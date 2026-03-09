@@ -54,21 +54,21 @@ nav a:hover::after{width:100%}
 .hero::before{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 70% 40%,rgba(180,42,36,0.025) 0%,transparent 60%);pointer-events:none}
 .hero-in{max-width:var(--max);margin:0 auto;width:100%;display:grid;grid-template-columns:1.3fr 0.7fr;gap:5rem;align-items:center}
 
-.h-tag{font-family:var(--mono);font-size:0.68rem;color:var(--red);margin-bottom:1.8rem;letter-spacing:0.02em;opacity:0;animation:up 0.6s ease 0.15s forwards}
+.h-tag{font-family:var(--mono);font-size:0.68rem;color:var(--red);margin-bottom:1.8rem;letter-spacing:0.02em;opacity:1;animation:up 0.6s ease 0.15s both}
 
-.hero h1{font-family:var(--serif);font-size:3.8rem;font-weight:500;line-height:1.12;margin-bottom:1.5rem;opacity:0;animation:up 0.6s ease 0.3s forwards}
+.hero h1{font-family:var(--serif);font-size:3.8rem;font-weight:500;line-height:1.12;margin-bottom:1.5rem;opacity:1;animation:up 0.6s ease 0.3s both}
 .hero h1 em{font-style:italic;color:var(--red);font-weight:400}
 
-.h-body{font-size:1.05rem;color:var(--text2);line-height:1.85;max-width:540px;margin-bottom:2.5rem;opacity:0;animation:up 0.6s ease 0.45s forwards}
+.h-body{font-size:1.05rem;color:var(--text2);line-height:1.85;max-width:540px;margin-bottom:2.5rem;opacity:1;animation:up 0.6s ease 0.45s both}
 
-.h-stats{display:flex;gap:0;opacity:0;animation:up 0.6s ease 0.6s forwards}
+.h-stats{display:flex;gap:0;opacity:1;animation:up 0.6s ease 0.6s both}
 .hs{padding:0 2rem 0 0;border-right:1px solid var(--rule2);margin-right:2rem}
 .hs:last-child{border-right:none;margin-right:0;padding-right:0}
 .hs .v{font-family:var(--serif);font-size:2.2rem;font-weight:600;color:var(--red);display:block;line-height:1}
 .hs .v sup{font-size:0.45em}
 .hs .l{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-top:0.3rem;display:block;line-height:1.4}
 
-.hero-right{opacity:0;animation:up 0.6s ease 0.4s forwards}
+.hero-right{opacity:1;transform:translateY(0);animation:up 0.6s ease 0.4s both}
 .ph-wrap{max-width:360px;margin-left:auto}
 .ph-frame{width:100%;aspect-ratio:3/3.7;border:1px solid var(--rule2);position:relative;overflow:hidden}
 .ph-frame img{width:100%;height:100%;object-fit:cover;object-position:center top}
@@ -80,12 +80,12 @@ nav a:hover::after{width:100%}
 /* ===== MEDIA BAR ===== */
 .mb{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.6rem 3rem;background:var(--bg2)}
 .mb-in{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:2.5rem}
-.mb-lb{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.25em;color:var(--text3);white-space:nowrap}
+.mb-lb{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--text2);white-space:nowrap}
 .mb-lg{display:flex;gap:2rem;flex-wrap:wrap;align-items:center}
-.ml{font-family:var(--serif);font-size:0.9rem;color:var(--text);opacity:0.15;white-space:nowrap;transition:opacity 0.25s}
-.ml:hover{opacity:0.5}
+.ml{font-family:var(--serif);font-size:1rem;color:var(--text);opacity:0.4;white-space:nowrap;transition:opacity 0.25s}
+.ml:hover{opacity:0.75}
 .ml.i{font-style:italic}
-.ml.s{font-family:var(--sans);font-size:0.72rem;font-weight:600;letter-spacing:0.03em}
+.ml.s{font-family:var(--sans);font-size:0.8rem;font-weight:600;letter-spacing:0.03em}
 
 /* ===== SHARED SECTION ===== */
 .sec{max-width:var(--max);margin:0 auto;padding:6rem 3rem}
@@ -306,7 +306,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="#" class="nav-cv">↓ CV</a>
+  <a href="https://seanwang.xyz/sean-wang-cv.pdf" class="nav-cv">↓ CV</a>
 </nav>
 
 <!-- HERO -->
@@ -365,9 +365,9 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
   <h2 class="st">Three forces that distort markets</h2>
   <p class="sd">My career has been a sustained investigation into a single question: what happens when information systems in capital markets break down?</p>
   <div class="themes">
-    <div class="thm"><div class="thm-n">1</div><h3>Information Bias &amp; Discrimination</h3><p>Racial prejudice and executive narcissism systematically distort financial intermediaries' output. I document these distortions, validate novel measurement approaches, and identify what mitigates them.</p><div class="thm-tags"><a class="tg" href="https://doi.org/10.1016/j.jacceco.2024.101707">JAE 2025</a><a class="tg" href="https://doi.org/10.1111/1475-679X.12176">JAR 2017</a><a class="tg" href="https://doi.org/10.1111/1475-679X.12434">JAR 2022</a><a class="tg" href="https://doi.org/10.1007/s11142-017-9427-x">RAST 2018</a><a class="tg" href="https://doi.org/10.1007/s11142-025-09902-7">RAST 2025</a><a class="tg" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5193858">WP: Migration</a></div></div>
-    <div class="thm"><div class="thm-n">2</div><h3>Price Discovery &amp; Attention</h3><p>Cognitive constraints cause systematic delays in price discovery. Information acquisition paradoxically crowds out macro news. Microstructure frictions create predictable return patterns around earnings.</p><div class="thm-tags"><a class="tg" href="https://doi.org/10.1016/j.jfineco.2014.06.009">JFE 2014</a><a class="tg" href="https://dx.doi.org/10.2139/ssrn.4839711">RAST 2026</a><a class="tg" href="https://doi.org/10.2308/accr-52656">TAR 2020</a><a class="tg" href="https://doi.org/10.1016/j.aos.2018.07.003">AOS 2019</a><a class="tg" href="https://doi.org/10.1017/S0022109018000261">JFQA 2018</a></div></div>
-    <div class="thm"><div class="thm-n">3</div><h3>Transparency &amp; Measurement</h3><p>Firms and accounting standards suppress and omit critical information. Pharmaceutical embargoes, regulatory backfire effects, and the trillions in intangible capital missing from corporate balance sheets.</p><div class="thm-tags"><a class="tg" href="https://doi.org/10.1287/mnsc.2021.02058">MS 2024</a><a class="tg" href="#">WP: Embargo</a><a class="tg" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4839739">WP: Kinky</a></div></div>
+    <div class="thm"><div class="thm-n">1</div><h3>Information Bias &amp; Discrimination</h3><p>Racial prejudice and executive narcissism systematically distort financial intermediaries' output. I document these distortions, validate novel measurement approaches, and identify what mitigates them.</p><div class="thm-tags"><a class="tg" href="https://seanwang.xyz/papers/rupar-wang-yoon-2025-jae.pdf">JAE 2025</a><a class="tg" href="https://seanwang.xyz/papers/ham-lang-seybert-wang-2017-jar.pdf">JAR 2017</a><a class="tg" href="https://seanwang.xyz/papers/guggenmos-rennekamp-rupar-wang-2022-jar.pdf">JAR 2022</a><a class="tg" href="https://seanwang.xyz/papers/ham-seybert-wang-2018-rast.pdf">RAST 2018</a><a class="tg" href="https://seanwang.xyz/papers/ham-piorkowski-seybert-wang-2025-rast.pdf">RAST 2025</a><a class="tg" href="https://seanwang.xyz/papers/wan-wang-wang-yorulmaz-2026-wp.pdf">WP: Migration</a></div></div>
+    <div class="thm"><div class="thm-n">2</div><h3>Price Discovery &amp; Attention</h3><p>Cognitive constraints cause systematic delays in price discovery. Information acquisition paradoxically crowds out macro news. Microstructure frictions create predictable return patterns around earnings.</p><div class="thm-tags"><a class="tg" href="https://seanwang.xyz/papers/so-wang-2014-jfe.pdf">JFE 2014</a><a class="tg" href="https://seanwang.xyz/papers/pan-sul-wang-2026-rast.pdf">RAST 2026</a><a class="tg" href="https://seanwang.xyz/papers/barth-landsman-raval-wang-2020-tar.pdf">TAR 2020</a><a class="tg" href="https://seanwang.xyz/papers/wang-2019-aos.pdf">AOS 2019</a><a class="tg" href="https://seanwang.xyz/papers/engelberg-ozoguz-wang-2018-jfqa.pdf">JFQA 2018</a></div></div>
+    <div class="thm"><div class="thm-n">3</div><h3>Transparency &amp; Measurement</h3><p>Firms and accounting standards suppress and omit critical information. Pharmaceutical embargoes, regulatory backfire effects, and the trillions in intangible capital missing from corporate balance sheets.</p><div class="thm-tags"><a class="tg" href="https://seanwang.xyz/papers/ewens-peters-wang-2025-ms.pdf">MS 2024</a><a class="tg" href="#">WP: Embargo</a><a class="tg" href="https://seanwang.xyz/papers/barth-jeong-landsman-wang-2026-wp.pdf">WP: Kinky</a></div></div>
   </div>
 </div>
 
@@ -401,7 +401,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
         <div class="qt-bottom">
           <span class="qt-badge">Policy Relevant</span>
           <div class="qt-links">
-            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3991111">↗ SSRN</a>
+            <a href="https://seanwang.xyz/papers/rupar-wang-yoon-2025-jae.pdf">↗ PDF</a>
             <a href="https://doi.org/10.1016/j.jacceco.2024.101707">↗ DOI</a>
             <a href="#">↗ Media</a>
           </div>
@@ -432,6 +432,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
         <div class="qt-bottom">
           <span class="qt-badge">New Working Paper</span>
           <div class="qt-links">
+            <a href="https://seanwang.xyz/papers/wan-wang-wang-yorulmaz-2026-wp.pdf">↗ PDF</a>
             <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5193858">↗ SSRN</a>
           </div>
         </div>
@@ -460,7 +461,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
         </div>
         <div class="qt-bottom">
           <span class="qt-badge">98th Percentile Cited</span>
-          <div class="qt-links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2581157">↗ SSRN</a><a href="https://doi.org/10.1111/1475-679X.12176">↗ DOI</a><a href="#">↗ Media</a></div>
+          <div class="qt-links"><a href="https://seanwang.xyz/papers/ham-lang-seybert-wang-2017-jar.pdf">↗ PDF</a><a href="https://doi.org/10.1111/1475-679X.12176">↗ DOI</a><a href="#">↗ Media</a></div>
         </div>
       </div>
     </div>
@@ -488,7 +489,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
         <div class="qt-bottom">
           <span class="qt-badge">Public Data Resource</span>
           <div class="qt-links">
-            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3287437">↗ SSRN</a>
+            <a href="https://seanwang.xyz/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a>
             <a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a>
             <a href="https://github.com/michaelewens/intangible_capital">↗ GitHub</a>
           </div>
@@ -518,7 +519,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
         </div>
         <div class="qt-bottom">
           <span class="qt-badge">JFE</span>
-          <div class="qt-links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2275982">↗ SSRN</a><a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></div>
+          <div class="qt-links"><a href="https://seanwang.xyz/papers/so-wang-2014-jfe.pdf">↗ PDF</a><a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></div>
         </div>
       </div>
     </div>
@@ -531,18 +532,18 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
   <div class="so">// complete record</div>
   <h2 class="st">All publications</h2>
   <div class="apl">
-    <div class="ap"><span class="yr">2026</span><div class="ti">Firm-specific Information Processing and the Delayed Discovery of Macroeconomic News <span class="co">· with J. Pan, E. Sul</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://dx.doi.org/10.2139/ssrn.4839711">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2025</span><div class="ti">Do Sell-side Analysts React Too Pessimistically to Bad News for Minority-led Firms? <span class="co">· with K. Rupar, H. Yoon</span></div><span class="vn">J. Acct. & Econ.</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3991111">↗ SSRN</a> <a href="https://doi.org/10.1016/j.jacceco.2024.101707">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2025</span><div class="ti">CFO Narcissism and the Power of Persuasion Over Analysts: A Mixed-Methods Approach <span class="co">· with C. Ham, M. Piorkowski, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4506020">↗ SSRN</a> <a href="https://doi.org/10.1007/s11142-025-09902-7">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2024</span><div class="ti">Acquisition Prices and the Measurement of Intangible Capital <span class="co">· with M. Ewens, R. Peters</span></div><span class="vn">Management Science</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3287437">↗ SSRN</a> <a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2022</span><div class="ti">Non-GAAP Reporting, Regulatory Focus, and GAAP Aggressiveness <span class="co">· with R. Guggenmos, K. Rennekamp, K. Rupar</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3045484">↗ SSRN</a> <a href="https://doi.org/10.1111/1475-679X.12434">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2020</span><div class="ti">Asymmetric Timeliness and the Resolution of Investor Disagreement <span class="co">· with M. Barth, W. Landsman, V. Raval</span></div><span class="vn">The Acct. Review</span><span class="ssrn"><a href="https://doi.org/10.2308/accr-52656">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2019</span><div class="ti">Informational Environments and Analyst vs. Insider Information Content <span class="co">· solo-authored</span></div><span class="vn">Acct. Org. & Soc.</span><span class="ssrn"><a href="https://doi.org/10.1016/j.aos.2018.07.003">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2018</span><div class="ti">Know Thy Neighbor: Industry Clusters, Information Spillovers and Market Efficiency <span class="co">· with J. Engelberg, A. Ozoguz</span></div><span class="vn">JFQA</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1571793">↗ SSRN</a> <a href="https://doi.org/10.1017/S0022109018000261">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2018</span><div class="ti">Narcissism is a Bad Sign: CEO Signature Size, Investment, and Performance <span class="co">· with C. Ham, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://doi.org/10.1007/s11142-017-9427-x">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2017</span><div class="ti">CFO Narcissism and Financial Reporting Quality <span class="co">· with C. Ham, M. Lang, N. Seybert</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2581157">↗ SSRN</a> <a href="https://doi.org/10.1111/1475-679X.12176">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2014</span><div class="ti">News-driven Return Reversals: Liquidity Provision Ahead of Earnings <span class="co">· with E. So</span></div><span class="vn">J. Financial Econ.</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2275982">↗ SSRN</a> <a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2014</span><div class="ti">The Prevention of Excess Managerial Risk Taking <span class="co">· with E. Van Wesep</span></div><span class="vn">J. Corp. Finance</span><span class="ssrn"><a href="https://doi.org/10.1016/j.jcorpfin.2013.04.008">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2026</span><div class="ti">Firm-specific Information Processing and the Delayed Discovery of Macroeconomic News <span class="co">· with J. Pan, E. Sul</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://seanwang.xyz/papers/pan-sul-wang-2026-rast.pdf">↗ PDF</a> <a href="https://dx.doi.org/10.2139/ssrn.4839711">↗ SSRN</a></span></div>
+    <div class="ap"><span class="yr">2025</span><div class="ti">Do Sell-side Analysts React Too Pessimistically to Bad News for Minority-led Firms? <span class="co">· with K. Rupar, H. Yoon</span></div><span class="vn">J. Acct. & Econ.</span><span class="ssrn"><a href="https://seanwang.xyz/papers/rupar-wang-yoon-2025-jae.pdf">↗ PDF</a> <a href="https://doi.org/10.1016/j.jacceco.2024.101707">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2025</span><div class="ti">CFO Narcissism and the Power of Persuasion Over Analysts: A Mixed-Methods Approach <span class="co">· with C. Ham, M. Piorkowski, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://seanwang.xyz/papers/ham-piorkowski-seybert-wang-2025-rast.pdf">↗ PDF</a> <a href="https://doi.org/10.1007/s11142-025-09902-7">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2024</span><div class="ti">Acquisition Prices and the Measurement of Intangible Capital <span class="co">· with M. Ewens, R. Peters</span></div><span class="vn">Management Science</span><span class="ssrn"><a href="https://seanwang.xyz/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a> <a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2022</span><div class="ti">Non-GAAP Reporting, Regulatory Focus, and GAAP Aggressiveness <span class="co">· with R. Guggenmos, K. Rennekamp, K. Rupar</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="https://seanwang.xyz/papers/guggenmos-rennekamp-rupar-wang-2022-jar.pdf">↗ PDF</a> <a href="https://doi.org/10.1111/1475-679X.12434">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2020</span><div class="ti">Asymmetric Timeliness and the Resolution of Investor Disagreement <span class="co">· with M. Barth, W. Landsman, V. Raval</span></div><span class="vn">The Acct. Review</span><span class="ssrn"><a href="https://seanwang.xyz/papers/barth-landsman-raval-wang-2020-tar.pdf">↗ PDF</a> <a href="https://seanwang.xyz/papers/barth-landsman-raval-wang-2020-toy-model.pdf">↗ Model</a> <a href="https://doi.org/10.2308/accr-52656">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2019</span><div class="ti">Informational Environments and Analyst vs. Insider Information Content <span class="co">· solo-authored</span></div><span class="vn">Acct. Org. & Soc.</span><span class="ssrn"><a href="https://seanwang.xyz/papers/wang-2019-aos.pdf">↗ PDF</a> <a href="https://doi.org/10.1016/j.aos.2018.07.003">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2018</span><div class="ti">Know Thy Neighbor: Industry Clusters, Information Spillovers and Market Efficiency <span class="co">· with J. Engelberg, A. Ozoguz</span></div><span class="vn">JFQA</span><span class="ssrn"><a href="https://seanwang.xyz/papers/engelberg-ozoguz-wang-2018-jfqa.pdf">↗ PDF</a> <a href="https://doi.org/10.1017/S0022109018000261">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2018</span><div class="ti">Narcissism is a Bad Sign: CEO Signature Size, Investment, and Performance <span class="co">· with C. Ham, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://seanwang.xyz/papers/ham-seybert-wang-2018-rast.pdf">↗ PDF</a> <a href="https://doi.org/10.1007/s11142-017-9427-x">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2017</span><div class="ti">CFO Narcissism and Financial Reporting Quality <span class="co">· with C. Ham, M. Lang, N. Seybert</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="https://seanwang.xyz/papers/ham-lang-seybert-wang-2017-jar.pdf">↗ PDF</a> <a href="https://doi.org/10.1111/1475-679X.12176">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2014</span><div class="ti">News-driven Return Reversals: Liquidity Provision Ahead of Earnings <span class="co">· with E. So</span></div><span class="vn">J. Financial Econ.</span><span class="ssrn"><a href="https://seanwang.xyz/papers/so-wang-2014-jfe.pdf">↗ PDF</a> <a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2014</span><div class="ti">The Prevention of Excess Managerial Risk Taking <span class="co">· with E. Van Wesep</span></div><span class="vn">J. Corp. Finance</span><span class="ssrn"><a href="https://seanwang.xyz/papers/wang-vanwesep-2014-jcf.pdf">↗ PDF</a> <a href="https://doi.org/10.1016/j.jcorpfin.2013.04.008">↗ DOI</a></span></div>
   </div>
 </div>
 
@@ -556,14 +557,14 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
       <h4>Migration Fear, Information Access, and Analyst Forecast Accuracy</h4>
       <div class="au2">with C. Wan, Y. Wang, A. Yorulmaz</div>
       <div class="wp-desc">Anti-immigrant sentiment creates a racial accuracy gap in analyst forecasts. A one-SD increase in migration fear raises Non-White analysts' absolute forecast errors by $0.04 EPS with no effect on White peers. Non-White analysts see a 5.7pp drop in conference call participation during high-fear periods — suggesting societal tensions reduce private information sharing with minority analysts.</div>
-      <div class="wp-lnk"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5193858">↗ SSRN</a></div>
+      <div class="wp-lnk"><a href="https://seanwang.xyz/papers/wan-wang-wang-yorulmaz-2026-wp.pdf">↗ PDF</a> <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5193858">↗ SSRN</a></div>
     </div>
     <div class="wp">
       <div class="wp-status">Working Paper · Mar 2026</div>
       <h4>Are Analyst Forecast Errors Really Kinky?</h4>
       <div class="au2">with M. Barth, J. Jeong, W. Landsman</div>
       <div class="wp-desc">The well-known "kink" in earnings surprises is widely attributed to earnings management — but ~66% is actually driven by analyst strategic behavior. Analysts under-revise EPS forecasts while bundling directionally consistent target price and recommendation revisions, creating predictable bias. Adjusting for bundling, the ratio of small beats to small misses falls from 2.43 to 1.49.</div>
-      <div class="wp-lnk"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4839739">↗ SSRN</a></div>
+      <div class="wp-lnk"><a href="https://seanwang.xyz/papers/barth-jeong-landsman-wang-2026-wp.pdf">↗ PDF</a> <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4839739">↗ SSRN</a></div>
     </div>
     <div class="wp">
       <div class="wp-status">Targeting JAE</div>
@@ -647,7 +648,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
       <div class="at"><span class="ay">2008–16</span><span class="ar">Assistant Professor</span><span class="ap2">UNC Kenan-Flagler</span></div>
       <div class="at"><span class="ay">2016–18</span><span class="ar">Visiting Asst. Professor</span><span class="ap2">Rice (Jones)</span></div>
       <div class="at"><span class="ay">2018–present</span><span class="ar">Assistant Professor</span><span class="ap2">SMU Cox School of Business</span></div>
-      <a href="#" class="nav-cv" style="margin-top:1.5rem;display:inline-block;padding:0.5rem 1.1rem;font-size:0.7rem">↓ Download CV (PDF)</a>
+      <a href="https://seanwang.xyz/sean-wang-cv.pdf" class="nav-cv" style="margin-top:1.5rem;display:inline-block;padding:0.5rem 1.1rem;font-size:0.7rem">↓ Download CV (PDF)</a>
     </div>
     <div class="ab-txt">
       <p class="dc">Before I studied markets, I studied molecules. My academic journey began in chemistry at Duke and the University of South Florida, where I learned to think in terms of systems, reactions, and evidence. That scientific training — the insistence on rigor, on letting data lead, on questioning assumptions — became the foundation for everything that followed.</p>
@@ -684,7 +685,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
     <a href="https://scholar.google.com/citations?user=fUc4WKwAAAAJ" class="clk">Google Scholar</a>
     <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=577565" class="clk">SSRN</a>
     <a href="https://www.linkedin.com/in/sean-wang-1801774a/" class="clk">LinkedIn</a>
-    <a href="#" class="clk" style="border-color:var(--red-dim);color:var(--red)">↓ Download CV</a>
+    <a href="https://seanwang.xyz/sean-wang-cv.pdf" class="clk" style="border-color:var(--red-dim);color:var(--red)">↓ Download CV</a>
   </div>
 </div>
 
