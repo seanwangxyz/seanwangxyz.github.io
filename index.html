@@ -114,7 +114,8 @@ nav a:hover::after{width:100%}
 .thm h3{font-family:var(--serif);font-size:1.2rem;font-weight:600;margin-bottom:0.7rem;line-height:1.3}
 .thm p{font-size:0.86rem;color:var(--text2);line-height:1.75;margin-bottom:1rem}
 .thm-tags{display:flex;flex-wrap:wrap;gap:0.3rem;padding-top:0.8rem;border-top:1px solid var(--rule)}
-.tg{font-family:var(--mono);font-size:0.6rem;font-weight:500;padding:0.2rem 0.5rem;background:var(--red-glow);color:var(--red);border-radius:2px}
+.tg{font-family:var(--mono);font-size:0.6rem;font-weight:500;padding:0.2rem 0.5rem;background:var(--red-glow);color:var(--red);border-radius:2px;text-decoration:none;transition:background 0.2s,color 0.2s}
+a.tg:hover{background:var(--red);color:#fff}
 
 /* ===== FEATURED PAPERS ===== */
 .pp-wrap{background:var(--bg2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:6rem 3rem}
@@ -187,6 +188,7 @@ nav a:hover::after{width:100%}
 .ap .ssrn{text-align:right;white-space:nowrap}
 .ap .ssrn a{font-family:var(--mono);font-size:0.58rem;color:var(--red);text-decoration:none;font-weight:500;opacity:0.6;transition:opacity 0.2s}
 .ap .ssrn a:hover{opacity:1}
+.ap .ssrn a+a{margin-left:0.6rem}
 
 /* CV button in nav */
 .nav-cv{font-family:var(--mono);font-size:0.62rem;color:var(--red);text-decoration:none;padding:0.3rem 0.7rem;border:1px solid var(--red-dim);letter-spacing:0.05em;transition:all 0.2s;font-weight:500}
@@ -266,8 +268,9 @@ nav a:hover::after{width:100%}
 footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3)}
 
 @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.rv{opacity:0;transform:translateY(14px);transition:all 0.6s ease}
-.rv.v{opacity:1;transform:translateY(0)}
+.rv{opacity:1;transform:translateY(0);transition:all 0.6s ease}
+.rv-ready .rv{opacity:0;transform:translateY(14px)}
+.rv-ready .rv.v{opacity:1;transform:translateY(0)}
 
 @media(max-width:960px){
   .hero-in,.themes,.ab-grid,.data-g,.blog-grid{grid-template-columns:1fr}
@@ -321,7 +324,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
     </div>
     <div class="hero-right">
       <div class="ph-wrap">
-        <div class="ph-frame"><img src="headshot.jpeg" alt="Sean Wang"><div class="ph-bar"></div></div>
+        <div class="ph-frame"><img src="https://seanwang.xyz/headshot.jpeg" alt="Sean Wang"><div class="ph-bar"></div></div>
         <div class="jb-row"><div class="jb">J. Financial<br>Economics</div><div class="jb">J. Acct &<br>Economics</div><div class="jb">J. Acct<br>Research</div><div class="jb">The Acct<br>Review</div><div class="jb">Management<br>Science</div></div>
       </div>
     </div>
@@ -344,8 +347,8 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
       </div>
       <div class="upd">
         <div class="upd-date">Jan 2026</div>
-        <div class="upd-type">Conference</div>
-        <div class="upd-text"><strong>"CFO Narcissism and the Power of Persuasion Over Analysts"</strong> accepted at 2024 Review of Accounting Studies Conference.</div>
+        <div class="upd-type">Publication</div>
+        <div class="upd-text"><strong>"CFO Narcissism and the Power of Persuasion Over Analysts"</strong> published at Review of Accounting Studies (2025), 30(3), 2419–2467.</div>
       </div>
       <div class="upd">
         <div class="upd-date">Dec 2025</div>
@@ -362,9 +365,9 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
   <h2 class="st">Three forces that distort markets</h2>
   <p class="sd">My career has been a sustained investigation into a single question: what happens when information systems in capital markets break down?</p>
   <div class="themes">
-    <div class="thm"><div class="thm-n">1</div><h3>Information Bias &amp; Discrimination</h3><p>Racial prejudice and executive narcissism systematically distort financial intermediaries' output. I document these distortions, validate novel measurement approaches, and identify what mitigates them.</p><div class="thm-tags"><span class="tg">JAE 2025</span><span class="tg">JAR 2017</span><span class="tg">JAR 2022</span><span class="tg">RAS 2018</span><span class="tg">RAS Conf. 2024</span></div></div>
-    <div class="thm"><div class="thm-n">2</div><h3>Price Discovery &amp; Attention</h3><p>Cognitive constraints cause systematic delays in price discovery. Information acquisition paradoxically crowds out macro news. Microstructure frictions create predictable return patterns around earnings.</p><div class="thm-tags"><span class="tg">JFE 2014</span><span class="tg">RAS 2026</span><span class="tg">TAR 2020</span><span class="tg">AOS 2019</span><span class="tg">JFQA 2018</span></div></div>
-    <div class="thm"><div class="thm-n">3</div><h3>Transparency &amp; Measurement</h3><p>Firms and accounting standards suppress and omit critical information. Pharmaceutical embargoes, regulatory backfire effects, and the trillions in intangible capital missing from corporate balance sheets.</p><div class="thm-tags"><span class="tg">MS 2024</span><span class="tg">WP: Embargo</span><span class="tg">WP: Bundling</span></div></div>
+    <div class="thm"><div class="thm-n">1</div><h3>Information Bias &amp; Discrimination</h3><p>Racial prejudice and executive narcissism systematically distort financial intermediaries' output. I document these distortions, validate novel measurement approaches, and identify what mitigates them.</p><div class="thm-tags"><a class="tg" href="https://doi.org/10.1016/j.jacceco.2024.101707">JAE 2025</a><a class="tg" href="https://doi.org/10.1111/1475-679X.12176">JAR 2017</a><a class="tg" href="https://doi.org/10.1111/1475-679X.12434">JAR 2022</a><a class="tg" href="https://doi.org/10.1007/s11142-017-9427-x">RAST 2018</a><a class="tg" href="https://doi.org/10.1007/s11142-025-09902-7">RAST 2025</a><a class="tg" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5193858">WP: Migration</a></div></div>
+    <div class="thm"><div class="thm-n">2</div><h3>Price Discovery &amp; Attention</h3><p>Cognitive constraints cause systematic delays in price discovery. Information acquisition paradoxically crowds out macro news. Microstructure frictions create predictable return patterns around earnings.</p><div class="thm-tags"><a class="tg" href="https://doi.org/10.1016/j.jfineco.2014.06.009">JFE 2014</a><a class="tg" href="https://dx.doi.org/10.2139/ssrn.4839711">RAST 2026</a><a class="tg" href="https://doi.org/10.2308/accr-52656">TAR 2020</a><a class="tg" href="https://doi.org/10.1016/j.aos.2018.07.003">AOS 2019</a><a class="tg" href="https://doi.org/10.1017/S0022109018000261">JFQA 2018</a></div></div>
+    <div class="thm"><div class="thm-n">3</div><h3>Transparency &amp; Measurement</h3><p>Firms and accounting standards suppress and omit critical information. Pharmaceutical embargoes, regulatory backfire effects, and the trillions in intangible capital missing from corporate balance sheets.</p><div class="thm-tags"><a class="tg" href="https://doi.org/10.1287/mnsc.2021.02058">MS 2024</a><a class="tg" href="#">WP: Embargo</a><a class="tg" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4839739">WP: Kinky</a></div></div>
   </div>
 </div>
 
@@ -399,7 +402,37 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
           <span class="qt-badge">Policy Relevant</span>
           <div class="qt-links">
             <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3991111">↗ SSRN</a>
+            <a href="https://doi.org/10.1016/j.jacceco.2024.101707">↗ DOI</a>
             <a href="#">↗ Media</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qt-card rv">
+      <div class="qt-img">
+        <div class="qt-stat" style="font-size:2.2rem">5.7pp</div>
+        <span>drop in conference call participation for Non-White analysts during high migration-fear periods</span>
+      </div>
+      <div class="qt-body">
+        <div class="qt-top">
+          <span class="qt-venue">Working Paper · Jan 2026</span>
+          <span class="qt-stat-label">Information access gap</span>
+        </div>
+        <div class="qt-title">Migration Fear and Analyst Forecast Accuracy</div>
+        <div class="qt-au">with C. Wan, Y. Wang, A. Yorulmaz</div>
+        <div class="qt-section">
+          <div class="qt-label">Question</div>
+          <div class="qt-question">Does anti-immigrant sentiment impair minority analysts' ability to forecast earnings?</div>
+        </div>
+        <div class="qt-section">
+          <div class="qt-label">Takeaway</div>
+          <div class="qt-answer">A one-SD increase in migration fear raises Non-White analysts' absolute forecast errors by $0.04 EPS — with no effect on White peers. The mechanism: Non-White analysts lose access to private information channels, evidenced by a 5.7pp decline in conference call participation during high-fear periods. Attenuated under Non-White CEO leadership and in sanctuary jurisdictions.</div>
+        </div>
+        <div class="qt-bottom">
+          <span class="qt-badge">New Working Paper</span>
+          <div class="qt-links">
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5193858">↗ SSRN</a>
           </div>
         </div>
       </div>
@@ -427,7 +460,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
         </div>
         <div class="qt-bottom">
           <span class="qt-badge">98th Percentile Cited</span>
-          <div class="qt-links"><a href="#">↗ SSRN</a><a href="#">↗ Media</a></div>
+          <div class="qt-links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2581157">↗ SSRN</a><a href="https://doi.org/10.1111/1475-679X.12176">↗ DOI</a><a href="#">↗ Media</a></div>
         </div>
       </div>
     </div>
@@ -456,6 +489,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
           <span class="qt-badge">Public Data Resource</span>
           <div class="qt-links">
             <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3287437">↗ SSRN</a>
+            <a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a>
             <a href="https://github.com/michaelewens/intangible_capital">↗ GitHub</a>
           </div>
         </div>
@@ -470,7 +504,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
       <div class="qt-body">
         <div class="qt-top">
           <span class="qt-venue">Journal of Financial Economics · 2014</span>
-          <span class="qt-stat-label">With Eric So (MIT)</span>
+          <span class="qt-stat-label">Announcement-window return</span>
         </div>
         <div class="qt-title">Liquidity Provision Ahead of Earnings</div>
         <div class="qt-au">with E. So</div>
@@ -484,7 +518,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
         </div>
         <div class="qt-bottom">
           <span class="qt-badge">JFE</span>
-          <div class="qt-links"><a href="#">↗ SSRN</a></div>
+          <div class="qt-links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2275982">↗ SSRN</a><a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></div>
         </div>
       </div>
     </div>
@@ -498,16 +532,17 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
   <h2 class="st">All publications</h2>
   <div class="apl">
     <div class="ap"><span class="yr">2026</span><div class="ti">Firm-specific Information Processing and the Delayed Discovery of Macroeconomic News <span class="co">· with J. Pan, E. Sul</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://dx.doi.org/10.2139/ssrn.4839711">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2025</span><div class="ti">Do Sell-side Analysts React Too Pessimistically to Bad News for Minority-led Firms? <span class="co">· with K. Rupar, H. Yoon</span></div><span class="vn">J. Acct. & Econ.</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3991111">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2024</span><div class="ti">Acquisition Prices and the Measurement of Intangible Capital <span class="co">· with M. Ewens, R. Peters</span></div><span class="vn">Management Science</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3287437">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2022</span><div class="ti">Non-GAAP Reporting, Regulatory Focus, and GAAP Aggressiveness <span class="co">· with R. Guggenmos, K. Rennekamp, K. Rupar</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="#">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2020</span><div class="ti">Asymmetric Timeliness and the Resolution of Investor Disagreement <span class="co">· with M. Barth, W. Landsman, V. Raval</span></div><span class="vn">The Acct. Review</span><span class="ssrn"><a href="#">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2019</span><div class="ti">Informational Environments and Analyst vs. Insider Information Content <span class="co">· solo-authored</span></div><span class="vn">Acct. Org. & Soc.</span><span class="ssrn"><a href="#">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2018</span><div class="ti">Know Thy Neighbor: Industry Clusters, Information Spillovers and Market Efficiency <span class="co">· with J. Engelberg, A. Ozoguz</span></div><span class="vn">JFQA</span><span class="ssrn"><a href="#">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2018</span><div class="ti">Narcissism is a Bad Sign: CEO Signature Size, Investment, and Performance <span class="co">· with C. Ham, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="#">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2017</span><div class="ti">CFO Narcissism and Financial Reporting Quality <span class="co">· with C. Ham, M. Lang, N. Seybert</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="#">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2014</span><div class="ti">News-driven Return Reversals: Liquidity Provision Ahead of Earnings <span class="co">· with E. So</span></div><span class="vn">J. Financial Econ.</span><span class="ssrn"><a href="#">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2014</span><div class="ti">The Prevention of Excess Managerial Risk Taking <span class="co">· with E. Van Wesep</span></div><span class="vn">J. Corp. Finance</span><span class="ssrn"><a href="#">↗ SSRN</a></span></div>
+    <div class="ap"><span class="yr">2025</span><div class="ti">Do Sell-side Analysts React Too Pessimistically to Bad News for Minority-led Firms? <span class="co">· with K. Rupar, H. Yoon</span></div><span class="vn">J. Acct. & Econ.</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3991111">↗ SSRN</a> <a href="https://doi.org/10.1016/j.jacceco.2024.101707">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2025</span><div class="ti">CFO Narcissism and the Power of Persuasion Over Analysts: A Mixed-Methods Approach <span class="co">· with C. Ham, M. Piorkowski, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4506020">↗ SSRN</a> <a href="https://doi.org/10.1007/s11142-025-09902-7">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2024</span><div class="ti">Acquisition Prices and the Measurement of Intangible Capital <span class="co">· with M. Ewens, R. Peters</span></div><span class="vn">Management Science</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3287437">↗ SSRN</a> <a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2022</span><div class="ti">Non-GAAP Reporting, Regulatory Focus, and GAAP Aggressiveness <span class="co">· with R. Guggenmos, K. Rennekamp, K. Rupar</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3045484">↗ SSRN</a> <a href="https://doi.org/10.1111/1475-679X.12434">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2020</span><div class="ti">Asymmetric Timeliness and the Resolution of Investor Disagreement <span class="co">· with M. Barth, W. Landsman, V. Raval</span></div><span class="vn">The Acct. Review</span><span class="ssrn"><a href="https://doi.org/10.2308/accr-52656">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2019</span><div class="ti">Informational Environments and Analyst vs. Insider Information Content <span class="co">· solo-authored</span></div><span class="vn">Acct. Org. & Soc.</span><span class="ssrn"><a href="https://doi.org/10.1016/j.aos.2018.07.003">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2018</span><div class="ti">Know Thy Neighbor: Industry Clusters, Information Spillovers and Market Efficiency <span class="co">· with J. Engelberg, A. Ozoguz</span></div><span class="vn">JFQA</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1571793">↗ SSRN</a> <a href="https://doi.org/10.1017/S0022109018000261">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2018</span><div class="ti">Narcissism is a Bad Sign: CEO Signature Size, Investment, and Performance <span class="co">· with C. Ham, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://doi.org/10.1007/s11142-017-9427-x">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2017</span><div class="ti">CFO Narcissism and Financial Reporting Quality <span class="co">· with C. Ham, M. Lang, N. Seybert</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2581157">↗ SSRN</a> <a href="https://doi.org/10.1111/1475-679X.12176">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2014</span><div class="ti">News-driven Return Reversals: Liquidity Provision Ahead of Earnings <span class="co">· with E. So</span></div><span class="vn">J. Financial Econ.</span><span class="ssrn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2275982">↗ SSRN</a> <a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></span></div>
+    <div class="ap"><span class="yr">2014</span><div class="ti">The Prevention of Excess Managerial Risk Taking <span class="co">· with E. Van Wesep</span></div><span class="vn">J. Corp. Finance</span><span class="ssrn"><a href="https://doi.org/10.1016/j.jcorpfin.2013.04.008">↗ DOI</a></span></div>
   </div>
 </div>
 
@@ -517,29 +552,24 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
     <div class="so">// pipeline</div>
     <h2 class="st">Working papers</h2>
     <div class="wp">
+      <div class="wp-status">Working Paper · Jan 2026</div>
+      <h4>Migration Fear, Information Access, and Analyst Forecast Accuracy</h4>
+      <div class="au2">with C. Wan, Y. Wang, A. Yorulmaz</div>
+      <div class="wp-desc">Anti-immigrant sentiment creates a racial accuracy gap in analyst forecasts. A one-SD increase in migration fear raises Non-White analysts' absolute forecast errors by $0.04 EPS with no effect on White peers. Non-White analysts see a 5.7pp drop in conference call participation during high-fear periods — suggesting societal tensions reduce private information sharing with minority analysts.</div>
+      <div class="wp-lnk"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5193858">↗ SSRN</a></div>
+    </div>
+    <div class="wp">
+      <div class="wp-status">Working Paper · Mar 2026</div>
+      <h4>Are Analyst Forecast Errors Really Kinky?</h4>
+      <div class="au2">with M. Barth, J. Jeong, W. Landsman</div>
+      <div class="wp-desc">The well-known "kink" in earnings surprises is widely attributed to earnings management — but ~66% is actually driven by analyst strategic behavior. Analysts under-revise EPS forecasts while bundling directionally consistent target price and recommendation revisions, creating predictable bias. Adjusting for bundling, the ratio of small beats to small misses falls from 2.43 to 1.49.</div>
+      <div class="wp-lnk"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4839739">↗ SSRN</a></div>
+    </div>
+    <div class="wp">
       <div class="wp-status">Targeting JAE</div>
       <h4>Embargoed Disclosure</h4>
       <div class="au2">Solo-authored</div>
       <div class="wp-desc">How pharmaceutical companies use embargo clauses in clinical trial contracts to control the timing and terms of disclosure — with consequences for market price discovery and public health.</div>
-    </div>
-    <div class="wp">
-      <div class="wp-status">Working Paper</div>
-      <h4>Analyst Forecast Bundling Intensity and Earnings Surprise</h4>
-      <div class="au2">with Y. Zhang and O. Chen</div>
-      <div class="wp-desc">Analysts signal private EPS information through bundling behavior. Adjusting for bundling reduces the "earnings kink" by 66%, suggesting much of what's attributed to earnings management reflects predictable analyst biases.</div>
-      <div class="wp-lnk"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4839739">↗ SSRN</a></div>
-    </div>
-    <div class="wp">
-      <div class="wp-status">R&R at Review of Finance</div>
-      <h4>Information from Implied Volatility Comovements and Insider Trades</h4>
-      <div class="au2">with V. Zhu</div>
-      <div class="wp-desc">Firms with higher implied volatility comovement have insider trades that reveal macroeconomic information — connecting option markets to information production by corporate insiders.</div>
-    </div>
-    <div class="wp">
-      <div class="wp-status">Accepted: RAS 2024 Conference</div>
-      <h4>CFO Narcissism and the Power of Persuasion Over Analysts</h4>
-      <div class="au2">with C. Ham and N. Seybert</div>
-      <div class="wp-desc">Narcissistic CFOs use persuasive abilities to induce overly optimistic analyst valuations through public conference calls and private channels — helping explain why firms tolerate narcissistic executives.</div>
     </div>
   </div>
 </div>
@@ -661,16 +691,18 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
 <footer>&copy; 2026 Sean Wang</footer>
 
 <script>
+// Enable scroll reveal animation
+document.documentElement.classList.add('rv-ready');
+
 // Scroll reveal
 const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('v'); }), { threshold: 0.06 });
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
 // Scroll progress bar
 window.addEventListener('scroll', () => {
-  const h = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = (window.scrollY / h) * 100;
-  document.getElementById('scroll-progress').style.width = pct + '%';
-}, { passive: true });
+  const el = document.getElementById('scroll-progress');
+  if(el) el.style.width = ((document.documentElement.scrollTop / (document.documentElement.scrollHeight - window.innerHeight)) * 100) + '%';
+});
 </script>
 </body>
 </html>
