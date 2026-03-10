@@ -41,7 +41,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 #scroll-progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--red),var(--red-light));z-index:10000;transition:width 0.05s linear;pointer-events:none}
 nav{position:fixed;top:2px;width:100%;z-index:1000;padding:0 3rem;height:58px;display:flex;justify-content:space-between;align-items:center;background:rgba(14,12,10,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--rule)}
 .n-left{display:flex;align-items:center;gap:0.5rem}
-.n-mark{font-family:var(--serif);font-size:0.78rem;font-weight:600;color:var(--red);width:26px;height:26px;border:1.5px solid var(--red-dim);display:flex;align-items:center;justify-content:center}
+.n-mark{font-family:var(--serif);font-size:0.68rem;font-weight:600;color:var(--red);padding:0.25rem 0.45rem;border:1.5px solid var(--red-dim);display:flex;align-items:center;justify-content:center;white-space:nowrap}
 .n-name{font-family:var(--sans);font-size:0.88rem;font-weight:600;letter-spacing:0.03em}
 nav ul{list-style:none;display:flex;gap:2rem}
 nav a{color:var(--text3);text-decoration:none;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.13em;font-weight:500;transition:color 0.25s;position:relative}
@@ -316,7 +316,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
 
 <!-- NAV -->
 <nav>
-  <div class="n-left"><div class="n-mark">W</div><span class="n-name">Sean Wang</span></div>
+  <div class="n-left"><div class="n-mark">s·Dub</div><span class="n-name">Sean Wang</span></div>
   <ul>
     <li><a href="#updates">Latest</a></li>
     <li><a href="#research">Research</a></li>
