@@ -75,6 +75,8 @@ nav a:hover::after{width:100%}
 .ph-bar{position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--red),transparent);z-index:2}
 .jb-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule)}
 .jb{background:var(--bg);padding:0.65rem 0.3rem;text-align:center;font-family:var(--mono);font-size:0.55rem;color:var(--text3);font-weight:500;line-height:1.3;transition:all 0.2s}
+.jb a{color:var(--text3);text-decoration:none;display:block;transition:color 0.2s}
+.jb:hover a{color:var(--red)}
 .jb:hover{color:var(--red);background:var(--red-glow)}
 
 /* ===== MEDIA BAR ===== */
@@ -179,16 +181,28 @@ a.tg:hover{background:var(--red);color:#fff}
 
 /* ===== ALL PUBS ===== */
 .apl{border-top:1px solid var(--rule)}
-.ap{display:grid;grid-template-columns:60px 1fr 145px 55px;gap:1.5rem;padding:1.1rem 0;border-bottom:1px solid var(--rule);align-items:baseline;transition:all 0.2s}
-.ap:hover{background:var(--red-glow);margin:0 -1rem;padding-left:1rem;padding-right:1rem}
+.pub-item{border-bottom:1px solid var(--rule);transition:all 0.2s}
+.pub-item:hover{background:var(--red-glow)}
+.pub-item.open{background:var(--red-glow2)}
+.ap{display:grid;grid-template-columns:60px 1fr 145px 30px;gap:1.5rem;padding:1.1rem 0;align-items:baseline;cursor:pointer}
 .ap .yr{font-family:var(--mono);font-size:0.72rem;color:var(--text3)}
 .ap .ti{font-size:0.9rem;font-weight:500;line-height:1.4}
 .ap .ti .co{font-weight:400;color:var(--text3);font-size:0.78rem}
 .ap .vn{font-family:var(--mono);font-size:0.62rem;color:var(--red-dim);font-weight:500;text-align:right;white-space:nowrap}
-.ap .ssrn{text-align:right;white-space:nowrap}
-.ap .ssrn a{font-family:var(--mono);font-size:0.58rem;color:var(--red);text-decoration:none;font-weight:500;opacity:0.6;transition:opacity 0.2s}
-.ap .ssrn a:hover{opacity:1}
-.ap .ssrn a+a{margin-left:0.6rem}
+.ap-toggle{font-family:var(--mono);font-size:0;color:var(--text3);text-align:right;transition:color 0.3s;user-select:none}
+.ap-toggle::before{content:'＋';font-size:0.7rem}
+.pub-item.open .ap-toggle{color:var(--red)}
+.pub-item.open .ap-toggle::before{content:'−'}
+.ap-detail{max-height:0;overflow:hidden;transition:max-height 0.45s ease}
+.pub-item.open .ap-detail{max-height:500px}
+.ap-inner{display:grid;grid-template-columns:140px 1fr;gap:1.5rem;align-items:start;padding:0.5rem 0 1.5rem 60px;margin-left:1.5rem}
+.ap-svg{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--rule);border-radius:3px;aspect-ratio:1;overflow:hidden}
+.ap-svg svg{width:100%;height:100%}
+.ap-q{font-family:var(--serif);font-size:0.88rem;font-style:italic;color:var(--cream2);margin-bottom:0.5rem;line-height:1.5}
+.ap-a{font-size:0.82rem;color:var(--text2);line-height:1.7}
+.ap-links{margin-top:0.6rem;display:flex;gap:0.6rem;flex-wrap:wrap}
+.ap-links a{font-family:var(--mono);font-size:0.58rem;color:var(--red);text-decoration:none;opacity:0.7;transition:opacity 0.2s}
+.ap-links a:hover{opacity:1}
 
 /* CV button in nav */
 .nav-cv{font-family:var(--mono);font-size:0.62rem;color:var(--red);text-decoration:none;padding:0.3rem 0.7rem;border:1px solid var(--red-dim);letter-spacing:0.05em;transition:all 0.2s;font-weight:500}
@@ -225,9 +239,9 @@ a.tg:hover{background:var(--red);color:#fff}
 .ab-grid{display:grid;grid-template-columns:260px 1fr;gap:4.5rem}
 .at{padding:0.6rem 0 0.6rem 1.6rem;border-left:1px solid var(--rule);position:relative}
 .at::before{content:'';position:absolute;left:-4px;top:0.9rem;width:7px;height:7px;border:1.5px solid var(--red-dim);background:var(--bg);border-radius:50%}
-.at .ay{font-family:var(--mono);font-size:0.62rem;color:var(--text3)}
-.at .ar{font-weight:600;font-size:0.85rem}
-.at .ap2{font-size:0.75rem;color:var(--text3)}
+.at .ay{font-family:var(--mono);font-size:0.62rem;color:var(--text3);display:block}
+.at .ar{font-weight:600;font-size:0.85rem;color:var(--text);display:block}
+.at .ap2{font-size:0.75rem;color:var(--text3);display:block}
 .ab-txt p{font-size:1rem;color:var(--text2);line-height:1.9;margin-bottom:1.2rem}
 .ab-txt .dc::first-letter{font-family:var(--serif);font-size:4rem;float:left;line-height:0.72;padding-right:0.5rem;padding-top:0.35rem;color:var(--red);font-weight:400}
 .ab-txt em{color:var(--red-light);font-style:italic}
@@ -282,7 +296,10 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
   .qt-title{font-size:1.15rem}
   .ap{grid-template-columns:50px 1fr}
   .ap .vn{grid-column:2;text-align:left}
-  .ap .ssrn{grid-column:2;text-align:left}
+  .ap-toggle{position:absolute;right:0;top:1.1rem}
+  .ap{position:relative;padding-right:2rem}
+  .ap-inner{grid-template-columns:1fr;padding-left:0;margin-left:0}
+  .ap-svg{max-width:160px}
   .updates-grid{grid-template-columns:1fr}
   nav ul{gap:1rem}
   nav a{font-size:0.65rem}
@@ -313,26 +330,23 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
 <section class="hero">
   <div class="hero-in">
     <div>
-      <div class="h-tag">// Assistant Professor of Accounting · SMU Cox School of Business</div>
+      <div class="h-tag">// Accounting Professor · SMU Cox</div>
       <h1>When information <em>breaks,</em> who pays?</h1>
       <p class="h-body">I study the forces that distort information in capital markets — racial bias in analyst forecasts, pharmaceutical disclosure suppression, narcissistic executives, and the cognitive limits of investor attention. My work spans accounting, finance, behavioral science, and public policy.</p>
       <div class="h-stats">
         <div class="hs"><span class="v">11</span><span class="l">Top-tier<br>publications</span></div>
         <div class="hs"><span class="v">5</span><span class="l">Elite journals<br>JFE · JAE · JAR · TAR · MS</span></div>
-        <div class="hs"><span class="v">98<sup>th</sup></span><span class="l">Percentile cited<br>Web of Science</span></div>
+        <div class="hs"><span class="v">40+</span><span class="l">Seminars & conferences<br>NBER · AFA · Kellogg · NYU · Yale · LBS</span></div>
       </div>
     </div>
     <div class="hero-right">
       <div class="ph-wrap">
         <div class="ph-frame"><img src="https://seanwang.xyz/headshot.jpeg" alt="Sean Wang"><div class="ph-bar"></div></div>
-        <div class="jb-row"><div class="jb">J. Financial<br>Economics</div><div class="jb">J. Acct &<br>Economics</div><div class="jb">J. Acct<br>Research</div><div class="jb">The Acct<br>Review</div><div class="jb">Management<br>Science</div></div>
+        <div class="jb-row"><div class="jb"><a href="https://seanwang.xyz/papers/so-wang-2014-jfe.pdf">J. Financial<br>Economics</a></div><div class="jb"><a href="https://seanwang.xyz/papers/rupar-wang-yoon-2025-jae.pdf">J. Acct &<br>Economics</a></div><div class="jb"><a href="https://seanwang.xyz/papers/ham-lang-seybert-wang-2017-jar.pdf">J. Acct<br>Research</a></div><div class="jb"><a href="https://seanwang.xyz/papers/barth-landsman-raval-wang-2020-tar.pdf">The Acct<br>Review</a></div><div class="jb"><a href="https://seanwang.xyz/papers/ewens-peters-wang-2025-ms.pdf">Management<br>Science</a></div></div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- MEDIA -->
-<div class="mb"><div class="mb-in"><span class="mb-lb">Research featured in</span><div class="mb-lg"><span class="ml i">The Economist</span><span class="ml">The Wall Street Journal</span><span class="ml i">The New York Times</span><span class="ml i">Financial Times</span><span class="ml s">Harvard Business Review</span><span class="ml s">ABC News</span><span class="ml s">USA Today</span><span class="ml i">The Washington Post</span></div></div></div>
 
 <!-- UPDATES -->
 <div class="updates" id="updates">
@@ -380,13 +394,21 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
 
     <div class="qt-card rv">
       <div class="qt-img">
-        <div class="qt-stat" style="font-size:3rem">57%</div>
-        <span>more negative valuations for Non-White CEOs after bad news</span>
+        <svg viewBox="0 0 420 140" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"><rect width="420" height="140" fill="#18150f"/>
+          <text x="210" y="22" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">ANALYST REACTION TO BAD NEWS</text>
+          <text x="95" y="52" text-anchor="end" font-family="Karla,sans-serif" font-size="11" fill="#a09888">White CEO</text>
+          <rect x="100" y="40" width="110" height="18" rx="3" fill="#2a2320" stroke="#3a3530" stroke-width="1"/>
+          <text x="95" y="82" text-anchor="end" font-family="Karla,sans-serif" font-size="11" fill="#e8e0d0" font-weight="600">Non-White CEO</text>
+          <rect x="100" y="70" width="173" height="18" rx="3" fill="#b42a24"/>
+          <text x="280" y="83" font-family="Newsreader,serif" font-size="20" font-weight="600" fill="#fff">+57%</text>
+          <line x1="210" y1="36" x2="210" y2="93" stroke="#6a6055" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="210" y="118" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055">more negative valuations for Non-White CEOs after bad news</text>
+        </svg>
       </div>
       <div class="qt-body">
         <div class="qt-top">
           <span class="qt-venue">Journal of Accounting & Economics · 2025</span>
-          <span class="qt-stat-label">57% more negative valuations</span>
+          <span class="qt-stat-label">Racial gap in analyst valuations</span>
         </div>
         <div class="qt-title">CEO Race and Analyst Judgments</div>
         <div class="qt-au">with K. Rupar and H. Yoon</div>
@@ -411,13 +433,29 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
 
     <div class="qt-card rv">
       <div class="qt-img">
-        <div class="qt-stat" style="font-size:2.2rem">5.7pp</div>
-        <span>drop in conference call participation for Non-White analysts during high migration-fear periods</span>
+        <svg viewBox="0 0 420 140" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"><rect width="420" height="140" fill="#18150f"/>
+          <text x="210" y="18" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">NON-WHITE ANALYST FORECAST ERROR</text>
+          <line x1="50" y1="95" x2="370" y2="95" stroke="#3a3530" stroke-width="1"/>
+          <text x="90" y="110" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">2011</text>
+          <text x="150" y="110" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">2013</text>
+          <text x="210" y="110" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24" font-weight="600">2016</text>
+          <text x="270" y="110" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">2018</text>
+          <text x="340" y="110" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">2019</text>
+          <circle cx="90" cy="82" r="3" fill="#a09888"/><circle cx="120" cy="83" r="3" fill="#a09888"/><circle cx="150" cy="81" r="3" fill="#a09888"/><circle cx="180" cy="82" r="3" fill="#a09888"/>
+          <line x1="90" y1="82" x2="180" y2="82" stroke="#a09888" stroke-width="1.5"/>
+          <circle cx="240" cy="62" r="3" fill="#b42a24"/><circle cx="270" cy="50" r="3.5" fill="#b42a24"/><circle cx="300" cy="45" r="3.5" fill="#b42a24"/><circle cx="340" cy="42" r="4" fill="#b42a24"/>
+          <line x1="240" y1="62" x2="340" y2="42" stroke="#b42a24" stroke-width="2"/>
+          <line x1="210" y1="28" x2="210" y2="95" stroke="#b42a24" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="210" y="128" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24">2016 Presidential Election</text>
+          <text x="58" y="42" font-family="Newsreader,serif" font-size="28" font-weight="500" fill="#b42a24">5.7×</text>
+          <text x="58" y="58" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">larger effect</text>
+          <text x="58" y="70" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">post-election</text>
+        </svg>
       </div>
       <div class="qt-body">
         <div class="qt-top">
           <span class="qt-venue">Working Paper · Jan 2026</span>
-          <span class="qt-stat-label">Information access gap</span>
+          <span class="qt-stat-label">5.7× larger effect post-election</span>
         </div>
         <div class="qt-title">Migration Fear and Analyst Forecast Accuracy</div>
         <div class="qt-au">with C. Wan, Y. Wang, A. Yorulmaz</div>
@@ -441,13 +479,28 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
 
     <div class="qt-card rv">
       <div class="qt-img">
-        <div class="qt-stat" style="font-size:2.5rem">98<sup style="font-size:0.45em">th</sup> %ile</div>
-        <span>citation impact · 5th most-cited paper at JAR since publication</span>
+        <svg viewBox="0 0 420 140" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"><rect width="420" height="140" fill="#18150f"/>
+          <text x="210" y="16" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">SIGNATURE SIZE → NARCISSISM → MISREPORTING</text>
+          <!-- Non-narcissist: "X Robert I D'Alessandro" - small, neat, contained -->
+          <text x="105" y="38" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#a09888">Non-narcissist</text>
+          <line x1="30" y1="72" x2="185" y2="72" stroke="#3a3530" stroke-width="0.5"/>
+          <text x="32" y="69" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">X</text>
+          <!-- Small neat cursive: R-o-b-e-r-t  I  D'A-l-e-s-s-a-n-d-r-o -->
+          <path d="M40,68 C42,60 44,65 47,58 C48,56 48,66 50,64 C52,62 54,66 56,63 C58,61 59,66 62,63 C63,62 65,66 67,64 C69,63 70,66 72,64 C73,63 74,66 76,65 C78,66 80,64 82,65 C83,64 85,62 86,64 C87,66 89,63 91,62 C93,60 94,66 97,63 C99,62 100,66 103,64 C105,63 107,60 109,63 C110,65 112,62 114,63 C116,64 118,62 120,63 C122,64 124,66 127,64 C129,63 131,65 134,64 C136,63 139,66 142,64 C145,63 148,65 152,64 C155,63 158,66 162,64 C165,63 168,65 172,65" fill="none" stroke="#7a8a9a" stroke-width="1.2" stroke-linecap="round"/>
+          <!-- Narcissist: huge looping signature with dramatic ascenders -->
+          <text x="315" y="38" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24" font-weight="600">Narcissist</text>
+          <line x1="230" y1="100" x2="400" y2="100" stroke="#3a3530" stroke-width="0.5"/>
+          <text x="232" y="97" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">X</text>
+          <!-- Huge initial loops going way up, then flowing cursive with underline -->
+          <path d="M245,95 C247,80 250,60 255,45 C258,38 260,55 262,42 C264,35 266,60 270,30 C272,22 268,50 272,55 C276,65 280,28 284,20 C286,16 282,55 286,48 C290,35 294,55 298,42 C300,38 296,60 300,55 C304,50 308,62 312,58 C315,55 318,65 322,60 C325,56 328,68 332,62 C335,58 338,70 342,64 C345,60 348,72 352,66 C355,62 360,74 365,68 C368,65 372,78 378,72 C382,68 386,80 390,76" fill="none" stroke="#b42a24" stroke-width="2.8" stroke-linecap="round"/>
+          <text x="210" y="120" text-anchor="middle" font-family="Newsreader,serif" font-size="18" font-weight="500" fill="#b42a24">98th percentile cited at JAR</text>
+          <text x="210" y="135" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">5th most-cited since its year of publication · Web of Science</text>
+        </svg>
       </div>
       <div class="qt-body">
         <div class="qt-top">
           <span class="qt-venue">Journal of Accounting Research · 2017</span>
-          <span class="qt-stat-label">Executive traits matter</span>
+          <span class="qt-stat-label">The signature paper</span>
         </div>
         <div class="qt-title">CFO Narcissism and Financial Reporting Quality</div>
         <div class="qt-au">with C. Ham, M. Lang, and N. Seybert</div>
@@ -468,13 +521,68 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
 
     <div class="qt-card rv">
       <div class="qt-img">
-        <div class="qt-stat" style="font-size:1.6rem;letter-spacing:0.02em">Trillions Missing</div>
-        <span>from corporate balance sheets due to 1974-era accounting rules</span>
+        <svg viewBox="0 0 400 140" style="width:100%;height:100%"><rect width="400" height="140" fill="#18150f"/>
+          <text x="200" y="20" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">PERSUASION TACTICS ON CONFERENCE CALLS</text>
+          <rect x="40" y="35" width="140" height="70" rx="5" fill="#2a2320" stroke="#b42a24" stroke-width="1.5"/>
+          <text x="110" y="58" text-anchor="middle" font-family="Karla,sans-serif" font-size="11" font-weight="600" fill="#b42a24">Narcissistic CFO</text>
+          <text x="110" y="74" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">euphemisms · positive tone</text>
+          <text x="110" y="88" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">targets bearish analysts</text>
+          <line x1="185" y1="70" x2="230" y2="70" stroke="#b42a24" stroke-width="2" marker-end="url(#arw)"/>
+          <defs><marker id="arw" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><path d="M0,0 L6,2 L0,4" fill="#b42a24"/></marker></defs>
+          <rect x="235" y="45" width="125" height="50" rx="5" fill="#2a2320" stroke="#3a3530" stroke-width="1"/>
+          <text x="297" y="65" text-anchor="middle" font-family="Karla,sans-serif" font-size="11" fill="#a09888">Analyst</text>
+          <text x="297" y="82" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" font-weight="600" fill="#b42a24">↑ Overvaluation</text>
+          <text x="200" y="128" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055">Lab experiment confirms: coercive tactics drive inflated valuations</text>
+        </svg>
       </div>
       <div class="qt-body">
         <div class="qt-top">
-          <span class="qt-venue">Management Science · 2024</span>
-          <span class="qt-stat-label">Missing intangible assets</span>
+          <span class="qt-venue">Review of Accounting Studies · 2025</span>
+          <span class="qt-stat-label">Coercive persuasion in lab + field</span>
+        </div>
+        <div class="qt-title">CFO Narcissism and the Power of Persuasion Over Analysts</div>
+        <div class="qt-au">with C. Ham, M. Piorkowski, and N. Seybert</div>
+        <div class="qt-section">
+          <div class="qt-label">Question</div>
+          <div class="qt-question">Do narcissistic executives intentionally manipulate the analysts who value their firms?</div>
+        </div>
+        <div class="qt-section">
+          <div class="qt-label">Takeaway</div>
+          <div class="qt-answer">Yes — and they do it through both public and private channels. On conference calls, narcissistic CFOs use more persuasive language, more euphemisms, and strategically call on bearish analysts to argue with them. In a controlled lab study, narcissists are especially likely to deploy coercive tactics — including threatening to revoke private access — to pressure analysts into higher valuations. The overvaluation is most damaging after negative earnings news.</div>
+        </div>
+        <div class="qt-bottom">
+          <span class="qt-badge">Mixed Methods</span>
+          <div class="qt-links">
+            <a href="https://seanwang.xyz/papers/ham-piorkowski-seybert-wang-2025-rast.pdf">↗ PDF</a>
+            <a href="https://doi.org/10.1007/s11142-025-09902-7">↗ DOI</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qt-card rv">
+      <div class="qt-img">
+        <svg viewBox="0 0 400 140" style="width:100%;height:100%"><rect width="400" height="140" fill="#18150f"/>
+          <text x="200" y="18" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">CORPORATE BALANCE SHEET</text>
+          <rect x="60" y="28" width="100" height="90" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/>
+          <text x="110" y="48" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Tangible</text>
+          <text x="110" y="62" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Assets</text>
+          <text x="110" y="82" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">PP&E, Cash, etc.</text>
+          <text x="110" y="112" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">GAAP Reported</text>
+          <rect x="230" y="28" width="100" height="90" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/>
+          <rect x="230" y="28" width="100" height="35" rx="4" fill="rgba(180,42,36,0.2)" stroke="#b42a24" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="280" y="42" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#b42a24">MISSING</text>
+          <text x="280" y="54" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#b42a24">R&D · SG&A · Org Capital</text>
+          <text x="280" y="78" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Tangible</text>
+          <text x="280" y="92" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Assets</text>
+          <text x="280" y="112" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24" font-weight="600">EPW Adjusted</text>
+          <text x="190" y="78" text-anchor="middle" font-family="Newsreader,serif" font-size="22" fill="#b42a24">→</text>
+        </svg>
+      </div>
+      <div class="qt-body">
+        <div class="qt-top">
+          <span class="qt-venue">Management Science · 2025</span>
+          <span class="qt-stat-label">Trillions missing from balance sheets</span>
         </div>
         <div class="qt-title">Intangible Capital Measurement</div>
         <div class="qt-au">with M. Ewens and R. Peters</div>
@@ -492,6 +600,8 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
             <a href="https://seanwang.xyz/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a>
             <a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a>
             <a href="https://github.com/michaelewens/intangible_capital">↗ GitHub</a>
+            <a href="https://seanwang.xyz/Morgan-Stanley-Intangible-Impact.pdf">↗ MS: Impact</a>
+            <a href="https://seanwang.xyz/Morgan-Stanley-ROIC.pdf">↗ MS: ROIC</a>
           </div>
         </div>
       </div>
@@ -499,13 +609,21 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
 
     <div class="qt-card rv">
       <div class="qt-img">
-        <div class="qt-stat" style="font-size:2.2rem">1.45%</div>
-        <span>announcement-window return from pre-earnings reversal strategy</span>
+        <svg viewBox="0 0 400 140" style="width:100%;height:100%"><rect width="400" height="140" fill="#18150f"/>
+          <text x="200" y="18" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">SHORT-TERM RETURN REVERSALS</text>
+          <rect x="80" y="80" width="80" height="30" rx="3" fill="#2a2320" stroke="#3a3530" stroke-width="1"/>
+          <text x="120" y="100" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055">Normal</text>
+          <rect x="220" y="28" width="80" height="82" rx="3" fill="#b42a24"/>
+          <text x="260" y="60" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" font-weight="600" fill="#fff">Earnings</text>
+          <text x="260" y="76" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" font-weight="600" fill="#fff">Window</text>
+          <text x="340" y="65" font-family="Newsreader,serif" font-size="36" font-weight="500" fill="#b42a24">6×</text>
+          <text x="200" y="128" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055">six-fold increase in reversals → 1.45% announcement-window return</text>
+        </svg>
       </div>
       <div class="qt-body">
         <div class="qt-top">
           <span class="qt-venue">Journal of Financial Economics · 2014</span>
-          <span class="qt-stat-label">Announcement-window return</span>
+          <span class="qt-stat-label">6× reversal increase</span>
         </div>
         <div class="qt-title">Liquidity Provision Ahead of Earnings</div>
         <div class="qt-au">with E. So</div>
@@ -524,26 +642,215 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
       </div>
     </div>
 
+    <div class="qt-card rv">
+      <div class="qt-img">
+        <svg viewBox="0 0 420 140" style="width:100%;height:100%" preserveAspectRatio="xMidYMid meet"><rect width="420" height="140" fill="#18150f"/>
+          <text x="110" y="16" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">Analyst SUE (raw)</text>
+          <text x="310" y="16" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24" font-weight="600">Analyst SUE (adjusted)</text>
+          <!-- Left histogram: raw - big kink -->
+          <rect x="50" y="98" width="10" height="8" fill="#4455aa" opacity="0.5"/><rect x="62" y="92" width="10" height="14" fill="#4455aa" opacity="0.5"/><rect x="74" y="85" width="10" height="21" fill="#4455aa" opacity="0.5"/><rect x="86" y="72" width="10" height="34" fill="#4455aa" opacity="0.6"/><rect x="98" y="24" width="10" height="82" fill="#5566cc" opacity="0.8"/><rect x="110" y="48" width="10" height="58" fill="#5566cc" opacity="0.7"/><rect x="122" y="72" width="10" height="34" fill="#4455aa" opacity="0.5"/><rect x="134" y="82" width="10" height="24" fill="#4455aa" opacity="0.4"/><rect x="146" y="90" width="10" height="16" fill="#4455aa" opacity="0.3"/><rect x="158" y="95" width="10" height="11" fill="#4455aa" opacity="0.25"/>
+          <line x1="45" y1="106" x2="175" y2="106" stroke="#3a3530" stroke-width="0.5"/>
+          <text x="102" y="120" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">0</text>
+          <line x1="98" y1="22" x2="120" y2="22" stroke="#b42a24" stroke-width="1"/><text x="135" y="25" font-family="Karla,sans-serif" font-size="7" fill="#b42a24">kink!</text>
+          <!-- Right histogram: adjusted - kink reduced -->
+          <rect x="250" y="90" width="10" height="16" fill="#b42a24" opacity="0.3"/><rect x="262" y="82" width="10" height="24" fill="#b42a24" opacity="0.35"/><rect x="274" y="68" width="10" height="38" fill="#b42a24" opacity="0.45"/><rect x="286" y="52" width="10" height="54" fill="#b42a24" opacity="0.6"/><rect x="298" y="38" width="10" height="68" fill="#b42a24" opacity="0.75"/><rect x="310" y="44" width="10" height="62" fill="#b42a24" opacity="0.7"/><rect x="322" y="60" width="10" height="46" fill="#b42a24" opacity="0.55"/><rect x="334" y="74" width="10" height="32" fill="#b42a24" opacity="0.4"/><rect x="346" y="85" width="10" height="21" fill="#b42a24" opacity="0.3"/><rect x="358" y="92" width="10" height="14" fill="#b42a24" opacity="0.25"/>
+          <line x1="245" y1="106" x2="375" y2="106" stroke="#3a3530" stroke-width="0.5"/>
+          <text x="302" y="120" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">0</text>
+          <!-- Arrow and label -->
+          <text x="210" y="55" text-anchor="middle" font-family="Newsreader,serif" font-size="22" fill="#b42a24">→</text>
+          <text x="210" y="75" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#b42a24">66%</text>
+          <text x="210" y="86" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">kink</text>
+          <text x="210" y="95" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">reduced</text>
+          <text x="210" y="135" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">most of the "kink" is analyst behavior, not earnings management</text>
+        </svg>
+      </div>
+      <div class="qt-body">
+        <div class="qt-top">
+          <span class="qt-venue">Working Paper · Mar 2026</span>
+          <span class="qt-stat-label">66% of the kink is analyst behavior</span>
+        </div>
+        <div class="qt-title">Are Analyst Forecast Errors Really Kinky?</div>
+        <div class="qt-au">with M. Barth, J. Jeong, and W. Landsman</div>
+        <div class="qt-section">
+          <div class="qt-label">Question</div>
+          <div class="qt-question">Is the famous "kink" in earnings surprises really caused by earnings management?</div>
+        </div>
+        <div class="qt-section">
+          <div class="qt-label">Takeaway</div>
+          <div class="qt-answer">No — approximately 66% of the asymmetry is driven by analyst strategic behavior, not managerial manipulation. Analysts under-revise EPS forecasts while bundling directionally consistent target price and recommendation revisions. Adjusting for this predictable bias, the ratio of small beats to small misses drops from 2.43 to 1.49. Studies using meet-or-beat indicators as proxies for earnings management are partially capturing analyst strategic behavior.</div>
+        </div>
+        <div class="qt-bottom">
+          <span class="qt-badge">New Working Paper</span>
+          <div class="qt-links">
+            <a href="https://seanwang.xyz/papers/barth-jeong-landsman-wang-2026-wp.pdf">↗ PDF</a>
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4839739">↗ SSRN</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
-
-<!-- ALL PUBS -->
 <div class="sec rv">
   <div class="so">// complete record</div>
   <h2 class="st">All publications</h2>
   <div class="apl">
-    <div class="ap"><span class="yr">2026</span><div class="ti">Firm-specific Information Processing and the Delayed Discovery of Macroeconomic News <span class="co">· with J. Pan, E. Sul</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://seanwang.xyz/papers/pan-sul-wang-2026-rast.pdf">↗ PDF</a> <a href="https://dx.doi.org/10.2139/ssrn.4839711">↗ SSRN</a></span></div>
-    <div class="ap"><span class="yr">2025</span><div class="ti">Do Sell-side Analysts React Too Pessimistically to Bad News for Minority-led Firms? <span class="co">· with K. Rupar, H. Yoon</span></div><span class="vn">J. Acct. & Econ.</span><span class="ssrn"><a href="https://seanwang.xyz/papers/rupar-wang-yoon-2025-jae.pdf">↗ PDF</a> <a href="https://doi.org/10.1016/j.jacceco.2024.101707">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2025</span><div class="ti">CFO Narcissism and the Power of Persuasion Over Analysts: A Mixed-Methods Approach <span class="co">· with C. Ham, M. Piorkowski, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://seanwang.xyz/papers/ham-piorkowski-seybert-wang-2025-rast.pdf">↗ PDF</a> <a href="https://doi.org/10.1007/s11142-025-09902-7">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2024</span><div class="ti">Acquisition Prices and the Measurement of Intangible Capital <span class="co">· with M. Ewens, R. Peters</span></div><span class="vn">Management Science</span><span class="ssrn"><a href="https://seanwang.xyz/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a> <a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2022</span><div class="ti">Non-GAAP Reporting, Regulatory Focus, and GAAP Aggressiveness <span class="co">· with R. Guggenmos, K. Rennekamp, K. Rupar</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="https://seanwang.xyz/papers/guggenmos-rennekamp-rupar-wang-2022-jar.pdf">↗ PDF</a> <a href="https://doi.org/10.1111/1475-679X.12434">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2020</span><div class="ti">Asymmetric Timeliness and the Resolution of Investor Disagreement <span class="co">· with M. Barth, W. Landsman, V. Raval</span></div><span class="vn">The Acct. Review</span><span class="ssrn"><a href="https://seanwang.xyz/papers/barth-landsman-raval-wang-2020-tar.pdf">↗ PDF</a> <a href="https://seanwang.xyz/papers/barth-landsman-raval-wang-2020-toy-model.pdf">↗ Model</a> <a href="https://doi.org/10.2308/accr-52656">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2019</span><div class="ti">Informational Environments and Analyst vs. Insider Information Content <span class="co">· solo-authored</span></div><span class="vn">Acct. Org. & Soc.</span><span class="ssrn"><a href="https://seanwang.xyz/papers/wang-2019-aos.pdf">↗ PDF</a> <a href="https://doi.org/10.1016/j.aos.2018.07.003">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2018</span><div class="ti">Know Thy Neighbor: Industry Clusters, Information Spillovers and Market Efficiency <span class="co">· with J. Engelberg, A. Ozoguz</span></div><span class="vn">JFQA</span><span class="ssrn"><a href="https://seanwang.xyz/papers/engelberg-ozoguz-wang-2018-jfqa.pdf">↗ PDF</a> <a href="https://doi.org/10.1017/S0022109018000261">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2018</span><div class="ti">Narcissism is a Bad Sign: CEO Signature Size, Investment, and Performance <span class="co">· with C. Ham, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ssrn"><a href="https://seanwang.xyz/papers/ham-seybert-wang-2018-rast.pdf">↗ PDF</a> <a href="https://doi.org/10.1007/s11142-017-9427-x">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2017</span><div class="ti">CFO Narcissism and Financial Reporting Quality <span class="co">· with C. Ham, M. Lang, N. Seybert</span></div><span class="vn">J. Acct. Research</span><span class="ssrn"><a href="https://seanwang.xyz/papers/ham-lang-seybert-wang-2017-jar.pdf">↗ PDF</a> <a href="https://doi.org/10.1111/1475-679X.12176">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2014</span><div class="ti">News-driven Return Reversals: Liquidity Provision Ahead of Earnings <span class="co">· with E. So</span></div><span class="vn">J. Financial Econ.</span><span class="ssrn"><a href="https://seanwang.xyz/papers/so-wang-2014-jfe.pdf">↗ PDF</a> <a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></span></div>
-    <div class="ap"><span class="yr">2014</span><div class="ti">The Prevention of Excess Managerial Risk Taking <span class="co">· with E. Van Wesep</span></div><span class="vn">J. Corp. Finance</span><span class="ssrn"><a href="https://seanwang.xyz/papers/wang-vanwesep-2014-jcf.pdf">↗ PDF</a> <a href="https://doi.org/10.1016/j.jcorpfin.2013.04.008">↗ DOI</a></span></div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2026</span><div class="ti">Firm-specific Information Processing and the Delayed Discovery of Macroeconomic News <span class="co">· with J. Pan, E. Sul</span></div><span class="vn">Rev. Acct. Studies</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="52" text-anchor="middle" font-family="Newsreader,serif" font-size="32" font-weight="500" fill="#b42a24">23%</text><text x="70" y="74" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055">of aggregate return</text><text x="70" y="88" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055">delayed 3 days</text><rect x="25" y="100" width="90" height="4" rx="2" fill="#1e1a14"/><rect x="25" y="100" width="21" height="4" rx="2" fill="#b42a24"/></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Does processing firm-specific news cause investors to neglect macroeconomic information?</div>
+          <div class="ap-a">Yes — 23.2% of the aggregate market return on earnings announcement dates is incorporated into firm prices with a 3-day delay, but only for extreme announcers. The effect is stronger when SEC EDGAR downloads are high and retail trading is intense, consistent with limited processing bandwidth. Macro news is fully priced for firms with small or zero surprises.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/pan-sul-wang-2026-rast.pdf">↗ PDF</a><a href="https://dx.doi.org/10.2139/ssrn.4839711">↗ SSRN</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2025</span><div class="ti">Do Sell-side Analysts React Too Pessimistically to Bad News for Minority-led Firms? <span class="co">· with K. Rupar, H. Yoon</span></div><span class="vn">J. Acct. & Econ.</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="38" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">BAD NEWS REACTION</text><rect x="20" y="48" width="45" height="14" rx="2" fill="#2a2320"/><text x="42" y="59" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" font-weight="600" fill="#a09888">White CEO</text><rect x="20" y="68" width="71" height="14" rx="2" fill="#b42a24"/><text x="55" y="79" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" font-weight="600" fill="#fff">Non-White CEO</text><text x="70" y="105" text-anchor="middle" font-family="Newsreader,serif" font-size="28" font-weight="500" fill="#b42a24">57%</text><text x="70" y="120" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">more negative</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Do analysts evaluate bad news differently when a firm has a non-White CEO?</div>
+          <div class="ap-a">Analysts' target prices are 57% more negative following bad news for non-White CEOs — a subconscious bias that attenuates with familiarity and varies with societal racial sentiment. Non-White CEO firms are more likely to beat targets in the following 12 months, confirming the gap lacks economic justification. Validated by a randomized experiment.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/rupar-wang-yoon-2025-jae.pdf">↗ PDF</a><a href="https://doi.org/10.1016/j.jacceco.2024.101707">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2025</span><div class="ti">CFO Narcissism and the Power of Persuasion Over Analysts <span class="co">· with C. Ham, M. Piorkowski, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="35" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">CONFERENCE CALL</text><rect x="30" y="45" width="40" height="30" rx="4" fill="#2a2320" stroke="#b42a24" stroke-width="1"/><text x="50" y="64" text-anchor="middle" font-family="Karla,sans-serif" font-size="18" fill="#b42a24">!</text><rect x="75" y="55" width="35" height="20" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><text x="92" y="69" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">analyst</text><text x="70" y="105" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" font-weight="600" fill="#b42a24">Coercive Tactics</text><text x="70" y="120" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">in lab + archival data</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Do narcissistic executives intentionally manipulate the analysts who value their firms?</div>
+          <div class="ap-a">Narcissistic CFOs use more persuasive language, more euphemisms, and strategically call on bearish analysts to argue with them on conference calls. In a lab study, narcissists deploy coercive tactics — including threatening to cut private access — to pressure analysts into higher valuations. The overvaluation is most damaging after negative earnings news.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/ham-piorkowski-seybert-wang-2025-rast.pdf">↗ PDF</a><a href="https://doi.org/10.1007/s11142-025-09902-7">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2025</span><div class="ti">Measuring Intangible Capital with Market Prices <span class="co">· with M. Ewens, R. Peters</span></div><span class="vn">Management Science</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="30" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">BALANCE SHEET</text><rect x="25" y="38" width="35" height="60" rx="2" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><text x="42" y="72" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">Reported</text><rect x="68" y="38" width="35" height="60" rx="2" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><rect x="68" y="38" width="35" height="20" rx="2" fill="rgba(180,42,36,0.25)" stroke="#b42a24" stroke-width="1" stroke-dasharray="3,2"/><text x="85" y="52" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#b42a24">Missing</text><text x="85" y="72" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">Actual</text><text x="70" y="118" text-anchor="middle" font-family="Newsreader,serif" font-size="16" font-weight="500" fill="#b42a24">15% smaller</text><text x="70" y="132" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">than BEA estimates</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">What happens when accounting rules omit trillions in internally generated assets?</div>
+          <div class="ap-a">We develop a structural model using acquisition prices to estimate missing intangible capital — both knowledge capital and organizational capital. Our estimates are 15% smaller than status quo BEA parameters while exhibiting far more cross-industry variation. Adjusted balance sheets fix well-documented biases in market-to-book and ROE. Data, code, and parameters freely available.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a><a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a><a href="https://github.com/michaelewens/intangible_capital">↗ GitHub</a><a href="https://seanwang.xyz/Morgan-Stanley-Intangible-Impact.pdf">↗ MS: Impact</a><a href="https://seanwang.xyz/Morgan-Stanley-ROIC.pdf">↗ MS: ROIC</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2022</span><div class="ti">Non-GAAP Reporting, Regulatory Focus, and GAAP Aggressiveness <span class="co">· with R. Guggenmos, K. Rennekamp, K. Rupar</span></div><span class="vn">J. Acct. Research</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="35" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">S&amp;P 500 NON-GAAP USE</text><circle cx="70" cy="78" r="30" fill="none" stroke="#2a2320" stroke-width="6"/><circle cx="70" cy="78" r="30" fill="none" stroke="#b42a24" stroke-width="6" stroke-dasharray="177 11" stroke-linecap="round" transform="rotate(-90 70 78)"/><text x="70" y="84" text-anchor="middle" font-family="Newsreader,serif" font-size="22" font-weight="500" fill="#b42a24">94%</text><text x="70" y="126" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">SEC scrutiny backfires</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Does regulatory attention to non-GAAP reporting actually improve financial reporting quality?</div>
+          <div class="ap-a">Paradoxically, no. When 94% of S&P 500 firms report non-GAAP earnings, constraining that channel via SEC scrutiny pushes managers toward more aggressive GAAP earnings management instead. Non-GAAP flexibility acts as a safety valve — take it away, and managers find other, less transparent ways to meet expectations. Validated by experiment, survey, and archival data.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/guggenmos-rennekamp-rupar-wang-2022-jar.pdf">↗ PDF</a><a href="https://doi.org/10.1111/1475-679X.12434">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2020</span><div class="ti">Asymmetric Timeliness and the Resolution of Investor Disagreement <span class="co">· with M. Barth, W. Landsman, V. Raval</span></div><span class="vn">The Acct. Review</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="22" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">PRICE DISCOVERY</text><text x="70" y="42" text-anchor="end" font-family="Karla,sans-serif" font-size="7" fill="#a09888">Low ATC</text><text x="70" y="70" text-anchor="end" font-family="Karla,sans-serif" font-size="7" fill="#b42a24">High ATC</text><polyline points="15,50 35,42 55,38 75,36 95,35 115,35" fill="none" stroke="#a09888" stroke-width="2"/><polyline points="15,78 35,72 55,68 75,66 95,65 115,64" fill="none" stroke="#b42a24" stroke-width="2" stroke-dasharray="4,3"/><line x1="15" y1="88" x2="120" y2="88" stroke="#3a3530" stroke-width="0.5"/><text x="70" y="108" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#b42a24">Slower</text><text x="70" y="120" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#b42a24">convergence</text><text x="70" y="134" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">gains ≠ losses</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Does conservative accounting — recognizing bad news faster than good — impede price discovery?</div>
+          <div class="ap-a">Asymmetric timeliness forces investors to disaggregate earnings into good-news and bad-news components, adding processing complexity. This slows the resolution of disagreement and uncertainty at earnings announcements, delaying price discovery. A formal companion model shows pricing error is mechanically increasing in the degree of asymmetry.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/barth-landsman-raval-wang-2020-tar.pdf">↗ PDF</a><a href="https://seanwang.xyz/papers/barth-landsman-raval-wang-2020-toy-model.pdf">↗ Model</a><a href="https://doi.org/10.2308/accr-52656">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2019</span><div class="ti">Informational Environments and Analyst vs. Insider Information Content <span class="co">· solo-authored</span></div><span class="vn">Acct. Org. & Soc.</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="40" y="30" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24">Analysts</text><text x="100" y="30" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#a09888">Insiders</text><line x1="70" y1="38" x2="70" y2="110" stroke="#3a3530" stroke-width="1"/><text x="40" y="55" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#b42a24">Industry</text><text x="40" y="68" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">expertise</text><text x="100" y="55" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#a09888">Firm</text><text x="100" y="68" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">expertise</text><text x="40" y="92" text-anchor="middle" font-family="Karla,sans-serif" font-size="22" fill="#b42a24">↔</text><text x="100" y="92" text-anchor="middle" font-family="Karla,sans-serif" font-size="22" fill="#a09888">↔</text><text x="70" y="130" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">Relative information channels</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Do analysts and insiders bring different types of information to markets?</div>
+          <div class="ap-a">Analysts have relative expertise in industry-level information; insiders have relative expertise in firm-specific information. When firm-specific prices are already efficient, insider trades lose more information content than analyst recommendations — and vice versa for industry information. Both rely on their specific comparative advantage when informing prices.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/wang-2019-aos.pdf">↗ PDF</a><a href="https://doi.org/10.1016/j.aos.2018.07.003">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2018</span><div class="ti">Know Thy Neighbor: Industry Clusters, Information Spillovers and Market Efficiency <span class="co">· with J. Engelberg, A. Ozoguz</span></div><span class="vn">JFQA</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="25" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">INDUSTRY CLUSTER</text><circle cx="50" cy="60" r="6" fill="#b42a24" opacity="0.8"/><circle cx="70" cy="50" r="6" fill="#b42a24" opacity="0.6"/><circle cx="62" cy="72" r="6" fill="#b42a24" opacity="0.7"/><circle cx="80" cy="65" r="6" fill="#b42a24" opacity="0.5"/><line x1="50" y1="60" x2="70" y2="50" stroke="#b42a24" stroke-width="1" opacity="0.3"/><line x1="50" y1="60" x2="62" y2="72" stroke="#b42a24" stroke-width="1" opacity="0.3"/><line x1="70" y1="50" x2="80" y2="65" stroke="#b42a24" stroke-width="1" opacity="0.3"/><line x1="62" y1="72" x2="80" y2="65" stroke="#b42a24" stroke-width="1" opacity="0.3"/><circle cx="115" cy="85" r="5" fill="#3a3530"/><text x="115" y="100" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">isolated</text><text x="70" y="108" text-anchor="middle" font-family="Newsreader,serif" font-size="24" font-weight="500" fill="#b42a24">10%</text><text x="70" y="124" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">faster price discovery</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Does geographic proximity to industry peers improve market efficiency?</div>
+          <div class="ap-a">Firms co-located in industry clusters have prices that incorporate information 10%+ faster than isolated firms. Geography creates information spillovers — learning about one firm cheaply informs you about its neighbors. Analysts are more likely to cover clustered firms, and fund managers who hold one cluster stock are more likely to hold others. Causal evidence from exogenous firm relocations.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/engelberg-ozoguz-wang-2018-jfqa.pdf">↗ PDF</a><a href="https://doi.org/10.1017/S0022109018000261">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2018</span><div class="ti">Narcissism is a Bad Sign: CEO Signature Size, Investment, and Performance <span class="co">· with C. Ham, N. Seybert</span></div><span class="vn">Rev. Acct. Studies</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="25" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">CITATION IMPACT</text><rect x="20" y="34" width="100" height="24" rx="3" fill="#2a2320" stroke="#b42a24" stroke-width="1"/><text x="70" y="50" text-anchor="middle" font-family="Newsreader,serif" font-size="16" font-weight="600" fill="#b42a24">99th %ile</text><text x="70" y="78" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">4th most-cited paper</text><text x="70" y="91" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">at RAST since its year of publication</text><text x="70" y="118" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#a09888">Overinvest in R&D + M&A</text><text x="70" y="131" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#a09888">yet underperform</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">What are the real consequences of having a narcissistic CEO?</div>
+          <div class="ap-a">Using the size of CEO signatures in SEC filings — validated as a narcissism measure in two lab studies — narcissistic CEOs overinvest in high-exposure activities (R&D, M&A) but not routine capital expenditure. Their firms deliver lower profitability and operating cash flows. Yet narcissistic CEOs receive higher compensation. The 4th most-cited paper in RAST since its year of publication.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/ham-seybert-wang-2018-rast.pdf">↗ PDF</a><a href="https://doi.org/10.1007/s11142-017-9427-x">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2017</span><div class="ti">CFO Narcissism and Financial Reporting Quality <span class="co">· with C. Ham, M. Lang, N. Seybert</span></div><span class="vn">J. Acct. Research</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="16" text-anchor="middle" font-family="Karla,sans-serif" font-size="7.5" fill="#6a6055">SIGNATURE SIZE</text>
+          <!-- Non-narcissist: small neat -->
+          <text x="38" y="32" font-family="Karla,sans-serif" font-size="7" fill="#a09888">non-narcissist</text>
+          <line x1="8" y1="56" x2="95" y2="56" stroke="#3a3530" stroke-width="0.4"/>
+          <text x="9" y="54" font-family="Karla,sans-serif" font-size="6" fill="#6a6055">X</text>
+          <path d="M15,53 C17,48 19,52 21,47 C22,46 23,52 25,50 C27,49 28,52 30,50 C32,49 33,52 35,51 C37,50 38,52 40,51 C42,50 43,52 46,51 C48,50 50,52 53,51 C55,50 57,52 60,51 C62,50 64,52 67,51 C69,50 72,52 75,51 C78,50 80,52 83,52" fill="none" stroke="#7a8a9a" stroke-width="0.9" stroke-linecap="round"/>
+          <!-- Narcissist: huge loops -->
+          <text x="38" y="70" font-family="Karla,sans-serif" font-size="7" fill="#b42a24" font-weight="600">narcissist</text>
+          <line x1="8" y1="108" x2="132" y2="108" stroke="#3a3530" stroke-width="0.4"/>
+          <text x="9" y="106" font-family="Karla,sans-serif" font-size="6" fill="#6a6055">X</text>
+          <path d="M16,103 C18,92 21,80 24,72 C26,66 28,85 30,68 C32,60 30,82 34,55 C36,48 33,78 37,62 C40,50 43,75 46,58 C48,52 46,75 50,65 C53,58 56,78 60,68 C63,62 66,80 70,72 C73,66 76,82 80,74 C83,68 86,82 90,76 C93,72 96,84 100,78 C103,74 106,84 110,80 C113,77 118,86 122,82" fill="none" stroke="#b42a24" stroke-width="2" stroke-linecap="round"/>
+          <text x="70" y="126" text-anchor="middle" font-family="Newsreader,serif" font-size="12" font-weight="500" fill="#b42a24">98th %ile</text><text x="70" y="137" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">cited at JAR</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Can executive psychology shape corporate reporting and firm behavior?</div>
+          <div class="ap-a">Narcissistic CFOs — measured via experimentally validated signature size — produce more aggressive financial reports, exhibit less timely loss recognition, have weaker internal controls, and are more likely to restate earnings. Results hold for within-firm comparisons around CFO changes and are robust to controlling for CEO narcissism. The 5th most-cited paper in JAR since its year of publication. Featured in The Economist, FT, WSJ, NYT, HBR, and Washington Post.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/ham-lang-seybert-wang-2017-jar.pdf">↗ PDF</a><a href="https://doi.org/10.1111/1475-679X.12176">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2014</span><div class="ti">News-driven Return Reversals: Liquidity Provision Ahead of Earnings <span class="co">· with E. So</span></div><span class="vn">J. Financial Econ.</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="25" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">RETURN REVERSALS</text><rect x="30" y="60" width="25" height="35" rx="2" fill="#2a2320"/><rect x="65" y="35" width="25" height="60" rx="2" fill="#b42a24"/><text x="42" y="55" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">Normal</text><text x="77" y="30" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#b42a24">Earnings</text><text x="100" y="70" font-family="Newsreader,serif" font-size="20" font-weight="500" fill="#b42a24">6×</text><text x="70" y="115" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" font-weight="600" fill="#b42a24">1.45% return</text><text x="70" y="130" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">announcement window</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Can market microstructure frictions create predictable price patterns around scheduled information events?</div>
+          <div class="ap-a">Short-term return reversals increase six-fold during earnings announcements vs. non-announcement periods. Market makers demand higher compensation for holding inventory through the release of anticipated news, creating predictable price concessions. A long-short strategy on pre-announcement returns yields 1.45% during the announcement window.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/so-wang-2014-jfe.pdf">↗ PDF</a><a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="pub-item">
+      <div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2014</span><div class="ti">The Prevention of Excess Managerial Risk Taking <span class="co">· with E. Van Wesep</span></div><span class="vn">J. Corp. Finance</span><span class="ap-toggle">＋</span></div>
+      <div class="ap-detail"><div class="ap-inner">
+        <div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="25" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">OPTIMAL CONTRACT</text><circle cx="70" cy="55" r="4" fill="#b42a24"/><line x1="70" y1="59" x2="45" y2="78" stroke="#a09888" stroke-width="1.5"/><line x1="70" y1="59" x2="95" y2="78" stroke="#b42a24" stroke-width="1.5"/><circle cx="45" cy="82" r="3" fill="#a09888"/><circle cx="95" cy="82" r="3" fill="#b42a24"/><text x="45" y="97" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#a09888">Meet target</text><text x="95" y="97" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#b42a24">−NPV risk</text><text x="95" y="108" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">↓ Severance</text><text x="95" y="117" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">prevents this</text><text x="70" y="136" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">Theory paper</text></svg></div>
+        <div class="ap-content">
+          <div class="ap-q">Can compensation design prevent managers from gambling with shareholder value?</div>
+          <div class="ap-a">Executives facing unrealistic performance targets may take negative-NPV risks rather than accept mediocre outcomes. An optimal contract features high targets (to screen for talent) paired with severance pay (so bad managers don't gamble). Severance should be contingent on results — complete failure nullifies payments. The model also predicts efficient "empire building" as a screening mechanism.</div>
+          <div class="ap-links"><a href="https://seanwang.xyz/papers/wang-vanwesep-2014-jcf.pdf">↗ PDF</a><a href="https://doi.org/10.1016/j.jcorpfin.2013.04.008">↗ DOI</a></div>
+        </div>
+      </div></div>
+    </div>
+
   </div>
 </div>
 
@@ -641,20 +948,20 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.62rem;color:var(--text3
   <p class="sd">A chemist who became a financial economist — bringing a scientist's rigor to the messiest questions in capital markets.</p>
   <div class="ab-grid">
     <div>
-      <div class="at"><span class="ay">Education</span><span class="ar">B.A. Chemistry</span><span class="ap2">Duke University</span></div>
-      <div class="at"><span class="ay"></span><span class="ar">M.A. Chemistry</span><span class="ap2">U. South Florida · Highest Honors</span></div>
-      <div class="at"><span class="ay"></span><span class="ar">M.B.A. Finance</span><span class="ap2">NYU Stern · Highest Honors</span></div>
-      <div class="at"><span class="ay">2009</span><span class="ar">Ph.D. Accounting</span><span class="ap2">Cornell · Minors: Econometrics, Finance</span></div>
-      <div class="at"><span class="ay">2008–16</span><span class="ar">Assistant Professor</span><span class="ap2">UNC Kenan-Flagler</span></div>
-      <div class="at"><span class="ay">2016–18</span><span class="ar">Visiting Asst. Professor</span><span class="ap2">Rice (Jones)</span></div>
-      <div class="at"><span class="ay">2018–present</span><span class="ar">Assistant Professor</span><span class="ap2">SMU Cox School of Business</span></div>
+      <div class="at"><span class="ay">Education</span><span class="ar">Duke University</span><span class="ap2">B.A. Chemistry</span></div>
+      <div class="at"><span class="ay"></span><span class="ar">U. South Florida</span><span class="ap2">M.A. Chemistry · Highest Honors</span></div>
+      <div class="at"><span class="ay"></span><span class="ar">NYU Stern</span><span class="ap2">M.B.A. Finance · Highest Honors</span></div>
+      <div class="at"><span class="ay">2009</span><span class="ar">Cornell University</span><span class="ap2">Ph.D. Accounting · Econometrics, Finance</span></div>
+      <div class="at"><span class="ay">2008–2016</span><span class="ar">UNC-Chapel Hill</span><span class="ap2">Kenan-Flagler Business School</span></div>
+      <div class="at"><span class="ay">2016–2018</span><span class="ar">Rice Business</span><span class="ap2">visitor at Jones Graduate School</span></div>
+      <div class="at"><span class="ay">2018–present</span><span class="ar">Southern Methodist</span><span class="ap2">Cox School of Business</span></div>
       <a href="https://seanwang.xyz/sean-wang-cv.pdf" class="nav-cv" style="margin-top:1.5rem;display:inline-block;padding:0.5rem 1.1rem;font-size:0.7rem">↓ Download CV (PDF)</a>
     </div>
     <div class="ab-txt">
-      <p class="dc">Before I studied markets, I studied molecules. My academic journey began in chemistry at Duke and the University of South Florida, where I learned to think in terms of systems, reactions, and evidence. That scientific training — the insistence on rigor, on letting data lead, on questioning assumptions — became the foundation for everything that followed.</p>
-      <p>The pivot from science to finance came at NYU Stern, where working in financial services gave me a front-row view of how information moves through markets — and how often it gets distorted along the way. That experience drove me to academia: I wanted to understand these distortions systematically, not just observe them anecdotally.</p>
-      <p>At Cornell, I found my intellectual home in information economics. My doctoral work, with minors in both econometrics and finance, gave me the methodological toolkit to study the deep structure of price discovery. Since then, my research has followed the information — wherever it gets produced, wherever it's corrupted, wherever it fails to reach the people who need it.</p>
-      <p>Today, my work spans from documenting racial bias in Wall Street analyst forecasts, to exposing how pharmaceutical companies contractually suppress clinical trial results, to measuring the trillions in intangible assets that modern accounting systems systematically omit. The through-line is always the same question: <em>when information breaks, who pays?</em></p>
+      <p class="dc">Before I studied markets, I studied molecules. My academic journey began in organic and polymer chemistry at Duke and the University of South Florida, where I learned to think in terms of systems, reactions, and equilibria. That scientific training — the insistence on rigor, on letting data and evidence lead, on theoretically questioning assumptions — became the foundation for everything that followed.</p>
+      <p>The pivot from pure science to capital markets and financial economics came at NYU Stern, where my focus in equity valuation and earnings quality gave me a front-row view of how information moves through markets — and how often it gets distorted along the way. That experience drove me to academia: I wanted to understand these distortions systematically, not just observe them anecdotally.</p>
+      <p>At Cornell, I found my intellectual home in information economics. My doctoral work, with additional concentrations in both econometrics and finance, gave me the methodological toolkit to study the deep structure of price discovery. Since then, my research has followed the information — wherever it gets produced, wherever it's corrupted, wherever it fails to reach the people who need it.</p>
+      <p>Today, my work spans from documenting racial bias in Wall Street analyst valuations, to exposing how pharmaceutical companies contractually suppress clinical trial results, to measuring the trillions in intangible assets that modern accounting systems systematically omit. The through-line is always the same question: <em>when information breaks, who pays?</em></p>
     </div>
   </div>
 </div>
