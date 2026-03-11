@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://profsean.wang/sitemap.xml
