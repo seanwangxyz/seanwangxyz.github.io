@@ -289,6 +289,13 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 .rv-ready .rv{opacity:0;transform:translateY(14px)}
 .rv-ready .rv.v{opacity:1;transform:translateY(0)}
 
+/* ===== HAMBURGER (hidden on desktop) ===== */
+.nav-burger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;margin-left:0.5rem;flex-direction:column;gap:4px;z-index:1001}
+.nav-burger span{display:block;width:18px;height:1.5px;background:var(--text2);transition:all 0.3s}
+.nav-burger.active span:nth-child(1){transform:rotate(45deg) translate(3px,3px)}
+.nav-burger.active span:nth-child(2){opacity:0}
+.nav-burger.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+
 @media(max-width:960px){
   .hero-in,.themes,.ab-grid,.data-g,.blog-grid{grid-template-columns:1fr}
   .hero h1{font-size:2.6rem}
@@ -305,7 +312,90 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
   .ap-svg{max-width:160px}
   .updates-grid{grid-template-columns:1fr}
   nav ul{gap:1rem}
-  nav a{font-size:0.7rem}
+  nav a{font-size:0.68rem;letter-spacing:0.08em}
+}
+
+@media(max-width:680px){
+  /* Nav → hamburger */
+  nav{padding:0 1.2rem}
+  .nav-burger{display:flex}
+  .nav-cv{font-size:0.6rem;padding:0.25rem 0.5rem}
+  nav ul{
+    position:fixed;top:60px;right:0;width:220px;
+    flex-direction:column;gap:0;
+    background:rgba(14,12,10,0.97);backdrop-filter:blur(24px);
+    border-left:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:0.5rem 0;
+    transform:translateX(100%);transition:transform 0.3s ease;
+    z-index:999
+  }
+  nav ul.nav-open{transform:translateX(0)}
+  nav ul li{border-bottom:1px solid var(--rule)}
+  nav ul li:last-child{border-bottom:none}
+  nav a{display:block;padding:0.9rem 1.5rem;font-size:0.75rem;letter-spacing:0.1em}
+  nav a::after{display:none}
+
+  /* Hero */
+  .hero{padding:5rem 1.2rem 3rem;min-height:auto}
+  .hero-in{gap:2.5rem}
+  .hero h1{font-size:2rem}
+  .h-body{font-size:0.92rem;margin-bottom:1.8rem}
+  .h-tag{font-size:0.62rem;margin-bottom:1.2rem}
+  .h-stats{flex-wrap:wrap;gap:1.2rem}
+  .hs{padding:0 1.5rem 0 0;margin-right:1.5rem}
+  .hs .v{font-size:1.6rem}
+  .hs .l{font-size:0.62rem}
+  .ph-wrap{max-width:280px;margin:0 auto}
+
+  /* Media bar */
+  .mb{padding:1rem 1.2rem;overflow-x:auto}
+  .mb-in{gap:1.5rem}
+  .mb-lg{gap:1.2rem}
+
+  /* Sections */
+  .sec{padding:3.5rem 1.2rem}
+  .st{font-size:1.8rem}
+  .sd{font-size:0.9rem}
+
+  /* Theme cards */
+  .themes{gap:0.8rem}
+  .thm{padding:1.5rem 1.2rem}
+  .thm h3{font-size:1.05rem}
+  .thm p{font-size:0.82rem}
+
+  /* Featured papers */
+  .pp-wrap{padding:3.5rem 1.2rem}
+  .qt-img{aspect-ratio:2/1}
+
+  /* Working papers */
+  .wp-bg{padding:3.5rem 1.2rem}
+
+  /* Data section */
+  .data-s{padding:3.5rem 1.2rem}
+  .data-g{gap:2rem}
+
+  /* Blog */
+  .blog-bg{padding:3.5rem 1.2rem}
+  .bp-title{font-size:1.05rem}
+  .bp-cat-filters{flex-wrap:wrap;gap:0.4rem}
+
+  /* About */
+  .ab-grid{gap:2rem}
+  .ab-txt p{font-size:0.9rem}
+
+  /* Teaching */
+  .tch-grid{grid-template-columns:1fr}
+  .tq{padding:1rem 1.2rem;font-size:0.82rem}
+
+  /* Contact */
+  .cta{padding:3rem 1.2rem}
+  .cls{gap:0.6rem}
+  .clk{padding:0.5rem 1rem;font-size:0.65rem}
+
+  /* Updates */
+  .updates{padding:2.5rem 1.2rem}
+
+  footer{padding:1rem 1.2rem}
 }
 </style>
 </head>
@@ -327,6 +417,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="https://profsean.wang/sean-wang-cv.pdf" class="nav-cv">↓ CV</a>
+  <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->
@@ -909,7 +1000,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
       <p class="dc">Before I studied markets, I studied molecules. My academic journey began in organic and polymer chemistry at Duke and the University of South Florida, where I learned to think in terms of systems, reactions, and equilibria. That scientific training — the insistence on rigor, on letting data and evidence lead, on theoretically questioning assumptions — became the foundation for everything that followed.</p>
       <p>The pivot from pure science to capital markets and financial economics came at NYU Stern, where my focus in equity valuation and earnings quality gave me a front-row view of how information moves through markets — and how often it gets distorted along the way. That experience drove me to academia: I wanted to understand these distortions systematically, not just observe them anecdotally.</p>
       <p>At Cornell, I found my intellectual home in information economics. My doctoral work, with additional concentrations in both econometrics and finance, gave me the methodological toolkit to study the deep structure of price discovery. Since then, my research has followed the information — wherever it gets produced, wherever it's corrupted, wherever it fails to reach the people who need it.</p>
-      <p>Today, my work spans from documenting racial bias in Wall Street analyst valuations, to exposing how pharmaceutical companies contractually suppress clinical trial results, to measuring the trillions in intangible assets that modern accounting systems systematically omit. The through-line is always the same question: <em>when information breaks, who pays?</em></p>
+      <p>Today, my work spans from documenting racial bias in Wall Street analyst valuations, to exposing how pharmaceutical companies contractually suppress clinical trial results, to measuring the trillions in intangible assets that modern accounting systems systematically omit. The costs of these failures fall disproportionately on those with the least power to see them coming — retail investors without access, patients without expertise, minority-led firms without the benefit of the doubt. The through-line is always the same question: <em>when information breaks, who pays?</em></p>
     </div>
   </div>
 </div>
@@ -936,7 +1027,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
   <h2>Let's connect</h2>
   <p class="ca">SMU Cox School of Business · 6212 Bishop Blvd, Crow 375 · Dallas, TX 75275</p>
   <div class="cls">
-    <a href="/cdn-cgi/l/email-protection#c2aaa7aeaead82b2b0ada4b1a7a3acecb5a3aca5" class="clk"><span class="__cf_email__" data-cfemail="91f9f4fdfdfed1e1e3fef7e2f4f0ffbfe6f0fff6">[email&#160;protected]</span></a>
+    <a href="mailto:seanwang@smu.edu" class="clk">seanwang@smu.edu</a>
     <a href="https://scholar.google.com/citations?user=fUc4WKwAAAAJ" class="clk">Google Scholar</a>
     <a href="https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=577565" class="clk">SSRN</a>
     <a href="https://www.linkedin.com/in/sean-wang-1801774a/" class="clk">LinkedIn</a>
@@ -946,7 +1037,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 
 <footer>&copy; 2026 Sean Wang</footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Enable scroll reveal animation
 document.documentElement.classList.add('rv-ready');
 
@@ -955,4 +1046,53 @@ const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting)
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
 // Scroll progress bar
-window.addEventListener('s
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('scroll-progress');
+  if(el) el.style.width = ((document.documentElement.scrollTop / (document.documentElement.scrollHeight - window.innerHeight)) * 100) + '%';
+});
+
+// Paper accordion toggle
+document.querySelectorAll('.pub-item .ap').forEach(row => {
+  row.addEventListener('click', () => row.parentElement.classList.toggle('open'));
+});
+
+// Blog category filters
+document.querySelectorAll('.bp-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.bp-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.textContent;
+    document.querySelectorAll('.bp').forEach(post => {
+      const postCat = post.querySelector('.bp-cat')?.textContent || '';
+      post.style.display = (cat === 'All' || postCat.toLowerCase().includes(cat.toLowerCase())) ? '' : 'none';
+    });
+  });
+});
+
+// Mobile hamburger toggle
+const burger = document.querySelector('.nav-burger');
+const navUl = document.querySelector('nav ul');
+if (burger && navUl) {
+  burger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navUl.classList.toggle('nav-open');
+    burger.classList.toggle('active');
+  });
+  // Close on link click
+  navUl.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navUl.classList.remove('nav-open');
+      burger.classList.remove('active');
+    });
+  });
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('nav')) {
+      navUl.classList.remove('nav-open');
+      burger.classList.remove('active');
+    }
+  });
+}
+</script>
+</body>
+</html>
