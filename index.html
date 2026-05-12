@@ -89,8 +89,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3)}
 @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.rv{opacity:1;transform:translateY(0);transition:all 0.6s ease}.rv-ready .rv{opacity:0;transform:translateY(14px)}.rv-ready .rv.v{opacity:1;transform:translateY(0)}
 .nav-burger{display:none;background:none;border:none;cursor:pointer;padding:0.5rem;margin-left:0.5rem;flex-direction:column;gap:4px;z-index:1001}.nav-burger span{display:block;width:18px;height:1.5px;background:var(--text2);transition:all 0.3s}.nav-burger.active span:nth-child(1){transform:rotate(45deg) translate(3px,3px)}.nav-burger.active span:nth-child(2){opacity:0}.nav-burger.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
-@media(max-width:960px){.hero-in,.themes,.ab-grid,.data-g,.blog-grid{grid-template-columns:1fr}.hero h1{font-size:2.6rem}.pp-thumb{grid-template-columns:1fr}.pp-full .pp-content{grid-template-columns:1fr}.tch-grid{grid-template-columns:1fr 1fr}.qt-body{padding:1.5rem}.qt-title{font-size:1.15rem}.ap{grid-template-columns:50px 1fr}.ap .vn{grid-column:2;text-align:left}.ap-toggle{position:absolute;right:0;top:1.1rem}.ap{position:relative;padding-right:2rem}.ap-inner{grid-template-columns:1fr;padding-left:0;margin-left:0}.ap-svg{max-width:160px}.updates-grid{grid-template-columns:1fr}nav ul{gap:1rem}nav a{font-size:0.68rem;letter-spacing:0.08em}}
-@media(max-width:680px){nav{padding:0 1.2rem}.nav-burger{display:flex}.nav-cv{font-size:0.6rem;padding:0.25rem 0.5rem}nav ul{position:fixed;top:60px;right:0;width:220px;flex-direction:column;gap:0;background:rgba(14,12,10,0.97);backdrop-filter:blur(24px);border-left:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:0.5rem 0;transform:translateX(100%);transition:transform 0.3s ease;z-index:999}nav ul.nav-open{transform:translateX(0)}nav ul li{border-bottom:1px solid var(--rule)}nav ul li:last-child{border-bottom:none}nav a{display:block;padding:0.9rem 1.5rem;font-size:0.75rem;letter-spacing:0.1em}nav a::after{display:none}.hero{padding:5rem 1.2rem 3rem;min-height:auto}.hero-in{gap:2.5rem}.hero h1{font-size:2rem}.h-body{font-size:0.92rem;margin-bottom:1.8rem}.h-tag{font-size:0.62rem;margin-bottom:1.2rem}.h-stats{flex-wrap:wrap;gap:1.2rem}.hs{padding:0 1.5rem 0 0;margin-right:1.5rem}.hs .v{font-size:1.6rem}.hs .l{font-size:0.62rem}.ph-wrap{max-width:280px;margin:0 auto}.mb{padding:1rem 1.2rem;overflow-x:auto}.mb-in{gap:1.5rem}.mb-lg{gap:1.2rem}.sec{padding:3.5rem 1.2rem}.st{font-size:1.8rem}.sd{font-size:0.9rem}.themes{gap:0.8rem}.thm{padding:1.5rem 1.2rem}.thm h3{font-size:1.05rem}.thm p{font-size:0.82rem}.pp-wrap{padding:3.5rem 1.2rem}.qt-img{aspect-ratio:2/1}.wp-bg{padding:3.5rem 1.2rem}.data-s{padding:3.5rem 1.2rem}.data-g{gap:2rem}.blog-bg{padding:3.5rem 1.2rem}.bp-title{font-size:1.05rem}.blog-cta{flex-direction:column;align-items:flex-start;gap:1rem}.ab-grid{gap:2rem}.ab-txt p{font-size:0.9rem}.tch-grid{grid-template-columns:1fr}.tq{padding:1rem 1.2rem;font-size:0.82rem}.cta{padding:3rem 1.2rem}.cls{gap:0.6rem}.clk{padding:0.5rem 1rem;font-size:0.65rem}.updates{padding:2.5rem 1.2rem}footer{padding:1rem 1.2rem}}
+/* Featured video block */
+.vid-feature{margin-bottom:2.5rem;background:var(--bg);border:1px solid var(--rule);overflow:hidden;transition:all 0.3s}.vid-feature:hover{border-color:var(--rule2);box-shadow:0 8px 30px rgba(0,0,0,0.3)}.vid-feature .vid-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000}.vid-feature .vid-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.vid-feature .vid-meta{padding:1.4rem 2rem 1.6rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--rule)}.vid-feature .vid-left{flex:1;min-width:220px}.vid-feature .vid-eyebrow{font-family:var(--mono);font-size:0.62rem;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.35rem}.vid-feature .vid-title{font-family:var(--serif);font-size:1.15rem;font-weight:600;line-height:1.3;margin-bottom:0.25rem}.vid-feature .vid-desc{font-size:0.82rem;color:var(--text3);line-height:1.55}.vid-feature .vid-cta{font-family:var(--mono);font-size:0.66rem;font-weight:500;color:var(--red);text-decoration:none;padding:0.5rem 1rem;border:1px solid var(--red-dim);letter-spacing:0.05em;white-space:nowrap;transition:all 0.2s}.vid-feature .vid-cta:hover{background:var(--red);color:#fff}
+@media(max-width:960px){.hero-in,.themes,.ab-grid,.data-g,.blog-grid{grid-template-columns:1fr}.hero h1{font-size:2.6rem}.pp-thumb{grid-template-columns:1fr}.pp-full .pp-content{grid-template-columns:1fr}.tch-grid{grid-template-columns:1fr 1fr}.qt-body{padding:1.5rem}.qt-title{font-size:1.15rem}.ap{grid-template-columns:50px 1fr}.ap .vn{grid-column:2;text-align:left}.ap-toggle{position:absolute;right:0;top:1.1rem}.ap{position:relative;padding-right:2rem}.ap-inner{grid-template-columns:1fr;padding-left:0;margin-left:0}.ap-svg{max-width:160px}.updates-grid{grid-template-columns:1fr}nav ul{gap:1rem}nav a{font-size:0.68rem;letter-spacing:0.08em}.vid-feature .vid-meta{padding:1.2rem 1.4rem}}
+@media(max-width:680px){nav{padding:0 1.2rem}.nav-burger{display:flex}.nav-cv{font-size:0.6rem;padding:0.25rem 0.5rem}nav ul{position:fixed;top:60px;right:0;width:220px;flex-direction:column;gap:0;background:rgba(14,12,10,0.97);backdrop-filter:blur(24px);border-left:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:0.5rem 0;transform:translateX(100%);transition:transform 0.3s ease;z-index:999}nav ul.nav-open{transform:translateX(0)}nav ul li{border-bottom:1px solid var(--rule)}nav ul li:last-child{border-bottom:none}nav a{display:block;padding:0.9rem 1.5rem;font-size:0.75rem;letter-spacing:0.1em}nav a::after{display:none}.hero{padding:5rem 1.2rem 3rem;min-height:auto}.hero-in{gap:2.5rem}.hero h1{font-size:2rem}.h-body{font-size:0.92rem;margin-bottom:1.8rem}.h-tag{font-size:0.62rem;margin-bottom:1.2rem}.h-stats{flex-wrap:wrap;gap:1.2rem}.hs{padding:0 1.5rem 0 0;margin-right:1.5rem}.hs .v{font-size:1.6rem}.hs .l{font-size:0.62rem}.ph-wrap{max-width:280px;margin:0 auto}.mb{padding:1rem 1.2rem;overflow-x:auto}.mb-in{gap:1.5rem}.mb-lg{gap:1.2rem}.sec{padding:3.5rem 1.2rem}.st{font-size:1.8rem}.sd{font-size:0.9rem}.themes{gap:0.8rem}.thm{padding:1.5rem 1.2rem}.thm h3{font-size:1.05rem}.thm p{font-size:0.82rem}.pp-wrap{padding:3.5rem 1.2rem}.qt-img{aspect-ratio:2/1}.wp-bg{padding:3.5rem 1.2rem}.data-s{padding:3.5rem 1.2rem}.data-g{gap:2rem}.blog-bg{padding:3.5rem 1.2rem}.bp-title{font-size:1.05rem}.blog-cta{flex-direction:column;align-items:flex-start;gap:1rem}.ab-grid{gap:2rem}.ab-txt p{font-size:0.9rem}.tch-grid{grid-template-columns:1fr}.tq{padding:1rem 1.2rem;font-size:0.82rem}.cta{padding:3rem 1.2rem}.cls{gap:0.6rem}.clk{padding:0.5rem 1rem;font-size:0.65rem}.updates{padding:2.5rem 1.2rem}footer{padding:1rem 1.2rem}.vid-feature .vid-meta{padding:1rem 1.2rem;flex-direction:column;align-items:flex-start}.vid-feature .vid-title{font-size:1rem}}
 </style>
 
 <!-- Google Analytics -->
@@ -141,8 +143,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
     </div>
   </div>
 </section>
-
-<!-- UPDATES — CHANGE 1: New R&R update card replaces Embargoed Disclosure -->
+<!-- UPDATES -->
 <div class="updates" id="updates">
   <div class="updates-in">
     <div class="so">// latest</div>
@@ -167,7 +168,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
   </div>
 </div>
 
-<!-- RESEARCH THEMES — CHANGE 2: Theme 1 tag "WP: Migration" → "R&R: Migration" -->
+<!-- RESEARCH THEMES -->
 <div class="sec rv" id="research">
   <div class="so">// research program</div>
   <h2 class="st">Three forces that distort markets</h2>
@@ -179,12 +180,39 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
   </div>
 </div>
 
-<!-- FEATURED PAPERS — CHANGES 3 & 4: Migration Fear card venue + badge updated -->
+<!-- FEATURED PAPERS -->
 <div class="pp-wrap" id="papers">
   <div class="pp-in">
     <div class="so">// signature work</div>
     <h2 class="st">Featured papers</h2>
     <p class="sd">Selected publications — each distilled to one question and one takeaway.</p>
+
+    <!-- FEATURED VIDEO: Intangibles -->
+    <div class="vid-feature rv">
+      <div class="vid-wrap">
+        <iframe src="https://www.youtube.com/embed/oSMQVcHJar0" title="Sean Wang — Intangible Capital" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="vid-meta">
+        <div class="vid-left">
+          <div class="vid-eyebrow">// featured · video</div>
+          <div class="vid-title">Making intangibles tangible</div>
+          <div class="vid-desc">A short presentation on the EPW framework for measuring missing intangible capital from acquisition prices — featured research from <em>Management Science</em> (2025).</div>
+        </div>
+        <a href="https://www.youtube.com/watch?v=oSMQVcHJar0" class="vid-cta" target="_blank" rel="noopener">↗ Watch on YouTube</a>
+      </div>
+    </div>
+    <div class="qt-card rv">
+      <div class="qt-img"><svg viewBox="0 0 400 140" style="width:100%;height:100%"><rect width="400" height="140" fill="#18150f"/><text x="200" y="18" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">CORPORATE BALANCE SHEET</text><rect x="60" y="28" width="100" height="90" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><text x="110" y="48" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Tangible</text><text x="110" y="62" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Assets</text><text x="110" y="82" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">PP&E, Cash, etc.</text><text x="110" y="112" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">GAAP Reported</text><rect x="230" y="28" width="100" height="90" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><rect x="230" y="28" width="100" height="35" rx="4" fill="rgba(180,42,36,0.2)" stroke="#b42a24" stroke-width="1.5" stroke-dasharray="5,3"/><text x="280" y="42" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#b42a24">MISSING</text><text x="280" y="54" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#b42a24">R&D · SG&A · Org Capital</text><text x="280" y="78" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Tangible</text><text x="280" y="92" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Assets</text><text x="280" y="112" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24" font-weight="600">EPW Adjusted</text><text x="190" y="78" text-anchor="middle" font-family="Newsreader,serif" font-size="22" fill="#b42a24">→</text></svg></div>
+      <div class="qt-body">
+        <div class="qt-top"><span class="qt-venue">Management Science · 2025</span><span class="qt-stat-label">Trillions missing from balance sheets</span></div>
+        <div class="qt-title">Intangible Capital Measurement</div>
+        <div class="qt-au">with M. Ewens and R. Peters</div>
+        <div class="qt-section"><div class="qt-label">Question</div><div class="qt-question">What happens when accounting omits trillions in internally generated assets?</div></div>
+        <div class="qt-section"><div class="qt-label">Takeaway</div><div class="qt-answer">Investors and researchers inherit a distorted map of firm value. We develop a structural model using acquisition prices to estimate missing intangible capital. Our parameters outperform BEA estimates, were discussed at NBER, and are applied at Morgan Stanley. Free data and code available below.</div></div>
+        <div class="qt-bottom"><span class="qt-badge">Public Data Resource</span><div class="qt-links"><a href="https://profsean.wang/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a><a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a><a href="https://github.com/michaelewens/intangible_capital">↗ GitHub</a><a href="https://www.youtube.com/watch?v=oSMQVcHJar0">↗ Video</a><a href="https://profsean.wang/Morgan-Stanley-Intangible-Impact.pdf">↗ MS: Impact</a><a href="https://profsean.wang/Morgan-Stanley-ROIC.pdf">↗ MS: ROIC</a></div></div>
+      </div>
+    </div>
+
 
     <div class="qt-card rv">
       <div class="qt-img">
@@ -239,18 +267,6 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
     </div>
 
     <div class="qt-card rv">
-      <div class="qt-img"><svg viewBox="0 0 400 140" style="width:100%;height:100%"><rect width="400" height="140" fill="#18150f"/><text x="200" y="18" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">CORPORATE BALANCE SHEET</text><rect x="60" y="28" width="100" height="90" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><text x="110" y="48" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Tangible</text><text x="110" y="62" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Assets</text><text x="110" y="82" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">PP&E, Cash, etc.</text><text x="110" y="112" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">GAAP Reported</text><rect x="230" y="28" width="100" height="90" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><rect x="230" y="28" width="100" height="35" rx="4" fill="rgba(180,42,36,0.2)" stroke="#b42a24" stroke-width="1.5" stroke-dasharray="5,3"/><text x="280" y="42" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#b42a24">MISSING</text><text x="280" y="54" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#b42a24">R&D · SG&A · Org Capital</text><text x="280" y="78" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Tangible</text><text x="280" y="92" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Assets</text><text x="280" y="112" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24" font-weight="600">EPW Adjusted</text><text x="190" y="78" text-anchor="middle" font-family="Newsreader,serif" font-size="22" fill="#b42a24">→</text></svg></div>
-      <div class="qt-body">
-        <div class="qt-top"><span class="qt-venue">Management Science · 2025</span><span class="qt-stat-label">Trillions missing from balance sheets</span></div>
-        <div class="qt-title">Intangible Capital Measurement</div>
-        <div class="qt-au">with M. Ewens and R. Peters</div>
-        <div class="qt-section"><div class="qt-label">Question</div><div class="qt-question">What happens when accounting omits trillions in internally generated assets?</div></div>
-        <div class="qt-section"><div class="qt-label">Takeaway</div><div class="qt-answer">Investors and researchers inherit a distorted map of firm value. We develop a structural model using acquisition prices to estimate missing intangible capital. Our parameters outperform BEA estimates, were discussed at NBER, and are applied at Morgan Stanley. Free data and code available below.</div></div>
-        <div class="qt-bottom"><span class="qt-badge">Public Data Resource</span><div class="qt-links"><a href="https://profsean.wang/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a><a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a><a href="https://github.com/michaelewens/intangible_capital">↗ GitHub</a><a href="https://profsean.wang/Morgan-Stanley-Intangible-Impact.pdf">↗ MS: Impact</a><a href="https://profsean.wang/Morgan-Stanley-ROIC.pdf">↗ MS: ROIC</a></div></div>
-      </div>
-    </div>
-
-    <div class="qt-card rv">
       <div class="qt-img"><svg viewBox="0 0 400 140" style="width:100%;height:100%"><rect width="400" height="140" fill="#18150f"/><text x="200" y="18" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">SHORT-TERM RETURN REVERSALS</text><rect x="80" y="80" width="80" height="30" rx="3" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><text x="120" y="100" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055">Normal</text><rect x="220" y="28" width="80" height="82" rx="3" fill="#b42a24"/><text x="260" y="60" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" font-weight="600" fill="#fff">Earnings</text><text x="260" y="76" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" font-weight="600" fill="#fff">Window</text><text x="340" y="65" font-family="Newsreader,serif" font-size="36" font-weight="500" fill="#b42a24">6×</text><text x="200" y="128" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055">six-fold increase in reversals → 1.45% announcement-window return</text></svg></div>
       <div class="qt-body">
         <div class="qt-top"><span class="qt-venue">Journal of Financial Economics · 2014</span><span class="qt-stat-label">6× reversal increase</span></div>
@@ -294,13 +310,13 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
     <div class="pub-item"><div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2014</span><div class="ti">News-driven Return Reversals: Liquidity Provision Ahead of Earnings <span class="co">· with E. So</span></div><span class="vn">J. Financial Econ.</span><span class="ap-toggle">＋</span></div><div class="ap-detail"><div class="ap-inner"><div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="25" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">RETURN REVERSALS</text><rect x="30" y="60" width="25" height="35" rx="2" fill="#2a2320"/><rect x="65" y="35" width="25" height="60" rx="2" fill="#b42a24"/><text x="42" y="55" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">Normal</text><text x="77" y="30" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#b42a24">Earnings</text><text x="100" y="70" font-family="Newsreader,serif" font-size="20" font-weight="500" fill="#b42a24">6×</text><text x="70" y="115" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" font-weight="600" fill="#b42a24">1.45% return</text><text x="70" y="130" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">announcement window</text></svg></div><div class="ap-content"><div class="ap-q">Can microstructure frictions create predictable price patterns around information events?</div><div class="ap-a">Return reversals increase six-fold during earnings announcements. Market makers demand higher compensation for inventory risk, creating predictable price concessions. 1.45% announcement-window return.</div><div class="ap-links"><a href="https://profsean.wang/papers/so-wang-2014-jfe.pdf">↗ PDF</a><a href="https://doi.org/10.1016/j.jfineco.2014.06.009">↗ DOI</a></div></div></div></div></div>
 
     <h3 class="theme-sub" id="theme-transparency"><span class="thm-num">03</span> Transparency &amp; Measurement</h3>
-    <div class="pub-item"><div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2025</span><div class="ti">Measuring Intangible Capital with Market Prices <span class="co">· with M. Ewens, R. Peters</span></div><span class="vn">Management Science</span><span class="ap-toggle">＋</span></div><div class="ap-detail"><div class="ap-inner"><div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="30" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">BALANCE SHEET</text><rect x="25" y="38" width="35" height="60" rx="2" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><text x="42" y="72" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">Reported</text><rect x="68" y="38" width="35" height="60" rx="2" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><rect x="68" y="38" width="35" height="20" rx="2" fill="rgba(180,42,36,0.25)" stroke="#b42a24" stroke-width="1" stroke-dasharray="3,2"/><text x="85" y="52" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#b42a24">Missing</text><text x="85" y="72" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">Actual</text><text x="70" y="118" text-anchor="middle" font-family="Newsreader,serif" font-size="16" font-weight="500" fill="#b42a24">15% smaller</text><text x="70" y="132" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">than BEA estimates</text></svg></div><div class="ap-content"><div class="ap-q">What happens when accounting rules omit trillions in internally generated assets?</div><div class="ap-a">We estimate missing intangible capital using acquisition prices. Our estimates are 15% smaller than BEA parameters with far more cross-industry variation. Data, code, and parameters freely available.</div><div class="ap-links"><a href="https://profsean.wang/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a><a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a><a href="https://github.com/michaelewens/intangible_capital">↗ GitHub</a><a href="https://profsean.wang/Morgan-Stanley-Intangible-Impact.pdf">↗ MS: Impact</a><a href="https://profsean.wang/Morgan-Stanley-ROIC.pdf">↗ MS: ROIC</a></div></div></div></div></div>
+    <div class="pub-item"><div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2025</span><div class="ti">Measuring Intangible Capital with Market Prices <span class="co">· with M. Ewens, R. Peters</span></div><span class="vn">Management Science</span><span class="ap-toggle">＋</span></div><div class="ap-detail"><div class="ap-inner"><div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="30" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">BALANCE SHEET</text><rect x="25" y="38" width="35" height="60" rx="2" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><text x="42" y="72" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">Reported</text><rect x="68" y="38" width="35" height="60" rx="2" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><rect x="68" y="38" width="35" height="20" rx="2" fill="rgba(180,42,36,0.25)" stroke="#b42a24" stroke-width="1" stroke-dasharray="3,2"/><text x="85" y="52" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#b42a24">Missing</text><text x="85" y="72" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">Actual</text><text x="70" y="118" text-anchor="middle" font-family="Newsreader,serif" font-size="16" font-weight="500" fill="#b42a24">15% smaller</text><text x="70" y="132" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">than BEA estimates</text></svg></div><div class="ap-content"><div class="ap-q">What happens when accounting rules omit trillions in internally generated assets?</div><div class="ap-a">We estimate missing intangible capital using acquisition prices. Our estimates are 15% smaller than BEA parameters with far more cross-industry variation. Data, code, and parameters freely available.</div><div class="ap-links"><a href="https://profsean.wang/papers/ewens-peters-wang-2025-ms.pdf">↗ PDF</a><a href="https://doi.org/10.1287/mnsc.2021.02058">↗ DOI</a><a href="https://github.com/michaelewens/intangible_capital">↗ GitHub</a><a href="https://www.youtube.com/watch?v=oSMQVcHJar0">↗ Video</a><a href="https://profsean.wang/Morgan-Stanley-Intangible-Impact.pdf">↗ MS: Impact</a><a href="https://profsean.wang/Morgan-Stanley-ROIC.pdf">↗ MS: ROIC</a></div></div></div></div></div>
     <div class="pub-item"><div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2022</span><div class="ti">Non-GAAP Reporting, Regulatory Focus, and GAAP Aggressiveness <span class="co">· with R. Guggenmos, K. Rennekamp, K. Rupar</span></div><span class="vn">J. Acct. Research</span><span class="ap-toggle">＋</span></div><div class="ap-detail"><div class="ap-inner"><div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="35" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">NON-GAAP USE</text><circle cx="70" cy="78" r="30" fill="none" stroke="#2a2320" stroke-width="6"/><circle cx="70" cy="78" r="30" fill="none" stroke="#b42a24" stroke-width="6" stroke-dasharray="177 11" stroke-linecap="round" transform="rotate(-90 70 78)"/><text x="70" y="84" text-anchor="middle" font-family="Newsreader,serif" font-size="22" font-weight="500" fill="#b42a24">94%</text><text x="70" y="126" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">SEC scrutiny backfires</text></svg></div><div class="ap-content"><div class="ap-q">Does regulatory attention to non-GAAP reporting actually improve financial reporting quality?</div><div class="ap-a">Paradoxically, no. Constraining non-GAAP via SEC scrutiny pushes managers toward more aggressive GAAP earnings management instead. Non-GAAP flexibility acts as a safety valve. Validated by experiment, survey, and archival data.</div><div class="ap-links"><a href="https://profsean.wang/papers/guggenmos-rennekamp-rupar-wang-2022-jar.pdf">↗ PDF</a><a href="https://doi.org/10.1111/1475-679X.12434">↗ DOI</a></div></div></div></div></div>
     <div class="pub-item"><div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2014</span><div class="ti">The Prevention of Excess Managerial Risk Taking <span class="co">· with E. Van Wesep</span></div><span class="vn">J. Corp. Finance</span><span class="ap-toggle">＋</span></div><div class="ap-detail"><div class="ap-inner"><div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="25" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">OPTIMAL CONTRACT</text><circle cx="70" cy="55" r="4" fill="#b42a24"/><line x1="70" y1="59" x2="45" y2="78" stroke="#a09888" stroke-width="1.5"/><line x1="70" y1="59" x2="95" y2="78" stroke="#b42a24" stroke-width="1.5"/><circle cx="45" cy="82" r="3" fill="#a09888"/><circle cx="95" cy="82" r="3" fill="#b42a24"/><text x="45" y="97" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#a09888">Meet target</text><text x="95" y="97" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#b42a24">−NPV risk</text><text x="95" y="108" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">↓ Severance</text><text x="95" y="117" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">prevents this</text><text x="70" y="136" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">Theory paper</text></svg></div><div class="ap-content"><div class="ap-q">Can compensation design prevent managers from gambling with shareholder value?</div><div class="ap-a">Optimal contracts feature high targets paired with severance pay so bad managers don't take negative-NPV risks. Severance should be contingent on results — complete failure nullifies payments.</div><div class="ap-links"><a href="https://profsean.wang/papers/wang-vanwesep-2014-jcf.pdf">↗ PDF</a><a href="https://doi.org/10.1016/j.jcorpfin.2013.04.008">↗ DOI</a></div></div></div></div></div>
   </div>
 </div>
 
-<!-- WORKING PAPERS — CHANGE 5: Migration Fear status updated -->
+<!-- WORKING PAPERS -->
 <div class="wp-bg">
   <div class="wp-in">
     <div class="so">// pipeline</div>
@@ -439,9 +455,42 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 
 <footer>&copy; 2026 Sean Wang</footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
 document.documentElement.classList.add('rv-ready');
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')}),{threshold:0.06});document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-window.addEventListener('scroll',()=>{const el=document.getElementById('scroll-progress');if(el)el.style.width=((document.documentElement.scrollTop/(document.documentElement.scrollHeight-window.innerHeight))*100)+'%'});
-document.querySelectorAll('.pub-item .ap').forEach(row=>{row.addEventListener('click',()=>row.parentElement.classList.toggle('open'))});
-const burger=document.querySelector('.nav-burger');const navUl=document.querySelector('nav ul');if(burger&&navUl){burger.addEventListener('click',(e)=>{e.stopPropagation();navUl.classList.toggle('nav-open');burger.classList.toggle('active')});navUl.querySelectorAll('a').forEach(a=>{a.addEventListener('click',()=>{navUl.classList.remove('nav-open');burger.classList.remove('active')})});document.addEventLis
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('v') }), { threshold: 0.06 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('scroll-progress');
+  if (el) el.style.width = ((document.documentElement.scrollTop / (document.documentElement.scrollHeight - window.innerHeight)) * 100) + '%';
+});
+
+document.querySelectorAll('.pub-item .ap').forEach(row => {
+  row.addEventListener('click', () => row.parentElement.classList.toggle('open'));
+});
+
+const burger = document.querySelector('.nav-burger');
+const navUl = document.querySelector('nav ul');
+if (burger && navUl) {
+  burger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navUl.classList.toggle('nav-open');
+    burger.classList.toggle('active');
+  });
+  navUl.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navUl.classList.remove('nav-open');
+      burger.classList.remove('active');
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('nav')) {
+      navUl.classList.remove('nav-open');
+      burger.classList.remove('active');
+    }
+  });
+}
+</script>
+</body>
+</html>
