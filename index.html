@@ -85,6 +85,43 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .blog-bg{background:var(--bg2);border-top:1px solid var(--rule);padding:6rem 3rem}.blog-in{max-width:var(--max);margin:0 auto}.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}.bp{background:var(--bg);border:1px solid var(--rule);padding:1.8rem 1.5rem;transition:all 0.3s}.bp:hover{border-color:var(--rule2);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}.bp-cat{font-family:var(--mono);font-size:0.62rem;color:var(--red);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem}.bp-title{font-family:var(--serif);font-size:1.15rem;font-weight:600;line-height:1.35;margin-bottom:0.5rem}.bp-excerpt{font-size:0.82rem;color:var(--text3);line-height:1.7}.bp-icon{font-family:var(--serif);font-size:2rem;color:var(--red);line-height:1;margin-bottom:0.8rem;opacity:0.7}
 .blog-cta{display:flex;align-items:center;gap:2rem;padding-top:1.5rem;border-top:1px solid var(--rule)}.blog-sub{display:inline-block;font-family:var(--mono);font-size:0.72rem;font-weight:500;color:#fff;background:var(--red);text-decoration:none;padding:0.6rem 1.5rem;transition:all 0.2s;letter-spacing:0.03em}.blog-sub:hover{background:var(--red-light);transform:translateY(-1px)}.blog-rss{font-family:var(--mono);font-size:0.68rem;color:var(--text3);text-decoration:none;transition:color 0.2s}.blog-rss:hover{color:var(--red)}
 .tch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.tc{background:var(--bg2);border:1px solid var(--rule);padding:1.5rem;text-align:center;transition:all 0.25s}.tc:hover{border-color:var(--rule2);transform:translateY(-2px)}.tc .tn{font-family:var(--serif);font-size:1rem;font-weight:600;margin-bottom:0.2rem}.tc .ta{font-size:0.68rem;color:var(--text3);margin-bottom:0.7rem}.tc .ts{font-family:var(--serif);font-size:2.2rem;color:var(--red);line-height:1;font-weight:400}.tc .tm{font-size:0.67rem;color:var(--text3)}.tq{margin-top:2rem;padding:1.5rem 2rem;background:var(--red-glow);border-left:2px solid var(--red-dim);font-size:0.9rem;color:var(--text2);font-style:italic;line-height:1.75}.tq .at3{display:block;margin-top:0.5rem;font-style:normal;font-size:0.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em}
+/* Teaching evaluation section */
+.evl-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.8rem 0;margin-bottom:3.5rem}
+.evl-stat{padding:0 1.5rem;border-right:1px solid var(--rule)}
+.evl-stat:last-child{border-right:none}
+.evl-stat .v{font-family:var(--serif);font-size:2.2rem;font-weight:500;color:var(--red);line-height:1;display:block;margin-bottom:0.4rem}
+.evl-stat .v sup{font-size:0.45em;color:var(--text2)}
+.evl-stat .l{font-family:var(--mono);font-size:0.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;line-height:1.5;display:block}
+.evl-sub{margin-bottom:3.5rem}
+.evl-sub:last-of-type{margin-bottom:2rem}
+.evl-h3{font-family:var(--serif);font-size:1.4rem;font-weight:500;margin-bottom:0.3rem;letter-spacing:-0.005em}
+.evl-note{font-family:var(--mono);font-size:0.66rem;color:var(--text3);margin-bottom:1.2rem;letter-spacing:0.02em}
+.evl-dist-bar{display:flex;height:38px;overflow:hidden;margin-bottom:0.9rem}
+.evl-dist-seg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:0.72rem;font-weight:500;color:#fdf6ea;letter-spacing:0.04em}
+.evl-dist-seg.s5{background:#c43a32;flex:63.1}
+.evl-dist-seg.s4{background:#9e3027;flex:26.2}
+.evl-dist-seg.s3{background:#6e2620;flex:6.6}
+.evl-dist-seg.s2{background:#4a201e;flex:2.8;font-size:0}
+.evl-dist-seg.s1{background:#2e1a18;flex:1.3;font-size:0}
+.evl-dist-legend{display:flex;gap:1.4rem;font-family:var(--mono);font-size:0.66rem;color:var(--text2);flex-wrap:wrap}
+.evl-dist-legend strong{color:var(--text);font-weight:600}
+.evl-tbl{width:100%;border-collapse:collapse}
+.evl-tbl th{font-family:var(--mono);font-size:0.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;text-align:left;padding:0 12px 0.9rem 0;border-bottom:1px solid var(--rule);font-weight:500}
+.evl-tbl th.num{text-align:right;padding-right:0;padding-left:1.8rem;white-space:nowrap}
+.evl-tbl td{padding:0.95rem 12px 0.95rem 0;border-bottom:1px solid var(--rule);font-size:0.92rem;color:var(--text);font-weight:400;vertical-align:baseline;line-height:1.5}
+.evl-tbl td.num{font-family:var(--mono);font-size:0.9rem;text-align:right;padding-right:0;padding-left:1.8rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.evl-tbl tr:last-child td{border-bottom:none}
+.evl-tbl .mean{color:var(--red);font-weight:500}
+.evl-chart svg{width:100%;height:auto;display:block;margin-top:0.5rem}
+.evl-quotes{column-count:2;column-gap:1.2rem}
+.evl-quote{background:var(--bg2);border-left:2px solid var(--red);padding:1.2rem 1.5rem;margin-bottom:1.2rem;break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;display:block}
+.evl-quote p{font-family:var(--serif);font-style:italic;font-size:0.96rem;line-height:1.55;color:var(--text);margin-bottom:0.8rem;font-weight:400}
+.evl-quote em{color:var(--red-light);font-style:italic}
+.evl-attr{font-family:var(--mono);font-size:0.6rem;color:var(--text2);letter-spacing:0.1em;text-transform:uppercase}
+.evl-honest{font-family:var(--serif);font-size:1rem;line-height:1.8;color:var(--text2);max-width:760px}
+.evl-honest strong{color:var(--text);font-weight:500}
+.evl-method{font-family:var(--mono);font-size:0.68rem;color:var(--text3);line-height:1.7;letter-spacing:0.01em;padding-top:1.8rem;border-top:1px solid var(--rule);max-width:760px}
+.evl-method a{color:var(--text2);text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
 .cta{border-top:1px solid var(--rule);background:var(--bg2);padding:5rem 3rem;text-align:center}.cta h2{font-family:var(--serif);font-size:2rem;margin-bottom:0.5rem}.cta .ca{color:var(--text3);font-size:0.85rem;margin-bottom:2rem}.cls{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}.clk{font-family:var(--mono);font-size:0.7rem;font-weight:500;color:var(--text3);text-decoration:none;padding:0.6rem 1.5rem;border:1px solid var(--rule);transition:all 0.2s}.clk:hover{border-color:var(--red);color:var(--red)}
 footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3)}
 @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.rv{opacity:1;transform:translateY(0);transition:all 0.6s ease}.rv-ready .rv{opacity:0;transform:translateY(14px)}.rv-ready .rv.v{opacity:1;transform:translateY(0)}
@@ -92,6 +129,16 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 /* Featured video block */
 .vid-feature{margin-bottom:2.5rem;background:var(--bg);border:1px solid var(--rule);overflow:hidden;transition:all 0.3s}.vid-feature:hover{border-color:var(--rule2);box-shadow:0 8px 30px rgba(0,0,0,0.3)}.vid-feature .vid-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000}.vid-feature .vid-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.vid-feature .vid-meta{padding:1.4rem 2rem 1.6rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--rule)}.vid-feature .vid-left{flex:1;min-width:220px}.vid-feature .vid-eyebrow{font-family:var(--mono);font-size:0.62rem;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.35rem}.vid-feature .vid-title{font-family:var(--serif);font-size:1.15rem;font-weight:600;line-height:1.3;margin-bottom:0.25rem}.vid-feature .vid-desc{font-size:0.82rem;color:var(--text3);line-height:1.55}.vid-feature .vid-cta{font-family:var(--mono);font-size:0.66rem;font-weight:500;color:var(--red);text-decoration:none;padding:0.5rem 1rem;border:1px solid var(--red-dim);letter-spacing:0.05em;white-space:nowrap;transition:all 0.2s}.vid-feature .vid-cta:hover{background:var(--red);color:#fff}
 @media(max-width:960px){.hero-in,.themes,.ab-grid,.data-g,.blog-grid{grid-template-columns:1fr}.hero h1{font-size:2.6rem}.pp-thumb{grid-template-columns:1fr}.pp-full .pp-content{grid-template-columns:1fr}.tch-grid{grid-template-columns:1fr 1fr}.qt-body{padding:1.5rem}.qt-title{font-size:1.15rem}.ap{grid-template-columns:50px 1fr}.ap .vn{grid-column:2;text-align:left}.ap-toggle{position:absolute;right:0;top:1.1rem}.ap{position:relative;padding-right:2rem}.ap-inner{grid-template-columns:1fr;padding-left:0;margin-left:0}.ap-svg{max-width:160px}.updates-grid{grid-template-columns:1fr}nav ul{gap:1rem}nav a{font-size:0.68rem;letter-spacing:0.08em}.vid-feature .vid-meta{padding:1.2rem 1.4rem}}
+@media(max-width:760px){
+.evl-stats{grid-template-columns:repeat(2,1fr);border-bottom:none}
+.evl-stat{padding:1rem 0.8rem;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.evl-stat:nth-child(even){border-right:none}
+.evl-stat:last-child{border-bottom:none}
+.evl-stat .v{font-size:1.8rem}
+.evl-quotes{column-count:1}
+.evl-tbl td,.evl-tbl th{font-size:0.82rem}
+.evl-dist-legend{gap:0.8rem;font-size:0.6rem}
+}
 @media(max-width:680px){nav{padding:0 1.2rem}.nav-burger{display:flex}.nav-cv{font-size:0.6rem;padding:0.25rem 0.5rem}nav ul{position:fixed;top:60px;right:0;width:220px;flex-direction:column;gap:0;background:rgba(14,12,10,0.97);backdrop-filter:blur(24px);border-left:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:0.5rem 0;transform:translateX(100%);transition:transform 0.3s ease;z-index:999}nav ul.nav-open{transform:translateX(0)}nav ul li{border-bottom:1px solid var(--rule)}nav ul li:last-child{border-bottom:none}nav a{display:block;padding:0.9rem 1.5rem;font-size:0.75rem;letter-spacing:0.1em}nav a::after{display:none}.hero{padding:5rem 1.2rem 3rem;min-height:auto}.hero-in{gap:2.5rem}.hero h1{font-size:2rem}.h-body{font-size:0.92rem;margin-bottom:1.8rem}.h-tag{font-size:0.62rem;margin-bottom:1.2rem}.h-stats{flex-wrap:wrap;gap:1.2rem}.hs{padding:0 1.5rem 0 0;margin-right:1.5rem}.hs .v{font-size:1.6rem}.hs .l{font-size:0.62rem}.ph-wrap{max-width:280px;margin:0 auto}.mb{padding:1rem 1.2rem;overflow-x:auto}.mb-in{gap:1.5rem}.mb-lg{gap:1.2rem}.sec{padding:3.5rem 1.2rem}.st{font-size:1.8rem}.sd{font-size:0.9rem}.themes{gap:0.8rem}.thm{padding:1.5rem 1.2rem}.thm h3{font-size:1.05rem}.thm p{font-size:0.82rem}.pp-wrap{padding:3.5rem 1.2rem}.qt-img{aspect-ratio:2/1}.wp-bg{padding:3.5rem 1.2rem}.data-s{padding:3.5rem 1.2rem}.data-g{gap:2rem}.blog-bg{padding:3.5rem 1.2rem}.bp-title{font-size:1.05rem}.blog-cta{flex-direction:column;align-items:flex-start;gap:1rem}.ab-grid{gap:2rem}.ab-txt p{font-size:0.9rem}.tch-grid{grid-template-columns:1fr}.tq{padding:1rem 1.2rem;font-size:0.82rem}.cta{padding:3rem 1.2rem}.cls{gap:0.6rem}.clk{padding:0.5rem 1rem;font-size:0.65rem}.updates{padding:2.5rem 1.2rem}footer{padding:1rem 1.2rem}.vid-feature .vid-meta{padding:1rem 1.2rem;flex-direction:column;align-items:flex-start}.vid-feature .vid-title{font-size:1rem}}
 </style>
 
@@ -117,6 +164,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
     <li><a href="#blog">Blog</a></li>
     <li><a href="#data">Data</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#teaching">Teaching</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="https://profsean.wang/sean-wang-cv.pdf" class="nav-cv">↓ CV</a>
@@ -183,7 +231,6 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
   </div>
 </div>
 
-<!-- RESEARCH THEMES — CHANGE 2: Theme 1 tag "WP: Migration" → "R&R: Migration" -->
 <div class="sec rv" id="research">
   <div class="so">// research program</div>
   <h2 class="st">Three forces that distort markets</h2>
@@ -195,14 +242,12 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
   </div>
 </div>
 
-<!-- FEATURED PAPERS — CHANGES 3 & 4: Migration Fear card venue + badge updated -->
 <div class="pp-wrap" id="papers">
   <div class="pp-in">
     <div class="so">// signature work</div>
     <h2 class="st">Featured papers</h2>
     <p class="sd">Selected publications — each distilled to one question and one takeaway.</p>
 
-    <!-- FEATURED VIDEO: Intangibles -->
     <div class="vid-feature rv">
       <div class="vid-wrap">
         <iframe src="https://www.youtube.com/embed/oSMQVcHJar0" title="Sean Wang — Intangible Capital" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
@@ -216,6 +261,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
         <a href="https://www.youtube.com/watch?v=oSMQVcHJar0" class="vid-cta" target="_blank" rel="noopener">↗ Watch on YouTube</a>
       </div>
     </div>
+
     <div class="qt-card rv">
       <div class="qt-img"><svg viewBox="0 0 400 140" style="width:100%;height:100%"><rect width="400" height="140" fill="#18150f"/><text x="200" y="18" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#6a6055" letter-spacing="0.1em">CORPORATE BALANCE SHEET</text><rect x="60" y="28" width="100" height="90" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><text x="110" y="48" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Tangible</text><text x="110" y="62" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Assets</text><text x="110" y="82" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#6a6055">PP&E, Cash, etc.</text><text x="110" y="112" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">GAAP Reported</text><rect x="230" y="28" width="100" height="90" rx="4" fill="#2a2320" stroke="#3a3530" stroke-width="1"/><rect x="230" y="28" width="100" height="35" rx="4" fill="rgba(180,42,36,0.2)" stroke="#b42a24" stroke-width="1.5" stroke-dasharray="5,3"/><text x="280" y="42" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" font-weight="600" fill="#b42a24">MISSING</text><text x="280" y="54" text-anchor="middle" font-family="Karla,sans-serif" font-size="8" fill="#b42a24">R&D · SG&A · Org Capital</text><text x="280" y="78" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Tangible</text><text x="280" y="92" text-anchor="middle" font-family="Karla,sans-serif" font-size="10" fill="#a09888">Assets</text><text x="280" y="112" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#b42a24" font-weight="600">EPW Adjusted</text><text x="190" y="78" text-anchor="middle" font-family="Newsreader,serif" font-size="22" fill="#b42a24">→</text></svg></div>
       <div class="qt-body">
@@ -306,6 +352,7 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 
   </div>
 </div>
+
 <div class="sec rv">
   <div class="so">// complete record</div>
   <h2 class="st">All publications</h2>
@@ -330,7 +377,6 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
   </div>
 </div>
 
-<!-- WORKING PAPERS — CHANGE 5: Migration Fear status updated -->
 <div class="wp-bg">
   <div class="wp-in">
     <div class="so">// pipeline</div>
@@ -450,16 +496,198 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 <div class="sec rv" id="teaching">
   <div class="so">// teaching</div>
   <h2 class="st">In the classroom</h2>
-  <p class="sd">I teach accounting the way I research it — by asking <em>why</em> and <em>who cares</em>. The goal is lasting intuition, not memorized rules.</p>
-  <div class="tch-grid">
-    <div class="tc"><div class="tn">Equity Valuation</div><div class="ta">MBA · EMBA · MAcc</div><div class="ts">6.3</div><div class="tm">/ 7.0</div></div>
-    <div class="tc"><div class="tn">Financial Acct.</div><div class="ta">MBA · MS Finance · MS Mgmt</div><div class="ts">6.3</div><div class="tm">/ 7.0</div></div>
-    <div class="tc"><div class="tn">Applied Valuation</div><div class="ta">Masters of Accounting</div><div class="ts">4.8</div><div class="tm">/ 5.0</div></div>
-    <div class="tc"><div class="tn">Corporate Finance</div><div class="ta">Masters of Accounting</div><div class="ts">4.8</div><div class="tm">/ 5.0</div></div>
+  <p class="sd">I teach <strong style="color:var(--text)">ACCT 6202: Financial Accounting II</strong> in the SMU Cox MBA program — full-time, professional, and online cohorts. Below are aggregated end-of-course evaluations from every section I have taught at SMU, beginning Fall 2018. Previously taught Equity Valuation and Corporate Finance at UNC Kenan-Flagler and Rice Jones. Raw response files available on request.</p>
+
+  <!-- Headline stat row -->
+  <div class="evl-stats">
+    <div class="evl-stat"><span class="v">14</span><span class="l">Semesters<br>Fall '18 – Sp '26</span></div>
+    <div class="evl-stat"><span class="v">39</span><span class="l">Sections<br>taught</span></div>
+    <div class="evl-stat"><span class="v">1,355</span><span class="l">Students<br>enrolled</span></div>
+    <div class="evl-stat"><span class="v">4.47<sup>/5</sup></span><span class="l">Mean rating<br>4,008 ratings</span></div>
+    <div class="evl-stat"><span class="v">89<sup>%</sup></span><span class="l">Rated 4 or 5<br>out of 5</span></div>
   </div>
-  <div class="tq">"Professor Wang is the best — I wish he taught more courses. His emphasis on learning the material rather than memorizing should be adopted by the rest of the SMU faculty."<span class="at3">— Student evaluation, SMU Cox</span></div>
-  <div class="tq" style="margin-top:0.8rem;border-left-color:rgba(122,30,26,0.5)">"I can't sum it up in 2 to 3 things... he genuinely may be the best professor I have ever had the pleasure of learning from. Never has a professor been so effective in teaching both the materials and how to dive deeper into the context."<span class="at3">— Student evaluation, SMU Cox</span></div>
-  <div class="tq" style="margin-top:0.8rem;border-left-color:rgba(122,30,26,0.3)">"Sean encouraged us to think like investors, which is exactly what I was hoping for. He also made the course challenging enough to stimulate creative thinking."<span class="at3">— Student evaluation, SMU Cox</span></div>
+
+  <!-- Distribution -->
+  <div class="evl-sub">
+    <h3 class="evl-h3">Distribution of all ratings</h3>
+    <div class="evl-note">N = 4,008 individual question ratings across 12 semesters (5-point scale)</div>
+    <div class="evl-dist-bar">
+      <div class="evl-dist-seg s5">63.1%</div>
+      <div class="evl-dist-seg s4">26.2%</div>
+      <div class="evl-dist-seg s3">6.6%</div>
+      <div class="evl-dist-seg s2"></div>
+      <div class="evl-dist-seg s1"></div>
+    </div>
+    <div class="evl-dist-legend">
+      <span><strong>5</strong> Strongly Agree</span>
+      <span><strong>4</strong> Agree</span>
+      <span><strong>3</strong> Neutral</span>
+      <span><strong>2</strong> Disagree (2.8%)</span>
+      <span><strong>1</strong> Strongly Disagree (1.3%)</span>
+    </div>
+  </div>
+
+  <!-- Per-question table -->
+  <div class="evl-sub">
+    <h3 class="evl-h3">Per-question results</h3>
+    <div class="evl-note">SMU Course Evaluation, standard 7-item instrument. Sorted by mean.</div>
+    <table class="evl-tbl">
+      <thead>
+        <tr><th>Question</th><th class="num">Mean</th><th class="num">Median</th><th class="num">% at 4 or 5</th><th class="num">N</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>The instructor fostered an academic environment that was respectful to students.</td><td class="num mean">4.62</td><td class="num">5</td><td class="num">94%</td><td class="num">569</td></tr>
+        <tr><td>The course was intellectually challenging or thought-provoking.</td><td class="num mean">4.57</td><td class="num">5</td><td class="num">93%</td><td class="num">574</td></tr>
+        <tr><td>The instructor was available to answer questions inside and outside of class.</td><td class="num mean">4.49</td><td class="num">5</td><td class="num">89%</td><td class="num">573</td></tr>
+        <tr><td>The instructor clearly defined and explained the course objectives and expectations.</td><td class="num mean">4.48</td><td class="num">5</td><td class="num">91%</td><td class="num">576</td></tr>
+        <tr><td>The course helped me to develop knowledge or skills.</td><td class="num mean">4.45</td><td class="num">5</td><td class="num">89%</td><td class="num">571</td></tr>
+        <tr><td>The instructor utilized class time effectively.</td><td class="num mean">4.34</td><td class="num">5</td><td class="num">84%</td><td class="num">573</td></tr>
+        <tr><td>The instructor presented the course content effectively.</td><td class="num mean">4.33</td><td class="num">5</td><td class="num">84%</td><td class="num">572</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Multi-year trend -->
+  <div class="evl-sub">
+    <h3 class="evl-h3">Trend across semesters</h3>
+    <div class="evl-note">Mean rating across all evaluation questions, expressed as % of scale maximum. Two scales unified.</div>
+    <div class="evl-chart">
+      <svg viewBox="0 0 960 360" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <line x1="70" y1="300" x2="940" y2="300" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="70" y1="246" x2="940" y2="246" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="70" y1="192" x2="940" y2="192" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="70" y1="138" x2="940" y2="138" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="70" y1="84" x2="940" y2="84" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="70" y1="30" x2="940" y2="30" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <text x="60" y="304" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">75%</text>
+        <text x="60" y="250" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">80%</text>
+        <text x="60" y="196" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">85%</text>
+        <text x="60" y="142" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">90%</text>
+        <text x="60" y="88" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">95%</text>
+        <text x="60" y="34" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">100%</text>
+        <rect x="265" y="30" width="225" height="270" fill="#1e1a14" opacity="0.65"/>
+        <text x="378" y="48" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="#7d7268" letter-spacing="0.16em">COVID SEMESTERS</text>
+        <path d="M 90,145.6 L 153.85,144.5 L 217.7,118.6 L 281.5,163.9 L 345.4,161.8 L 409.2,197.4 L 473,188.8 L 536.9,131.5 L 600.8,159.6 L 664.6,231.9 L 728.5,160.7 L 792.3,70.96 L 856.2,119.6 L 920,133.7" stroke="#b42a24" stroke-width="2" fill="none"/>
+        <circle cx="90" cy="145.6" r="3.5" fill="#b42a24"/>
+        <circle cx="153.85" cy="144.5" r="3.5" fill="#b42a24"/>
+        <circle cx="217.7" cy="118.6" r="3.5" fill="#b42a24"/>
+        <circle cx="281.5" cy="163.9" r="3.5" fill="#b42a24"/>
+        <circle cx="345.4" cy="161.8" r="3.5" fill="#b42a24"/>
+        <circle cx="409.2" cy="197.4" r="3.5" fill="#b42a24"/>
+        <circle cx="473" cy="188.8" r="3.5" fill="#b42a24"/>
+        <circle cx="536.9" cy="131.5" r="3.5" fill="#b42a24"/>
+        <circle cx="600.8" cy="159.6" r="3.5" fill="#b42a24"/>
+        <circle cx="664.6" cy="231.9" r="3.5" fill="#b42a24"/>
+        <circle cx="728.5" cy="160.7" r="3.5" fill="#b42a24"/>
+        <circle cx="792.3" cy="70.96" r="4.5" fill="#b42a24"/>
+        <circle cx="856.2" cy="119.6" r="3.5" fill="#b42a24"/>
+        <circle cx="920" cy="133.7" r="3.5" fill="#b42a24"/>
+        <text x="90" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F18</text>
+        <text x="153.85" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S19</text>
+        <text x="217.7" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F19</text>
+        <text x="281.5" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F20</text>
+        <text x="345.4" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S21</text>
+        <text x="409.2" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F21</text>
+        <text x="473" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S22</text>
+        <text x="536.9" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F22</text>
+        <text x="600.8" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F23</text>
+        <text x="664.6" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S24</text>
+        <text x="728.5" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F24</text>
+        <text x="792.3" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S25</text>
+        <text x="856.2" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F25</text>
+        <text x="920" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S26</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Selected student comments -->
+  <div class="evl-sub">
+    <h3 class="evl-h3">Selected student comments</h3>
+    <div class="evl-note">17 of 464 open-ended responses across 14 semesters. Verbatim — student spelling and punctuation preserved.</div>
+    <div class="evl-quotes">
+      <div class="evl-quote">
+        <p>&ldquo;Professor Wang is the best - I wish he taught more courses. He makes class exciting and actually ties it into real life. His emphasis on learning the material rather than memorizing should be adopted by the rest of the SMU faculty. Additionally, I really appreciated how he tied the lectures in with real life examples and explained how we can use this material when managing our own finances. This class was the most useful course I've taken this year, largely because of the approach that Professor Wang took to constructing it.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2022</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;The instructor took time to really explain the concepts. He was available to all students when needed and took extra time to stay after class even if it was late. He taught accounting to where class was not boring and kept students engaged in the material.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Spring 2019</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;He was constantly challenging us to look at accounting not just as debits and credits, but what did they mean. <br>He spent a lot of time trying to help us understand the WHY of accounting&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2019</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;The way in which Prof Wang relates everything back to the real world and is willing to talk after class is truly impressive. I have really enjoyed the class and he has made it exceptionally interesting.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2021</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;Sean Wang has an amazing perspective when it comes to accounting. He made accounting relevant to investors in many topics which was extremely insightful and interesting to learn.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2022</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;The bigger picture discussions helped a lot. Not just the journal entries and debits/credits but also how they apply, how managers can use or misuse accounting, and how it applies to personal finance&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2023</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;Sean really kept me engaged with his energy and relating the material to real world scenarios like investing. The pre-class videos helped with me learning the material as I felt I had a good understanding of it prior to going over it in class.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2024</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;The instructor's energy was fantastic, and it was clear he genuinely cared about ensuring we understood the concepts. He made accounting engaging and enjoyable!&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Spring 2025</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;Material was presented in a great way to foster understanding of the concepts instead of just memorizing journal entries. Professor was very knowledgeable and a great instructor and seemed like he really cared about the student's learning and understanding.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Spring 2026</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;Sean is a great teacher and I can tell he cares about teaching us the things most important to our future careers, not teaching us as if we are going to be accountants. I like the intuition approach he gives and his reasoning behind decisions he makes about how he instructs the course. I also like his no screens policy, I think a lot of learning is lost by typing notes and I'm glad he tried to push the science behind this to us.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2023</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;The professors patience and focus on developing our intuition was the greatest contributor to our learning. It wasn't enough for us to memorize formulas and rules, the professor wanted us to understand the thoughts and reasoning behind each idea. As a result, myself and everyone else I have spoken to regarding the course has felt they have grown more knowledgeable and confident in their understanding of accounting.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Spring 2025</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;Sean is a fantastic teacher because he <em>genuinely</em> wants us to understand the accounting concepts and why he's teaching the material. <br>Despite all the MAJOR life events going on, Sean went above and beyond to teach us what he set out to. I'm in awe and impressed and wish more teachers would care as much as Sean does.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2018</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;Appreciate how much focus was given to the intuition behind the topics. I also appreciate the focus on explaining how each topic could be manipulated and the rational for why someone would manipulate it in that way. When focusing intently on learning the rules, for me, it can be easy to get lost in the details and not see the big picture. Your explanations and &quot;why&quot; questions on slides made the course much more about meaningful understanding. Great class, thank you for making it so valuable!&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Fall 2018</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;Thoroughly enjoyed the in-depth discussions to developing skills of intuition when reading financial statements and just in general when reading business news. The course was challenging, but the way it was presented had me asking questions and seeking knowledge more than the scope of the course. Thank you, Sean, for exciting me about Valuation and Intuition moving forward in this program and in the real world.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Spring 2025</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;I have my undergraduate and masters in accounting so I have taken my fair share of accounting course in my life. Sean Wang could be in my top 2 accounting professors that I have ever had. <br>He is enthusatic about accounting <br>He is organized and prepared for the class lecture <br>He teaches in a way that is simple in learning complex concepts.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Spring 2025</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;I'm not a huge fan of accounting, but Professor Wang used real-life examples that not only kept me engaged but also helped me better understand the concepts he was conveying to us students. On top of this, his teaching style of guiding us to use intuition throughout the course helped me connect what I previously thought of as complex subject matter into straightforward, tangible concepts.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Spring 2026</div>
+      </div>
+      <div class="evl-quote">
+        <p>&ldquo;He tied in his real life experiences and real world examples that made learning more interesting and applicable to my daily life. I have yet to find a class that made me as interested and engaged by fully understanding the material and how it relates to our everyday financial events. Having a teacher that not only teaches the material, but makes sure we understand why the material is important and relevant to everyday lives is the reason that I chose to come to SMU to get my MBA and Professor Wang did an exemplary job and I would love to take more of his classes.&rdquo;</p>
+        <div class="evl-attr">— MBA Student · Spring 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Honest paragraph -->
+  <div class="evl-sub">
+    <h3 class="evl-h3">What students consistently ask for</h3>
+    <div class="evl-note">419 improvement-oriented comments, thematically grouped.</div>
+    <p class="evl-honest">By a wide margin, the most common piece of constructive feedback I receive — across roughly <strong>14% of improvement comments over a decade</strong> — is to provide additional practice problems and worked examples. It is the only suggestion to appear consistently in every academic year. I have been steadily incorporating more pre-class problem sets and TA-led review sessions in response, and continue to refine the balance between conceptual class discussion and procedural practice.</p>
+  </div>
+
+  <!-- Methodology -->
+  <div class="evl-method">
+    Source: SMU Cox official end-of-semester course evaluations, Fall 2018 through Spring 2026. Fall 2018 and Spring 2019 used the prior 7-point Cox-specific instrument (20 numeric questions); all later semesters use SMU's current 5-point university-wide instrument (7 numeric questions). For the unified semester-by-semester trend, both scales are normalized as a percentage of their respective maxima. Raw response files available on request: <a href="mailto:hello@profsean.wang">hello@profsean.wang</a>.
+  </div>
+
 </div>
 
 <div class="cta" id="contact">
