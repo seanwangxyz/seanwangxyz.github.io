@@ -105,6 +105,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .evl-dist-seg.s1{background:#2e1a18;flex:1.3;font-size:0}
 .evl-dist-legend{display:flex;gap:1.4rem;font-family:var(--mono);font-size:0.66rem;color:var(--text2);flex-wrap:wrap}
 .evl-dist-legend strong{color:var(--text);font-weight:600}
+.evl-best{font-family:var(--mono);font-size:0.62rem;font-weight:400;opacity:0.85;margin-left:0.2rem;letter-spacing:0.06em;text-transform:none}
 .evl-tbl{width:100%;border-collapse:collapse}
 .evl-tbl th{font-family:var(--mono);font-size:0.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;text-align:left;padding:0 12px 0.9rem 0;border-bottom:1px solid var(--rule);font-weight:500}
 .evl-tbl th.num{text-align:right;padding-right:0;padding-left:1.8rem;white-space:nowrap}
@@ -496,23 +497,23 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 <div class="sec rv" id="teaching">
   <div class="so">// teaching</div>
   <h2 class="st">In the classroom</h2>
-  <p class="sd">I teach <strong style="color:var(--text)">ACCT 6202: Financial Accounting II</strong> in the SMU Cox MBA and MSF programs — full-time and professional cohorts. Below are aggregated end-of-course evaluations from every section I have taught at SMU, beginning Fall 2018. Previously taught Equity Valuation and Corporate Finance at UNC Kenan-Flagler and Rice Jones. Raw response files available on request.</p>
+  <p class="sd">I teach <strong style="color:var(--text)">ACCT 6202: Financial Accounting II</strong> in the SMU Cox MBA program — full-time, professional, and online cohorts. Below are aggregated end-of-course evaluations from every section I have taught at SMU, beginning Fall 2018. Previously taught Equity Valuation and Corporate Finance at UNC Kenan-Flagler and Rice Jones. Raw response files available on request.</p>
 
   <!-- Headline stat row -->
   <div class="evl-stats">
     <div class="evl-stat"><span class="v">14</span><span class="l">Semesters<br>Fall '18 – Sp '26</span></div>
     <div class="evl-stat"><span class="v">39</span><span class="l">Sections<br>taught</span></div>
     <div class="evl-stat"><span class="v">1,355</span><span class="l">Students<br>enrolled</span></div>
-    <div class="evl-stat"><span class="v">4.47<sup>/5</sup></span><span class="l">Mean rating<br>4,008 ratings</span></div>
+    <div class="evl-stat"><span class="v">4.5<sup>/5</sup></span><span class="l">Mean rating<br>4,008 ratings</span></div>
     <div class="evl-stat"><span class="v">89<sup>%</sup></span><span class="l">Rated 4 or 5<br>out of 5</span></div>
   </div>
 
   <!-- Distribution -->
   <div class="evl-sub">
-    <h3 class="evl-h3">Distribution of all ratings</h3>
+    <h3 class="evl-h3">Summary statistics of <span style="text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:4px;text-decoration-thickness:1.5px">all student ratings</span> at SMU.</h3>
     <div class="evl-note">N = 4,008 individual question ratings across 12 semesters (5-point scale)</div>
     <div class="evl-dist-bar">
-      <div class="evl-dist-seg s5">63.1%</div>
+      <div class="evl-dist-seg s5">63.1% <span class="evl-best">(best score)</span></div>
       <div class="evl-dist-seg s4">26.2%</div>
       <div class="evl-dist-seg s3">6.6%</div>
       <div class="evl-dist-seg s2"></div>
@@ -536,13 +537,13 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
         <tr><th>Question</th><th class="num">Mean</th><th class="num">Median</th><th class="num">% at 4 or 5</th><th class="num">N</th></tr>
       </thead>
       <tbody>
-        <tr><td>The instructor fostered an academic environment that was respectful to students.</td><td class="num mean">4.62</td><td class="num">5</td><td class="num">94%</td><td class="num">569</td></tr>
-        <tr><td>The course was intellectually challenging or thought-provoking.</td><td class="num mean">4.57</td><td class="num">5</td><td class="num">93%</td><td class="num">574</td></tr>
-        <tr><td>The instructor was available to answer questions inside and outside of class.</td><td class="num mean">4.49</td><td class="num">5</td><td class="num">89%</td><td class="num">573</td></tr>
-        <tr><td>The instructor clearly defined and explained the course objectives and expectations.</td><td class="num mean">4.48</td><td class="num">5</td><td class="num">91%</td><td class="num">576</td></tr>
-        <tr><td>The course helped me to develop knowledge or skills.</td><td class="num mean">4.45</td><td class="num">5</td><td class="num">89%</td><td class="num">571</td></tr>
-        <tr><td>The instructor utilized class time effectively.</td><td class="num mean">4.34</td><td class="num">5</td><td class="num">84%</td><td class="num">573</td></tr>
-        <tr><td>The instructor presented the course content effectively.</td><td class="num mean">4.33</td><td class="num">5</td><td class="num">84%</td><td class="num">572</td></tr>
+        <tr><td>The instructor fostered an academic environment that was respectful to students.</td><td class="num mean">4.6</td><td class="num">5</td><td class="num">94%</td><td class="num">569</td></tr>
+        <tr><td>The course was intellectually challenging or thought-provoking.</td><td class="num mean">4.6</td><td class="num">5</td><td class="num">93%</td><td class="num">574</td></tr>
+        <tr><td>The instructor was available to answer questions inside and outside of class.</td><td class="num mean">4.5</td><td class="num">5</td><td class="num">89%</td><td class="num">573</td></tr>
+        <tr><td>The instructor clearly defined and explained the course objectives and expectations.</td><td class="num mean">4.5</td><td class="num">5</td><td class="num">91%</td><td class="num">576</td></tr>
+        <tr><td>The course helped me to develop knowledge or skills.</td><td class="num mean">4.5</td><td class="num">5</td><td class="num">89%</td><td class="num">571</td></tr>
+        <tr><td>The instructor utilized class time effectively.</td><td class="num mean">4.3</td><td class="num">5</td><td class="num">84%</td><td class="num">573</td></tr>
+        <tr><td>The instructor presented the course content effectively.</td><td class="num mean">4.3</td><td class="num">5</td><td class="num">84%</td><td class="num">572</td></tr>
       </tbody>
     </table>
   </div>
@@ -550,52 +551,91 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
   <!-- Multi-year trend -->
   <div class="evl-sub">
     <h3 class="evl-h3">Trend across semesters</h3>
-    <div class="evl-note">Mean rating across all evaluation questions, expressed as % of scale maximum. Two scales unified.</div>
+    <div class="evl-note">Mean rating per semester ± 1 standard error. Shaded band marks COVID-disrupted semesters. n = respondents.</div>
     <div class="evl-chart">
-      <svg viewBox="0 0 960 360" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 960 390" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
         <line x1="70" y1="300" x2="940" y2="300" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
         <line x1="70" y1="246" x2="940" y2="246" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
         <line x1="70" y1="192" x2="940" y2="192" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
         <line x1="70" y1="138" x2="940" y2="138" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
         <line x1="70" y1="84" x2="940" y2="84" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
         <line x1="70" y1="30" x2="940" y2="30" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <rect x="249.6" y="30" width="255.4" height="270" fill="#1e1a14" opacity="0.65"/>
+        <text x="377.3" y="48" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="#7d7268" letter-spacing="0.16em">COVID SEMESTERS</text>
+        <line x1="70" y1="30" x2="70" y2="300" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="70" y1="300" x2="940" y2="300" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="70" y1="300" x2="75" y2="300" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="70" y1="246" x2="75" y2="246" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="70" y1="192" x2="75" y2="192" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="70" y1="138" x2="75" y2="138" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="70" y1="84" x2="75" y2="84" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="70" y1="30" x2="75" y2="30" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="90.00" y1="300" x2="90.00" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="153.85" y1="300" x2="153.85" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="217.69" y1="300" x2="217.69" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="281.54" y1="300" x2="281.54" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="345.38" y1="300" x2="345.38" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="409.23" y1="300" x2="409.23" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="473.08" y1="300" x2="473.08" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="536.92" y1="300" x2="536.92" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="600.77" y1="300" x2="600.77" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="664.62" y1="300" x2="664.62" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="728.46" y1="300" x2="728.46" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="792.31" y1="300" x2="792.31" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="856.15" y1="300" x2="856.15" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+        <line x1="920.00" y1="300" x2="920.00" y2="304" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
         <text x="60" y="304" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">75%</text>
         <text x="60" y="250" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">80%</text>
         <text x="60" y="196" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">85%</text>
         <text x="60" y="142" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">90%</text>
         <text x="60" y="88" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">95%</text>
         <text x="60" y="34" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">100%</text>
-        <rect x="265" y="30" width="225" height="270" fill="#1e1a14" opacity="0.65"/>
-        <text x="378" y="48" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="#7d7268" letter-spacing="0.16em">COVID SEMESTERS</text>
-        <path d="M 90,145.6 L 153.85,144.5 L 217.7,118.6 L 281.5,163.9 L 345.4,161.8 L 409.2,197.4 L 473,188.8 L 536.9,131.5 L 600.8,159.6 L 664.6,231.9 L 728.5,160.7 L 792.3,70.96 L 856.2,119.6 L 920,133.7" stroke="#b42a24" stroke-width="2" fill="none"/>
-        <circle cx="90" cy="145.6" r="3.5" fill="#b42a24"/>
-        <circle cx="153.85" cy="144.5" r="3.5" fill="#b42a24"/>
-        <circle cx="217.7" cy="118.6" r="3.5" fill="#b42a24"/>
-        <circle cx="281.5" cy="163.9" r="3.5" fill="#b42a24"/>
-        <circle cx="345.4" cy="161.8" r="3.5" fill="#b42a24"/>
-        <circle cx="409.2" cy="197.4" r="3.5" fill="#b42a24"/>
-        <circle cx="473" cy="188.8" r="3.5" fill="#b42a24"/>
-        <circle cx="536.9" cy="131.5" r="3.5" fill="#b42a24"/>
-        <circle cx="600.8" cy="159.6" r="3.5" fill="#b42a24"/>
-        <circle cx="664.6" cy="231.9" r="3.5" fill="#b42a24"/>
-        <circle cx="728.5" cy="160.7" r="3.5" fill="#b42a24"/>
-        <circle cx="792.3" cy="70.96" r="4.5" fill="#b42a24"/>
-        <circle cx="856.2" cy="119.6" r="3.5" fill="#b42a24"/>
-        <circle cx="920" cy="133.7" r="3.5" fill="#b42a24"/>
-        <text x="90" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F18</text>
-        <text x="153.85" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S19</text>
-        <text x="217.7" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F19</text>
-        <text x="281.5" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F20</text>
-        <text x="345.4" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S21</text>
-        <text x="409.2" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F21</text>
-        <text x="473" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S22</text>
-        <text x="536.9" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F22</text>
-        <text x="600.8" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F23</text>
-        <text x="664.6" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S24</text>
-        <text x="728.5" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F24</text>
-        <text x="792.3" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S25</text>
-        <text x="856.2" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F25</text>
-        <text x="920" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S26</text>
+        <path d="M 90.00,134.70 L 153.85,127.62 L 217.69,110.57 L 281.54,153.12 L 345.38,152.27 L 409.23,186.29 L 473.08,166.39 L 536.92,122.13 L 600.77,150.91 L 664.62,203.96 L 728.46,151.13 L 792.31,64.96 L 856.15,112.37 L 920.00,123.68 L 920.00,143.62 L 856.15,126.02 L 792.31,76.82 L 728.46,169.62 L 664.62,259.55 L 600.77,169.27 L 536.92,140.99 L 473.08,211.60 L 409.23,209.12 L 345.38,170.24 L 281.54,173.66 L 217.69,126.01 L 153.85,145.72 L 90.00,141.54 Z" fill="#c43a32" opacity="0.16" stroke="none"/>
+        <path d="M 90.00,138.12 L 153.85,136.67 L 217.69,118.29 L 281.54,163.39 L 345.38,161.25 L 409.23,197.70 L 473.08,189.00 L 536.92,131.56 L 600.77,160.09 L 664.62,231.75 L 728.46,160.38 L 792.31,70.89 L 856.15,119.20 L 920.00,133.65" stroke="#b42a24" stroke-width="2" fill="none"/>
+        <circle cx="90.00" cy="138.12" r="3.5" fill="#b42a24"/>
+        <circle cx="153.85" cy="136.67" r="3.5" fill="#b42a24"/>
+        <circle cx="217.69" cy="118.29" r="3.5" fill="#b42a24"/>
+        <circle cx="281.54" cy="163.39" r="3.5" fill="#b42a24"/>
+        <circle cx="345.38" cy="161.25" r="3.5" fill="#b42a24"/>
+        <circle cx="409.23" cy="197.70" r="3.5" fill="#b42a24"/>
+        <circle cx="473.08" cy="189.00" r="3.5" fill="#b42a24"/>
+        <circle cx="536.92" cy="131.56" r="3.5" fill="#b42a24"/>
+        <circle cx="600.77" cy="160.09" r="3.5" fill="#b42a24"/>
+        <circle cx="664.62" cy="231.75" r="3.5" fill="#b42a24"/>
+        <circle cx="728.46" cy="160.38" r="3.5" fill="#b42a24"/>
+        <circle cx="792.31" cy="70.89" r="4.5" fill="#b42a24"/>
+        <circle cx="856.15" cy="119.20" r="3.5" fill="#b42a24"/>
+        <circle cx="920.00" cy="133.65" r="3.5" fill="#b42a24"/>
+        <text x="90.00" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F18</text>
+        <text x="90.00" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=109</text>
+        <text x="153.85" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S19</text>
+        <text x="153.85" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=15</text>
+        <text x="217.69" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F19</text>
+        <text x="217.69" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=72</text>
+        <text x="281.54" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F20</text>
+        <text x="281.54" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=46</text>
+        <text x="345.38" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S21</text>
+        <text x="345.38" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=60</text>
+        <text x="409.23" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F21</text>
+        <text x="409.23" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=57</text>
+        <text x="473.08" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S22</text>
+        <text x="473.08" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=12</text>
+        <text x="536.92" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F22</text>
+        <text x="536.92" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=46</text>
+        <text x="600.77" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F23</text>
+        <text x="600.77" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=51</text>
+        <text x="664.62" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S24</text>
+        <text x="664.62" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=13</text>
+        <text x="728.46" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F24</text>
+        <text x="728.46" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=56</text>
+        <text x="792.31" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S25</text>
+        <text x="792.31" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=40</text>
+        <text x="856.15" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">F25</text>
+        <text x="856.15" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=84</text>
+        <text x="920.00" y="320" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6a6055">S26</text>
+        <text x="920.00" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#7d7268">n=39</text>
+        <text x="35" y="22" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#7d7268" letter-spacing="0.08em">MEAN</text>
+        <text x="935" y="376" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="#7d7268" letter-spacing="0.08em">SEMESTER  →</text>
       </svg>
     </div>
   </div>
