@@ -192,7 +192,6 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
     </div>
   </div>
 </section>
-
 <div class="updates" id="updates">
   <div class="updates-in">
     <div class="so">// latest</div>
@@ -374,7 +373,6 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 
   </div>
 </div>
-
 <div class="sec rv">
   <div class="so">// complete record</div>
   <h2 class="st">All publications</h2>
@@ -398,7 +396,6 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
     <div class="pub-item"><div class="ap" onclick="this.parentElement.classList.toggle('open')"><span class="yr">2014</span><div class="ti">The Prevention of Excess Managerial Risk Taking <span class="co">· with E. Van Wesep</span></div><span class="vn">J. Corp. Finance</span><span class="ap-toggle">＋</span></div><div class="ap-detail"><div class="ap-inner"><div class="ap-svg"><svg viewBox="0 0 140 140"><rect width="140" height="140" fill="#18150f"/><text x="70" y="25" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">OPTIMAL CONTRACT</text><circle cx="70" cy="55" r="4" fill="#b42a24"/><line x1="70" y1="59" x2="45" y2="78" stroke="#a09888" stroke-width="1.5"/><line x1="70" y1="59" x2="95" y2="78" stroke="#b42a24" stroke-width="1.5"/><circle cx="45" cy="82" r="3" fill="#a09888"/><circle cx="95" cy="82" r="3" fill="#b42a24"/><text x="45" y="97" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#a09888">Meet target</text><text x="95" y="97" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#b42a24">−NPV risk</text><text x="95" y="108" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">↓ Severance</text><text x="95" y="117" text-anchor="middle" font-family="Karla,sans-serif" font-size="7" fill="#6a6055">prevents this</text><text x="70" y="136" text-anchor="middle" font-family="Karla,sans-serif" font-size="9" fill="#6a6055">Theory paper</text></svg></div><div class="ap-content"><div class="ap-q">Can compensation design prevent managers from gambling with shareholder value?</div><div class="ap-a">Optimal contracts feature high targets paired with severance pay so bad managers don't take negative-NPV risks. Severance should be contingent on results — complete failure nullifies payments.</div><div class="ap-links"><a href="https://profsean.wang/papers/wang-vanwesep-2014-jcf.pdf">↗ PDF</a><a href="https://doi.org/10.1016/j.jcorpfin.2013.04.008">↗ DOI</a></div></div></div></div></div>
   </div>
 </div>
-
 <div class="wp-bg">
   <div class="wp-in">
     <div class="so">// pipeline</div>
@@ -521,7 +518,6 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
     </div>
   </div>
 </div>
-
 <div class="sec rv" id="teaching">
   <div class="so">// teaching</div>
   <h2 class="st">In the classroom</h2>
@@ -777,7 +773,6 @@ footer{padding:1.2rem 3rem;text-align:center;font-size:0.67rem;color:var(--text3
 document.documentElement.classList.add('rv-ready');
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')}),{threshold:0.06});document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 window.addEventListener('scroll',()=>{const el=document.getElementById('scroll-progress');if(el)el.style.width=((document.documentElement.scrollTop/(document.documentElement.scrollHeight-window.innerHeight))*100)+'%'});
-document.querySelectorAll('.pub-item .ap').forEach(row=>{row.addEventListener('click',()=>row.parentElement.classList.toggle('open'))});
 const burger=document.querySelector('.nav-burger');const navUl=document.querySelector('nav ul');if(burger&&navUl){burger.addEventListener('click',(e)=>{e.stopPropagation();navUl.classList.toggle('nav-open');burger.classList.toggle('active')});navUl.querySelectorAll('a').forEach(a=>{a.addEventListener('click',()=>{navUl.classList.remove('nav-open');burger.classList.remove('active')})});document.addEventListener('click', (e) => {
     if (!e.target.closest('nav')) {
       navUl.classList.remove('nav-open');
