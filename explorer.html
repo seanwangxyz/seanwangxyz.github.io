@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Missing Balance Sheet — Intangible Capital Explorer | Sean Wang</title>
+<meta name="description" content="An interactive exhibit of the intangible capital that accounting leaves off corporate balance sheets, built on the published Ewens, Peters and Wang (2023) parameters and stocks, with a disclosed 2019–2025 extension.">
+<link rel="canonical" href="https://profsean.wang/explorer.html">
+<meta property="og:title" content="The Missing Balance Sheet — Intangible Capital Explorer">
+<meta property="og:description" content="Knowledge and organizational capital for 2,000 public firms, built on the published EPW parameters. $4.1tn to $6.6tn across a constant panel of 3,159 firms, 2018–2025.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://profsean.wang/explorer.html">
+<meta property="og:image" content="https://profsean.wang/headshot-rice.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23ffffff'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='30' font-weight='600' fill='%23b42a24' text-anchor='middle'%3EsW%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=Karla:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ffffff; --inset:#faf7f1; --inset2:#f4efe4; --band:#fbfaf7;
+  --ink:#1a1714; --ink2:#575046; --ink3:#8b8377;
+  --red:#b42a24; --red-tint:rgba(180,42,36,.07); --red-tint2:rgba(180,42,36,.13);
+  --rule:rgba(26,23,20,.11); --rule2:rgba(26,23,20,.22); --rule3:rgba(180,42,36,.25);
+  --org:#8b8377;
+  --serif:'Newsreader',Georgia,serif; --sans:'Karla',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --max:1120px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--red);color:#fff}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 0}
+.n-left{display:flex;align-items:center;gap:.55rem}
+.n-mark{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--red);padding:.22rem .38rem;border:1.5px solid var(--rule3)}
+.n-name{font-size:.86rem;font-weight:600;letter-spacing:.03em}
+.back{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.back:hover{color:var(--red)}
+/* ---------- nav (mirrors index.html; anchors are absolute because the
+              section targets live on the home page, not this one) ---------- */
+nav ul{display:flex;gap:clamp(.85rem,1.5vw,1.35rem);list-style:none;align-items:center}
+nav a{font-size:.72rem;text-transform:uppercase;letter-spacing:.13em;font-weight:500;color:var(--ink2)}
+nav a:hover{color:var(--red)}
+nav a[aria-current="page"]{color:var(--red)}
+.nav-cv{border:1px solid var(--rule3);padding:.3rem .6rem;color:var(--red)!important}
+/* Boxed = something you use (Dashboard, CV). Plain = a section you scroll to.
+   Same box as .nav-cv so the pattern is legible rather than decorative. */
+.nav-tool{border:1px solid var(--rule3);padding:.3rem .6rem;color:var(--red)!important}
+.nav-tool:hover{background:var(--red-tint);border-color:var(--red)}
+.nav-tool[aria-current="page"]{background:var(--red-tint);border-color:var(--red)}
+.burger{display:none;background:none;border:1px solid var(--rule2);padding:.4rem .55rem;cursor:pointer;font-family:var(--mono);font-size:.7rem;color:var(--ink2)}
+@media(max-width:760px){
+  .nav{flex-wrap:wrap;position:relative}
+  nav ul{position:absolute;top:100%;right:0;left:0;background:var(--paper);border-bottom:1px solid var(--rule);flex-direction:column;align-items:flex-start;gap:0;padding:0 clamp(20px,4vw,48px);max-height:0;overflow:hidden;transition:max-height .3s;z-index:70}
+  nav ul.open{max-height:26rem;padding-bottom:1rem}
+  nav li{width:100%;padding:.6rem 0;border-bottom:1px solid var(--rule)}
+  .burger{display:block}
+}
+.hero{padding:clamp(2.4rem,5vw,4rem) 0 1.6rem}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);display:flex;align-items:center;gap:.5rem}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--red)}
+h1{font-family:var(--serif);font-size:clamp(2rem,4.4vw,3.1rem);font-weight:500;line-height:1.12;margin:1rem 0 .8rem;max-width:20ch;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--red)}
+.lede{font-size:1.02rem;color:var(--ink2);line-height:1.8;max-width:62ch}
+.lede b{color:var(--ink);font-weight:600}
+section{padding:clamp(2rem,4vw,3.2rem) 0}
+.band{background:var(--band);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.so{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+h2{font-family:var(--serif);font-size:clamp(1.5rem,2.8vw,2.1rem);font-weight:500;line-height:1.18;margin-bottom:.5rem}
+h2 em{font-style:italic;color:var(--red)}
+.sd{font-size:.95rem;color:var(--ink2);line-height:1.8;max-width:64ch}
+.shead{margin-bottom:1.8rem}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin:1.6rem 0}
+@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpis div{background:var(--paper);padding:1rem .9rem}
+.kpis b{font-family:var(--serif);font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:600;color:var(--red);display:block;line-height:1}
+.kpis span{font-family:var(--mono);font-size:.56rem;letter-spacing:.07em;color:var(--ink3);display:block;margin-top:.5rem;text-transform:uppercase;line-height:1.5}
+.card{border:1px solid var(--rule);background:var(--paper);padding:1.2rem 1.3rem}
+.fig-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.2rem}
+.fig-cap{font-family:var(--mono);font-size:.6rem;color:var(--ink3);line-height:1.75;margin-top:.7rem}
+svg.chart{width:100%;height:auto;display:block;font-family:var(--mono)}
+.ctl{display:flex;gap:.45rem;flex-wrap:wrap;margin:.9rem 0 .2rem;align-items:center}
+.ctl-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-right:.2rem}
+.tg{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;border:1px solid var(--rule2);background:none;padding:.35rem .7rem;cursor:pointer;color:var(--ink2);transition:.2s}
+.tg:hover{border-color:var(--red);color:var(--red)}
+.tg[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.legend{display:flex;gap:1.1rem;flex-wrap:wrap;font-family:var(--mono);font-size:.62rem;color:var(--ink2);margin-top:.6rem}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:.35rem;vertical-align:-1px;font-style:normal}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+input[type=search]{font-family:var(--sans);font-size:.9rem;padding:.6rem .8rem;border:1px solid var(--rule2);background:var(--paper);color:var(--ink);width:100%;max-width:22rem}
+input[type=search]:focus{border-color:var(--red);outline:none}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);text-align:left;padding:.6rem .5rem;border-bottom:1px solid var(--rule2);font-weight:400;cursor:pointer;white-space:nowrap}
+th:hover{color:var(--red)}
+th span{display:inline-block;width:.9em;color:var(--red);font-size:.9em}
+th[aria-sort] {color:var(--ink)}
+th.r,td.r{text-align:right}
+td{padding:.55rem .5rem;border-bottom:1px solid var(--rule);vertical-align:middle}
+tbody tr:hover{background:var(--inset)}
+.tick{font-family:var(--mono);font-size:.56rem;color:var(--ink3)}
+.pill{font-family:var(--mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;padding:.18rem .45rem;border:1px solid var(--rule2);color:var(--ink3);white-space:nowrap}
+.note{border-left:2px solid var(--red);background:var(--red-tint);padding:.9rem 1.1rem;font-size:.88rem;color:var(--ink2);line-height:1.75;margin-top:1.2rem}
+.note b{color:var(--ink);font-weight:600}
+details{border:1px solid var(--rule);padding:.9rem 1.1rem;margin-top:.8rem;background:var(--paper)}
+summary{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);cursor:pointer}
+summary:hover{color:var(--red)}
+details p{font-size:.88rem;color:var(--ink2);line-height:1.8;margin-top:.8rem;max-width:70ch}
+details code{font-family:var(--mono);font-size:.82em;background:var(--inset2);padding:.1rem .3rem}
+footer{border-top:1px solid var(--rule);padding:1.8rem 0;font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;color:var(--ink3)}
+.foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer a:hover{color:var(--red)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a href="#main" class="sr">Skip to content</a>
+<header><div class="wrap nav">
+  <a class="n-left" href="index.html"><span class="n-mark">sW:</span><span class="n-name">Sean Wang</span></a>
+  <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="navlist">MENU</button>
+  <nav><ul id="navlist">
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="index.html#record">Papers</a></li>
+    <li><a href="index.html#data">Intangibles</a></li>
+    <li><a class="nav-tool" href="explorer.html" aria-current="page">Dashboard</a></li>
+    <li><a href="index.html#writing">Blog</a></li>
+    <li><a href="index.html#teaching">Teaching</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="sean-wang-cv.pdf" class="nav-cv">CV ↓</a></li>
+  </ul></nav>
+</div></header>
+
+<main id="main">
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">Interactive exhibit</div>
+  <h1>The missing <em>balance sheet</em></h1>
+  <p class="lede">Accounting expenses research and most of the spending that builds an organization, so the assets they create never appear on a balance sheet. Using the published parameters from <b>Ewens, Peters and Wang (2023)</b>, this page rebuilds those assets as capital stocks — and extends them to the present.</p>
+  <div class="kpis" id="kpis">
+    <div><b>—</b><span>loading</span></div><div><b>—</b><span>loading</span></div>
+    <div><b>—</b><span>loading</span></div><div><b>—</b><span>loading</span></div>
+  </div>
+</div></div>
+
+<section class="band"><div class="wrap">
+  <div class="shead">
+    <div class="so">The trend</div>
+    <h2>A constant panel of firms, <em>2018 to 2025</em></h2>
+    <p class="sd">Same <span id="balN">3,159</span> firms in every year, so the change is growth rather than a shifting sample. Nominal dollars overstate it — the deflated series is the honest one, and both are shown.</p>
+  </div>
+  <div class="card">
+    <div class="fig-lbl">Off-balance-sheet intangible capital, constant panel</div>
+    <div class="ctl">
+      <button class="tg" id="bNom" aria-pressed="true">Nominal $</button>
+      <button class="tg" id="bReal" aria-pressed="false">Constant 2018 $</button>
+    </div>
+    <svg class="chart" id="chBal" viewBox="0 0 720 300" role="img" aria-labelledby="cb1"><title id="cb1">Knowledge and organizational capital for a constant panel of firms, 2018 to 2025</title></svg>
+    <div class="legend"><span><i style="background:#b42a24"></i>Knowledge capital (R&amp;D)</span><span><i style="background:#8b8377"></i>Organizational capital (SG&amp;A)</span></div>
+    <p class="fig-cap" id="capBal"></p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="shead">
+    <div class="so">The long view</div>
+    <h2>Forty-five years of <em>assets nobody books</em></h2>
+    <p class="sd">The published EPW series runs to fiscal 2018; everything after is a disclosed extension built here with the same fixed parameters. The firm count moves over time, so read this as the scale of the phenomenon rather than a like-for-like growth rate.</p>
+  </div>
+  <div class="card">
+    <div class="fig-lbl">Aggregate intangible capital, all covered firms</div>
+    <svg class="chart" id="chLong" viewBox="0 0 720 320" role="img" aria-labelledby="cl1"><title id="cl1">Aggregate knowledge and organizational capital by fiscal year, 1980 to 2025</title></svg>
+    <div class="legend"><span><i style="background:#b42a24"></i>Knowledge</span><span><i style="background:#8b8377"></i>Organizational</span><span><i style="background:var(--red-tint2)"></i>Extension (2019–2025)</span></div>
+    <p class="fig-cap" id="capLong"></p>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="shead">
+    <div class="so">By industry</div>
+    <h2>Where the <em>invisible assets</em> are</h2>
+    <p class="sd">The published parameters differ sharply across the five Fama-French industries. Health capitalizes half of overhead as organizational investment; consumer firms, a fifth.</p>
+  </div>
+  <div class="two">
+    <div class="card">
+      <div class="fig-lbl">Constant panel by industry, 2018 → 2025</div>
+      <svg class="chart" id="chInd" viewBox="0 0 420 300" role="img" aria-labelledby="ci1"><title id="ci1">Intangible capital by industry, 2018 and 2025</title></svg>
+      <p class="fig-cap">Total of knowledge and organizational capital, nominal dollars.</p>
+    </div>
+    <div class="card">
+      <div class="fig-lbl">Published parameters (EPW 2023)</div>
+      <table id="tParm"><thead><tr><th>Industry</th><th class="r">δ knowledge</th><th class="r">δ organization</th><th class="r">γ SG&amp;A share</th><th class="r">median off-book</th></tr></thead><tbody></tbody></table>
+      <p class="fig-cap">δ is the annual depreciation rate; γ is the share of adjusted SG&amp;A treated as investment in organizational capital. Fixed at the published values — not re-estimated here. The final column is the median off-book share among firms with over $200m in reported assets.</p>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="shead">
+    <div class="so">Firm level</div>
+    <h2>Look up <em>a company</em></h2>
+    <p class="sd">The 2,000 largest holders of intangible capital, covering 98% of the total. Figures are millions of nominal dollars; the sparkline runs 2018 to the firm’s last available year. <b>Off-book share</b> is intangible capital as a fraction of that capital plus reported assets — the portion of a firm’s asset base that never reaches its balance sheet. Screen by size before reading the ranking: shell companies with almost no reported assets sit at 100% and mean nothing.</p>
+  </div>
+  <div class="card">
+    <label class="sr" for="q">Search companies</label>
+    <input type="search" id="q" placeholder="Search by company or ticker…" autocomplete="off">
+    <div class="ctl" id="sortby" role="group" aria-label="Sort the table">
+      <span class="ctl-lbl">Sort by</span>
+      <button class="tg" data-k="t" aria-pressed="true">Total</button>
+      <button class="tg" data-k="k" aria-pressed="false">Knowledge</button>
+      <button class="tg" data-k="o" aria-pressed="false">Organizational</button>
+      <button class="tg" data-k="r" aria-pressed="false">Off-book share</button>
+      <button class="tg" data-k="n" aria-pressed="false">Company</button>
+    </div>
+    <div class="ctl" id="dirf" role="group" aria-label="Sort direction">
+      <span class="ctl-lbl">Order</span>
+      <button class="tg" id="dirHi" data-d="-1" aria-pressed="true">High → Low</button>
+      <button class="tg" id="dirLo" data-d="1" aria-pressed="false">Low → High</button>
+    </div>
+    <div class="ctl" id="szf" role="group" aria-label="Minimum reported assets">
+      <span style="font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);align-self:center;margin-right:.2rem">Reported assets</span>
+      <button class="tg" data-z="0" aria-pressed="false">Any</button>
+      <button class="tg" data-z="1" aria-pressed="true">Over $200m</button>
+      <button class="tg" data-z="2" aria-pressed="false">Over $1bn</button>
+    </div>
+    <div class="ctl" id="indf" role="group" aria-label="Industry">
+      <span style="font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);align-self:center;margin-right:.2rem">Industry</span>
+      <button class="tg" data-i="" aria-pressed="true">All</button>
+    </div>
+    <div class="ctl" id="idxf" role="group" aria-label="Index membership">
+      <span style="font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);align-self:center;margin-right:.2rem">Index</span>
+      <button class="tg" data-m="0" aria-pressed="true">All firms</button>
+      <button class="tg" data-m="1">S&amp;P 500</button>
+      <button class="tg" data-m="2">Nasdaq 100</button>
+      <button class="tg" data-m="4">Dow 30</button>
+    </div>
+    <p class="fig-cap" id="capIdx" style="margin:.5rem 0 0"></p>
+    <div style="overflow-x:auto;margin-top:.9rem">
+      <table id="tFirms"><thead><tr>
+        <th data-s="n">Company<span></span></th><th data-s="i">Industry<span></span></th>
+        <th class="r" data-s="k">Knowledge<span></span></th><th class="r" data-s="o">Organizational<span></span></th>
+        <th class="r" data-s="t">Total<span></span></th>
+        <th class="r" data-s="r">Off-book share<span></span></th><th>2018 →</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <div class="ctl" id="pager" role="navigation" aria-label="Table pages" style="margin-top:.8rem;flex-wrap:wrap"></div>
+    <p class="fig-cap" id="capFirms"></p>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="shead">
+    <div class="so">Method and limits</div>
+    <h2>How this was <em>built</em></h2>
+  </div>
+  <div class="note">
+    <b>What is published data and what is not.</b> Fiscal years through 2018 are the public EPW stock table, unchanged. Fiscal years 2019 onward are an extension constructed here: the published FY2018 stock is carried forward by the same perpetual-inventory recurrence, using the published fixed parameters and subsequent R&amp;D and adjusted SG&amp;A. It is not part of the EPW published table and should not be cited as such.
+  </div>
+  <details><summary>The recurrence</summary>
+    <p>For each firm and component, real capital accumulates as <code>K_t = (1 − δ)·K_(t−1) + I_t</code>, with flows deflated by CPI before accumulation and stocks re-inflated to nominal dollars for output. Knowledge investment is R&amp;D. Organizational investment is the industry γ times adjusted SG&amp;A, following the submitted definition including the R&amp;D-in-cost-of-goods overlap rule. Parameters are assigned on the historical SIC, filled from the company header SIC. Regulated, financial and public-service firms are excluded, as in the original construction.</p>
+  </details>
+  <details><summary>Validation</summary>
+    <p>Before extending anything, the recurrence was used to reproduce EPW's own published stocks for 2011–2018 from Compustat flows. Correlation with the published values is <code>0.9999</code> for both components; median absolute error is 0.04% for knowledge capital and 0.01% for organizational capital; the aggregate across all matched firm-years differs by <code>+0.09%</code>. As a further check, the CPI deflator was recovered from the published stocks by solving the recurrence, and matches the FRED CPIAUCSL annual-average series to within 0.14% in every year.</p>
+  </details>
+  <details><summary>Limitations</summary>
+    <p>The extension covers only firms with a published FY2018 stock — 5,067 of them. Firms that listed after 2018 are absent, because seeding them would require their full spending history. Firms exit the panel as they delist or are acquired, so the all-firms aggregate is not a like-for-like series; the constant-panel chart exists for that reason. Fiscal 2025 is incomplete, since many filings are outstanding, and is excluded from the headline. This is a conditional reproduction of the submitted method, not a claim of full historical replication: original-universe and header-SIC coverage were not fully recovered.</p>
+  </details>
+  <details><summary>Sources and reuse</summary>
+    <p>Parameters and stocks through 2018: Ewens, Peters and Wang, <i>Measuring Intangible Capital with Market Prices</i>, <i>Management Science</i>, published materials under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--red)">CC BY-NC 4.0</a>. Deflator: FRED series CPIAUCSL, annual averages. Underlying accounting inputs are licensed and are not redistributed here — only derived capital stocks are published. Firm identifiers are shown by name and ticker rather than by internal database key.</p>
+  </details>
+  <div class="ctl" style="margin-top:1.2rem">
+    <a class="tg" href="https://github.com/michaelewens/Intangible-capital-stocks">Published parameters &amp; stocks ↗</a>
+    <a class="tg" href="papers/ewens-peters-wang-2025-ms.pdf">The paper (PDF) ↗</a>
+    <a class="tg" href="epw-extension-2019-2025.csv">The 2019–2025 extension (CSV) ↓</a>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap foot">
+  <span>© 2026 Sean Wang · Visiting Professor, Rice University Jones Graduate School of Business</span>
+  <span><a href="index.html">profsean.wang</a> · <a href="mailto:Sean@profsean.wang">Sean@profsean.wang</a></span>
+</div></footer>
+
+<script src="epw-data.js"></script>
+<script>
+const RED='#b42a24',ORG='#8b8377',MUTE='#8b8377',INK='#1a1714',GRID='rgba(26,23,20,.10)',AXIS='rgba(26,23,20,.45)';
+const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtT=v=>'$'+v.toFixed(2)+'tn', fmtM=v=>v>=1000?'$'+(v/1000).toFixed(1)+'bn':'$'+Math.round(v)+'m';
+const el=(t,a)=>{let s='<'+t;for(const k in a)s+=' '+k+'="'+a[k]+'"';return s+'/>'};
+const tx=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.fs||9}" fill="${o.f||MUTE}" text-anchor="${o.a||'start'}"${o.w?' font-weight="500"':''}>${s}</text>`;
+let D=null,mode='nom',sortKey='t',sortDir=-1,query='',minSize=1,indFilter='',idxFilter=0;
+let page=1, perPage=60;
+
+// Mobile nav drawer. Wired outside boot() so it works even if the data file
+// is missing and the page renders empty.
+(function(){
+  var b=document.querySelector('.burger'),ul=document.getElementById('navlist');
+  if(!b||!ul)return;
+  b.addEventListener('click',function(e){e.stopPropagation();var o=ul.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false')});
+  ul.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){ul.classList.remove('open');b.setAttribute('aria-expanded','false')})});
+  document.addEventListener('click',function(e){if(!e.target.closest('nav')&&!e.target.closest('.burger')){ul.classList.remove('open');b.setAttribute('aria-expanded','false')}});
+})();
+
+if(window.EPW_DATA){D=window.EPW_DATA;boot();}
+else{$('#kpis').innerHTML='<div style="grid-column:1/-1;padding:1rem"><b style="font-size:1rem">Data file not found</b><span>epw-data.js must sit in the same folder as this page</span></div>';}
+
+function boot(){
+  const b=D.bal, last=b[b.length-1], first=b[0];
+  const lt=last[1]+last[2], ft=first[1]+first[2];
+  $('#kpis').innerHTML=[
+    [fmtT(lt),'Off-book intangible capital<br>constant panel, FY'+last[0]],
+    ['+'+((lt/ft-1)*100).toFixed(0)+'%','Growth since '+first[0]+'<br>+'+((last[3]/b[0][3]-1)*100).toFixed(0)+'% in constant dollars'],
+    [D.meta.balanced_firms.toLocaleString(),'Firms in the<br>constant panel'],
+    ['0.998 / 0.990','Correlation with published EPW stocks<br>knowledge / organizational, matched rows']
+  ].map(([v,k])=>`<div><b>${v}</b><span>${k}</span></div>`).join('');
+  const bn2=$('#balN'); if(bn2)bn2.textContent=D.meta.balanced_firms.toLocaleString();
+  // wire the table FIRST so a chart failure can never disable sorting
+  wireTable();
+  firmTable();
+  try{drawBal();drawLong();drawInd();parmTable();}catch(e){console.error('chart render failed:',e)}
+  const bn=$('#bNom'),br=$('#bReal');
+  if(bn&&br){
+    bn.onclick=()=>{mode='nom';bn.setAttribute('aria-pressed','true');br.setAttribute('aria-pressed','false');drawBal()};
+    br.onclick=()=>{mode='real';br.setAttribute('aria-pressed','true');bn.setAttribute('aria-pressed','false');drawBal()};
+  }
+}
+
+const dfltDir=k=>(k==='n'||k==='i')?1:-1;
+// Two different affordances, deliberately:
+//   toggle=false (the "Sort by" buttons) always lands on the useful end —
+//     biggest first for numbers, A–Z for names — even if that key is already
+//     active. Total is the sort on page load, so a toggling button would have
+//     flipped it to smallest-first on the user's first click, which reads as
+//     a broken control.
+//   toggle=true (clicking a column header) flips, which is what a table header
+//     is expected to do. The direction button flips too.
+function setSort(k,toggle){
+  if(toggle && k===sortKey){sortDir=-sortDir}
+  else{sortKey=k;sortDir=dfltDir(k)}
+  page=1;
+  firmTable();
+}
+
+// Windowed pager: first/prev, a sliding run of page numbers with ellipses,
+// then next/last. Keeps the control narrow at 33 pages and at 3.
+function drawPager(nPages){
+  const el=$('#pager'); if(!el)return;
+  if(nPages<=1){el.innerHTML='';return}
+  const btn=(label,p,opts={})=>{
+    const dis=opts.disabled?' disabled style="opacity:.35;cursor:default"':'';
+    const on=opts.current?' aria-current="page" aria-pressed="true"':'';
+    return `<button class="tg" data-p="${p}"${dis}${on}>${label}</button>`;
+  };
+  let out=btn('« First',1,{disabled:page===1})+btn('‹ Prev',page-1,{disabled:page===1});
+  const win=2; let lo=Math.max(1,page-win), hi=Math.min(nPages,page+win);
+  if(lo>1){out+=btn('1',1);if(lo>2)out+='<span class="ctl-lbl" style="align-self:center">…</span>';}
+  for(let p=lo;p<=hi;p++)out+=btn(String(p),p,{current:p===page});
+  if(hi<nPages){if(hi<nPages-1)out+='<span class="ctl-lbl" style="align-self:center">…</span>';out+=btn(String(nPages),nPages);}
+  out+=btn('Next ›',page+1,{disabled:page===nPages})+btn('Last »',nPages,{disabled:page===nPages});
+  el.innerHTML=out;
+}
+
+function wireTable(){
+  const head=document.querySelector('#tFirms thead');
+  if(head)head.addEventListener('click',e=>{
+    const th=e.target.closest('th[data-s]'); if(th)setSort(th.dataset.s,true);
+  });
+  const sb=$('#sortby');
+  if(sb)sb.addEventListener('click',e=>{
+    const b=e.target.closest('button[data-k]'); if(b)setSort(b.dataset.k,false);
+  });
+  // Two explicit, always-visible directions. A single toggling button labelled
+  // with its current state reads as "click me to get highest first" even when
+  // it is already showing highest first.
+  const df=$('#dirf');
+  if(df)df.addEventListener('click',e=>{
+    const b=e.target.closest('button[data-d]'); if(!b)return;
+    sortDir=+b.dataset.d; page=1; firmTable();
+  });
+  const q=$('#q');
+  if(q)q.addEventListener('input',e=>{query=e.target.value.toLowerCase();page=1;firmTable()});
+  const sz=$('#szf');
+  if(sz)sz.addEventListener('click',e=>{
+    const b=e.target.closest('button[data-z]'); if(!b)return;
+    minSize=+b.dataset.z; page=1;
+    sz.querySelectorAll('button[data-z]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+    firmTable();
+  });
+  const pg=$('#pager');
+  if(pg)pg.addEventListener('click',e=>{
+    const b=e.target.closest('button[data-p]'); if(!b||b.disabled)return;
+    page=+b.dataset.p; firmTable();
+    const t=$('#tFirms'); if(t&&t.scrollIntoView)t.scrollIntoView({block:'start',behavior:'smooth'});
+  });
+  // Industry buttons are built from the data so they can never drift from it.
+  const inf=$('#indf');
+  if(inf){
+    D.indNames.forEach(n=>{
+      const b=document.createElement('button');
+      b.className='tg'; b.dataset.i=n; b.textContent=n; b.setAttribute('aria-pressed','false');
+      inf.appendChild(b);
+    });
+    inf.addEventListener('click',e=>{
+      const b=e.target.closest('button[data-i]'); if(!b)return;
+      indFilter=b.dataset.i; page=1;
+      inf.querySelectorAll('button[data-i]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+      firmTable();
+    });
+  }
+  const ixf=$('#idxf');
+  if(ixf)ixf.addEventListener('click',e=>{
+    const b=e.target.closest('button[data-m]'); if(!b)return;
+    idxFilter=+b.dataset.m; page=1;
+    ixf.querySelectorAll('button[data-m]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+    firmTable();
+  });
+}
+
+// Index membership is CURRENT membership applied to the whole panel, so it is a
+// survivorship filter, not point-in-time membership. Coverage is also partial:
+// financials, utilities and real estate are screened out of the EPW sample
+// entirely, so a large share of each index can never appear here.
+function idxCaption(){
+  const m=D.meta||{}, a=m.index_asof||{}, k=m.index_matched||{};
+  if(!idxFilter)return m.index_note||'';
+  const spec={1:['S&P 500',503,k.sp500,a.sp500],2:['Nasdaq 100',101,k.ndx,a.nasdaq100],4:['Dow 30',30,k.dow,a.dow30]}[idxFilter];
+  if(!spec)return '';
+  const [nm,tot,got,dt]=spec;
+  return `${got} of ${tot} current ${nm} members appear in this table (constituents as of ${dt}). `
+       + `The rest are absent because financials, utilities and real estate are excluded from the EPW sample by construction, `
+       + `or because the firm falls outside the 2,000 largest holders of intangible capital. `
+       + `Membership is current, not point-in-time — firms that have since left the index are not flagged.`;
+}
+
+function drawBal(){
+  const W=720,H=300,L=58,R=18,T=22,B=44, b=D.bal;
+  const vals=b.map(r=>mode==='nom'?r[1]+r[2]:r[3]);
+  const max=Math.ceil(Math.max(...vals)*1.15);
+  const x=i=>L+i*(W-L-R)/(b.length-1), y=v=>H-B-(v/max)*(H-B-T);
+  let s='';
+  for(let g=0;g<=max;g+=2){s+=`<line x1="${L}" y1="${y(g)}" x2="${W-R}" y2="${y(g)}" stroke="${GRID}"/>`+tx(L-8,y(g)+3,'$'+g+'tn',{a:'end'});}
+  if(mode==='nom'){
+    const ao=b.map((r,i)=>`${x(i)},${y(r[2])}`).join(' ');
+    s+=`<polygon points="${L},${y(0)} ${ao} ${W-R},${y(0)}" fill="${ORG}" opacity=".22"/>`;
+    const at=b.map((r,i)=>`${x(i)},${y(r[1]+r[2])}`).join(' ');
+    s+=`<polygon points="${ao.split(' ').reverse().join(' ')} ${at}" fill="${RED}" opacity=".20"/>`;
+    s+=`<polyline points="${ao}" fill="none" stroke="${ORG}" stroke-width="2"/>`;
+    s+=`<polyline points="${at}" fill="none" stroke="${RED}" stroke-width="2.4"/>`;
+    b.forEach((r,i)=>{s+=el('circle',{cx:x(i),cy:y(r[1]+r[2]),r:3,fill:RED})});
+  }else{
+    const at=b.map((r,i)=>`${x(i)},${y(r[3])}`).join(' ');
+    s+=`<polygon points="${L},${y(0)} ${at} ${W-R},${y(0)}" fill="${RED}" opacity=".14"/>`;
+    s+=`<polyline points="${at}" fill="none" stroke="${RED}" stroke-width="2.4"/>`;
+    b.forEach((r,i)=>{s+=el('circle',{cx:x(i),cy:y(r[3]),r:3,fill:RED})});
+  }
+  b.forEach((r,i)=>{s+=tx(x(i),H-B+16,r[0],{a:'middle'})});
+  const lv=vals[vals.length-1];
+  s+=tx(W-R,y(lv)-10,fmtT(lv),{a:'end',f:RED,fs:13,w:1});
+  s+=`<line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="${AXIS}"/>`;
+  $('#chBal').innerHTML=$('#chBal').innerHTML.split('</title>')[0]+'</title>'+s;
+  $('#capBal').textContent = mode==='nom'
+    ? `Nominal dollars. Knowledge capital ${fmtT(b[0][1])} → ${fmtT(last1(1))}; organizational ${fmtT(b[0][2])} → ${fmtT(last1(2))}.`
+    : `Deflated to constant 2018 dollars using CPIAUCSL. Roughly two-fifths of the nominal increase is price level.`;
+  function last1(i){return b[b.length-1][i]}
+}
+
+function drawLong(){
+  const W=720,H=320,L=58,R=18,T=22,B=52, a=D.long;
+  const max=Math.ceil(Math.max(...a.map(r=>r[2]+r[3]))*1.12);
+  const x=i=>L+i*(W-L-R)/(a.length-1), y=v=>H-B-(v/max)*(H-B-T);
+  let s='';
+  const ei=a.findIndex(r=>r[4]===1);
+  if(ei>0){s+=`<rect x="${x(ei)-((x(1)-x(0))/2)}" y="${T-8}" width="${W-R-x(ei)+((x(1)-x(0))/2)}" height="${H-B-T+8}" fill="${RED}" opacity=".06"/>`;
+           s+=tx(W-R-4,T+2,'EXTENSION',{a:'end',f:RED,fs:8});}
+  for(let g=0;g<=max;g+=2){s+=`<line x1="${L}" y1="${y(g)}" x2="${W-R}" y2="${y(g)}" stroke="${GRID}"/>`+tx(L-8,y(g)+3,'$'+g+'tn',{a:'end'});}
+  const ao=a.map((r,i)=>`${x(i)},${y(r[3])}`).join(' ');
+  s+=`<polygon points="${L},${y(0)} ${ao} ${W-R},${y(0)}" fill="${ORG}" opacity=".22"/>`;
+  const at=a.map((r,i)=>`${x(i)},${y(r[2]+r[3])}`).join(' ');
+  s+=`<polygon points="${ao.split(' ').reverse().join(' ')} ${at}" fill="${RED}" opacity=".20"/>`;
+  s+=`<polyline points="${ao}" fill="none" stroke="${ORG}" stroke-width="1.8"/>`;
+  s+=`<polyline points="${at}" fill="none" stroke="${RED}" stroke-width="2.2"/>`;
+  a.forEach((r,i)=>{if(r[0]%5===0||i===a.length-1)s+=tx(x(i),H-B+16,r[0],{a:'middle',fs:8})});
+  s+=tx(L,H-B+34,'firms covered',{fs:7.5});
+  a.forEach((r,i)=>{if(r[0]%10===0||i===a.length-1)s+=tx(x(i),H-B+34,r[1].toLocaleString(),{a:'middle',fs:7.5})});
+  s+=`<line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="${AXIS}"/>`;
+  $('#chLong').innerHTML=$('#chLong').innerHTML.split('</title>')[0]+'</title>'+s;
+  const p=a.filter(r=>r[4]===0), q=a[a.length-1];
+  $('#capLong').textContent=`Published EPW stocks through fiscal ${p[p.length-1][0]} (${p[p.length-1][1].toLocaleString()} firms); extension thereafter. The same industry screen is applied to every year, so the count falls with delistings rather than jumping at the extension boundary. FY${q[0]} covers ${q[1].toLocaleString()} firms; its mix of fiscal year-ends matches earlier years, so it is not a partial-filing artefact.`;
+}
+
+function drawInd(){
+  const W=420,H=300,L=76,R=54,T=18,B=30;
+  function tot(n,yr){const r=D.ind[n].find(z=>z[0]===yr);return r?r[1]+r[2]:0}
+  const yrs=D.ind[D.indNames[0]].map(z=>z[0]);
+  const yA=yrs[0], yB=yrs[yrs.length-1];
+  const names=D.indNames.slice().sort((p,q)=>tot(q,yB)-tot(p,yB));
+  const max=Math.max(...names.map(n=>tot(n,yB)))*1.18;
+  const bh=(H-T-B)/names.length;
+  let s='';
+  names.forEach((n,i)=>{
+    const yb=T+i*bh+bh*0.16, h=bh*0.3;
+    const w1=(tot(n,yA)/max)*(W-L-R), w2=(tot(n,yB)/max)*(W-L-R);
+    s+=tx(L-8,yb+h+2,n,{a:'end',f:INK,fs:9});
+    s+=el('rect',{x:L,y:yb,width:w1.toFixed(1),height:h.toFixed(1),fill:ORG,opacity:.35});
+    s+=el('rect',{x:L,y:(yb+h+2).toFixed(1),width:w2.toFixed(1),height:h.toFixed(1),fill:RED});
+    s+=tx(L+w2+6,yb+h*2+2,fmtT(tot(n,yB)),{f:RED,fs:9,w:1});
+  });
+  s+=tx(L,H-10,String(yA),{fs:8});s+=el('rect',{x:L+28,y:H-17,width:12,height:6,fill:ORG,opacity:.35});
+  s+=tx(L+50,H-10,String(yB),{fs:8});s+=el('rect',{x:L+78,y:H-17,width:12,height:6,fill:RED});
+  $('#chInd').innerHTML=$('#chInd').innerHTML.split('</title>')[0]+'</title>'+s;
+}
+
+function parmTable(){
+  const med=D.indMed||{};
+  const rows=Object.entries(D.parm).sort((a,b)=>(med[b[0]]||0)-(med[a[0]]||0))
+    .map(([k,v])=>`<tr><td>${esc(k)}</td><td class="r">${v[0].toFixed(2)}</td><td class="r">${v[1].toFixed(2)}</td><td class="r">${v[2].toFixed(2)}</td><td class="r"><b style="color:var(--red)">${med[k]!=null?med[k]+'%':'—'}</b></td></tr>`).join('');
+  $('#tParm tbody').innerHTML=rows;
+}
+
+function spark(k,o,w=90,h=20){
+  const t=k.map((v,i)=>v+o[i]); const mx=Math.max(...t)||1;
+  const pts=t.map((v,i)=>`${(i*(w-2)/(t.length-1)+1).toFixed(1)},${(h-1-(v/mx)*(h-3)).toFixed(1)}`).join(' ');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${RED}" stroke-width="1.4"/></svg>`;
+}
+
+function firmTable(){
+  const f=D.firms.map(r=>{const n=r[4].length-1;return{n:r[0],t:r[1],i:D.indNames[r[2]],y0:r[3],k:r[4],o:r[5],
+     K:r[4][n],O:r[5][n],T:r[4][n]+r[5][n],R:(r[6]==null?-1:r[6]),Z:(r[7]||0),ly:r[3]+n,M:(r[8]||0)}});
+  let v=f.filter(r=>r.Z>=minSize);
+  if(indFilter)v=v.filter(r=>r.i===indFilter);
+  if(idxFilter)v=v.filter(r=>(r.M&idxFilter)!==0);
+  if(query)v=v.filter(r=>r.n.toLowerCase().includes(query)||r.t.toLowerCase().includes(query));
+  const key={n:'n',i:'i',k:'K',o:'O',t:'T',r:'R'}[sortKey];
+  // Off-book share is published as an integer percent (deliberately — more
+  // precision would invert back to reported assets). That leaves ~90 distinct
+  // values across 2,000 firms, so a single-key sort is mostly ties and the
+  // order inside a tie looks arbitrary. Break ties on total intangible
+  // capital, then name, so the ranking is deterministic and readable.
+  v=v.slice().sort((a,b)=>{
+    const x=a[key],y=b[key];
+    const p = (typeof x==='string' ? x.localeCompare(y) : x-y)*sortDir;
+    if(p) return p;
+    if(key!=='T' && b.T!==a.T) return b.T-a.T;
+    return a.n.localeCompare(b.n);
+  });
+  document.querySelectorAll('#tFirms th[data-s]').forEach(th=>{
+    const on=th.dataset.s===sortKey, sp=th.querySelector('span');
+    if(sp)sp.textContent = on ? (sortDir>0?'▲':'▼') : '';
+    if(on)th.setAttribute('aria-sort',sortDir>0?'ascending':'descending'); else th.removeAttribute('aria-sort');
+  });
+  document.querySelectorAll('#sortby button[data-k]').forEach(b=>
+    b.setAttribute('aria-pressed', b.dataset.k===sortKey?'true':'false'));
+  const txt=(sortKey==='n'||sortKey==='i')?['Z → A','A → Z']:['High → Low','Low → High'];
+  const dh=$('#dirHi'), dl=$('#dirLo');
+  if(dh&&dl){
+    dh.textContent=txt[0]; dl.textContent=txt[1];
+    dh.setAttribute('aria-pressed',sortDir<0?'true':'false');
+    dl.setAttribute('aria-pressed',sortDir>0?'true':'false');
+  }
+  const nPages=Math.max(1,Math.ceil(v.length/perPage));
+  if(page>nPages)page=nPages;
+  if(page<1)page=1;
+  const from=(page-1)*perPage, show=v.slice(from,from+perPage);
+  drawPager(nPages);
+  const lastYr=D.meta&&D.meta.ext_last?D.meta.ext_last:Math.max(...f.map(r=>r.ly));
+  const badge=m=>[[1,'S&P'],[2,'NDX'],[4,'DOW']].filter(([bit])=>m&bit)
+      .map(([,lab])=>`<span class="tick" style="border:1px solid var(--rule3);padding:0 .25em;margin-left:.25em">${lab}</span>`).join('');
+  // Mark the column the order is actually coming from. Without this, a row like
+  // Walmart — 4th by Total but $0m knowledge capital — makes the whole table
+  // look unsorted.
+  const A=k=>sortKey===k?' style="background:rgba(26,23,20,.045)"':'';
+  $('#tFirms tbody').innerHTML=show.map(r=>`<tr>
+    <td${A('n')}><b>${esc(r.n)}</b>${r.t?` <span class="tick">${esc(r.t)}</span>`:''}${badge(r.M)}</td>
+    <td${A('i')}><span class="pill">${esc(r.i)}</span></td>
+    <td class="r"${A('k')}>${fmtM(r.K)}</td><td class="r"${A('o')}>${fmtM(r.O)}</td>
+    <td class="r"${A('t')}><b>${fmtM(r.T)}</b></td>
+    <td class="r"${A('r')}>${r.R<0?'<span class="tick">n/a</span>':`<b style="color:var(--red)">${r.R}%</b>`}</td>
+    <td>${spark(r.k,r.o)} <span class="tick"${r.ly<lastYr?' style="color:var(--red)" title="last available fiscal year — not comparable with FY'+lastYr+' firms"':''}>${r.ly}</span></td></tr>`).join('');
+  const sz=['any size','over $200m in reported assets','over $1bn in reported assets'][minSize];
+  const stale=v.filter(r=>r.ly<lastYr).length;
+  $('#capFirms').textContent=`Showing ${(from+1).toLocaleString()}–${(from+show.length).toLocaleString()} of ${v.length.toLocaleString()} firms`
+    +` (${sz}${indFilter?', '+indFilter:''}${idxFilter?', index members only':''})`
+    +`${nPages>1?`, page ${page} of ${nPages}`:''}. `
+    +`Millions of nominal dollars at each firm's last available fiscal year, shown beside the sparkline. `
+    +(stale?`${stale.toLocaleString()} of these last reported before FY${lastYr} and are marked in red — their totals are not comparable with current filers. `:'')
+    +`Off-book share is rounded to the nearest percent.`
+    +(sortDir>0&&(sortKey==='t'||sortKey==='k'||sortKey==='o')
+       ? ` Lowest first shows the bottom of the 2,000 largest holders of intangible capital, not the bottom of the market — the floor here is an artefact of that cut.` : '');
+  const ci=$('#capIdx'); if(ci)ci.textContent=idxCaption();
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8WXJP5FDTQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-8WXJP5FDTQ');</script>
+</body>
+</html>
