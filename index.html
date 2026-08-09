@@ -64,6 +64,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&amp;family=Karla:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script>try{var _a=localStorage.getItem('psw-audience');if(_a==='industry')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 <style>
 :root{
   --paper:#ffffff; --inset:#faf7f1; --inset2:#f4efe4; --band:#fbfaf7;
@@ -1182,8 +1183,11 @@ document.documentElement.classList.add('rv-ready');
     if(sa)sa.setAttribute('aria-pressed',n?'false':'true');
     if(sn)sn.setAttribute('aria-pressed',n?'true':'false');
     root.setAttribute('data-theme',n?THEME_FOR_AUDIENCE.industry:THEME_FOR_AUDIENCE.academia);
+    // Remembered so the choice survives a reload and carries to the dashboard.
+    try{localStorage.setItem('psw-audience',n?'industry':'academia')}catch(e){}
   }
-  setReg(false);
+  var saved='academia'; try{saved=localStorage.getItem('psw-audience')||'academia'}catch(e){}
+  setReg(saved==='industry');
   if(sa&&sn){sa.addEventListener('click',function(){setReg(false)});sn.addEventListener('click',function(){setReg(true)})}
 
   var fbs=document.querySelectorAll('.fb');

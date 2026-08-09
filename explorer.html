@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=Karla:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script>try{var _a=localStorage.getItem('psw-audience');if(_a==='industry')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 <style>
 :root{
   --paper:#ffffff; --inset:#faf7f1; --inset2:#f4efe4; --band:#fbfaf7;
@@ -25,6 +26,25 @@
   --org:#8b8377;
   --serif:'Newsreader',Georgia,serif; --sans:'Karla',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
   --max:1120px;
+  --hdr:rgba(255,255,255,.92);
+  --ch-red:#b42a24; --ch-org:#8b8377; --ch-mute:#8b8377; --ch-ink:#1a1714;
+  --ch-grid:rgba(26,23,20,.10); --ch-axis:rgba(26,23,20,.45);
+  color-scheme:light;
+}
+/* Industry & media reads dark. Set on <html> by the head script from the same
+   localStorage key the homepage writes, so the choice carries across pages.
+   Chart colours are variables too — the SVGs are drawn in JS and would
+   otherwise stay black-on-black. */
+html[data-theme="dark"]{
+  --paper:#0e0c0a; --inset:#16130f; --inset2:#1e1a14; --band:#12100e;
+  --ink:#ede8df; --ink2:#b0a898; --ink3:#7d7268;
+  --red:#d4483f; --red-tint:rgba(212,72,63,.10); --red-tint2:rgba(212,72,63,.18);
+  --rule:rgba(255,255,255,.09); --rule2:rgba(255,255,255,.20); --rule3:rgba(212,72,63,.35);
+  --org:#8f8778;
+  --hdr:rgba(14,12,10,.92);
+  --ch-red:#d4483f; --ch-org:#8f8778; --ch-mute:#8f8778; --ch-ink:#ede8df;
+  --ch-grid:rgba(237,232,223,.11); --ch-axis:rgba(237,232,223,.42);
+  color-scheme:dark;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -34,7 +54,7 @@ a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--red);outline-offset:3px}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(20px,4vw,48px)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+header{position:sticky;top:0;z-index:60;background:var(--hdr);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 0}
 .n-left{display:flex;align-items:center;gap:.55rem}
 .n-mark{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--red);padding:.22rem .38rem;border:1.5px solid var(--rule3)}
@@ -287,7 +307,15 @@ footer a:hover{color:var(--red)}
 
 <script src="epw-data.js"></script>
 <script>
-const RED='#b42a24',ORG='#8b8377',MUTE='#8b8377',INK='#1a1714',GRID='rgba(26,23,20,.10)',AXIS='rgba(26,23,20,.45)';
+// Chart colours come from CSS so light and dark stay in one place. The SVGs
+// are built as strings in JS, so these have to be read, not inherited.
+let RED,ORG,MUTE,INK,GRID,AXIS;
+function readChartColours(){
+  const c=getComputedStyle(document.documentElement), v=n=>c.getPropertyValue(n).trim();
+  RED=v('--ch-red')||'#b42a24'; ORG=v('--ch-org')||'#8b8377'; MUTE=v('--ch-mute')||'#8b8377';
+  INK=v('--ch-ink')||'#1a1714'; GRID=v('--ch-grid')||'rgba(26,23,20,.10)'; AXIS=v('--ch-axis')||'rgba(26,23,20,.45)';
+}
+readChartColours();
 const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtT=v=>'$'+v.toFixed(2)+'tn', fmtM=v=>v>=1000?'$'+(v/1000).toFixed(1)+'bn':'$'+Math.round(v)+'m';
 const el=(t,a)=>{let s='<'+t;for(const k in a)s+=' '+k+'="'+a[k]+'"';return s+'/>'};
