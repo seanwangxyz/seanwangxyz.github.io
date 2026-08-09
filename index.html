@@ -64,7 +64,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&amp;family=Karla:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<script>try{var _a=localStorage.getItem('psw-audience');if(_a==='industry')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<script>try{var _a=localStorage.getItem('psw-audience-2');if(_a!=='academia')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 <style>
 :root{
   --paper:#ffffff; --inset:#faf7f1; --inset2:#f4efe4; --band:#fbfaf7;
@@ -74,6 +74,8 @@
   --rule:rgba(26,23,20,0.11); --rule2:rgba(26,23,20,0.22); --rule3:rgba(180,42,36,0.25);
   --serif:'Newsreader',Georgia,serif; --sans:'Karla',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
   --max:1180px;
+  /* One value per box family, so near-identical paddings stop drifting. */
+  --pad-tile:1rem .85rem; --pad-frame:7px;
   --fig-red:#b42a24; --fig-red2:rgba(180,42,36,.55); --fig-ink:#1a1714; --fig-mute:#8b8377;
   --fig-bg:#ffffff; --fig-axis:rgba(26,23,20,.45); --fig-line:rgba(26,23,20,.3);
   --fig-grid:rgba(26,23,20,.10); --fig-fill1:rgba(26,23,20,.20);
@@ -109,6 +111,7 @@ header{position:sticky;top:0;z-index:80;background:color-mix(in srgb, var(--pape
 nav{order:2}
 .burger{order:4}
 .n-left{display:flex;align-items:center;gap:.55rem}
+.n-left:hover .n-name{color:var(--red)}
 .n-mark{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--red);padding:.22rem .38rem;border:1.5px solid var(--rule3);white-space:nowrap}
 .n-name{font-size:.88rem;font-weight:600;letter-spacing:.03em}
 nav ul{display:flex;gap:clamp(.85rem,1.5vw,1.35rem);list-style:none;align-items:center}
@@ -149,6 +152,7 @@ body.newsroom .r-acad{display:none}
 html[data-theme="dark"] .hero-photo img{filter:brightness(.88) contrast(1.04)}
 @media(max-width:900px){.hero-grid{grid-template-columns:120px minmax(0,1fr);align-items:start}.hero-photo{grid-row:1;align-self:start;min-height:0;aspect-ratio:4/5}}
 .hero p.lede{font-size:1.05rem;color:var(--ink2);line-height:1.8;max-width:46ch}
+.lede-now{display:inline-block;margin-top:.7rem;font-size:.88rem;color:var(--ink3)}
 /* Sits below the hero grid, full width, so it cannot disturb the three-column
    photo / lede / stats layout. */
 .hero-tool{display:flex;align-items:baseline;gap:.75rem;margin:1.4rem 0 0;padding:.75rem .9rem;
@@ -162,9 +166,13 @@ html[data-theme="dark"] .hero-photo img{filter:brightness(.88) contrast(1.04)}
 @media(max-width:640px){.hero-tool{flex-wrap:wrap;gap:.4rem}.hero-tool .ht-go{display:none}}
 .hero p.lede b{color:var(--ink);font-weight:600}
 .hs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.hs div{background:var(--paper);padding:.85rem .8rem;display:flex;flex-direction:column;justify-content:flex-start}
+.hs div{background:var(--paper);padding:var(--pad-tile);display:flex;flex-direction:column;justify-content:flex-start}
 .hs .v{font-family:var(--serif);font-size:1.75rem;font-weight:600;color:var(--red);line-height:1}
 .hs .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.06em;color:var(--ink3);margin-top:.45rem;line-height:1.45;text-transform:uppercase}
+.hs .kk{display:inline-block;margin-top:.3rem;color:var(--ink2);letter-spacing:.04em}
+.hs-lnk{display:block;color:inherit}
+.hs-lnk:hover .v{color:var(--red-ui)}
+.hs-lnk:hover .k{color:var(--ink2)}
 .reg-bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:2.2rem;padding-top:1rem;border-top:1px solid var(--rule);flex-wrap:wrap}
 .reg-note{font-family:var(--mono);font-size:.66rem;color:var(--ink3);letter-spacing:.02em}
 
@@ -200,14 +208,31 @@ html[data-theme="dark"] .pill.pub{background:var(--inset2);color:var(--ink);bord
 .qa .q{font-size:.94rem;font-weight:600;line-height:1.55;margin-bottom:.45rem}
 .qa .q::before{content:"Q";font-family:var(--mono);font-size:.62rem;color:var(--red);margin-right:.55em;vertical-align:.12em}
 .qa .a{font-size:.92rem;color:var(--ink2);line-height:1.75}
+/* Lead sentence carries the finding; bullets carry the support. */
+.qa .a .lead{margin-bottom:.55rem}
+.qa .a ul{list-style:none;margin:0;padding:0}
+.qa .a li{position:relative;padding-left:1rem;margin-bottom:.3rem;font-size:.88rem;line-height:1.65}
+.qa .a li::before{content:"";position:absolute;left:.1rem;top:.62em;width:4px;height:4px;border-radius:50%;background:var(--red)}
+.qa .a li:last-child{margin-bottom:0}
 .qa .a b{color:var(--ink);font-weight:600}
-.ident{font-family:var(--mono);font-size:.64rem;color:var(--ink3);line-height:1.85;border-top:1px dashed var(--rule2);padding-top:.75rem;margin-top:.9rem}
+/* Closed by default: 64-129 words of design detail per card is the right
+   content for a referee and dead weight for everyone else. */
+.ident{border-top:1px dashed var(--rule2);padding-top:.75rem;margin-top:.9rem}
+.ident>summary{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink3);cursor:pointer;list-style:none;display:flex;align-items:center;gap:.4rem}
+.ident>summary::-webkit-details-marker{display:none}
+.ident>summary::after{content:"+";font-size:.85rem;line-height:1;color:var(--red)}
+.ident[open]>summary::after{content:"\2212"}
+.ident>summary:hover{color:var(--red)}
+.ident-body{font-family:var(--mono);font-size:.64rem;color:var(--ink3);line-height:1.85;margin-top:.6rem}
 .ident b{color:var(--ink2);font-weight:500}
 .links{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.9rem}
 .lk{font-family:var(--mono);font-size:.63rem;letter-spacing:.05em;border:1px solid var(--rule2);padding:.3rem .6rem;color:var(--ink2);transition:.2s}
 .lk:hover{border-color:var(--red);color:var(--red)}
 .lk.pri{border-color:var(--rule3);color:var(--red)}
-.fig-cell{border-left:1px solid var(--rule);background:var(--inset);padding:1.1rem 1.15rem;display:flex;flex-direction:column;justify-content:center}
+.fig-cell{border-left:1px solid var(--rule);background:var(--inset);padding:1.1rem 1.15rem;display:flex;flex-direction:column;justify-content:center;cursor:pointer;display:block;transition:.2s}
+a.fig-cell:hover{background:var(--red-tint)}
+a.fig-cell:hover .fig-lbl{color:var(--red)}
 @media(max-width:900px){.fig-cell{border-left:none;border-top:1px solid var(--rule)}}
 .fig-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
 .fig-cap{font-family:var(--mono);font-size:.58rem;color:var(--ink3);line-height:1.7;margin-top:.6rem}
@@ -248,7 +273,7 @@ html[data-theme="dark"] .fb[aria-pressed="true"]{background:var(--red);color:#ff
 
 /* ---------- teaching ---------- */
 .tstats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:1.8rem}
-.tstats div{background:var(--paper);padding:1.1rem .8rem;text-align:center}
+.tstats div{background:var(--paper);padding:var(--pad-tile);text-align:center}
 .tstats b{font-family:var(--serif);font-size:clamp(1.3rem,2.2vw,1.85rem);font-weight:600;display:block;line-height:1}
 .tstats span{font-family:var(--mono);font-size:.55rem;letter-spacing:.08em;color:var(--ink3);display:block;margin-top:.45rem;text-transform:uppercase;line-height:1.5}
 @media(max-width:760px){.tstats{grid-template-columns:repeat(2,1fr)}}
@@ -281,14 +306,14 @@ blockquote cite{display:block;font-family:var(--mono);font-size:.6rem;font-style
 /* Monochrome against the colour hero — a deliberate register shift, not a
    second headshot. Frame is the neutral rule, not crimson: the accent is
    already spent on the hero photo and the nav. */
-.about-photo{border:1px solid var(--rule);background:var(--paper);padding:5px;position:sticky;top:5.5rem}
+.about-photo{border:1px solid var(--rule);background:var(--paper);padding:var(--pad-frame);position:sticky;top:5.5rem}
 .about-photo img{width:100%;height:auto;display:block}
 html[data-theme="dark"] .about-photo img{filter:brightness(.9) contrast(1.03)}
 @media(max-width:900px){
   .about-grid{grid-template-columns:1fr}
   .about-photo{position:static;max-width:240px;margin-bottom:.5rem}
 }
-.photo{border:1px solid var(--rule);padding:9px;background:var(--paper)}
+.photo{border:1px solid var(--rule);padding:var(--pad-frame);background:var(--paper)}
 .photo img{width:100%;height:auto;display:block;filter:grayscale(12%)}
 html[data-theme="dark"] .photo img{filter:grayscale(20%) brightness(.92)}
 .photo .cap{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;color:var(--ink3);padding-top:.65rem;text-transform:uppercase}
@@ -341,10 +366,10 @@ footer a:hover{color:var(--red)}
 
 <header>
   <div class="wrap nav">
-    <div class="n-left"><span class="n-mark">sW:</span><span class="n-name">Sean Wang</span></div>
+    <a class="n-left" href="#top" aria-label="Back to top"><span class="n-mark">sW:</span><span class="n-name">Sean Wang</span></a>
     <button class="burger" aria-expanded="false" aria-controls="navlist">MENU</button>
     <nav><ul id="navlist">
-      <li><a href="#research">Research</a></li>
+      <li><a href="#program">Research</a></li>
       <li><a href="#record">Papers</a></li>
       <li><a href="#data">Intangibles</a></li>
       <li><a class="nav-tool" href="explorer.html">Dashboard</a></li>
@@ -360,17 +385,17 @@ footer a:hover{color:var(--red)}
 <main id="main">
 
 <!-- ============ HERO ============ -->
-<div class="hero">
+<div class="hero" id="top">
   <div class="wrap">
     <div class="eyebrow">Information economics in capital markets</div>
     <h1>When information <em>breaks,</em> who pays?</h1>
     <div class="hero-grid">
       <div class="hero-photo"><img src="headshot-rice.jpg" alt="Sean Wang" width="800" height="1000" loading="eager"></div>
-      <p class="lede">I study the forces that distort information in capital markets — <b>bias in analyst research</b>, <b>contractual control of clinical-trial disclosure</b>, <b>executive personality</b>, and the <b>intangible capital</b> that accounting leaves off the balance sheet. The work spans accounting, finance, behavioral science, and public policy.</p>
+      <p class="lede">I study the forces that distort information in capital markets — <b>bias in analyst research</b>, <b>contractual control of clinical-trial disclosure</b>, <b>executive personality</b>, and the <b>intangible capital</b> that accounting leaves off the balance sheet. The work spans accounting, finance, behavioral science, and public policy.<br><span class="lede-now">I am currently visiting Rice University for the 2026&ndash;27 academic year.</span></p>
       <div class="hs">
-        <div><div class="v">11</div><div class="k">Top-tier<br>publications</div></div>
-        <div><div class="v">5</div><div class="k">Elite journals<br>JFE · JAE · JAR<br>TAR · MS</div></div>
-        <div><div class="v">90+</div><div class="k">Seminars &amp; conferences<br>NBER · AFA · Kellogg · NYU · Yale · LBS</div></div>
+        <div><a class="hs-lnk" href="sean-wang-cv.pdf"><div class="v">11</div><div class="k">Top-tier publications<br><span class="kk">JFE · JAE · JAR · TAR · MS</span></div></a></div>
+        <div><a class="hs-lnk" href="sean-wang-cv.pdf"><div class="v">100+</div><div class="k">Research presented at<br><span class="kk">NBER · AFA · Berkeley · Carnegie Mellon · Cornell</span></div></a></div>
+        <div><a class="hs-lnk" href="sean-wang-cv.pdf"><div class="v">17</div><div class="k">Media outlets<br><span class="kk">FT · NYT · WSJ · Washington Post · HBR</span></div></a></div>
       </div>
     </div>
     <a class="hero-tool" href="explorer.html">
@@ -381,8 +406,8 @@ footer a:hover{color:var(--red)}
     <div class="reg-bar">
       <div class="reg">
         <span class="reg-lbl" id="reglbl">Audience</span>
-        <button class="seg" id="segA" aria-pressed="true" aria-describedby="reglbl">Academia</button>
-        <button class="seg" id="segN" aria-pressed="false" aria-describedby="reglbl">Industry &amp; media</button>
+        <button class="seg" id="segA" aria-pressed="false" aria-describedby="reglbl">Academia</button>
+        <button class="seg" id="segN" aria-pressed="true" aria-describedby="reglbl">Industry &amp; media</button>
       </div>
       <p class="reg-note r-acad">Showing identification, samples, and estimates.</p>
       <p class="reg-note r-news">Showing plain-English findings and quotable figures.</p>
@@ -391,7 +416,7 @@ footer a:hover{color:var(--red)}
 </div>
 
 <!-- ============ RESEARCH PROGRAM ============ -->
-<section id="program" class="band">
+<section id="program">
   <div class="wrap">
     <div class="shead rv">
       <div class="so">Research program</div>
@@ -399,19 +424,19 @@ footer a:hover{color:var(--red)}
       <p class="sd">One question, pursued three ways: what happens when the information systems in capital markets break down?</p>
     </div>
     <div class="streams">
-      <a class="stream rv" href="#record">
+      <a class="stream rv" href="#record" data-jump="bias">
         <div class="sn">01</div>
         <h3>Information bias &amp; discrimination</h3>
         <p>Racial prejudice and executive personality distort what financial intermediaries produce. I document the distortions, validate new ways to measure them, and identify what makes them go away.</p>
         <div class="sj">JAE 2025 · JAR 2017 · RAST 2018 · RAST 2025 · TAR (R&amp;R)</div>
       </a>
-      <a class="stream rv" href="#record">
+      <a class="stream rv" href="#record" data-jump="price">
         <div class="sn">02</div>
         <h3>Price discovery &amp; attention</h3>
         <p>Attention is finite and inventory is costly. Processing firm news crowds out macro news; microstructure frictions make prices predictable around scheduled announcements.</p>
         <div class="sj">JFE 2014 · RAST 2026 · TAR 2020 · AOS 2019 · JFQA 2018</div>
       </a>
-      <a class="stream rv" href="#record">
+      <a class="stream rv" href="#record" data-jump="measure">
         <div class="sn">03</div>
         <h3>Transparency &amp; measurement</h3>
         <p>Some information is suppressed by contract; some is omitted by accounting rules. Pharmaceutical embargoes, regulatory attention that backfires, and the intangible capital missing from balance sheets.</p>
@@ -422,13 +447,12 @@ footer a:hover{color:var(--red)}
 </section>
 
 <!-- ============ RESEARCH ============ -->
-<section id="research">
+<section id="research" class="band">
   <div class="wrap">
     <div class="shead rv">
       <div class="so">Selected work</div>
       <h2 class="st">How <em>we know it</em></h2>
-      <p class="sd r-acad">For each paper: the question it asks, what the evidence shows, and a drawing of the design that produced it. Estimates are quoted from the table they come from.</p>
-      <p class="sd r-news">For each paper: the question, the finding in plain English, and one picture. Everything here is quotable, and every figure links to the paper behind it.</p>
+      <p class="sd r-news">Everything here is quotable; every figure links to the paper behind it.</p>
     </div>
     <!-- 1. FRAGILE -->
     <article class="dos rv">
@@ -439,15 +463,15 @@ footer a:hover{color:var(--red)}
           <div class="with">with J. Bai, Y. Cao, and C. Wan</div>
           <div class="qa">
             <p class="q">When the market learns a firm's reputation was built on fabricated reviews, what does it cost — and does the damage heal?</p>
-            <p class="a">Flagged firms lose about <b>8% of foot traffic</b> and <b>5–6% of transaction volume</b> relative to demand-matched peers. The loss lands within a month and is still there at eighteen months — past the removal of the warning banner and the end of the advertising ban. Penalties are roughly twice as large when the alert carries documentary evidence.</p>
+            <div class="a"><p class="lead">Firms caught with fabricated reviews lose about <b>8% of foot traffic</b> and <b>5–6% of transaction volume</b> against demand-matched peers.</p><ul><li>The loss lands within a month and is still there at eighteen</li><li>It outlasts both the warning banner and the advertising ban</li><li>Penalties roughly double when the alert carries hard evidence</li></ul></div>
           </div>
-          <div class="ident r-acad">
+          <details class="ident r-acad"><summary>Design &amp; identification</summary><div class="ident-body">
             <b>Design</b> — staggered DiD; Sun &amp; Abraham (2021) interaction-weighted estimator for event studies.<br>
             <b>Controls</b> — never-treated demand-side peers from the intermediary's own "People Also Viewed" graph (revealed substitution, not industry code or geography).<br>
             <b>Estimate</b> — −0.0763 (t = −3.52), N = 16,837 firm-months; entropy-balanced −0.0772 (t = −4.95).<br>
             <b>Pre-trends</b> — max |t| = 1.24; no effect in the alert month itself (−0.6%, t = −0.47).<br>
             <b>Data</b> — Yelp alerts × SafeGraph GPS foot traffic × Consumer Edge transactions, 2019–2024.
-          </div>
+          </div></details>
           <div class="presskit r-news">
             <p class="hl">Get caught faking your reviews and you lose roughly 8% of your customers — permanently.</p>
             <p class="mn">Eighteen months later the traffic has not come back, long after the warning label is gone.</p>
@@ -457,7 +481,7 @@ footer a:hover{color:var(--red)}
             <a class="lk" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6963001">SSRN</a>
           </div>
         </div>
-        <div class="fig-cell">
+        <a class="fig-cell" href="papers/bai-cao-wan-wang-2026-wp.pdf" aria-label="Open the paper behind this figure">
           <div class="fig-lbl">Fig. 1 — Event study, foot traffic</div>
           <svg class="fig" viewBox="-18 0 368 200" role="img" aria-labelledby="f1t f1d">
             <title id="f1t">Event study of foot traffic around a consumer alert</title>
@@ -493,7 +517,7 @@ footer a:hover{color:var(--red)}
             <text x="188" y="194" font-size="6.5" fill="var(--fig-mute)" text-anchor="middle">MONTHS FROM ALERT</text>
           </svg>
           <p class="fig-cap">Sun–Abraham estimates, month −1 omitted (◦). Filled = p&lt;0.05. Months +8 and +9 are insignificant — a partial rebound while the ad ban is still active.</p>
-        </div>
+        </a>
       </div>
     </article>
 
@@ -506,15 +530,15 @@ footer a:hover{color:var(--red)}
           <div class="with">with O. Chen and Y. Zhang</div>
           <div class="qa">
             <p class="q">When drug sponsors buy the contractual right to review and delay the trials they fund, do they use it — and when?</p>
-            <p class="a"><b>Three-quarters</b> of industry-sponsored trials run by outside investigators carry embargo clauses. Those trials report the FDA's "very statistically persuasive" threshold — p&nbsp;&lt;&nbsp;0.0001 — <b>22.8% of the time versus 14.2%</b>. And their abstracts erase about <b>83% of the caution</b> independent investigators write into near-miss results. The effect appears only where the option is worth something.</p>
+            <div class="a"><p class="lead"><b>Three-quarters</b> of industry-sponsored trials run by outside investigators carry an embargo clause — and the sponsors use it.</p><ul><li>They clear the FDA’s p&nbsp;&lt;&nbsp;0.0001 bar <b>22.8%</b> of the time versus <b>14.2%</b></li><li>Their abstracts erase <b>83% of the caution</b> on near-miss results</li><li>The effect appears only where the option is worth something</li></ul></div>
           </div>
-          <div class="ident r-acad">
+          <details class="ident r-acad"><summary>Design &amp; identification</summary><div class="ident-body">
             <b>Design</b> — cross-sectional OLS with year × indication × firm fixed effects; SEs clustered by firm. Not a DiD; the paper reports associations.<br>
             <b>Identification</b> — a within-design placebo: the embargo effect on spin is <b>+0.336 (t = 3.05)</b> in the marginal zone (0.05 &lt; p ≤ 0.15) but <b>+0.097 (t = 1.45, n.s.)</b> where results already cleared p ≤ 0.05. Difference tested, p = 0.02.<br>
             <b>Magnitude</b> — 0.336 on a LIWC tone index with SD 0.402, i.e. ≈0.84 SD; it closes 83% of the −0.407 caution non-embargoed investigators show.<br>
             <b>Sample</b> — 58,144 firm–trial–indication observations, ClinicalTrials.gov × PubMed, 2007–2023.<br>
             <b>Downstream</b> — the FDA discounts the approval premium on extreme significance by ≈35% (−0.227, t = −2.55); capital markets show no reaction at all.
-          </div>
+          </div></details>
           <div class="presskit r-news">
             <p class="hl">Drug companies can pay for the right to review their own trial results before publication. Three out of four trials come with that clause.</p>
             <p class="mn">Those trials cluster at exactly the p-value the FDA treats as strong enough to approve a drug on a single study. The FDA appears to notice; investors don't.<br>Not a fraud claim — the paper is explicit that sponsors don't fabricate data.</p>
@@ -523,7 +547,7 @@ footer a:hover{color:var(--red)}
             <a class="lk pri" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6485602">SSRN</a>
           </div>
         </div>
-        <div class="fig-cell">
+        <a class="fig-cell" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6485602" aria-label="Open the paper behind this figure">
           <div class="fig-lbl">Fig. 2 — Spin by outcome zone</div>
           <svg class="fig" viewBox="0 0 350 200" role="img" aria-labelledby="f2t f2d">
             <title id="f2t">Spin in published abstracts by statistical-significance zone</title>
@@ -563,7 +587,7 @@ footer a:hover{color:var(--red)}
             <text x="68" y="121" font-size="6.5" fill="var(--fig-ink)">Not embargoed</text>
           </svg>
           <p class="fig-cap">Spin = LIWC tone, conclusions minus results, relative to trials that clearly failed. Table 5 Panel A, N = 7,907. Independent investigators write cautiously about near-misses; embargoed abstracts do not. The near-zero gap where results already passed is the placebo.</p>
-        </div>
+        </a>
       </div>
     </article>
 
@@ -576,14 +600,14 @@ footer a:hover{color:var(--red)}
           <div class="with">with K. Rupar and H. Yoon</div>
           <div class="qa">
             <p class="q">Do analysts price the same bad news differently when a firm's CEO is not White?</p>
-            <p class="a">A given dose of bad news moves analysts' valuations <b>57% more</b> when the CEO is non-White. There is <b>no comparable effect for good news</b> and none in EPS forecasts — the asymmetry is what makes this look like an unconscious stereotype response rather than a general race effect. And the pessimism was not justified: those firms are <b>2.7pp more likely</b> to exceed the target within twelve months.</p>
+            <div class="a"><p class="lead">Analysts price bad news <b>57% harder</b> when a firm’s CEO is not White.</p><ul><li>No comparable effect for good news, and none in EPS forecasts</li><li>The asymmetry points to unconscious stereotyping, not a race effect</li><li>And it was wrong: those firms beat the target <b>2.7pp</b> more often</li></ul></div>
           </div>
-          <div class="ident r-acad">
+          <details class="ident r-acad"><summary>Design &amp; identification</summary><div class="ident-body">
             <b>Design</b> — analyst-firm-date panel with analyst and year fixed effects, all 13 controls interacted with bad news; SEs two-way clustered by analyst and year-month. Plus a randomized experiment (N = 366) varying only the CEO's photo.<br>
             <b>Estimate</b> — Non-White × Bad News = <b>−0.013 (t = −2.27)</b>, N = 97,624, S&amp;P 1500, 2005–2019. Per one SD of bad news, implied returns fall 3.6% vs 2.3%; the 57% is the ratio of those sensitivities, not a level gap.<br>
             <b>Ex-post</b> — Beat = <b>+0.027 (p &lt; 0.01)</b>. The gloomier targets were wrong.<br>
             <b>Moderators</b> — amplified post-2016 and in high hate-crime areas; attenuates once an analyst has covered the CEO before.
-          </div>
+          </div></details>
           <div class="presskit r-news">
             <p class="hl">Wall Street analysts mark a company down substantially harder for the same bad news when its CEO isn't white — and the gloomier forecasts turn out to be wrong.</p>
             <p class="mn">No equivalent gap for good news, which is what points to an unconscious reflex. Confirmed by a randomized experiment where only the CEO's photograph changed.</p>
@@ -593,7 +617,7 @@ footer a:hover{color:var(--red)}
             <a class="lk" href="https://doi.org/10.1016/j.jacceco.2024.101707">DOI</a>
           </div>
         </div>
-        <div class="fig-cell">
+        <a class="fig-cell" href="papers/rupar-wang-yoon-2025-jae.pdf" aria-label="Open the paper behind this figure">
           <div class="fig-lbl">Fig. 3 — Valuation sensitivity to bad news</div>
           <svg class="fig" viewBox="0 0 350 250" role="img" aria-labelledby="f3t f3d">
             <title id="f3t">Analyst target-price sensitivity to bad news by CEO race</title>
@@ -634,7 +658,7 @@ footer a:hover{color:var(--red)}
             <text x="118" y="248" font-size="6" fill="var(--fig-mute)">The gloomier targets were beaten more often — not less.</text>
           </svg>
           <p class="fig-cap">Table 4, N = 97,624. The 57% compares slopes; the level gap in target prices is not statistically distinguishable from zero.</p>
-        </div>
+        </a>
       </div>
     </article>
     <!-- 4. INTANGIBLE CAPITAL -->
@@ -646,14 +670,14 @@ footer a:hover{color:var(--red)}
           <div class="with">with M. Ewens and R. Peters</div>
           <div class="qa">
             <p class="q">If accounting keeps internally created knowledge and organizational capital off the balance sheet, what are the right parameters for putting them back on?</p>
-            <p class="a">When a firm is acquired or liquidated, the market is forced to price exactly the intangibles that never appeared on its balance sheet — and purchase accounting makes that price public. Across 2,004 exits, R&amp;D turns out to depreciate <b>a third faster</b> than the official estimates imply, and the share of overhead that is really long-lived investment swings from <b>20% in consumer firms to 51% in healthcare</b> rather than being a flat 30%.</p>
+            <div class="a"><p class="lead">Across <b>2,004</b> acquisitions and liquidations, the market is forced to price exactly the intangibles that never reached the balance sheet.</p><ul><li>R&amp;D depreciates <b>a third faster</b> than official estimates imply</li><li>Overhead that is really investment: <b>20% consumer, 51% health</b></li><li>Purchase accounting makes that price public — that is the identification</li></ul></div>
           </div>
-          <div class="ident r-acad">
+          <details class="ident r-acad"><summary>Design &amp; identification</summary><div class="ident-body">
             <b>Design</b> — structural perpetual-inventory model fit by nonlinear least squares to observed exit prices; industry-year intangible market-to-book fixed effects; bootstrapped SEs (1,000 firm-level replications).<br>
             <b>Identification</b> — exit price P = identifiable intangible assets + goodwill, scrubbed of synergy and overpayment via announcement returns; matched against up to ten trailing years of R&amp;D and SG&amp;A.<br>
             <b>Estimates</b> — δ<sub>G</sub> = <b>0.33</b> (0.034), γ<sub>S</sub> = <b>0.28</b> (0.024), with δ<sub>S</sub> fixed at 0.20. Pseudo-R² = 0.542, N = 2,004 (1,523 acquisitions + 481 bankruptcies), 1996–2017.<br>
             <b>Validation</b> — on a 1978–2017 panel excluding all estimation firm-years, the resulting stocks perform equal to or better than status-quo measures; the gains are significant for market enterprise value and human-capital risk, marginal for brand, patents, and trademarks.
-          </div>
+          </div></details>
           <div class="presskit r-news">
             <p class="hl">Trillions in corporate assets never appear on a balance sheet. Acquisitions reveal what they're worth.</p>
             <p class="mn">Research spending loses value about a third faster than the official government estimates assume. Parameters, data, and code are public; used in Morgan Stanley research.</p>
@@ -666,7 +690,7 @@ footer a:hover{color:var(--red)}
           </div>
           <p class="fig-cap" style="margin-top:.7rem">These parameters, applied to every listed firm: the <a class="tool-lk" href="explorer.html">interactive dashboard</a> lets you look up a company and see how much of what it owns never reaches its balance sheet — sortable, filterable by industry or index, 1975 to 2025.</p>
         </div>
-        <div class="fig-cell">
+        <a class="fig-cell" href="papers/ewens-peters-wang-2025-ms.pdf" aria-label="Open the paper behind this figure">
           <div class="fig-lbl">Fig. 4 — Exit prices identify the parameters</div>
           <svg class="fig" viewBox="0 0 350 200" role="img" aria-labelledby="f4t f4d">
             <title id="f4t">How exit prices identify intangible capitalization parameters</title>
@@ -705,7 +729,7 @@ footer a:hover{color:var(--red)}
             <text x="267" y="173" font-size="6" fill="var(--fig-mute)" text-anchor="middle">flat across industries</text>
           </svg>
           <p class="fig-cap">Table 1, exits column. γ<sub>S</sub> is an investment share, not a depreciation rate, and ranges 0.20–0.51 across industries.</p>
-        </div>
+        </a>
       </div>
     </article>
 
@@ -718,14 +742,14 @@ footer a:hover{color:var(--red)}
           <div class="with">with E. So</div>
           <div class="qa">
             <p class="q">Do market frictions create predictable price patterns around scheduled news?</p>
-            <p class="a">Someone has to take the other side of every trade, and ahead of an earnings report that inventory becomes dangerous to hold. Market makers demand a steeper concession, so short-term reversals grow <b>more than six-fold</b> at announcements. A long-short position on pre-announcement returns earns <b>1.45%</b> over the three-day window, against 0.22% on placebo dates.</p>
+            <div class="a"><p class="lead">Short-term reversals grow <b>more than six-fold</b> at earnings announcements.</p><ul><li>A long-short position earns <b>1.45%</b> over three days, 0.22% on placebos</li><li>The cause is inventory: the other side is dangerous to hold</li><li>Market makers price that risk, so the concession widens</li></ul></div>
           </div>
-          <div class="ident r-acad">
+          <details class="ident r-acad"><summary>Design &amp; identification</summary><div class="ident-body">
             <b>Design</b> — conditional quintile sort on the market-adjusted return over t−4 to t−2, held t−1 to t+1, with breakpoints from the prior calendar quarter. The identifying comparison is a pseudo-announcement date drawn uniformly 10–40 trading days earlier.<br>
             <b>Estimate</b> — 1.448% (p = 0.00), Table 2 Panel A; pseudo-date counterpart 0.218%. Returns are <b>market-adjusted raw</b>, not factor-adjusted, and are gross of transaction costs. With size, book-to-market, momentum, and beta controls the spread is 1.16%.<br>
             <b>Sample</b> — 107,039 earnings announcements, 1996–2011, price ≥ $5.<br>
             <b>Mechanism</b> — inventory risk, not adverse selection: no size gradient, survives Nagel (2012) weights, scales with option-implied announcement volatility, and vanishes for unanticipated announcement dates.
-          </div>
+          </div></details>
           <div class="presskit r-news">
             <p class="hl">In the days before a company reports earnings, the cost of trading quietly rises — and it's predictable.</p>
             <p class="mn">Reversals grow more than six-fold at earnings versus ordinary days. Note: 1.45% is a raw three-day return before trading costs, not an implementable net return.</p>
@@ -735,7 +759,7 @@ footer a:hover{color:var(--red)}
             <a class="lk" href="https://doi.org/10.1016/j.jfineco.2014.06.009">DOI</a>
           </div>
         </div>
-        <div class="fig-cell">
+        <a class="fig-cell" href="papers/so-wang-2014-jfe.pdf" aria-label="Open the paper behind this figure">
           <div class="fig-lbl">Fig. 5 — Actual vs. placebo clock</div>
           <svg class="fig" viewBox="0 0 350 200" role="img" aria-labelledby="f5t f5d">
             <title id="f5t">Reversal strategy returns on actual versus pseudo announcement dates</title>
@@ -778,7 +802,7 @@ footer a:hover{color:var(--red)}
             <text x="8" y="194" font-size="6" fill="var(--fig-mute)">MECHANISM ✗ adverse selection — no size gradient; survives Nagel (2012) weights.</text>
           </svg>
           <p class="fig-cap">Table 2 Panel A, N = 107,039. Market-adjusted raw returns, gross of costs; 1.16% with risk controls.</p>
-        </div>
+        </a>
       </div>
     </article>
 
@@ -791,24 +815,24 @@ footer a:hover{color:var(--red)}
           <div class="with">with C. Ham, M. Lang, and N. Seybert</div>
           <div class="qa">
             <p class="q">Does a CFO's personality show up in the quality of the numbers the company reports?</p>
-            <p class="a">CFOs who take up more space when they sign their name run more aggressive accounting: larger discretionary accruals, slower recognition of bad news, weaker internal controls, and more restatements — moving from the 25th to the 75th percentile of signature size is associated with <b>23% higher odds of a restatement</b>. A lab experiment shows the mechanism is measured narcissism, not a handwriting quirk. The CEO's signature predicts almost none of it.</p>
+            <div class="a"><p class="lead">CFOs who take up more space when they sign their name run more aggressive accounting.</p><ul><li>Larger accruals, slower bad-news recognition, weaker controls</li><li>25th to 75th percentile of signature size: <b>23% higher</b> restatement odds</li><li>A lab experiment rules out handwriting. The CEO’s signature does not</li></ul></div>
           </div>
-          <div class="ident r-acad">
+          <details class="ident r-acad"><summary>Design &amp; identification</summary><div class="ident-body">
             <b>Validation</b> — n = 63 lab subjects; signature size correlates with NPI-40 (r = 0.30, p = 0.017), and narcissism fully mediates the path to misreporting: the direct effect falls from β = 0.36 (p = 0.035) to β = 0.27 (p = 0.124) once NPI-40 enters. Payoffs are deterministic, so overconfidence and risk aversion are inert by construction.<br>
             <b>Archival</b> — 512 notarized CFO signatures from SEC Order 4-460 (June 2002); firm-years with two-digit SIC fixed effects, SEs clustered by firm. Associational — no firm or CFO fixed effects are possible with one signature per CFO.<br>
             <b>Estimates</b> — accruals 0.009 (p&lt;0.01); real EM 0.051 (p&lt;0.05); conservatism −0.066 (p&lt;0.05); ineffective controls 0.641 (p&lt;0.10); restatement 0.455 (p&lt;0.05).<br>
             <b>Ruled out</b> — options-based overconfidence, facial width-to-height ratio, expected letter size, CFO relative pay.
-          </div>
+          </div></details>
           <div class="presskit r-news">
             <p class="hl">How big a CFO signs their name predicts how aggressively their company keeps its books.</p>
-            <p class="mn">A large signature is associated with 23% higher odds the year's financials get restated. The effect is specific to CFOs — the CEO's signature predicts almost nothing.<br>Covered in The Economist, FT, WSJ, NYT, HBR, Washington Post.</p>
+            <p class="mn">A large signature is associated with 23% higher odds the year's financials get restated. The effect is specific to CFOs — the CEO's signature predicts almost nothing.<br>Covered in the FT, WSJ, NYT, HBR, and Washington Post.</p>
           </div>
           <div class="links">
             <a class="lk pri" href="papers/ham-lang-seybert-wang-2017-jar.pdf">Paper (PDF)</a>
             <a class="lk" href="https://doi.org/10.1111/1475-679X.12176">DOI</a>
           </div>
         </div>
-        <div class="fig-cell">
+        <a class="fig-cell" href="papers/ham-lang-seybert-wang-2017-jar.pdf" aria-label="Open the paper behind this figure">
           <div class="fig-lbl">Fig. 6 — Validate the proxy, then apply it</div>
           <svg class="fig" viewBox="0 0 350 200" role="img" aria-labelledby="f6t f6d">
             <title id="f6t">Mediation of signature size through narcissism, and outcomes by executive role</title>
@@ -870,7 +894,7 @@ footer a:hover{color:var(--red)}
             <text x="278" y="183" font-size="5.6" fill="var(--fig-mute)" text-anchor="middle">of restatement, 25th → 75th pctile</text>
           </svg>
           <p class="fig-cap">Lab mediation (Figure 2) and archival outcomes (Tables 4–8, 11). The CFO/CEO asymmetry is consistent with CFO oversight of accounting quality.</p>
-        </div>
+        </a>
       </div>
     </article>
 
@@ -883,13 +907,13 @@ footer a:hover{color:var(--red)}
           <div class="with">with C. Wan, Y. Wang, and A. Yorulmaz</div>
           <div class="qa">
             <p class="q">Does anti-immigrant sentiment impair minority analysts' ability to forecast earnings?</p>
-            <p class="a">A one-standard-deviation rise in societal migration fear raises non-White analysts' absolute forecast errors by <b>$0.04 EPS</b>, with <b>no effect on White peers</b>. The mechanism appears to be lost access rather than lost skill: during high-fear periods non-White analysts see a <b>5.7 percentage point</b> drop in conference-call participation.</p>
+            <div class="a"><p class="lead">A one-standard-deviation rise in societal migration fear raises non-White analysts’ forecast errors by <b>$0.04 EPS</b>.</p><ul><li><b>No effect on White peers</b></li><li>The mechanism is lost access, not lost skill</li><li>Their conference-call participation drops <b>5.7 percentage points</b></li></ul></div>
           </div>
-          <div class="ident r-acad">
+          <details class="ident r-acad"><summary>Design &amp; identification</summary><div class="ident-body">
             <b>Design</b> — 1.3 million EPS forecasts, 1990–2023, against a news-based migration-fear index; the 2015–16 election is used as an inflection point in sentiment, corroborating rather than identifying.<br>
             <b>Mechanism</b> — 5.7pp reduction in conference-call participation during high-fear periods, coinciding with the increase in forecast errors.<br>
             <b>Moderators</b> — the penalty is largest in high-idiosyncratic-volatility firms and is attenuated under non-White CEO leadership and in sanctuary jurisdictions.
-          </div>
+          </div></details>
           <div class="presskit r-news">
             <p class="hl">When anti-immigrant sentiment rises, minority analysts get less accurate — because they get less access.</p>
             <p class="mn">No comparable effect for White analysts. The gap closes under non-White CEOs and in sanctuary jurisdictions, which points to information channels rather than ability.</p>
@@ -899,7 +923,7 @@ footer a:hover{color:var(--red)}
             <a class="lk" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5193858">SSRN</a>
           </div>
         </div>
-        <div class="fig-cell">
+        <a class="fig-cell" href="papers/wan-wang-wang-yorulmaz-2026-wp.pdf" aria-label="Open the paper behind this figure">
           <div class="fig-lbl">Fig. 7 — Effect and mechanism</div>
           <svg class="fig" viewBox="0 0 350 200" role="img" aria-labelledby="f7t f7d">
             <title id="f7t">Forecast error response to migration fear, by analyst race</title>
@@ -929,19 +953,19 @@ footer a:hover{color:var(--red)}
             <text x="8" y="196" font-size="6" fill="var(--fig-mute)">1.3M forecasts · 1990–2023</text>
           </svg>
           <p class="fig-cap">The 5.7 is the participation mechanism, in percentage points — not a multiple of the main effect.</p>
-        </div>
+        </a>
       </div>
     </article>
   </div>
 </section>
 
 <!-- ============ COMPLETE RECORD ============ -->
-<section id="record" class="band">
+<section id="record">
   <div class="wrap">
     <div class="shead rv">
       <div class="so">The complete record</div>
       <h2 class="st">Every paper, <em>one click away</em></h2>
-      <p class="sd">Twelve peer-reviewed articles, eleven of them in FT50 journals, plus work in progress. Every entry links to the full text — no paywall, no request form.</p>
+      <p class="sd">Twelve peer-reviewed articles, eleven in FT50 journals. Full text for every one — no paywall, no request form.</p>
     </div>
     <div class="filters rv" role="group" aria-label="Filter publications by research stream">
       <button class="fb" data-f="all" aria-pressed="true">All</button>
@@ -980,12 +1004,12 @@ footer a:hover{color:var(--red)}
 </section>
 
 <!-- ============ DATA ============ -->
-<section id="data">
+<section id="data" class="band">
   <div class="wrap">
     <div class="shead rv">
       <div class="so">Public goods</div>
       <h2 class="st">Data, code, and <em>the missing balance sheet</em></h2>
-      <p class="sd">Parameters and capitalized intangible stocks you can apply to any public firm — plus an interactive dashboard for seeing what GAAP leaves out.</p>
+      <p class="sd">Parameters and intangible capital stocks for any public firm, plus a dashboard for what GAAP leaves out.</p>
     </div>
     <div class="data-grid">
       <div class="card rv">
@@ -1036,12 +1060,12 @@ $ python construct_stocks.py<br>
 </section>
 
 <!-- ============ WRITING & PRESS ============ -->
-<section id="writing" class="band">
+<section id="writing">
   <div class="wrap">
     <div class="shead rv">
       <div class="so">Writing &amp; press</div>
       <h2 class="st">Research, translated <em>for people who act on it</em></h2>
-      <p class="sd">I write about information failures in markets, policy, and public health — turning academic evidence into arguments practitioners and regulators can use.</p>
+      <p class="sd">Evidence turned into arguments practitioners and regulators can use.</p>
     </div>
     <div class="wgrid">
       <a class="card rv" href="https://profseanwang.substack.com/">
@@ -1058,7 +1082,7 @@ $ python construct_stocks.py<br>
       </a>
     </div>
     <div class="media-line rv">
-      <b>Research covered in</b> &nbsp;The Economist · Financial Times · The New York Times · The Wall Street Journal · The Washington Post · Harvard Business Review · Bloomberg Businessweek · The Atlantic · ABC News · Chicago Tribune · Fast Company · Inc. · CFO · Motley Fool · NASDAQ · Seeking Alpha · The Times · Yahoo News
+      <b>Research covered in</b> &nbsp;Financial Times · The New York Times · The Wall Street Journal · The Washington Post · Harvard Business Review · Bloomberg Businessweek · The Atlantic
     </div>
     <div class="card rv r-news" style="margin-top:1.6rem">
       <h4>Press kit</h4>
@@ -1078,7 +1102,7 @@ $ python construct_stocks.py<br>
     <div class="shead rv">
       <div class="so">Teaching</div>
       <h2 class="st">Peer-reviewed by <em>1,355 students</em></h2>
-      <p class="sd">Financial Accounting II in the MBA program — full-time, professional, and online cohorts. Every section taught since Fall 2018, aggregated from official end-of-semester evaluations. Raw response files available on request.</p>
+      <p class="sd">Financial Accounting II, every MBA section since Fall 2018. Official end-of-semester evaluations; raw response files on request.</p>
     </div>
     <div class="tstats rv">
       <div><b>14</b><span>Semesters<br>F18 – Sp26</span></div>
@@ -1112,7 +1136,7 @@ $ python construct_stocks.py<br>
 </section>
 
 <!-- ============ ABOUT ============ -->
-<section id="about" class="band">
+<section id="about">
   <div class="wrap">
     <div class="shead rv">
       <div class="so">About</div>
@@ -1124,6 +1148,7 @@ $ python construct_stocks.py<br>
         <p>Before markets, <b>molecules</b>. Organic and polymer chemistry at Duke and South Florida taught me to think in systems, reactions, and equilibria — and to insist that evidence lead. The pivot came at NYU Stern, where equity valuation gave me a front-row view of how information moves through markets, and how often it gets distorted along the way.</p>
         <p>Cornell supplied the econometric toolkit. Since then the research has followed the information — wherever it is produced, wherever it is corrupted, and wherever it fails to reach the people who need it. Today that spans racial bias in analyst valuations, the contracts pharmaceutical sponsors use to control clinical-trial disclosure, and the trillions in intangible assets that accounting systematically omits.</p>
         <div class="pull">The costs of information failure fall hardest on <em>those with the least power to see them coming.</em></div>
+        <p class="fig-cap awards">Best Paper Award, 2023 AAA Accounting Behavior &amp; Organizations Conference · FARS Midyear Outstanding Discussion Award, 2021 · Track Chair, AAA Annual Meeting 2025</p>
         <div class="path">
           <div class="r"><b>Duke</b><span>B.A. Chemistry</span></div>
           <div class="r"><b>South Florida</b><span>M.A. Chemistry</span></div>
@@ -1131,7 +1156,6 @@ $ python construct_stocks.py<br>
           <div class="r"><b>Cornell</b><span>Ph.D. Accounting · econometrics, finance · 2009</span></div>
           <div class="r"><b>2008 — present</b><span>UNC Kenan-Flagler → Rice Jones → SMU Cox → Rice Jones</span></div>
         </div>
-        <p class="fig-cap" style="margin-top:1.4rem">Reviewer for JAE, TAR, RAST, Journal of Finance, JFE, RFS, Management Science, CAR, AOS, JFQA, and Review of Finance. Best Paper Award, 2023 AAA Accounting Behavior &amp; Organizations Conference. FARS Midyear Outstanding Discussion Award, 2021. Track Chair, AAA Annual Meeting 2025. Invited PhD guest lecturer at Harvard, UNC, and Georgia Tech.</p>
       </div>
     </div>
   </div>
@@ -1141,9 +1165,8 @@ $ python construct_stocks.py<br>
 <section id="contact" class="cta">
   <div class="wrap rv">
     <div class="eyebrow" style="justify-content:center;display:inline-flex">Get in touch</div>
-    <h2>Research collaboration, advisory work, <em>and press.</em></h2>
+    <h2>Research collaboration, advisory work, <em>and media.</em></h2>
     <p class="r-acad">Happy to hear from co-authors, seminar organizers, and doctoral students working on information economics, disclosure, or analyst behavior.</p>
-    <p class="r-news">Journalists: every figure on this page is quotable and links to the underlying paper. For background, data, or a plain-English walkthrough of any result, email directly.</p>
     <div class="btns">
       <a class="btn solid" href="mailto:Sean@profsean.wang">Sean@profsean.wang</a>
       <a class="btn" href="sean-wang-cv.pdf">Curriculum vitae ↓</a>
@@ -1157,7 +1180,7 @@ $ python construct_stocks.py<br>
 </main>
 
 <footer><div class="wrap foot">
-  <span>I am currently visiting Rice University for the 2026&ndash;2027 academic year.<br>© 2026 Sean Wang · Jones Graduate School of Business</span>
+  <span>© 2026 Sean Wang · Rice University Jones Graduate School of Business</span>
   <span><a href="https://profseanwang.substack.com/">Substack</a> · <a href="https://www.linkedin.com/in/sean-wang-1801774a/">LinkedIn</a> · <a href="mailto:Sean@profsean.wang">Email</a></span>
 </div></footer>
 
@@ -1184,11 +1207,21 @@ document.documentElement.classList.add('rv-ready');
     if(sn)sn.setAttribute('aria-pressed',n?'true':'false');
     root.setAttribute('data-theme',n?THEME_FOR_AUDIENCE.industry:THEME_FOR_AUDIENCE.academia);
     // Remembered so the choice survives a reload and carries to the dashboard.
-    try{localStorage.setItem('psw-audience',n?'industry':'academia')}catch(e){}
+    try{localStorage.setItem('psw-audience-2',n?'industry':'academia')}catch(e){}
   }
-  var saved='academia'; try{saved=localStorage.getItem('psw-audience')||'academia'}catch(e){}
+  var saved='industry'; try{saved=localStorage.getItem('psw-audience-2')||'industry'}catch(e){}
   setReg(saved==='industry');
   if(sa&&sn){sa.addEventListener('click',function(){setReg(false)});sn.addEventListener('click',function(){setReg(true)})}
+
+  // The three programme cards jump to the record AND narrow it to that theme,
+  // so "01 Information bias" lands on the five papers it refers to.
+  document.querySelectorAll('.stream[data-jump]').forEach(function(a){
+    a.addEventListener('click',function(){
+      var key=a.dataset.jump;
+      var btn=document.querySelector('.fb[data-f="'+key+'"]');
+      if(btn)btn.click();
+    });
+  });
 
   var fbs=document.querySelectorAll('.fb');
   fbs.forEach(function(btn){btn.addEventListener('click',function(){
