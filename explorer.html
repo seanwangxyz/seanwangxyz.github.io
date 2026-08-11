@@ -106,6 +106,7 @@ h2 em{font-style:italic;color:var(--red)}
 svg.chart{width:100%;height:auto;display:block;font-family:var(--mono)}
 .ctl{display:flex;gap:.45rem;flex-wrap:wrap;margin:.9rem 0 .2rem;align-items:center}
 .ctl-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-right:.2rem}
+#tFirms th{vertical-align:bottom;line-height:1.3}
 .tg{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;border:1px solid var(--rule2);background:none;padding:.35rem .7rem;cursor:pointer;color:var(--ink2);transition:.2s}
 .tg:hover{border-color:var(--red);color:var(--red)}
 .tg[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -178,10 +179,9 @@ footer a:hover{color:var(--red)}
     <input type="search" id="q" placeholder="Search by company or ticker…" autocomplete="off">
     <div class="ctl" id="sortby" role="group" aria-label="Sort the table">
       <span class="ctl-lbl">Sort by</span>
-      <button class="tg" data-k="t" aria-pressed="true">Total</button>
-      <button class="tg" data-k="k" aria-pressed="false">Knowledge</button>
-      <button class="tg" data-k="o" aria-pressed="false">Organizational</button>
-      <button class="tg" data-k="r" aria-pressed="false">Off-book share</button>
+      <button class="tg" data-k="t" aria-pressed="true">Off-book intangibles</button>
+      <button class="tg" data-k="g" aria-pressed="false">2018–2025 change</button>
+      <button class="tg" data-k="r" aria-pressed="false">% of assets off-book</button>
       <button class="tg" data-k="n" aria-pressed="false">Company</button>
     </div>
     <div class="ctl" id="dirf" role="group" aria-label="Sort direction">
@@ -210,9 +210,10 @@ footer a:hover{color:var(--red)}
     <div style="overflow-x:auto;margin-top:.9rem">
       <table id="tFirms"><thead><tr>
         <th data-s="n">Company<span></span></th><th data-s="i">Industry<span></span></th>
-        <th class="r" data-s="k">Knowledge<span></span></th><th class="r" data-s="o">Organizational<span></span></th>
-        <th class="r" data-s="t">Total<span></span></th>
-        <th class="r" data-s="r">Off-book share<span></span></th><th>2018 →</th>
+        <th class="r" data-s="t">Off-book<br>intangibles<span></span></th>
+        <th class="r" data-s="r">% of assets<br>off-book<span></span></th>
+        <th>Trend</th>
+        <th class="r" data-s="g">2018–2025 chg<br>in intangibles<span></span></th>
       </tr></thead><tbody></tbody></table>
     </div>
     <div class="ctl" id="pager" role="navigation" aria-label="Table pages" style="margin-top:.8rem;flex-wrap:wrap"></div>
@@ -318,6 +319,8 @@ function readChartColours(){
 readChartColours();
 const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtT=v=>'$'+v.toFixed(2)+'tn', fmtM=v=>v>=1000?'$'+(v/1000).toFixed(1)+'bn':'$'+Math.round(v)+'m';
+// 1st / 2nd / 3rd / 4th, with the 11-13 exception
+const ord=n=>{const a=n%10,b=n%100;return n+(a===1&&b!==11?'st':a===2&&b!==12?'nd':a===3&&b!==13?'rd':'th')};
 const el=(t,a)=>{let s='<'+t;for(const k in a)s+=' '+k+'="'+a[k]+'"';return s+'/>'};
 const tx=(x,y,s,o={})=>`<text x="${x}" y="${y}" font-size="${o.fs||9}" fill="${o.f||MUTE}" text-anchor="${o.a||'start'}"${o.w?' font-weight="500"':''}>${s}</text>`;
 let D=null,mode='nom',sortKey='t',sortDir=-1,query='',minSize=1,indFilter='',idxFilter=0;
@@ -556,20 +559,25 @@ function spark(k,o,w=90,h=20){
 }
 
 function firmTable(){
-  const f=D.firms.map(r=>{const n=r[4].length-1;return{n:r[0],t:r[1],i:D.indNames[r[2]],y0:r[3],k:r[4],o:r[5],
-     K:r[4][n],O:r[5][n],T:r[4][n]+r[5][n],R:(r[6]==null?-1:r[6]),Z:(r[7]||0),ly:r[3]+n,M:(r[8]||0)}});
+  const f=D.firms.map(r=>{const n=r[4].length-1;const T0=r[4][0]+r[5][0];return{n:r[0],t:r[1],i:D.indNames[r[2]],y0:r[3],k:r[4],o:r[5],
+     K:r[4][n],O:r[5][n],T:r[4][n]+r[5][n],R:(r[6]==null?-1:r[6]),Z:(r[7]||0),ly:r[3]+n,M:(r[8]||0),
+     // Growth from a near-zero base is arithmetic, not a finding: China Mobile
+     // going from $1m to $1.5bn reads as +149,500% and would sit permanently at
+     // the top of the sort. Below a $50m base the ratio is suppressed, not the row.
+     G:(T0>=50 ? (r[4][n]+r[5][n])/T0-1 : null)}});
   let v=f.filter(r=>r.Z>=minSize);
   if(indFilter)v=v.filter(r=>r.i===indFilter);
   if(idxFilter)v=v.filter(r=>(r.M&idxFilter)!==0);
   if(query)v=v.filter(r=>r.n.toLowerCase().includes(query)||r.t.toLowerCase().includes(query));
-  const key={n:'n',i:'i',k:'K',o:'O',t:'T',r:'R'}[sortKey];
+  const key={n:'n',i:'i',k:'K',o:'O',t:'T',r:'R',g:'G'}[sortKey];
   // Off-book share is published as an integer percent (deliberately — more
   // precision would invert back to reported assets). That leaves ~90 distinct
   // values across 2,000 firms, so a single-key sort is mostly ties and the
   // order inside a tie looks arbitrary. Break ties on total intangible
   // capital, then name, so the ranking is deterministic and readable.
   v=v.slice().sort((a,b)=>{
-    const x=a[key],y=b[key];
+    // firms with no baseline / no peer group sort to the bottom either way
+    const x=a[key]==null?-Infinity:a[key], y=b[key]==null?-Infinity:b[key];
     const p = (typeof x==='string' ? x.localeCompare(y) : x-y)*sortDir;
     if(p) return p;
     if(key!=='T' && b.T!==a.T) return b.T-a.T;
@@ -604,18 +612,19 @@ function firmTable(){
   $('#tFirms tbody').innerHTML=show.map(r=>`<tr>
     <td${A('n')}><b>${esc(r.n)}</b>${r.t?` <span class="tick">${esc(r.t)}</span>`:''}${badge(r.M)}</td>
     <td${A('i')}><span class="pill">${esc(r.i)}</span></td>
-    <td class="r"${A('k')}>${fmtM(r.K)}</td><td class="r"${A('o')}>${fmtM(r.O)}</td>
     <td class="r"${A('t')}><b>${fmtM(r.T)}</b></td>
     <td class="r"${A('r')}>${r.R<0?'<span class="tick">n/a</span>':`<b style="color:var(--red)">${r.R}%</b>`}</td>
-    <td>${spark(r.k,r.o)} <span class="tick"${r.ly<lastYr?' style="color:var(--red)" title="last available fiscal year — not comparable with FY'+lastYr+' firms"':''}>${r.ly}</span></td></tr>`).join('');
+    <td>${spark(r.k,r.o)}${r.ly<lastYr?` <span class="tick" style="color:var(--red)" title="last available fiscal year — not comparable with FY${lastYr} firms">${r.ly}</span>`:''}</td>
+    <td class="r"${A('g')}>${r.G==null?'<span class="tick">—</span>':(r.G>=0?'+':'')+Math.round(r.G*100)+'%'}</td></tr>`).join('');
   const sz=['any size','over $200m in reported assets','over $1bn in reported assets'][minSize];
   const stale=v.filter(r=>r.ly<lastYr).length;
   $('#capFirms').textContent=`Showing ${(from+1).toLocaleString()}–${(from+show.length).toLocaleString()} of ${v.length.toLocaleString()} firms`
     +` (${sz}${indFilter?', '+indFilter:''}${idxFilter?', index members only':''})`
     +`${nPages>1?`, page ${page} of ${nPages}`:''}. `
-    +`Millions of nominal dollars at each firm's last available fiscal year, shown beside the sparkline. `
+    +`Millions of nominal dollars at each firm's last available fiscal year. `
     +(stale?`${stale.toLocaleString()} of these last reported before FY${lastYr} and are marked in red — their totals are not comparable with current filers. `:'')
-    +`Off-book share is rounded to the nearest percent.`
+    +`The percentage is off-book intangibles divided by those intangibles plus reported assets, rounded to the nearest point. `
+    +`"Change" is growth in intangible capital over the years the sparkline covers; it is left blank where the 2018 base was under $50m, since a ratio off a near-zero base is arithmetic rather than a finding.`
     +(sortDir>0&&(sortKey==='t'||sortKey==='k'||sortKey==='o')
        ? ` Lowest first shows the bottom of the 2,000 largest holders of intangible capital, not the bottom of the market — the floor here is an artefact of that cut.` : '');
   const ci=$('#capIdx'); if(ci)ci.textContent=idxCaption();
