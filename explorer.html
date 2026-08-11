@@ -107,6 +107,13 @@ svg.chart{width:100%;height:auto;display:block;font-family:var(--mono)}
 .ctl{display:flex;gap:.45rem;flex-wrap:wrap;margin:.9rem 0 .2rem;align-items:center}
 .ctl-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-right:.2rem}
 #tFirms th{vertical-align:bottom;line-height:1.3}
+/* The table is width:100% with auto layout, so surplus width goes to the cell
+   with the widest content — the 90px sparkline — leaving a gap before the last
+   column. Pin every column except Company to its content and the slack lands in
+   the company-name column, where variable width is expected. */
+#tFirms th:not(:first-child),#tFirms td:not(:first-child){width:1%;white-space:nowrap}
+#tFirms td:last-child,#tFirms th:last-child{padding-right:0}
+#tFirms td:nth-child(5){padding-right:1rem}
 .tg{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;border:1px solid var(--rule2);background:none;padding:.35rem .7rem;cursor:pointer;color:var(--ink2);transition:.2s}
 .tg:hover{border-color:var(--red);color:var(--red)}
 .tg[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -212,8 +219,8 @@ footer a:hover{color:var(--red)}
         <th data-s="n">Company<span></span></th><th data-s="i">Industry<span></span></th>
         <th class="r" data-s="t">Off-book<br>intangibles<span></span></th>
         <th class="r" data-s="r">% of assets<br>off-book<span></span></th>
-        <th>Trend</th>
         <th class="r" data-s="g">2018–2025 chg<br>in intangibles<span></span></th>
+        <th>Trend</th>
       </tr></thead><tbody></tbody></table>
     </div>
     <div class="ctl" id="pager" role="navigation" aria-label="Table pages" style="margin-top:.8rem;flex-wrap:wrap"></div>
@@ -288,7 +295,7 @@ footer a:hover{color:var(--red)}
     <p>Before extending anything, the recurrence was used to reproduce EPW's own published stocks for 2011–2018 from Compustat flows. Correlation with the published values is <code>0.9999</code> for both components; median absolute error is 0.04% for knowledge capital and 0.01% for organizational capital; the aggregate across all matched firm-years differs by <code>+0.09%</code>. As a further check, the CPI deflator was recovered from the published stocks by solving the recurrence, and matches the FRED CPIAUCSL annual-average series to within 0.14% in every year.</p>
   </details>
   <details><summary>Limitations</summary>
-    <p>The extension covers only firms with a published FY2018 stock — 5,067 of them. Firms that listed after 2018 are absent, because seeding them would require their full spending history. Firms exit the panel as they delist or are acquired, so the all-firms aggregate is not a like-for-like series; the constant-panel chart exists for that reason. Fiscal 2025 is incomplete, since many filings are outstanding, and is excluded from the headline. This is a conditional reproduction of the submitted method, not a claim of full historical replication: original-universe and header-SIC coverage were not fully recovered.</p>
+    <p>The extension covers only firms with a published FY2018 stock — 5,067 of them. Firms that listed after 2018 are absent, because seeding them would require their full spending history. Firms exit the panel as they delist or are acquired, so the all-firms aggregate is not a like-for-like series; the constant-panel chart exists for that reason. Fiscal 2025 is included: 86% of its firms have July–December year-ends, against 85% in 2022–24, so late filers are not systematically missing and it is not a partial year. This is a conditional reproduction of the submitted method, not a claim of full historical replication: original-universe and header-SIC coverage were not fully recovered.</p>
   </details>
   <details><summary>Sources and reuse</summary>
     <p>Parameters and stocks through 2018: Ewens, Peters and Wang, <i>Measuring Intangible Capital with Market Prices</i>, <i>Management Science</i>, published materials under <a href="https://creativecommons.org/licenses/by-nc/4.0/" style="color:var(--red)">CC BY-NC 4.0</a>. Deflator: FRED series CPIAUCSL, annual averages. Underlying accounting inputs are licensed and are not redistributed here — only derived capital stocks are published. Firm identifiers are shown by name and ticker rather than by internal database key.</p>
@@ -614,8 +621,8 @@ function firmTable(){
     <td${A('i')}><span class="pill">${esc(r.i)}</span></td>
     <td class="r"${A('t')}><b>${fmtM(r.T)}</b></td>
     <td class="r"${A('r')}>${r.R<0?'<span class="tick">n/a</span>':`<b style="color:var(--red)">${r.R}%</b>`}</td>
-    <td>${spark(r.k,r.o)}${r.ly<lastYr?` <span class="tick" style="color:var(--red)" title="last available fiscal year — not comparable with FY${lastYr} firms">${r.ly}</span>`:''}</td>
-    <td class="r"${A('g')}>${r.G==null?'<span class="tick">—</span>':(r.G>=0?'+':'')+Math.round(r.G*100)+'%'}</td></tr>`).join('');
+    <td class="r"${A('g')}>${r.G==null?'<span class="tick">—</span>':(r.G>=0?'+':'')+Math.round(r.G*100)+'%'}</td>
+    <td>${spark(r.k,r.o)}${r.ly<lastYr?` <span class="tick" style="color:var(--red)" title="last available fiscal year — not comparable with FY${lastYr} firms">${r.ly}</span>`:''}</td></tr>`).join('');
   const sz=['any size','over $200m in reported assets','over $1bn in reported assets'][minSize];
   const stale=v.filter(r=>r.ly<lastYr).length;
   $('#capFirms').textContent=`Showing ${(from+1).toLocaleString()}–${(from+show.length).toLocaleString()} of ${v.length.toLocaleString()} firms`
