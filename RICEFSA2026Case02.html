@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Two Ways to Earn a Return</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a working desk. Sticky section rail on top, one long page of instruments, statements slide in from the right like a filing pulled from the drawer. */
+:root{
+  --paper:#F6F1E7; --panel:#FCF9F3; --ink:#24201B; --muted:#6E6457; --rule:#DED4C4; --tint:#EFE7D9;
+  --accent:#8C1C2B; --cmg:#A85A22; --sbux:#2B6762; --good:#3E7A3A; --bad:#A3302A; --deal:#5B4A8A;
+  --display:"Newsreader","Cambria",Georgia,serif;
+  --body:"Karla","Calibri","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono","Courier New",ui-monospace,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#1B1815; --panel:#231F1B; --ink:#EEE7DB; --muted:#A99E90; --rule:#3B342D; --tint:#2B2621;
+  --accent:#D46A74; --cmg:#DC8D52; --sbux:#62AEA6; --good:#7DB777; --bad:#E07A72; --deal:#A595D6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#1B1815; --panel:#231F1B; --ink:#EEE7DB; --muted:#A99E90; --rule:#3B342D; --tint:#2B2621;
+  --accent:#D46A74; --cmg:#DC8D52; --sbux:#62AEA6; --good:#7DB777; --bad:#E07A72; --deal:#A595D6; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:20px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3.3rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3vw,2.1rem)}
+h3{font-size:1.15rem}
+p{margin:0;max-width:66ch}
+.num,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cmg{color:var(--cmg)} .sbux{color:var(--sbux)}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* top rail */
+.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+.rail .in{max-width:1160px;margin:0 auto;padding:10px 20px;display:flex;gap:10px;align-items:center}
+.rail .brand{font-family:var(--display);font-weight:600;white-space:nowrap}
+.chips{display:flex;gap:4px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.chips a{font-size:.82rem;text-decoration:none;color:var(--muted);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.chips a:hover,.chips a.on{color:var(--ink);background:var(--tint)}
+.btn{border:1px solid var(--rule);background:var(--panel);border-radius:var(--r);padding:6px 12px;cursor:pointer;font-size:.85rem;white-space:nowrap}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* header */
+header.top{padding-block:40px 28px;display:grid;gap:16px;border-bottom:1px solid var(--rule)}
+.dek{font-family:var(--display);font-size:1.2rem;color:var(--muted);font-style:italic;max-width:60ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.85rem;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:500}
+
+section{padding-block:48px 8px;scroll-margin-top:64px}
+.sechead{display:grid;gap:8px;margin-bottom:22px}
+.qtag{font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.06em}
+.lede{color:var(--ink);max-width:68ch}
+
+.tag{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;padding:1px 5px;border-radius:3px;border:1px solid var(--rule);color:var(--muted);vertical-align:2px;margin-left:4px;text-transform:uppercase}
+.tag.g{border-color:color-mix(in srgb,var(--ink) 35%,transparent);color:var(--ink)}
+.tag.a{border-style:dashed}
+.tag.p{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.src{cursor:pointer;border-bottom:1px dotted currentColor}
+.src:hover{color:var(--accent)}
+
+/* tape */
+.tape{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:start;margin-top:28px;padding:20px;border:1px solid var(--rule);background:var(--panel);border-radius:var(--r)}
+.tape .big{display:flex;gap:28px;flex-wrap:wrap}
+.tape .mv{display:grid}
+.tape .mv .n{font-family:var(--mono);font-size:1.9rem;line-height:1.1}
+.tape .mv small{color:var(--muted);font-size:.8rem}
+@media (max-width:760px){.tape{grid-template-columns:1fr}}
+
+/* scoreboard + plane */
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:28px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.score{display:grid;gap:14px}
+.firm{border:1px solid var(--rule);background:var(--panel);border-radius:var(--r);padding:16px 18px;display:grid;gap:6px}
+.firm .nm{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.firm .nm h3{font-size:1.25rem}
+.eq{font-family:var(--mono);font-size:1.05rem;display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
+.eq .r{font-size:1.9rem;font-weight:500}
+.eq .op{color:var(--muted)}
+.sub{font-size:.85rem;color:var(--muted)}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tog{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;cursor:pointer;border:1px solid var(--rule);border-radius:99px;padding:5px 12px;background:var(--panel)}
+.tog input{accent-color:var(--accent)}
+.figure{border:1px solid var(--rule);border-radius:var(--r);background:var(--panel);padding:12px}
+.figure svg{width:100%;height:auto;display:block}
+.cap{font-size:.8rem;color:var(--muted);margin-top:6px}
+.badge{font-family:var(--mono);font-size:.7rem;padding:2px 6px;border-radius:3px;background:var(--tint);color:var(--accent)}
+
+.think{border-left:3px solid var(--accent);padding:10px 14px;background:color-mix(in srgb,var(--accent) 6%,var(--panel));margin-top:22px;max-width:76ch;border-radius:0 var(--r) var(--r) 0}
+.think .k{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--accent)}
+.think p{margin-top:4px}
+.ai{border:1px solid var(--ink);border-radius:var(--r);padding:16px 18px;background:var(--panel);margin-top:22px;display:grid;gap:8px}
+.ai .k{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em}
+
+/* finance bars */
+.fin{display:grid;gap:22px}
+.finrow{display:grid;gap:6px}
+.finrow .lab{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.9rem}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
+.tbl th,.tbl td{padding:6px 8px;border-bottom:1px solid var(--rule);text-align:right;vertical-align:middle}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl thead th{font-weight:500;color:var(--muted);font-size:.76rem;letter-spacing:.04em}
+.tbl td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tbl tr.grp td{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;padding-top:14px;border-bottom:none}
+.tbl tr.tot td{font-weight:700;border-top:1.5px solid var(--ink)}
+.tbl tr.ind td:first-child{padding-left:22px;color:var(--muted)}
+.tbl tr.hl td{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.scroll{overflow-x:auto}
+
+/* sort game */
+.sortbox{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:960px){.sortbox{grid-template-columns:1fr}}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:3px 9px;font-size:.75rem;cursor:pointer;font-family:var(--mono)}
+.seg button.on.o{background:var(--ink);color:var(--paper)}
+.seg button.on.f{background:var(--accent);color:#fff}
+.diff{color:var(--accent);font-family:var(--mono);font-size:.7rem;margin-left:6px}
+.readout{position:sticky;top:76px;display:grid;gap:12px}
+.ro{border:1px solid var(--rule);background:var(--panel);border-radius:var(--r);padding:14px 16px}
+.ro .row{display:flex;justify-content:space-between;gap:10px;font-size:.9rem;padding:3px 0}
+.ro .row b{font-family:var(--mono);font-weight:500}
+.ro .big{font-family:var(--mono);font-size:2rem}
+.tie{font-family:var(--mono);font-size:.85rem;padding:8px 10px;border-radius:5px;background:var(--tint)}
+.tie.ok{color:var(--good)}
+.firmswitch{display:inline-flex;border:1px solid var(--rule);border-radius:99px;padding:3px;background:var(--panel)}
+.firmswitch button{border:0;background:transparent;border-radius:99px;padding:5px 14px;cursor:pointer;font-size:.9rem}
+.firmswitch button.on{background:var(--ink);color:var(--paper)}
+
+/* cards row */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{border:1px solid var(--rule);border-radius:var(--r);background:var(--panel);padding:16px;display:grid;gap:8px;align-content:start}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:.9rem}
+.kv b{font-family:var(--mono);font-weight:500;white-space:nowrap}
+.meter{height:8px;border-radius:4px;background:var(--tint);overflow:hidden}
+.meter i{display:block;height:100%}
+
+/* sliders */
+.slider{display:grid;gap:4px}
+.slider label{display:flex;justify-content:space-between;gap:10px;font-size:.88rem}
+.slider label b{font-family:var(--mono);font-weight:500}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.out .o{border-top:2px solid var(--ink);padding-top:6px}
+.out .o .n{font-family:var(--mono);font-size:1.5rem}
+.out .o small{color:var(--muted);font-size:.78rem;display:block}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--paper);z-index:41;border-left:1px solid var(--rule);display:flex;flex-direction:column;box-shadow:-10px 0 30px rgba(0,0,0,.15);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer .dh{padding:14px 16px;border-bottom:1px solid var(--rule);display:grid;gap:10px}
+.drawer .dh .top{display:flex;justify-content:space-between;align-items:center}
+.drawer .tabs{display:flex;flex-wrap:wrap;gap:6px}
+.drawer .tabs button{border:1px solid var(--rule);background:var(--panel);border-radius:99px;padding:4px 11px;font-size:.8rem;cursor:pointer}
+.drawer .tabs button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.drawer .db{overflow:auto;padding:12px 16px 30px}
+.drawer .units{font-size:.8rem;color:var(--muted);margin-bottom:6px}
+footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:20px;font-size:.82rem;color:var(--muted);display:grid;gap:8px}
+@media (prefers-reduced-motion:no-preference){.drawer{animation:slide .22s ease-out}@keyframes slide{from{transform:translateX(30px);opacity:.6}}}
+</style>
+</head>
+<body>
+
+<div class="rail"><div class="in">
+  <span class="brand">Case 02</span>
+  <nav class="chips" id="chips">
+    <a href="#return">The return</a><a href="#finance">Who finances it</a><a href="#cycle">Cash cycle</a>
+    <a href="#sort">Sort it yourself</a><a href="#leases">"No debt"</a><a href="#quality">Quality of the year</a><a href="#deal">The deal</a>
+  </nav>
+  <button class="btn primary" id="openStmts" type="button">Statements</button>
+</div></div>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">BUSI 401 · FSA &amp; Valuation · Case 02, after the debrief</div>
+  <h1>Two Ways to Earn a Return</h1>
+  <p class="dek">Chipotle earns 27 cents a year on each dollar of net operating assets. Starbucks earns 16. One wins on margin, the other on turnover, and one of them is reportedly thinking about buying the other.</p>
+  <div class="meta">
+    <span><b class="cmg">Chipotle</b> FY2025, year ended 31 Dec 2025, reports in $ thousands</span>
+    <span><b class="sbux">Starbucks</b> FY2025, 52 weeks ended 28 Sep 2025, reports in $ millions</span>
+    <span>All figures here in <b>$ millions</b> unless the statement drawer says otherwise</span>
+  </div>
+  <div class="meta"><span>Every number carries a tag:</span>
+    <span><span class="tag g">given</span> read from the 10-K</span>
+    <span><span class="tag">derived</span> computed from given figures</span>
+    <span><span class="tag a">assumed</span> a judgment call you can change</span>
+    <span><span class="tag p">press</span> news reporting, not a filing</span>
+    <span>Dotted figures open the statement line.</span>
+  </div>
+
+  <div class="tape" id="tape">
+    <div style="display:grid;gap:10px">
+      <div class="eyebrow">The tape · Thursday 8 October 2026 <span class="tag p">press</span></div>
+      <p>The <i>Financial Times</i> reported that Starbucks had worked with advisers on a possible takeover of Chipotle, described as early-stage and possibly never happening. Chipotle was worth nearly $39 billion before the report. Starbucks said that as a matter of policy it does not comment on rumors and speculation.</p>
+      <p class="sub">Brian Niccol ran Chipotle from 2018 until he left to run Starbucks in September 2024. He would be buying the company he left.</p>
+    </div>
+    <div class="big">
+      <div class="mv"><span class="n cmg">+6.2%</span><small>Chipotle at the close, $32.68<br>about +$2.4B of market value</small></div>
+      <div class="mv"><span class="n sbux">−6.7%</span><small>Starbucks at its intraday low<br>(≈ $107B company), then recovered most of it</small></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ THE RETURN ============ -->
+<section id="return">
+  <div class="sechead">
+    <span class="qtag">Q8 · Q9 · ROE breaks, RNOA doesn't · Is the return real?</span>
+    <h2>Two ways to earn a return</h2>
+    <p class="lede">RNOA = NOPM × NOAT. Every point on the chart is a margin and a turnover; the curves are combinations that earn the same return. Chipotle sits high and to the left. Starbucks sits lower and further right. Flip the switches to see how much of Starbucks' position depends on two judgment calls from Q9.</p>
+  </div>
+  <div class="grid2">
+    <div class="score">
+      <div class="firm" style="border-top:3px solid var(--cmg)">
+        <div class="nm"><h3 class="cmg">Chipotle</h3><span class="sub">ROE <span class="num" id="cmgROE"></span> <span class="tag">derived</span></span></div>
+        <div class="eq"><span class="r" id="cmgR"></span><span class="op">=</span><span id="cmgM"></span><span class="op">×</span><span id="cmgT"></span></div>
+        <div class="sub">RNOA = NOPM × NOAT · NOPAT <span class="num" id="cmgNOPAT"></span> on average NOA <span class="num" id="cmgNOA"></span> <span class="tag">derived</span></div>
+        <div id="cmgFlag"></div>
+      </div>
+      <div class="firm" style="border-top:3px solid var(--sbux)">
+        <div class="nm"><h3 class="sbux">Starbucks</h3><span class="sub">ROE <span class="num" id="sbuxROE"></span> <span class="tag">derived</span></span></div>
+        <div class="eq"><span class="r" id="sbuxR"></span><span class="op">=</span><span id="sbuxM"></span><span class="op">×</span><span id="sbuxT"></span></div>
+        <div class="sub">RNOA = NOPM × NOAT · NOPAT <span class="num" id="sbuxNOPAT"></span> on average NOA <span class="num" id="sbuxNOA"></span> <span class="tag">derived</span></div>
+        <div class="ctrl">
+          <label class="tog"><input type="checkbox" id="tCore"> Core: add back the <span class="src" data-src="SBUX-IS:restr">$892.0M</span> charge after tax</label>
+          <label class="tog"><input type="checkbox" id="tNestle"> Treat the Nestlé prepayment as financing</label>
+        </div>
+        <div id="sbuxFlag"></div>
+      </div>
+      <p class="sub">Starbucks' ROE is negative because its common equity is negative (<span class="src" data-src="SBUX-BS:EQ">−$8,089.2M</span>). ROE stops meaning anything; RNOA still works, which is the point of Q8.</p>
+    </div>
+    <div class="figure">
+      <svg id="plane" viewBox="0 0 600 420" role="img" aria-label="Margin against turnover with RNOA curves"></svg>
+      <div class="cap">Horizontal: NOAT, revenue ÷ average NOA. Vertical: NOPM, NOPAT ÷ revenue. Curves: constant RNOA.</div>
+    </div>
+  </div>
+  <div class="think"><div class="k">STOP AND THINK</div>
+    <p>Chipotle's margin is double Starbucks', yet Starbucks turns its operating assets faster. What about selling coffee instead of burritos would produce exactly that pattern? Think about who makes your order, and how much of Starbucks' revenue comes from licensed stores that someone else owns.</p></div>
+</section>
+
+<!-- ============ WHO FINANCES IT ============ -->
+<section id="finance">
+  <div class="sechead">
+    <span class="qtag">Q2 · Q6 · Q7 · Paid before the coffee · "Chipotle has no debt"</span>
+    <h2>Who finances these companies?</h2>
+    <p class="lede">Every dollar of assets is paid for by someone. Read each bar left to right: customers, suppliers, employees, landlords, lenders, shareholders. Starbucks' shareholders sit below zero: buybacks and dividends have returned more than the company ever retained, so everyone else is funding the business plus the hole.</p>
+  </div>
+  <div class="fin" id="finBars"></div>
+  <div class="legend" id="finLegend" style="margin-top:12px"></div>
+  <div class="think"><div class="k">STOP AND THINK</div>
+    <p>If you have money sitting on a Starbucks card or in the app right now, you have lent Starbucks money at zero percent and cannot get it back in cash. Customers hold <span class="src" data-src="SBUX-BS:svc">$1.75 billion</span> of that float. Is that an operating liability or a financing one, and what would change in RNOA if you called it financing?</p></div>
+</section>
+
+<!-- ============ CASH CYCLE ============ -->
+<section id="cycle">
+  <div class="sechead">
+    <span class="qtag">Q2 · Q3 · Paid before the coffee · Two pantries, one screen</span>
+    <h2>The cash cycle</h2>
+    <p class="lede">You computed every input: days receivable (Q2e), days inventory (Q3a), days payable (Q3b) and customer prepayment days (Q2d). The case cut the final step of putting them together. Here it is. Day zero is the day inventory arrives.</p>
+  </div>
+  <div class="ctrl" style="margin-bottom:14px">
+    <label class="tog"><input type="checkbox" id="tPrepay"> Net out customer prepayments</label>
+    <label class="tog"><input type="checkbox" id="tNestleWC"> Count the Nestlé prepayment as customer float</label>
+  </div>
+  <div class="figure"><svg id="cycleSvg" viewBox="0 0 900 330" role="img" aria-label="Cash conversion timeline for both firms"></svg>
+    <div class="cap" id="cycleCap"></div></div>
+  <div class="cards" style="margin-top:16px">
+    <div class="card"><h3 class="sbux">Why Starbucks' pantry is so full</h3>
+      <div class="kv"><span>Inventory growth FY25</span><b>+23.0%</b></div>
+      <div class="kv"><span>Revenue growth FY25</span><b>+2.8%</b></div>
+      <div class="kv"><span>Coffee (unroasted + roasted) growth</span><b>+36.7%</b></div>
+      <div class="kv"><span>Coffee's share of the inventory increase</span><b>82%</b></div>
+      <p class="sub">Note 5 and the liquidity discussion say it: elevated coffee prices. The unit count did not explode; the price of each bag did. <span class="tag">derived</span></p></div>
+    <div class="card"><h3 class="cmg">Why Chipotle's barely exists</h3>
+      <div class="kv"><span>Inventory on the balance sheet</span><b class="src" data-src="CMG-BS:inv">$49.5M</b></div>
+      <div class="kv"><span>Days inventory</span><b>5.1</b></div>
+      <div class="kv"><span>Days payable</span><b>21.9</b></div>
+      <p class="sub">Fresh avocados and chicken cannot sit for two months. Suppliers wait three weeks for cash that came in from diners on day five. <span class="tag">derived</span></p></div>
+  </div>
+</section>
+
+<!-- ============ SORT ============ -->
+<section id="sort">
+  <div class="sechead">
+    <span class="qtag">Q7 · Q8 · Sort both balance sheets</span>
+    <h2>Sort it yourself</h2>
+    <p class="lede">Each line is either operating (it runs the restaurants) or financial (it raises or parks money). The sort drives everything: NOA, NNO, NOPAT and RNOA recompute as you click. It opens on the case key's sort. Clear it and try it cold, then compare.</p>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px">
+    <div class="firmswitch" role="tablist"><button type="button" id="swCMG" class="on">Chipotle</button><button type="button" id="swSBUX">Starbucks</button></div>
+    <button class="btn" type="button" id="btnClear">Clear the sort and try it cold</button>
+    <button class="btn" type="button" id="btnKey">Reset to the key</button>
+    <span class="sub" id="sortStatus"></span>
+  </div>
+  <div class="sortbox">
+    <div class="scroll"><table class="tbl" id="sortTbl"></table></div>
+    <div class="readout">
+      <div class="ro" id="roMain"></div>
+      <div class="tie" id="roTie"></div>
+      <div class="ro" id="roIncome"></div>
+    </div>
+  </div>
+  <div class="ai">
+    <div class="k">// APPLIED AI</div>
+    <h3>The model that found a 102.5% return</h3>
+    <p>An AI sorting Chipotle reported RNOA of 102.5%, and the number traveled into slides, a quiz bank and a rubric before anyone caught it. Reproduce it: on Chipotle, set both operating lease liabilities to <b>Operating</b>. Then look at the balance-sheet check under the readout.</p>
+    <p>It still ties. NOA − NNO = common equity holds under <i>any</i> sort in which every line lands somewhere, including a wrong one. The identity proves your arithmetic, not your classification. What catches the error is judgment: a lease liability is a promise to pay a landlord fixed amounts over 14 years, which is debt in everything but name, and a restaurant chain earning 100% on its operating assets should make you suspicious before it makes you excited.</p>
+    <p class="sub">The habit to keep: never ask a model to check its own answer in the same window. Open a fresh one and ask the question cold. Self-review inherits the first answer; a cold re-ask does not.</p>
+  </div>
+</section>
+
+<!-- ============ LEASES ============ -->
+<section id="leases">
+  <div class="sechead">
+    <span class="qtag">Q6 · "Chipotle has no debt"</span>
+    <h2>"Chipotle has no debt"</h2>
+    <p class="lede">True on the balance sheet: there is no line called debt. But Chipotle owes landlords <span class="src" data-src="CMG-BS:leaseL">$5,075.8M</span> in present value, discounted at a weighted 5.48%. That rate is a choice made at lease signing. Move it and watch the liability move.</p>
+  </div>
+  <div class="grid2">
+    <div style="display:grid;gap:18px">
+      <div class="slider"><label for="rRate">Discount rate <b id="rRateV"></b></label><input type="range" id="rRate" min="3" max="10" step="0.02" value="5.48"></div>
+      <div class="slider"><label for="rYears">Spread the "thereafter" payments over <b id="rYearsV"></b> <span class="tag a">assumed</span></label><input type="range" id="rYears" min="5" max="20" step="1" value="10"></div>
+      <div class="out">
+        <div class="o"><small>Present value of the lease payments</small><span class="n" id="pvOut"></span></div>
+        <div class="o"><small>Versus the $5,075.8M reported</small><span class="n" id="pvDiff"></span></div>
+        <div class="o"><small>First-year lease interest at this rate</small><span class="n" id="pvInt"></span></div>
+      </div>
+      <p class="sub">Undiscounted payments are $7,474.5M: $521.4M, $569.2M, $553.4M, $536.7M, $513.1M over the next five years and $4,780.6M thereafter <span class="tag g">given</span> (Note 9). The note does not say when "thereafter" is paid, so spreading it evenly is an assumption. At 5.48% and 10 years the rebuild lands within 0.2% of the reported liability.</p>
+    </div>
+    <div class="figure"><svg id="leaseSvg" viewBox="0 0 560 300" role="img" aria-label="Lease payments by year and their present value"></svg>
+      <div class="cap">Bars: payments as scheduled (assumed even after year 5). Dark portion: what each is worth today at the chosen rate.</div></div>
+  </div>
+  <div class="cards" style="margin-top:18px">
+    <div class="card"><div class="eyebrow">Moving the leases changes three things</div>
+      <div class="kv"><span>Lease interest moved out of operating costs</span><b>$263.5M</b></div>
+      <div class="kv"><span>That is this share of operating lease cost</span><b>48%</b></div>
+      <div class="kv"><span>Operating income with lease interest moved out</span><b>$2,199.3M</b></div>
+      <p class="sub">Average liability × 5.48% <span class="tag">derived</span>. The 5.30% opening-balance version ($240.7M) was also accepted.</p></div>
+    <div class="card"><div class="eyebrow">Two firms, two lease books</div>
+      <div class="kv"><span class="cmg">Chipotle weighted rate · remaining term</span><b>5.48% · 14.1 yrs</b></div>
+      <div class="kv"><span class="sbux">Starbucks weighted rate · remaining term</span><b>3.70% · 8.6 yrs</b></div>
+      <div class="kv"><span>Chipotle renewal options in the payments</span><b>40%</b></div>
+      <p class="sub">40% of Chipotle's undiscounted payments come from renewal options it is "reasonably certain" to exercise <span class="tag">derived</span>. That is a judgment in the liability itself.</p></div>
+  </div>
+</section>
+
+<!-- ============ QUALITY ============ -->
+<section id="quality">
+  <div class="sechead">
+    <span class="qtag">Q1 · Q4 · Q5 · Breakage · Store age · Two new CEOs</span>
+    <h2>The quality of the year</h2>
+    <p class="lede">Three places where a reported number is not quite what it looks like.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="eyebrow">Q1 · Breakage: the revenue nobody bought</div>
+      <p>When a gift card will never be redeemed, the company books the leftover as revenue. Chipotle's breakage jumped from $7.8M to $27.9M in one year <span class="tag g">given</span> (Note 1, p.45), after it changed its estimate.</p>
+      <label class="tog" style="justify-self:start"><input type="checkbox" id="tBreak"> Strip the breakage increase out of FY2025</label>
+      <svg id="breakSvg" viewBox="0 0 520 210" role="img" aria-label="Chipotle operating income with and without the breakage increase"></svg>
+      <p class="sub" id="breakCap"></p>
+    </div>
+    <div class="card">
+      <div class="eyebrow">Q5 · Two new CEOs, one big charge</div>
+      <p>Both firms had a new chief executive in FY2025. Both took a charge. One is 32 times the other, on a company three times the size.</p>
+      <svg id="chargeSvg" viewBox="0 0 520 110" role="img" aria-label="Restructuring charges as basis points of revenue"></svg>
+      <table class="tbl" style="margin-top:6px">
+        <thead><tr><th>Starbucks' $892.0M, opened up (Note 18)</th><th>$M</th></tr></thead>
+        <tbody>
+          <tr><td>Store assets written down</td><td class="n">352.8</td></tr>
+          <tr><td>Severance</td><td class="n">299.9</td></tr>
+          <tr><td>Lease exits (627 stores closed)</td><td class="n">239.3</td></tr>
+        </tbody></table>
+      <table class="tbl" style="margin-top:10px">
+        <thead><tr><th>Format B</th><th>ΔAssets</th><th>= ΔLiab</th><th>+ ΔEquity</th></tr></thead>
+        <tbody>
+          <tr><td>Store-asset impairment</td><td class="n">−352.8</td><td class="n">0</td><td class="n">−352.8</td></tr>
+          <tr><td>Severance (141.0 paid, 158.9 accrued)</td><td class="n">−141.0</td><td class="n">+158.9</td><td class="n">−299.9</td></tr>
+        </tbody></table>
+    </div>
+  </div>
+  <div class="cards" style="margin-top:16px">
+    <div class="card"><div class="eyebrow">Q4 · How old are the stores?</div>
+      <div class="kv"><span class="cmg">Chipotle implied useful life</span><b>13.9 yrs</b></div>
+      <div class="kv"><span>Share already used up · average age</span><b>50% · 7.0 yrs</b></div>
+      <div class="meter"><i style="width:50%;background:var(--cmg)"></i></div>
+      <div class="kv" style="margin-top:6px"><span class="sbux">Starbucks implied useful life</span><b>11.0 yrs</b></div>
+      <div class="kv"><span>Share already used up · average age</span><b>58% · 6.4 yrs</b></div>
+      <div class="meter"><i style="width:58%;background:var(--sbux)"></i></div>
+      <p class="sub">Depreciable PP&amp;E ÷ depreciation; accumulated ÷ depreciable <span class="tag">derived</span>. Starbucks uses cash-flow D&amp;A of $1,771.5M; the income-statement $1,684.7M gives 11.5 years and was also accepted.</p></div>
+    <div class="card"><div class="eyebrow">Q5 · Accruals</div>
+      <div class="kv"><span class="cmg">Chipotle (NI − OCF) ÷ avg assets</span><b>−6.4%</b></div>
+      <div class="kv"><span class="sbux">Starbucks (NI − OCF) ÷ avg assets</span><b>−9.1%</b></div>
+      <p class="sub">Both negative: cash from operations exceeds earnings, mostly because depreciation is a noncash expense. Starbucks' charge widens the difference, since most of it had not yet cost cash. <span class="tag">derived</span></p></div>
+    <div class="card"><div class="eyebrow">Q9 · Will it persist?</div>
+      <div class="kv"><span class="cmg">Chipotle comparable sales FY25</span><b>−1.7%</b></div>
+      <div class="kv"><span>Transactions FY25</span><b>−2.9%</b></div>
+      <p class="sub">Revenue grew 5.4% only because of new restaurants. Fewer people walked into the stores Chipotle already had. A 27% RNOA built on shrinking traffic is a return you should test, not extrapolate.</p></div>
+  </div>
+  <div class="think"><div class="k">STOP AND THINK</div>
+    <p>A new CEO's first-year charge is the cheapest big number they will ever take: it lands on the predecessor's watch in the market's memory and makes every later year look better. Argue it both ways. When is an $892M charge honesty, and when is it a cookie jar?</p></div>
+</section>
+
+<!-- ============ DEAL ============ -->
+<section id="deal">
+  <div class="sechead">
+    <span class="qtag">Beyond the case · the payoff</span>
+    <h2>Would the deal make sense?</h2>
+    <p class="lede">Chipotle earns 26.9% on its net operating assets and Starbucks earns 16.2%, so buying Chipotle should lift Starbucks' return. Set a price and find out why it does the opposite.</p>
+  </div>
+  <div class="grid2">
+    <div style="display:grid;gap:18px">
+      <div class="slider"><label for="dPrice">Price for Chipotle's equity <b id="dPriceV"></b></label><input type="range" id="dPrice" min="10" max="60" step="0.5" value="39"><span class="sub" id="dPremium"></span></div>
+      <div class="slider"><label for="dSyn">Annual pretax cost savings <b id="dSynV"></b> <span class="tag a">assumed</span></label><input type="range" id="dSyn" min="0" max="1000" step="10" value="0"><span class="sub">Analyst estimates in the press: William Blair about $300M; the FT about $770M.</span></div>
+      <label class="tog" style="justify-self:start"><input type="checkbox" id="dCore"> Use Starbucks' core NOPAT ($3,187.0M, charge added back)</label>
+      <div class="out">
+        <div class="o"><small>Return on the price paid</small><span class="n" id="dRet"></span></div>
+        <div class="o"><small>Combined RNOA</small><span class="n" id="dRNOA"></span></div>
+        <div class="o"><small>Combined average NOA</small><span class="n" id="dNOA"></span></div>
+      </div>
+      <p class="sub" id="dNote"></p>
+    </div>
+    <div class="figure"><svg id="dealPlane" viewBox="0 0 600 420" role="img" aria-label="The combined company on the margin and turnover chart"></svg>
+      <div class="cap">The purple point is the combined company. It keeps a respectable margin but its turnover collapses, because the purchase price lands in NOA.</div></div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <div class="eyebrow">Why it happens</div>
+    <p>RNOA is computed on book value. An acquirer pays market value. The difference between the price and Chipotle's book NOA becomes goodwill and stepped-up assets, which are operating assets, and they sit in NOA permanently. You do not inherit a 26.9% business. You inherit a 26.9% business at 26.9%-business prices, and the return on that price is what Chipotle's own shareholders were already earning. That is why Chipotle's holders were happy on 8 October: the price transfers the return to the sellers.</p>
+    <p class="sub">Assumptions: Chipotle's year-end NNO of $3,794.2M is assumed by the buyer; NOPAT adds with no financing cost for the deal; savings taxed at 22%, the case's rate; Starbucks' average NOA of $15,373.3M. Illustrative, not a valuation.</p>
+  </div>
+  <div class="think"><div class="k">STOP AND THINK</div>
+    <p>A falling RNOA is not by itself proof that the deal destroys value. The real test is whether the return on the price paid beats what Starbucks' investors could earn elsewhere at similar risk, which is the cost of capital. Hold that thought for the valuation half of the course. For now: at what price does the return on purchase price reach 8%, and is anyone going to sell Chipotle for that?</p></div>
+</section>
+
+<footer>
+  <div><b>Sources.</b> Chipotle Mexican Grill FY2025 Form 10-K (balance sheet p.36, income statement p.37, Notes 1, 2, 3, 9) and Starbucks FY2025 Form 10-K (income statement p.43, balance sheet p.45, Notes 1, 5, 7, 10, 11, 18). Derived figures are from the Case 02 key, verified at case freeze.</div>
+  <div><b>Press.</b> <a href="https://www.nrn.com/mergers-acquisitions/starbucks-is-reportedly-eyeing-a-chipotle-acquisition" target="_blank" rel="noopener">Nation's Restaurant News, 8 Oct 2026</a>, reporting the <i>Financial Times</i> · <a href="https://www.spokesman.com/stories/2026/oct/08/starbucks-has-explored-chipotle-takeover-ft-report/" target="_blank" rel="noopener">Reuters via the Spokesman-Review</a> · <a href="https://finance.yahoo.com/markets/stocks/articles/starbucks-sbux-chipotle-cmg-could-174730048.html" target="_blank" rel="noopener">Yahoo Finance, 9 Oct 2026</a> · <a href="https://www.tikr.com/blog/chipotle-stock-jumped-6-on-a-starbucks-takeover-report-its-q3-guide-counted-one-food-scare-and-left-out-another" target="_blank" rel="noopener">TIKR, Chipotle close</a>. The deal is unconfirmed reporting; treat it as such.</div>
+  <div>Tax rate on nonoperating items: 22%, as in the case key <span class="tag a">assumed</span>. Fiscal years differ by about three months, as in Case 01.</div>
+</footer>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Financial statements">
+  <div class="dh">
+    <div class="top"><b style="font-family:var(--display);font-size:1.15rem">The statements, as filed</b><button class="btn" id="closeStmts" type="button">Close</button></div>
+    <div class="tabs" id="stmtTabs"></div>
+  </div>
+  <div class="db" id="stmtBody"></div>
+</aside>
+
+<script>
+/*ENGINE*/
+const TAX = 0.22;
+// Balance-sheet lines for the sort. CMG in $ thousands (as filed), converted to $M by /1000.
+const CMG_LINES = [
+ {id:'cash', s:'A', l:'Cash and cash equivalents', v:[350545,748537], k:'F', g:'ioi', st:'cash'},
+ {id:'ar', s:'A', l:'Accounts receivable, net', v:[156466,143963], k:'O', st:'ar'},
+ {id:'inv', s:'A', l:'Inventory', v:[49508,48942], k:'O', st:'inv'},
+ {id:'prepaid', s:'A', l:'Prepaid expenses and other current assets', v:[120450,97538], k:'O', st:'prepaid'},
+ {id:'taxrec', s:'A', l:'Income tax receivable', v:[91393,67229], k:'O', st:'taxrec'},
+ {id:'invest', s:'A', l:'Investments (current)', v:[698591,674378], k:'F', g:'ioi', st:'invest'},
+ {id:'ppe', s:'A', l:'Leasehold improvements, property and equipment, net', v:[2679361,2390126], k:'O', st:'ppe'},
+ {id:'ltinv', s:'A', l:'Long-term investments', v:[197123,868025], k:'F', g:'ioi', st:'ltinv'},
+ {id:'rcash', s:'A', l:'Restricted cash', v:[35364,29842], k:'F', g:'ioi', st:'rcash'},
+ {id:'rou', s:'A', l:'Operating lease assets', v:[4463010,4000127], k:'O', st:'rou'},
+ {id:'otherA', s:'A', l:'Other assets', v:[130781,113728], k:'O', st:'otherA'},
+ {id:'gw', s:'A', l:'Goodwill', v:[21939,21939], k:'O', st:'gw'},
+ {id:'ap', s:'L', l:'Accounts payable', v:[212813,210695], k:'O', st:'ap'},
+ {id:'payroll', s:'L', l:'Accrued payroll and benefits', v:[250126,261913], k:'O', st:'payroll'},
+ {id:'accrued', s:'L', l:'Accrued liabilities', v:[182448,179747], k:'O', st:'accrued'},
+ {id:'unearned', s:'L', l:'Unearned revenue', v:[240375,238577], k:'O', st:'unearned'},
+ {id:'leaseC', s:'L', l:'Current operating lease liabilities', v:[302380,277836], k:'F', g:'lease', st:'leaseC'},
+ {id:'leaseL', s:'L', l:'Long-term operating lease liabilities', v:[4773434,4262782], k:'F', g:'lease', st:'leaseL'},
+ {id:'dtl', s:'L', l:'Deferred income tax liabilities', v:[125674,46208], k:'O', st:'dtl'},
+ {id:'otherL', s:'L', l:'Other liabilities', v:[76674,71070], k:'O', st:'otherL'},
+].map(x=>({...x, v:x.v.map(n=>n/1000)}));
+const SBUX_LINES = [
+ {id:'cash', s:'A', l:'Cash and cash equivalents', v:[3219.8,3286.2], k:'F', g:'iio', st:'cash'},
+ {id:'sti', s:'A', l:'Short-term investments', v:[247.2,257.0], k:'F', g:'iio', st:'sti'},
+ {id:'ar', s:'A', l:'Accounts receivable, net', v:[1277.5,1213.8], k:'O', st:'ar'},
+ {id:'inv', s:'A', l:'Inventories', v:[2185.6,1777.3], k:'O', st:'inv'},
+ {id:'prepaid', s:'A', l:'Prepaid expenses and other current assets', v:[452.2,313.1], k:'O', st:'prepaid'},
+ {id:'lti', s:'A', l:'Long-term investments', v:[246.9,276.0], k:'F', g:'iio', st:'lti'},
+ {id:'eqinv', s:'A', l:'Equity investments', v:[466.2,463.9], k:'O', g:'eqinc', st:'eqinv'},
+ {id:'ppe', s:'A', l:'Property, plant and equipment, net', v:[8493.5,8665.5], k:'O', st:'ppe'},
+ {id:'rou', s:'A', l:'Operating lease, right-of-use asset', v:[9315.7,9286.2], k:'O', st:'rou'},
+ {id:'dta', s:'A', l:'Deferred income taxes, net', v:[1826.9,1766.7], k:'O', st:'dta'},
+ {id:'otherA', s:'A', l:'Other long-term assets', v:[752.5,617.0], k:'O', st:'otherA'},
+ {id:'intang', s:'A', l:'Other intangible assets', v:[166.8,100.9], k:'O', st:'intang'},
+ {id:'gw', s:'A', l:'Goodwill', v:[3368.9,3315.7], k:'O', st:'gw'},
+ {id:'ap', s:'L', l:'Accounts payable', v:[1852.8,1595.5], k:'O', st:'ap'},
+ {id:'accrued', s:'L', l:'Accrued liabilities, excluding dividends payable', v:[1654.9,1503.5], k:'O', st:'accrued'},
+ {id:'divpay', s:'L', l:'Dividends payable (inside accrued liabilities, Note 7)', v:[704.8,691.2], k:'F', ind:1, st:'accrued'},
+ {id:'payroll', s:'L', l:'Accrued payroll and benefits', v:[1093.9,786.6], k:'O', st:'payroll'},
+ {id:'leaseC', s:'L', l:'Current portion of operating lease liability', v:[1564.5,1463.1], k:'F', g:'lease', st:'leaseC'},
+ {id:'svc', s:'L', l:'Stored value cards and current deferred revenue, excluding Nestlé', v:[1663.6,1604.2], k:'O', st:'svc'},
+ {id:'debtC', s:'L', l:'Current portion of long-term debt', v:[1498.9,1248.9], k:'F', g:'int', st:'debtC'},
+ {id:'debtL', s:'L', l:'Long-term debt', v:[14575.9,14319.5], k:'F', g:'int', st:'debtL'},
+ {id:'leaseL', s:'L', l:'Operating lease liability', v:[8972.2,8771.6], k:'F', g:'lease', st:'leaseL'},
+ {id:'defrev', s:'L', l:'Deferred revenue (long-term), excluding Nestlé', v:[172.6,163.6], k:'O', st:'defrevL'},
+ {id:'nestle', s:'L', l:'Nestlé up-front royalty, current + long-term (Note 11)', v:[5777.0,5977.0], k:'O', g:'nestle', ind:1, st:'defrevL'},
+ {id:'otherL', s:'L', l:'Other long-term liabilities', v:[577.8,656.2], k:'O', st:'otherL'},
+];
+// Income items tied to balance-sheet groups. Positive = nonoperating expense, negative = nonoperating income (pretax, $M).
+const FIRMS = {
+  CMG:{name:'Chipotle', lines:CMG_LINES, ni:1535.761, rev:11925.601, eq:[2830.607,3655546/1000], eqAvgROE:(2830.607+3655.546)/2, niROE:1535.761,
+       links:{ioi:-73.721, lease:263.4902368}, revAdj:{} },
+  SBUX:{name:'Starbucks', lines:SBUX_LINES, ni:1856.7, rev:37184.4, eq:[-8089.2,-7441.6], eqAvgROE:(-8096.6-7448.9)/2, niROE:1856.4,
+       links:{iio:-113.3, lease:384.2709, int:542.6, eqinc:-247.8, nestle:-176.5}, revAdj:{nestle:-176.5} },
+};
+function avg(a){return (a[0]+a[1])/2}
+function compute(code, sort, opts={}){
+  const F=FIRMS[code]; let OA=[0,0],OL=[0,0],FA=[0,0],FL=[0,0],unsorted=0;
+  const grpTot={}, grpFin={};
+  for(const ln of F.lines){
+    const c=sort[ln.id]; if(!c){unsorted++;}
+    const k=c||'O';
+    for(let y=0;y<2;y++){
+      if(ln.s==='A'){ if(k==='O')OA[y]+=ln.v[y]; else FA[y]+=ln.v[y]; }
+      else { if(k==='O')OL[y]+=ln.v[y]; else FL[y]+=ln.v[y]; }
+    }
+    if(ln.g){ grpTot[ln.g]=(grpTot[ln.g]||0)+avg(ln.v); if(k==='F') grpFin[ln.g]=(grpFin[ln.g]||0)+avg(ln.v); }
+  }
+  const NOA=[OA[0]-OL[0],OA[1]-OL[1]], NNO=[FL[0]-FA[0],FL[1]-FA[1]];
+  let nne=0, rev=F.rev;
+  for(const g in F.links){ const sh=grpTot[g]?(grpFin[g]||0)/grpTot[g]:0; nne+=sh*F.links[g]; if(F.revAdj[g]) rev+=sh*F.revAdj[g]; }
+  let nopat=F.ni+nne*(1-TAX);
+  if(opts.core) nopat+=892.0*(1-TAX);
+  const noaAvg=avg(NOA);
+  return {OA,OL,FA,FL,NOA,NNO,noaAvg,nnoAvg:avg(NNO),nne,nopat,rev,rnoa:nopat/noaAvg,nopm:nopat/rev,noat:rev/noaAvg,
+          roe:F.niROE/F.eqAvgROE, tie:[NOA[0]-NNO[0]-F.eq[0], NOA[1]-NNO[1]-F.eq[1]], unsorted};
+}
+function keySort(code){const o={};for(const l of FIRMS[code].lines)o[l.id]=l.k;return o}
+// Lease PV: five scheduled payments, then "thereafter" spread evenly over n years.
+const CMG_PAY=[521.413,569.200,553.401,536.731,513.146], CMG_THERE=4780.639;
+function leasePV(r,n){let pv=0;CMG_PAY.forEach((p,i)=>pv+=p/Math.pow(1+r,i+1));for(let t=1;t<=n;t++)pv+=CMG_THERE/n/Math.pow(1+r,5+t);return pv}
+function deal(price,syn,core){
+  const cmgNOPAT=1683.781, sbNOPAT=core?3187.045:2491.285, nno=3794.191, sbNOA=15373.35, rev=11925.601+37184.4;
+  const paid=price+nno, synAT=syn*(1-TAX), nopat=cmgNOPAT+sbNOPAT+synAT, noa=sbNOA+paid;
+  return {paid, ret:(cmgNOPAT+synAT)/paid, rnoa:nopat/noa, noa, nopm:nopat/rev, noat:rev/noa, be8:(cmgNOPAT+synAT)/0.08-nno};
+}
+/*END*/
+
+// ---------------- statements, as filed ----------------
+const ST = {
+ 'CMG-BS':{t:'Chipotle · Balance sheet', u:'In $ thousands, as filed. December 31.', cols:['2025','2024'], rows:[
+  ['Current assets','','','h'],['Cash and cash equivalents','350,545','748,537','','cash'],['Accounts receivable, net','156,466','143,963','','ar'],['Inventory','49,508','48,942','','inv'],['Prepaid expenses and other current assets','120,450','97,538','','prepaid'],['Income tax receivable','91,393','67,229','','taxrec'],['Investments','698,591','674,378','','invest'],['Total current assets','1,466,953','1,780,587','t'],
+  ['Leasehold improvements, property and equipment, net','2,679,361','2,390,126','','ppe'],['Long-term investments','197,123','868,025','','ltinv'],['Restricted cash','35,364','29,842','','rcash'],['Operating lease assets','4,463,010','4,000,127','','rou'],['Other assets','130,781','113,728','','otherA'],['Goodwill','21,939','21,939','','gw'],['Total assets','8,994,531','9,204,374','t','TA'],
+  ['Current liabilities','','','h'],['Accounts payable','212,813','210,695','','ap'],['Accrued payroll and benefits','250,126','261,913','','payroll'],['Accrued liabilities','182,448','179,747','','accrued'],['Unearned revenue','240,375','238,577','','unearned'],['Current operating lease liabilities','302,380','277,836','','leaseC'],['Total current liabilities','1,188,142','1,168,768','t'],
+  ['Long-term operating lease liabilities','4,773,434','4,262,782','','leaseL'],['Deferred income tax liabilities','125,674','46,208','','dtl'],['Other liabilities','76,674','71,070','','otherL'],['Total liabilities','6,163,924','5,548,828','t'],
+  ["Shareholders' equity",'','','h'],['Common stock','13,044','13,586'],['Additional paid-in capital','2,204,944','2,078,010'],['Accumulated other comprehensive loss','(7,289)','(10,282)'],['Retained earnings','619,908','1,574,232'],["Total shareholders' equity",'2,830,607','3,655,546','t','EQ'],["Total liabilities and shareholders' equity",'8,994,531','9,204,374','t']]},
+ 'CMG-IS':{t:'Chipotle · Income statement', u:'In $ thousands, as filed. Years ended December 31.', cols:['2025','2024','2023'], rows:[
+  ['Food and beverage revenue','11,866,051','11,247,384','9,804,124'],['Delivery service revenue','59,550','66,469','67,525'],['Total revenue','11,925,601','11,313,853','9,871,649','t','rev'],
+  ['Restaurant operating costs (excl. D&A)','','','','h'],['Food, beverage and packaging','3,526,992','3,374,516','2,912,564','','fbp'],['Labor','2,991,680','2,789,789','2,440,982'],['Occupancy','624,898','563,374','503,264','','occ'],['Other operating costs','1,755,824','1,568,482','1,428,747'],['General and administrative expenses','652,017','697,483','633,584'],['Depreciation and amortization','361,382','335,030','319,394','','da'],['Pre-opening costs','49,507','41,897','36,931'],['Impairment, closure costs, and asset disposals','27,503','26,949','38,370','','imp'],['Total operating expenses','9,989,803','9,397,520','8,313,836','t'],
+  ['Income from operations','1,935,798','1,916,333','1,557,813','t','oi'],['Interest and other income, net','73,721','93,897','62,693','','ioi'],['Income before income taxes','2,009,519','2,010,230','1,620,506','t'],['Provision for income taxes','473,758','476,120','391,769','','tax'],['Net income','1,535,761','1,534,110','1,228,737','t','ni'],['Diluted EPS ($)','1.14','1.11','0.89']]},
+ 'SBUX-BS':{t:'Starbucks · Balance sheet', u:'In $ millions, as filed. Sep 28, 2025 and Sep 29, 2024.', cols:['2025','2024'], rows:[
+  ['Current assets','','','h'],['Cash and cash equivalents','3,219.8','3,286.2','','cash'],['Short-term investments','247.2','257.0','','sti'],['Accounts receivable, net','1,277.5','1,213.8','','ar'],['Inventories','2,185.6','1,777.3','','inv'],['Prepaid expenses and other current assets','452.2','313.1','','prepaid'],['Total current assets','7,382.3','6,847.4','t'],
+  ['Long-term investments','246.9','276.0','','lti'],['Equity investments','466.2','463.9','','eqinv'],['Property, plant and equipment, net','8,493.5','8,665.5','','ppe'],['Operating lease, right-of-use asset','9,315.7','9,286.2','','rou'],['Deferred income taxes, net','1,826.9','1,766.7','','dta'],['Other long-term assets','752.5','617.0','','otherA'],['Other intangible assets','166.8','100.9','','intang'],['Goodwill','3,368.9','3,315.7','','gw'],['Total assets','32,019.7','31,339.3','t','TA'],
+  ['Current liabilities','','','h'],['Accounts payable','1,852.8','1,595.5','','ap'],['Accrued liabilities (incl. dividends payable 704.8 / 691.2)','2,359.7','2,194.7','','accrued'],['Accrued payroll and benefits','1,093.9','786.6','','payroll'],['Current portion of operating lease liability','1,564.5','1,463.1','','leaseC'],['Stored value card liability and current portion of deferred revenue','1,840.6','1,781.2','','svc'],['Current portion of long-term debt','1,498.9','1,248.9','','debtC'],['Total current liabilities','10,210.4','9,070.0','t'],
+  ['Long-term debt','14,575.9','14,319.5','','debtL'],['Operating lease liability','8,972.2','8,771.6','','leaseL'],['Deferred revenue (mostly Nestlé, Note 11)','5,772.6','5,963.6','','defrevL'],['Other long-term liabilities','577.8','656.2','','otherL'],['Total liabilities','40,108.9','38,780.9','t'],
+  ["Shareholders' deficit",'','','h'],['Common stock and additional paid-in capital','635.2','323.7'],['Retained deficit','(8,272.5)','(7,343.8)'],['Accumulated other comprehensive loss','(459.3)','(428.8)'],["Total shareholders' deficit",'(8,096.6)','(7,448.9)','t'],['Noncontrolling interests','7.4','7.3'],['Total deficit','(8,089.2)','(7,441.6)','t','EQ'],["Total liabilities and equity/(deficit)",'32,019.7','31,339.3','t']]},
+ 'SBUX-IS':{t:'Starbucks · Income statement', u:'In $ millions, as filed. Fiscal years ended Sep 28, 2025; Sep 29, 2024; Oct 1, 2023.', cols:['2025','2024','2023'], rows:[
+  ['Company-operated stores','30,744.8','29,765.9','29,462.3'],['Licensed stores','4,350.4','4,505.1','4,512.7'],['Other','2,089.2','1,905.2','2,000.6'],['Total net revenues','37,184.4','36,176.2','35,975.6','t','rev'],
+  ['Product and distribution costs','11,658.2','11,180.6','11,409.1','','pdc'],['Store operating expenses','17,058.9','15,286.5','14,720.3'],['Other operating expenses','584.6','565.6','539.4'],['Depreciation and amortization expenses','1,684.7','1,512.6','1,362.6','','da'],['General and administrative expenses','2,617.2','2,523.3','2,441.3'],['Restructuring and impairments','892.0','—','21.8','','restr'],['Total operating expenses','34,495.6','31,068.6','30,494.5','t'],
+  ['Income from equity investees','247.8','301.2','298.4','','eqinc'],['Gain from sale of assets','—','—','91.3'],['Operating income','2,936.6','5,408.8','5,870.8','t','oi'],['Interest income and other, net','113.3','122.8','81.2','','iio'],['Interest expense','(542.6)','(562.0)','(550.1)','','ie'],['Earnings before income taxes','2,507.3','4,969.6','5,401.9','t'],['Income tax expense','650.6','1,207.3','1,277.2','','tax'],['Net earnings including noncontrolling interests','1,856.7','3,762.3','4,124.7','t'],['Net earnings attributable to noncontrolling interests','0.3','1.4','0.2'],['Net earnings attributable to Starbucks','1,856.4','3,760.9','4,124.5','t','ni'],['Diluted EPS ($)','1.63','3.31','3.58']]},
+};
+
+// ---------------- helpers ----------------
+const $=s=>document.querySelector(s);
+const fm=(x,d=1)=>(x<0?'−':'')+Math.abs(x).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pc=(x,d=1)=>(x<0?'−':'')+Math.abs(x*100).toFixed(d)+'%';
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs={},parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function txt(parent,x,y,s,attrs={}){const t=el('text',{x,y,'font-family':'IBM Plex Mono, Courier New, monospace','font-size':12,fill:'var(--muted)',...attrs},parent);t.textContent=s;return t}
+
+// ---------------- state ----------------
+const state={sort:{CMG:keySort('CMG'),SBUX:keySort('SBUX')}, core:false, firm:'CMG'};
+
+// ---------------- margin x turnover plane ----------------
+function plane(svg, pts){
+  svg.innerHTML='';
+  const W=600,H=420,L=54,R=18,T=16,B=48,xmax=3.2,ymax=0.18;
+  const X=v=>L+(v/xmax)*(W-L-R), Y=v=>H-B-(v/ymax)*(H-T-B);
+  for(let i=0;i<=8;i++){const v=i*0.4;el('line',{x1:X(v),x2:X(v),y1:T,y2:H-B,stroke:'var(--rule)','stroke-width':1},svg);txt(svg,X(v),H-B+18,v.toFixed(1)+'×',{'text-anchor':'middle'})}
+  for(let i=0;i<=6;i++){const v=i*0.03;el('line',{x1:L,x2:W-R,y1:Y(v),y2:Y(v),stroke:'var(--rule)','stroke-width':1},svg);txt(svg,L-8,Y(v)+4,(v*100).toFixed(0)+'%',{'text-anchor':'end'})}
+  txt(svg,(L+W-R)/2,H-8,'NOAT  (revenue ÷ average NOA)',{'text-anchor':'middle',fill:'var(--ink)'});
+  const yl=txt(svg,14,(T+H-B)/2,'NOPM  (NOPAT ÷ revenue)',{'text-anchor':'middle',fill:'var(--ink)',transform:`rotate(-90 14 ${(T+H-B)/2})`});
+  for(const r of [0.05,0.10,0.15,0.20,0.25,0.30]){
+    let d='';for(let i=0;i<=80;i++){const x=Math.max(r/ymax,0.01)+(xmax-r/ymax)*i/80;const y=r/x;d+=(i?'L':'M')+X(x).toFixed(1)+','+Y(Math.min(y,ymax)).toFixed(1)}
+    el('path',{d,fill:'none',stroke:'var(--muted)','stroke-width':1,'stroke-dasharray':'3 4',opacity:.7},svg);
+    const lx=xmax, ly=r/xmax; if(ly<ymax) txt(svg,X(lx)-4,Y(ly)-5,'RNOA '+(r*100)+'%',{'text-anchor':'end','font-size':11});
+    else txt(svg,X(r/ymax)+4,T+12,(r*100)+'%',{'font-size':11});
+  }
+  for(const p of pts){
+    const off=p.x>xmax, cx=X(Math.min(p.x,xmax)), cy=Y(Math.min(Math.max(p.y,0),ymax));
+    if(p.from){el('line',{x1:X(p.from.x),y1:Y(p.from.y),x2:cx,y2:cy,stroke:p.c,'stroke-width':1.5,'stroke-dasharray':'2 3'},svg)}
+    el('circle',{cx,cy,r:p.ghost?5:8,fill:p.ghost?'var(--panel)':p.c,stroke:p.c,'stroke-width':2},svg);
+    const lab=p.label+'  '+pc(p.y*p.x)+(off?'  → '+p.x.toFixed(1)+'×':'');
+    const anchor=cx>W-170?'end':'start', dx=anchor==='end'?-12:12;
+    const t=el('text',{x:cx+dx,y:cy+(p.dy||4),'text-anchor':anchor,'font-family':'Karla, Calibri, sans-serif','font-size':13,'font-weight':p.ghost?400:700,fill:p.c},svg);t.textContent=lab;
+  }
+}
+
+// ---------------- scoreboard ----------------
+function renderReturn(){
+  const c=compute('CMG',state.sort.CMG), s=compute('SBUX',state.sort.SBUX,{core:state.core});
+  const sk=compute('SBUX',keySort('SBUX'));
+  $('#cmgR').textContent=pc(c.rnoa); $('#cmgM').textContent=pc(c.nopm); $('#cmgT').textContent=c.noat.toFixed(2)+'×';
+  $('#cmgNOPAT').textContent=fm(c.nopat); $('#cmgNOA').textContent=fm(c.noaAvg); $('#cmgROE').textContent=pc(c.roe);
+  $('#sbuxR').textContent=pc(s.rnoa); $('#sbuxM').textContent=pc(s.nopm); $('#sbuxT').textContent=s.noat.toFixed(2)+'×';
+  $('#sbuxNOPAT').textContent=fm(s.nopat); $('#sbuxNOA').textContent=fm(s.noaAvg); $('#sbuxROE').textContent=pc(s.roe);
+  const dC=diffCount('CMG'), dS=diffCount('SBUX');
+  $('#cmgFlag').innerHTML=dC?`<span class="badge">your sort: ${dC} line${dC>1?'s':''} differ from the key</span>`:'';
+  const nestleOnly = dS===1 && state.sort.SBUX.nestle==='F';
+  $('#sbuxFlag').innerHTML=(dS && !nestleOnly)?`<span class="badge">your sort: ${dS} line${dS>1?'s':''} differ from the key</span>`:'';
+  $('#tNestle').checked=state.sort.SBUX.nestle==='F'; $('#tCore').checked=state.core;
+  const pts=[{x:c.noat,y:c.nopm,c:'var(--cmg)',label:'Chipotle'}];
+  const moved = state.core || state.sort.SBUX.nestle==='F' || dS;
+  if(moved) pts.push({x:sk.noat,y:sk.nopm,c:'var(--sbux)',label:'as reported',ghost:true,dy:16});
+  pts.push({x:s.noat,y:s.nopm,c:'var(--sbux)',label:'Starbucks',from:moved?{x:sk.noat,y:sk.nopm}:null});
+  plane($('#plane'),pts);
+}
+function diffCount(code){const k=keySort(code);let n=0;for(const id in k)if(state.sort[code][id]&&state.sort[code][id]!==k[id])n++;return n}
+
+// ---------------- who finances it ----------------
+const FIN_CATS=[['cust','Customers','#C9A227'],['nest','Nestlé','#9B7BB8'],['sup','Suppliers','#7A9E5B'],['emp','Employees','#5B8FB0'],['oth','Other operating','#A39A8B'],['land','Landlords (leases)','#C0703A'],['lend','Lenders','#6F5A4B'],['div','Declared dividends','#D08A9A'],['sh','Shareholders','var(--accent)']];
+const FIN={CMG:{TA:8994.531,v:{cust:240.375,nest:0,sup:212.813,emp:250.126,oth:182.448+125.674+76.674,land:5075.814,lend:0,div:0,sh:2830.607}},
+           SBUX:{TA:32019.7,v:{cust:1836.2,nest:5777.0,sup:1852.8,emp:1093.9,oth:1654.9+577.8,land:10536.7,lend:16074.8,div:704.8,sh:-8089.2}}};
+function renderFinance(){
+  const host=$('#finBars');host.innerHTML='';
+  for(const code of ['CMG','SBUX']){
+    const f=FIN[code], row=document.createElement('div');row.className='finrow';
+    const name=code==='CMG'?'Chipotle':'Starbucks';
+    row.innerHTML=`<div class="lab"><b class="${code.toLowerCase()}">${name}</b><span class="sub">Total assets $${fm(f.TA)}M at year-end FY2025 <span class="tag g">given</span>; bar widths are shares of total assets</span></div>`;
+    const svg=el('svg',{viewBox:'0 0 900 64',role:'img','aria-label':name+' funding sources'});
+    const lo=-0.3, hi=1.3, X=v=>((v-lo)/(hi-lo))*900;
+    let x=0;
+    for(const [k,lab,col] of FIN_CATS){const v=f.v[k]/f.TA; if(!v)continue;
+      if(v>0){el('rect',{x:X(x),y:8,width:X(x+v)-X(x),height:30,fill:col,stroke:'var(--panel)','stroke-width':1},svg);
+        if(v>0.06){txt(svg,X(x)+(X(x+v)-X(x))/2,28,(v*100).toFixed(0)+'%',{'text-anchor':'middle',fill:'#fff','font-size':11})} x+=v;}
+    }
+    if(f.v.sh<0){const v=f.v.sh/f.TA;el('rect',{x:X(v),y:8,width:X(0)-X(v),height:30,fill:'var(--accent)'},svg);txt(svg,X(v)+(X(0)-X(v))/2,28,(v*100).toFixed(0)+'%',{'text-anchor':'middle',fill:'#fff','font-size':11});
+      txt(svg,X(v),56,'shareholders: −$'+fm(-f.v.sh)+'M',{'font-size':11,fill:'var(--accent)'})}
+    el('line',{x1:X(0),x2:X(0),y1:2,y2:44,stroke:'var(--ink)','stroke-width':1.5},svg);
+    el('line',{x1:X(1),x2:X(1),y1:2,y2:44,stroke:'var(--ink)','stroke-width':1,'stroke-dasharray':'3 3'},svg);
+    txt(svg,X(1)+4,56,'100% of assets',{'font-size':11});
+    if(f.v.sh>=0)txt(svg,X(0)+4,56,'0',{'font-size':11});
+    row.appendChild(svg);
+    const tbl=document.createElement('div');tbl.className='legend';
+    tbl.innerHTML=FIN_CATS.filter(([k])=>f.v[k]).map(([k,l,c])=>`<span><i style="background:${c}"></i>${l} <span class="num">${fm(f.v[k])}</span></span>`).join('');
+    row.appendChild(tbl);
+    host.appendChild(row);
+  }
+  $('#finLegend').innerHTML='<span>Customers = unearned revenue, stored value cards and loyalty. Other operating = accrued liabilities, deferred taxes, other. Landlords = operating lease liabilities. Starbucks\' accrued liabilities exclude the $704.8M of declared dividends shown separately. <span class="tag">derived</span></span>';
+}
+
+// ---------------- cash cycle ----------------
+const CYC={CMG:{dso:4.598,dio:5.094,dpo:21.914,pre:7.330},SBUX:{dso:12.227,dio:62.036,dpo:53.980,pre:17.033,preNestle:75.377}};
+function renderCycle(){
+  const svg=$('#cycleSvg');svg.innerHTML='';
+  const pre=$('#tPrepay').checked, nest=$('#tNestleWC').checked;
+  if(nest && !pre){$('#tPrepay').checked=true; return renderCycle();}
+  const lo=-80, hi=80, L=110, R=20, X=d=>L+(d-lo)/(hi-lo)*(900-L-R);
+  for(let d=lo;d<=hi;d+=20){el('line',{x1:X(d),x2:X(d),y1:20,y2:300,stroke:'var(--rule)'},svg);txt(svg,X(d),318,d+'d',{'text-anchor':'middle'})}
+  el('line',{x1:X(0),x2:X(0),y1:14,y2:300,stroke:'var(--ink)','stroke-width':1.2},svg);
+  txt(svg,X(0)+4,14,'inventory arrives',{'font-size':11,fill:'var(--ink)'});
+  let cap=[];
+  [['CMG','Chipotle','var(--cmg)',40],['SBUX','Starbucks','var(--sbux)',170]].forEach(([code,name,col,y0])=>{
+    const c=CYC[code];const preD=pre?(nest&&code==='SBUX'?c.preNestle:c.pre):0;
+    const collect=c.dio+c.dso, ccc=collect-c.dpo-preD;
+    txt(svg,8,y0+18,name,{fill:col,'font-family':'Karla, Calibri, sans-serif','font-size':15,'font-weight':700});
+    // inventory + receivable
+    el('rect',{x:X(0),y:y0,width:X(c.dio)-X(0),height:18,fill:col,opacity:.85},svg);
+    el('rect',{x:X(c.dio),y:y0,width:X(collect)-X(c.dio),height:18,fill:col,opacity:.45},svg);
+    const far=collect>40;
+    txt(svg,far?X(0)-8:X(collect)+6,y0+13,`on shelf ${c.dio.toFixed(1)}d + receivable ${c.dso.toFixed(1)}d → cash in, day ${collect.toFixed(1)}`,{'font-size':11,'text-anchor':far?'end':'start'});
+    // supplier
+    el('rect',{x:X(0),y:y0+26,width:X(c.dpo)-X(0),height:12,fill:'none',stroke:col,'stroke-width':1.5},svg);
+    txt(svg,far?X(0)-8:X(c.dpo)+6,y0+36,`supplier paid, day ${c.dpo.toFixed(1)}`,{'font-size':11,'text-anchor':far?'end':'start'});
+    if(pre){el('rect',{x:X(-preD),y:y0+46,width:X(0)-X(-preD),height:12,fill:nest&&code==='SBUX'?'var(--bad)':'#C9A227',opacity:.8},svg);
+      txt(svg,X(-preD)-6,y0+56,`customers prepay ${preD.toFixed(1)}d`,{'font-size':11,'text-anchor':'end'})}
+    // cycle bracket
+    const a=c.dpo+preD, b=collect, yb=y0+80;
+    el('line',{x1:X(Math.min(c.dpo,collect)),x2:X(Math.max(c.dpo,collect)),y1:yb,y2:yb,stroke:col,'stroke-width':3},svg);
+    const label=(pre?'cycle net of prepayments ':'cash conversion cycle ')+(ccc<0?'−':'+')+Math.abs(ccc).toFixed(1)+' days';
+    txt(svg,far?X(Math.min(c.dpo,collect))-8:X(Math.max(c.dpo,collect))+8,yb+5,label,{'font-size':13,fill:'var(--ink)','font-weight':500,'text-anchor':far?'end':'start'});
+    cap.push(`${name} ${ccc<0?'−':'+'}${Math.abs(ccc).toFixed(2)} days`);
+  });
+  let note='Negative means suppliers (and customers) are paid after the cash comes in: they finance the operation. ';
+  if(nest) note+='<b style="color:var(--bad)">Wrong on purpose:</b> the Nestlé balance is a 40-year prepaid license, not customer float. Counting it puts Starbucks at about −55 days, a number that describes nothing that happens in a store.';
+  else note+='Cycle = days inventory + days receivable − days payable. Not computed in the case; every input was. <span class="tag">derived</span>';
+  $('#cycleCap').innerHTML=cap.join(' · ')+'. '+note;
+}
+
+// ---------------- sort game ----------------
+function renderSort(){
+  const code=state.firm, F=FIRMS[code], s=state.sort[code], k=keySort(code);
+  const isCMG=code==='CMG';
+  let h=`<thead><tr><th>${F.name} balance sheet line</th><th>2025</th><th>2024</th><th>Sort</th></tr></thead><tbody>`;
+  let sec='';
+  for(const ln of F.lines){
+    if(ln.s!==sec){sec=ln.s;h+=`<tr class="grp"><td colspan="4">${sec==='A'?'Assets':'Liabilities'}</td></tr>`}
+    const c=s[ln.id], d=c&&c!==k[ln.id]&&state.checked;
+    h+=`<tr class="${ln.ind?'ind':''}"><td><span class="src" data-src="${code}-BS:${ln.st}">${ln.l}</span>${d?'<span class="diff">≠ key</span>':''}</td><td class="n">${fm(ln.v[0])}</td><td class="n">${fm(ln.v[1])}</td>
+      <td><span class="seg"><button type="button" class="o ${c==='O'?'on':''}" data-id="${ln.id}" data-k="O" aria-pressed="${c==='O'}">Op</button><button type="button" class="f ${c==='F'?'on':''}" data-id="${ln.id}" data-k="F" aria-pressed="${c==='F'}">Fin</button></span></td></tr>`;
+  }
+  h+=`<tr class="tot"><td>Common equity, as reported</td><td class="n">${fm(F.eq[0])}</td><td class="n">${fm(F.eq[1])}</td><td></td></tr></tbody>`;
+  $('#sortTbl').innerHTML=h;
+  const r=compute(code,s), left=r.unsorted;
+  const dn=diffCount(code);
+  $('#sortStatus').innerHTML=left?`${left} line${left>1?'s':''} left to sort`:(dn?`${dn} line${dn>1?'s':''} differ from the key${state.checked?'':' · <button class="btn" type="button" id="btnCheck">Show which</button>'}`:'Matches the key\'s sort');
+  if($('#btnCheck'))$('#btnCheck').onclick=()=>{state.checked=true;renderSort()};
+  const dash=v=>left?'—':v;
+  $('#roMain').innerHTML=`<div class="eyebrow">${F.name} · your sort</div>
+    <div class="row"><span>RNOA</span><b class="big" style="color:${isCMG?'var(--cmg)':'var(--sbux)'}">${dash(pc(r.rnoa))}</b></div>
+    <div class="row"><span>NOPM × NOAT</span><b>${dash(pc(r.nopm)+' × '+r.noat.toFixed(2)+'×')}</b></div>
+    <div class="row"><span>NOA, 2025 / 2024</span><b>${dash(fm(r.NOA[0])+' / '+fm(r.NOA[1]))}</b></div>
+    <div class="row"><span>NNO, 2025 / 2024</span><b>${dash(fm(r.NNO[0])+' / '+fm(r.NNO[1]))}</b></div>
+    <div class="row"><span>NOPAT</span><b>${dash(fm(r.nopat))}</b></div>`;
+  const ok=Math.abs(r.tie[0])<0.05&&Math.abs(r.tie[1])<0.05;
+  $('#roTie').className='tie'+(left?'':(ok?' ok':''));
+  $('#roTie').innerHTML=left?'Check: NOA − NNO = common equity. Sort every line first.':`NOA − NNO = ${fm(r.NOA[0]-r.NNO[0])} = common equity ${fm(F.eq[0])} ${ok?'✓ ties':'✗'}<br><span class="sub">It ties for any complete sort. That proves the arithmetic, not the classification.</span>`;
+  const lk=F.links;
+  $('#roIncome').innerHTML=`<div class="eyebrow">What moves with the sort</div>
+    <p class="sub" style="margin-top:4px">Income that belongs to a financial line leaves NOPAT with it: ${isCMG?'interest and other income ($73.7M) with the cash and investments; lease interest ($263.5M, average liability × 5.48%) with the lease liabilities':'interest income ($113.3M) with cash and investments; interest expense ($542.6M) with debt; lease interest ($384.3M, average liability × 3.70%) with the lease liabilities; equity-investee income ($247.8M) with equity investments; the Nestlé royalty ($176.5M) with the Nestlé balance'}. Taxed at 22%.</p>
+    <div class="row"><span>Net nonoperating expense, after tax</span><b>${dash(fm(r.nne*(1-TAX)))}</b></div>`;
+}
+$('#sortTbl').addEventListener('click',e=>{const b=e.target.closest('button[data-id]');if(!b)return;state.sort[state.firm][b.dataset.id]=b.dataset.k;renderSort();renderReturn()});
+$('#swCMG').onclick=()=>{state.firm='CMG';$('#swCMG').classList.add('on');$('#swSBUX').classList.remove('on');renderSort()};
+$('#swSBUX').onclick=()=>{state.firm='SBUX';$('#swSBUX').classList.add('on');$('#swCMG').classList.remove('on');renderSort()};
+$('#btnClear').onclick=()=>{state.sort[state.firm]={};state.checked=false;renderSort();renderReturn()};
+$('#btnKey').onclick=()=>{state.sort[state.firm]=keySort(state.firm);state.checked=false;renderSort();renderReturn()};
+
+// ---------------- leases ----------------
+function renderLease(){
+  const r=+$('#rRate').value/100, n=+$('#rYears').value, pv=leasePV(r,n);
+  $('#rRateV').textContent=(r*100).toFixed(2)+'%'; $('#rYearsV').textContent=n+' years';
+  $('#pvOut').textContent='$'+fm(pv)+'M'; const d=pv/5075.814-1; $('#pvDiff').textContent=(d>=0?'+':'−')+Math.abs(d*100).toFixed(1)+'%'; $('#pvInt').textContent='$'+fm(pv*r)+'M';
+  const svg=$('#leaseSvg');svg.innerHTML='';
+  const pays=[...CMG_PAY];for(let t=0;t<n;t++)pays.push(CMG_THERE/n);
+  const N=pays.length, L=46,R=10,T=14,B=34, W=560,H=300, max=600, bw=(W-L-R)/N;
+  const Y=v=>H-B-v/max*(H-T-B);
+  for(let v=0;v<=600;v+=200){el('line',{x1:L,x2:W-R,y1:Y(v),y2:Y(v),stroke:'var(--rule)'},svg);txt(svg,L-6,Y(v)+4,v,{'text-anchor':'end'})}
+  pays.forEach((p,i)=>{const x=L+i*bw+2, w=bw-4, d=p/Math.pow(1+r,i+1);
+    el('rect',{x,y:Y(p),width:w,height:Y(0)-Y(p),fill:i<5?'var(--cmg)':'var(--cmg)',opacity:i<5?.35:.2},svg);
+    el('rect',{x,y:Y(d),width:w,height:Y(0)-Y(d),fill:'var(--cmg)'},svg);
+    if(i===0||i===4||i===N-1)txt(svg,x+w/2,H-B+16,'yr '+(i+1),{'text-anchor':'middle','font-size':11});
+  });
+  txt(svg,L+5*bw+2,T+10,'"thereafter", spread evenly',{'font-size':11});
+  txt(svg,4,T+4,'$M',{'font-size':11});
+}
+['rRate','rYears'].forEach(id=>$('#'+id).addEventListener('input',renderLease));
+
+// ---------------- quality ----------------
+function bars(svg,items,max,unit){
+  svg.innerHTML='';const L=150,R=80,W=520,rowH=46;
+  items.forEach((it,i)=>{const y=12+i*rowH, w=(W-L-R)*it.v/max;
+    txt(svg,L-10,y+rowH/2+2,it.l,{'text-anchor':'end',fill:'var(--ink)','font-family':'Karla, Calibri, sans-serif','font-size':13});
+    el('rect',{x:L,y:y+6,width:Math.max(w,1),height:rowH-16,fill:it.c,opacity:it.o||1},svg);
+    txt(svg,L+w+6,y+rowH/2+2,it.t,{'font-size':12,fill:'var(--ink)'});});
+}
+function renderQuality(){
+  const strip=$('#tBreak').checked;
+  const items=[{l:'FY2024 operating income',v:1916.333,c:'var(--cmg)',o:.5,t:'$1,916.3M'},{l:'FY2025 as reported',v:1935.798,c:'var(--cmg)',t:'$1,935.8M  +1.02%'}];
+  if(strip) items.push({l:'FY2025 without the jump',v:1935.798-20.117,c:'var(--accent)',t:'$1,915.7M  −0.03%'});
+  // zoomed axis: bars start at 1,850
+  const svg=$('#breakSvg');svg.innerHTML='';const L=170,R=110,W=520,rowH=52,base=1850,max=1950;
+  items.forEach((it,i)=>{const y=14+i*rowH, w=(W-L-R)*(it.v-base)/(max-base);
+    txt(svg,L-10,y+rowH/2,it.l,{'text-anchor':'end',fill:'var(--ink)','font-family':'Karla, Calibri, sans-serif','font-size':13});
+    el('rect',{x:L,y:y+8,width:w,height:rowH-20,fill:it.c,opacity:it.o||1},svg);txt(svg,L+w+6,y+rowH/2,it.t,{'font-size':12,fill:'var(--ink)'});});
+  txt(svg,L,200,'axis starts at $1,850M so the difference is visible',{'font-size':10});
+  $('#breakCap').innerHTML=strip?'Breakage rose $20.1M; operating income rose $19.5M. The estimate change explains 103% of the year\'s operating-income growth. Without it, operating income was flat. <span class="tag">derived</span>':'Chipotle\'s operating income grew 1.0%. Tick the box to see how much of that growth came from one estimate. Starbucks\' breakage, for scale, is $222.4M, 12% of its net earnings.';
+  bars($('#chargeSvg'),[{l:'Starbucks $892.0M',v:239.9,c:'var(--sbux)',t:'240 bps'},{l:'Chipotle $27.5M',v:23.1,c:'var(--cmg)',t:'23 bps'}],260);
+}
+$('#tBreak').addEventListener('change',renderQuality);
+
+// ---------------- deal ----------------
+function renderDeal(){
+  const price=+$('#dPrice').value*1000, syn=+$('#dSyn').value, core=$('#dCore').checked, d=deal(price,syn,core);
+  $('#dPriceV').textContent='$'+(price/1000).toFixed(1)+'B';
+  const prem=price/39000-1;$('#dPremium').textContent=Math.abs(prem)<0.005?'About Chipotle\'s market value before the report.':`${prem>0?'A':'At a'} ${Math.abs(prem*100).toFixed(0)}% ${prem>0?'premium to':'discount to'} Chipotle's ~$39B pre-report value.`;
+  $('#dSynV').textContent='$'+syn+'M';
+  $('#dRet').textContent=pc(d.ret); $('#dRNOA').textContent=pc(d.rnoa); $('#dNOA').textContent='$'+fm(d.noa/1000)+'B';
+  $('#dNote').innerHTML=`You pay $${fm(d.paid/1000)}B in total (equity plus Chipotle's $3.8B of NNO) for $${fm(1683.8+syn*(1-TAX))}M a year of NOPAT. The return on purchase price reaches 8% only at an equity price of about <b>$${fm(Math.max(d.be8,0)/1000)}B</b> <span class="tag a">8% assumed</span>.`;
+  const sb=core?{x:37184.4/15373.35,y:3187.045/37184.4}:{x:2.41876,y:0.06700};
+  plane($('#dealPlane'),[{x:1.90807,y:0.14119,c:'var(--cmg)',label:'Chipotle'},{x:sb.x,y:sb.y,c:'var(--sbux)',label:'Starbucks',dy:18},{x:d.noat,y:d.nopm,c:'var(--deal)',label:'Combined',from:{x:sb.x,y:sb.y}}]);
+}
+['dPrice','dSyn'].forEach(id=>$('#'+id).addEventListener('input',renderDeal));$('#dCore').addEventListener('change',renderDeal);
+
+// ---------------- toggles ----------------
+$('#tCore').addEventListener('change',e=>{state.core=e.target.checked;renderReturn()});
+$('#tNestle').addEventListener('change',e=>{state.sort.SBUX.nestle=e.target.checked?'F':'O';renderReturn();renderSort()});
+$('#tPrepay').addEventListener('change',()=>{if(!$('#tPrepay').checked)$('#tNestleWC').checked=false;renderCycle()});
+$('#tNestleWC').addEventListener('change',renderCycle);
+
+// ---------------- statements drawer ----------------
+let curStmt='CMG-BS';
+function openStmt(key,hl){
+  curStmt=key;$('#scrim').hidden=false;$('#drawer').hidden=false;
+  $('#stmtTabs').innerHTML=Object.keys(ST).map(k=>`<button type="button" data-k="${k}" class="${k===key?'on':''}">${ST[k].t}</button>`).join('');
+  const s=ST[key];
+  let h=`<div class="units">${s.u}</div><table class="tbl"><thead><tr><th></th>${s.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+  for(const r of s.rows){const n=s.cols.length, lab=r[0], vals=r.slice(1,1+n), flag=r[1+n]||'', id=r[2+n]||'';
+    if(flag==='h'){h+=`<tr class="grp"><td colspan="${n+1}">${lab}</td></tr>`;continue}
+    h+=`<tr class="${flag==='t'?'tot':''} ${id&&id===hl?'hl':''}" ${id?`id="st-${id}"`:''}><td>${lab}</td>${vals.map(v=>`<td class="n">${v}</td>`).join('')}</tr>`;}
+  h+='</tbody></table>';
+  $('#stmtBody').innerHTML=h;
+  if(hl){const t=document.getElementById('st-'+hl);if(t)t.scrollIntoView({block:'center'})}
+  $('#closeStmts').focus({preventScroll:true});
+}
+function closeStmt(){$('#scrim').hidden=true;$('#drawer').hidden=true}
+$('#openStmts').onclick=()=>openStmt(curStmt);
+$('#closeStmts').onclick=closeStmt;$('#scrim').onclick=closeStmt;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeStmt()});
+$('#stmtTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)openStmt(b.dataset.k)});
+document.addEventListener('click',e=>{const s=e.target.closest('.src');if(!s||!s.dataset.src)return;const [k,id]=s.dataset.src.split(':');openStmt(k,id)});
+
+// ---------------- section chips ----------------
+const secs=[...document.querySelectorAll('section')];
+const obs=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){document.querySelectorAll('#chips a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+en.target.id))}})},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(s=>obs.observe(s));
+
+renderReturn();renderFinance();renderCycle();renderSort();renderLease();renderQuality();renderDeal();
+</script>
+
+</body>
+</html>
