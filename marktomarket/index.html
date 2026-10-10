@@ -524,7 +524,7 @@ html.dof .board-head { filter: blur(5px); opacity: 0.4; }
 .card-head .reading span { margin-left: 5px; }
 .card-head .reading:hover { border-color: var(--accent-2); }
 @keyframes m2m-eq { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
-@media (prefers-reduced-motion: reduce) { .card-head .reading i { animation: none; } }
+html.reduced .card-head .reading i { animation: none; }
 .card.is-pool { box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.28), 0 30px 80px -30px rgba(45, 212, 191, 0.25); }
 .card.is-cb .card-head { background: linear-gradient(180deg, #2A2414, #18150E); }
 .pips { display: inline-flex; gap: 4px; flex: none; }
@@ -1148,20 +1148,12 @@ html.panels.clue-open { --dock-h: 0px; }
   .streak-badge .sk-bars { height: 10px; }
   @keyframes placePulse { 0% { opacity: 0.6; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.025, 1.4); } }
 }
-html.reduced .live-ring, html.reduced .tk-place::after, html.reduced .fill-chip, html.reduced .streak-badge, html.reduced .streak-badge i,
-html.reduced .cell.glint .slab .f::after, html.reduced .cell.sheen .slab .f::after, html.reduced .dock button .dot::after { animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  .live-ring, .tk-place::after, .fill-chip, .streak-badge, .streak-badge i, .cell.glint .slab .f::after, .cell.sheen .slab .f::after, .dock button .dot::after, .opt.wrong::after,
-  .card.shake .opt.wrong.chosen, .card.shake .numbox.locked .nb-field, .card.rise .opts > li, .bet-area.on .lev, .idx svg.ixs.draw { animation: none !important; }
-}
+html.reduced .live-ring,html.reduced .tk-place::after,html.reduced .fill-chip,html.reduced .streak-badge,html.reduced .streak-badge i,html.reduced .cell.glint .slab .f::after,html.reduced .cell.sheen .slab .f::after,html.reduced .dock button .dot::after,html.reduced .opt.wrong::after,html.reduced .card.shake .opt.wrong.chosen,html.reduced .card.shake .numbox.locked .nb-field,html.reduced .card.rise .opts > li,html.reduced .bet-area.on .lev,html.reduced .idx svg.ixs.draw { animation: none !important; }
 
 /* ---------- reduced motion ---------- */
 html.reduced *, html.reduced *::before, html.reduced *::after { animation-duration: 0.001ms !important; animation-delay: 0ms !important; transition-duration: 0.001ms !important; transition-delay: 0ms !important; }
 html.reduced .board { transform: rotateX(var(--tilt)); }
 html.reduced .flash { display: none; }
-@media (prefers-reduced-motion: reduce) {
-  html:not(.motion-ok) .board { transform: rotateX(var(--tilt)); }
-}
 
 /* start-up failure notice (drawn by the build's guard script; never shown in a healthy start) */
 .boot-error { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 9999; width: min(560px, calc(100vw - 32px)); padding: 16px 18px; border: 1px solid var(--down); border-radius: 10px; background: var(--panel); color: var(--text); font: 15px/1.5 var(--f-ui); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); }
@@ -6684,11 +6676,11 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   const fx = (M2M.fx = {});
 
   // ---- motion guard ---------------------------------------------------------------
-  // The polish motion stays off when the game's Motion setting is Reduced, and also when the system
-  // asks for reduced motion (the setting starts from the system, but an old save can say Full).
+  // The polish motion stays off only when the game's own Motion setting is Reduced (Full is the default;
+  // players who want it calmer switch it in Settings).
   let osCalm = null;
   try { osCalm = window.matchMedia("(prefers-reduced-motion: reduce)"); } catch (e) { osCalm = null; }
-  fx.calm = () => U.reduced() || !!(osCalm && osCalm.matches);
+  fx.calm = () => U.reduced();
 
   fx.easeOut = (k) => 1 - Math.pow(1 - k, 3);
   fx.easeInOut = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
@@ -12262,7 +12254,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; }
   }
   function loadSettings() {
-    const d = { desk: "A", mask: D.ALL_MASK, bets: true, clock: false, sound: true, music: true, musicVol: 0.35, voice: "full", read: "auto", ambience: true, motion: prefersReduced() ? "reduced" : "full" };
+    const d = { desk: "A", mask: D.ALL_MASK, bets: true, clock: false, sound: true, music: true, musicVol: 0.35, voice: "full", read: "auto", ambience: true, motion: "full" };
     let saved = U.store.get(SET_KEY, null);
     if (!saved) {
       const v1 = U.store.get(SET_V1, null) || {};
