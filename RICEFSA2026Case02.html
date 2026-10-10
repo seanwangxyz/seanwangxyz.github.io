@@ -170,6 +170,19 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .drawer .units{font-size:.8rem;color:var(--muted);margin-bottom:6px}
 footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:20px;font-size:.82rem;color:var(--muted);display:grid;gap:8px}
 @media (prefers-reduced-motion:no-preference){.drawer{animation:slide .22s ease-out}@keyframes slide{from{transform:translateX(30px);opacity:.6}}}
+
+.syn .tbl th,.syn .tbl td{text-align:left;vertical-align:top;font-size:.84rem}
+.syn .tbl td.num{font-family:var(--mono);white-space:nowrap}
+.syn .tag.like{color:var(--ink);border-color:color-mix(in srgb,var(--ink) 50%,transparent)}
+.syn .tag.no{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 50%,transparent)}
+.srow{display:grid;grid-template-columns:150px 1fr 78px;gap:10px;align-items:center;font-size:.84rem;margin:6px 0}
+.srow .trk{position:relative;height:16px;background:var(--tint);border-radius:3px}
+.srow .fl{position:absolute;top:0;bottom:0;border-radius:3px;background:var(--muted)}
+.srow.need .fl{background:var(--accent)}
+.srow.real .fl{background:var(--sbux)}
+.srow .v{font-family:var(--mono);text-align:right}
+.tblwrap{overflow-x:auto}
+@media(max-width:700px){.srow{grid-template-columns:100px 1fr 64px}}
 </style>
 </head>
 <body>
@@ -178,7 +191,7 @@ footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:20px;font-si
   <span class="brand">Case 02</span>
   <nav class="chips" id="chips">
     <a href="#return">The return</a><a href="#finance">Who finances it</a><a href="#cycle">Cash cycle</a>
-    <a href="#sort">Sort it yourself</a><a href="#leases">"No debt"</a><a href="#quality">Quality of the year</a><a href="#deal">The deal</a>
+    <a href="#sort">Sort it yourself</a><a href="#leases">"No debt"</a><a href="#quality">Quality of the year</a><a href="#deal">The deal</a><a href="#synergies">Synergies</a>
   </nav>
   <button class="btn primary" id="openStmts" type="button">Statements</button>
 </div></div>
@@ -441,6 +454,43 @@ footer{border-top:1px solid var(--rule);margin-top:56px;padding-top:20px;font-si
   </div>
   <div class="think"><div class="k">STOP AND THINK</div>
     <p>A falling RNOA is not by itself proof that the deal destroys value. The real test is whether the return on the price paid beats what Starbucks' investors could earn elsewhere at similar risk, which is the cost of capital. Hold that thought for the valuation half of the course. For now: at what price does the return on purchase price reach 8%, and is anyone going to sell Chipotle for that?</p></div>
+</section>
+
+
+<!-- ============ SYNERGIES ============ -->
+<section id="synergies" class="syn">
+  <div class="sechead">
+    <span class="qtag">Beyond the case · who pays for the premium</span>
+    <h2>Could the synergies pay for it?</h2>
+    <p class="lede">Chipotle's market value before the report is the fair-value rung. Anything a buyer pays above it is a premium, and only synergies can earn it back. Set a premium and see how much the deal would have to save every year.</p>
+  </div>
+  <div class="grid2">
+    <div style="display:grid;gap:18px">
+      <div class="slider"><label for="sPrem">Premium over the ~$39B pre-report value <b id="sPremV"></b></label><input type="range" id="sPrem" min="0" max="40" step="1" value="20"><span class="sub" id="sPremSub"></span></div>
+      <label class="tog" style="justify-self:start"><input type="checkbox" id="sGrow" checked> Savings grow with Chipotle forever (4.5% a year)</label>
+      <div class="out">
+        <div class="o"><small>Equity price</small><span class="n" id="sEq"></span></div>
+        <div class="o"><small>Pretax savings needed each year</small><span class="n" id="sNeed"></span></div>
+        <div class="o"><small>Chipotle's whole G&amp;A is $652.0M</small><span class="n" id="sGa"></span></div>
+      </div>
+      <p class="sub">Savings are worth savings &divide; (8% &minus; growth) after tax at 22%. If they grow at the 4.5% a year already priced into Chipotle, each after-tax dollar is worth about $28.8; if they are flat, $12.5. Both are the L10 formula, V/NOA = (RNOA &minus; g)/(WACC &minus; g). <span class="tag a">8% assumed</span></p>
+    </div>
+    <div class="figure"><div id="synBars"></div>
+      <div class="cap">Needed versus claimed versus realistic, pretax, $M a year. The realistic range is our estimate, sized from the two 10-Ks and the press.</div></div>
+  </div>
+  <div class="card tblwrap" style="margin-top:18px">
+    <div class="eyebrow">What the press says, and how we sort it</div>
+    <table class="tbl"><thead><tr><th>Synergy</th><th>Said by</th><th>Figure</th><th>Our sort</th><th>Why</th></tr></thead><tbody><tr><td><b>Corporate and technology savings</b></td><td>Sharon Zackfia, William Blair<br><span class="sub"><a href="https://www.qsrmagazine.com/story/report-starbucks-exploring-takeover-of-chipotle/" target="_blank" rel="noopener">QSR Magazine</a>, <a href="https://fortune.com/2026/10/09/chipotle-starbucks-niccol-stock/" target="_blank" rel="noopener">Fortune</a></span></td><td class="num">about $300M a year</td><td><span class="tag like">Likely</span></td><td>Chipotle's G&A is $652.0M, so $300M is 46% of it. Treat it as the top of the range; it takes years.</td></tr><tr><td><b>G&amp;A and supply-chain optimization</b></td><td>Logan Reich, RBC<br><span class="sub"><a href="https://www.tradingview.com/news/seekingalpha:d08712f45094b:0-analysts-see-a-low-probability-of-a-starbucks-chipotle-mashup/" target="_blank" rel="noopener">Seeking Alpha</a></span></td><td class="num">not sized</td><td><span class="tag like">Likely, small</span></td><td>"Some synergies", but not enough to justify a deal.</td></tr><tr><td><b>Buying power for Starbucks food; shared inputs</b></td><td>Jacob Aiken-Phillips, Melius<br><span class="sub"><a href="https://www.qsrmagazine.com/story/report-starbucks-exploring-takeover-of-chipotle/" target="_blank" rel="noopener">QSR Magazine</a>, <a href="https://www.fool.com/investing/2026/10/08/starbucks-may-be-eyeing-a-potential-takeover-bid-for-chipotle-here-s-what-it-could-mean-for-investors/" target="_blank" rel="noopener">Motley Fool</a></span></td><td class="num">not sized</td><td><span class="tag ">Possible</span></td><td>Chipotle buys $3.5B of mostly beef, chicken and produce, which Starbucks does not. Packaging, equipment and card fees overlap.</td></tr><tr><td><b>Shared real estate and sites</b></td><td>Jim Salera, Stephens<br><span class="sub"><a href="https://finance.yahoo.com/markets/stocks/articles/starbucks-sbux-chipotle-cmg-could-174730048.html" target="_blank" rel="noopener">Yahoo Finance</a>, <a href="https://www.fool.com/investing/2026/10/08/starbucks-may-be-eyeing-a-potential-takeover-bid-for-chipotle-here-s-what-it-could-mean-for-investors/" target="_blank" rel="noopener">Motley Fool</a></span></td><td class="num">median Chipotle is 0.18 miles from a Starbucks</td><td><span class="tag ">Possible</span></td><td>Existing leases are locked in. The gain is on the 350–370 new sites a year, and it is small early on.</td></tr><tr><td><b>Loyalty, customer data, cross-promotion</b></td><td>Salera; Zackfia<br><span class="sub"><a href="https://finance.yahoo.com/markets/stocks/articles/starbucks-sbux-chipotle-cmg-could-174730048.html" target="_blank" rel="noopener">Yahoo Finance</a>, <a href="https://www.fool.com/investing/2026/10/08/starbucks-may-be-eyeing-a-potential-takeover-bid-for-chipotle-here-s-what-it-could-mean-for-investors/" target="_blank" rel="noopener">Motley Fool</a></span></td><td class="num">not sized</td><td><span class="tag ">Possible</span></td><td>A 1% sales lift at Chipotle is about $119M of revenue but only about $19M of operating income at a 16.2% margin. A partnership could also do it.</td></tr><tr><td><b>Faster growth abroad through Starbucks partners</b></td><td>Jim Sanderson (via Reuters)<br><span class="sub"><a href="https://www.spokesman.com/stories/2026/oct/08/starbucks-has-explored-chipotle-takeover-ft-report/" target="_blank" rel="noopener">Reuters via Spokesman-Review</a>, <a href="https://www.nrn.com/fast-casual/chipotle-makes-its-debut-in-mexico" target="_blank" rel="noopener">Nation's Restaurant News (Mexico)</a></span></td><td class="num">not sized</td><td><span class="tag no">Not caused by the deal</span></td><td>Chipotle opened in Mexico in July 2026 with Alsea, which also runs Starbucks there, and works with Alshaya in the Middle East. No merger needed.</td></tr><tr><td><b>Niccol back at Chipotle's helm</b></td><td>Jon Tower, Citi; others<br><span class="sub"><a href="https://fortune.com/2026/10/09/chipotle-starbucks-niccol-stock/" target="_blank" rel="noopener">Fortune</a>, <a href="https://www.adweek.com/brand-marketing/starbucks-is-reportedly-eyeing-chipotle-but-the-burrito-chain-may-be-more-than-it-can-chew/" target="_blank" rel="noopener">Adweek</a></span></td><td class="num">none</td><td><span class="tag no">Not caused by the deal</span></td><td>Chipotle can hire an operator. It is a management bet, not a synergy.</td></tr><tr><td><b>Cuts to Chipotle's food, packaging and overhead</b></td><td>Financial Times analysis, relayed<br><span class="sub"><a href="https://finance.yahoo.com/markets/stocks/articles/starbucks-sbux-chipotle-cmg-could-174730048.html" target="_blank" rel="noopener">Yahoo Finance</a></span></td><td class="num">about $770M a year</td><td><span class="tag no">Highly unlikely</span></td><td>Mostly Chipotle's own costs, which it could cut without a deal, and cutting food risks the brand while traffic fell 2.9% in 2025. Even the FT's own arithmetic gives only a ~6% return.</td></tr><tr><td><b>Starbucks coffee for a Chipotle breakfast</b></td><td>Peter Saleh, BTIG<br><span class="sub"><a href="https://www.tradingview.com/news/seekingalpha:d08712f45094b:0-analysts-see-a-low-probability-of-a-starbucks-chipotle-mashup/" target="_blank" rel="noopener">Seeking Alpha</a></span></td><td class="num">none</td><td><span class="tag no">Highly unlikely</span></td><td>No breakfast service, a different kitchen, and Starbucks' foodservice coffee runs largely through Nestlé's alliance (10-K).</td></tr><tr><td><b>Shared supply chain and operations</b></td><td>Saleh; Zackfia<br><span class="sub"><a href="https://www.tradingview.com/news/seekingalpha:d08712f45094b:0-analysts-see-a-low-probability-of-a-starbucks-chipotle-mashup/" target="_blank" rel="noopener">Seeking Alpha</a>, <a href="https://www.qsrmagazine.com/story/report-starbucks-exploring-takeover-of-chipotle/" target="_blank" rel="noopener">QSR Magazine</a></span></td><td class="num">"limited"</td><td><span class="tag no">Highly unlikely</span></td><td>Different products and kitchens. BTIG says the deal does not make sense on supply chain or operations.</td></tr></tbody></table>
+    <p class="sub">Reporting is secondhand and the deal is unconfirmed. The FT piece is behind a paywall, so its $770M reaches us through Yahoo Finance; Fortune does not repeat it. Realistic total from the likely and possible rows: about <b>$175M to $450M</b> a year pretax <span class="tag">our estimate</span>.</p>
+  </div>
+  <div class="grid2" style="margin-top:18px">
+    <div class="card"><div class="eyebrow">What else the press worries about</div>
+      <p>Starbucks has about $9.4B of net debt, and a debt-funded deal would take leverage to roughly six times (<a href="https://rallies.ai/news/analysts-skeptical-of-reportedly-explored-starbucks-chipotle-deal-7c26c9a0576303a3" target="_blank" rel="noopener">Rallies</a>). Paying in stock would mean about 440 million new shares, around 38% more, while FY2025 dividends of $2.77B already exceed free cash flow of $2.44B (<a href="https://www.tikr.com/blog/an-expensive-distraction-the-39-billion-mistake-starbucks-can-still-avoid" target="_blank" rel="noopener">TIKR</a>). Analysts give it a low chance: D.A. Davidson says 20% or lower (<a href="https://rallies.ai/news/analysts-skeptical-of-reportedly-explored-starbucks-chipotle-deal-7c26c9a0576303a3" target="_blank" rel="noopener">Rallies</a>) and TD Cowen calls it low-probability (<a href="https://www.cbsnews.com/news/chipotle-stock-starbucks-takeover-ceo-brian-niccol/" target="_blank" rel="noopener">CBS News</a>). It would also pull the CEO's attention from the Back to Starbucks turnaround.</p></div>
+    <div class="card"><div class="eyebrow">Our reading</div>
+      <p>The synergies the merger itself causes are about $175M to $450M a year. A 20% premium needs about $350M if the savings keep growing and about $800M if they do not; a 30% premium needs $520M to $1.2B. Only the most generous version clears. What is left is a bet that new management makes Chipotle grow faster than the market already expects, which Chipotle's own shareholders could get by hiring a manager. Sellers keep the premium; Starbucks keeps the risk.</p></div>
+  </div>
+  <div class="think"><div class="k">STOP AND THINK</div>
+    <p>Sort the rows above one more time: which of these could Chipotle do on its own, without being acquired? Why does that matter for who should be paid for it, the buyer or the seller?</p></div>
 </section>
 
 <footer>
@@ -832,6 +882,22 @@ const obs=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){do
 secs.forEach(s=>obs.observe(s));
 
 renderReturn();renderFinance();renderCycle();renderSort();renderLease();renderQuality();renderDeal();
+// ---------------- synergies ----------------
+function renderSyn(){
+  const prem=+$('#sPrem').value/100, eqp=39000*(1+prem), grow=$('#sGrow').checked, W=0.08, T=TAX;
+  const noa=6624.8, rn=0.26940108, m=(39000+3794.191)/noa, g0=(rn-m*W)/(1-m);
+  const aftertax=(grow?(W-g0):W)*39000*prem, need=aftertax/(1-T);
+  $('#sPremV').textContent=(prem*100).toFixed(0)+'%';
+  $('#sPremSub').textContent=prem===0?'No premium: you pay what the market already thought Chipotle was worth.':'Premium paid: $'+fm(39*prem)+'B above the pre-report value.';
+  $('#sEq').textContent='$'+fm(eqp/1000)+'B';
+  $('#sNeed').textContent='$'+fm(need,0)+'M';
+  $('#sGa').textContent=(need/652.0*100).toFixed(0)+'% of it';
+  const MAX=1400, row=(l,from,to,v,cls)=>`<div class="srow ${cls||''}"><span>${l}</span><div class="trk"><div class="fl" style="left:${from/MAX*100}%;width:${Math.max((to-from)/MAX*100,0.8)}%"></div></div><span class="v">${v}</span></div>`;
+  $('#synBars').innerHTML=row('Needed (your premium)',0,Math.min(need,MAX),'$'+fm(need,0)+'M','need')+row('FT estimate',0,770,'$770M')+row('William Blair estimate',0,300,'$300M')+row('Our realistic range',175,450,'$175–450M','real');
+}
+['sPrem','sGrow'].forEach(id=>$('#'+id).addEventListener(id==='sGrow'?'change':'input',renderSyn));
+renderSyn();
+
 </script>
 
 </body>
