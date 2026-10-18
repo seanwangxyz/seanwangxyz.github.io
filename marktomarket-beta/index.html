@@ -1417,6 +1417,170 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
 /* ---- online seats with a badge ---- */
 .pl-row .ol-av { --av: 28px; margin-left: -8px; }
 
+/* ---- the Desk button (owner only) ---- */
+.ac-desk { gap: 7px; border-color: var(--warn); color: var(--warn); background: var(--warn-bg); font-weight: 700; }
+.ac-desk:hover { color: var(--text-hi); border-color: var(--warn); }
+.ac-desk-i { font-size: 15px; line-height: 1; }
+
+/* ---- Sean's Desk ---- */
+.scr-desk { min-height: 100vh; display: flex; justify-content: center; padding: max(28px, 4vh) 24px calc(var(--tk-h) + 40px); }
+.dk-wrap { width: 100%; max-width: 1400px; padding: 22px 26px 24px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(12, 16, 26, 0.96); align-self: flex-start;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.9); min-width: 0; }
+.dk-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.dk-head .scr-h { margin: 4px 0 0; }
+.dk-head .eyebrow { color: var(--warn); }
+.dk-acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.dk-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin-bottom: 16px; overflow-x: auto; }
+.dk-tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; padding: 9px 16px 10px; margin-bottom: -1px; font-size: 15px; color: var(--text-2);
+  font-family: var(--f-mono); letter-spacing: 0.04em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.dk-tab:hover { color: var(--text); }
+.dk-tab[aria-selected="true"] { color: var(--text-hi); border-bottom-color: var(--warn); font-weight: 600; }
+.dk-badge { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: var(--down); color: #fff; font-size: 11.5px; font-weight: 700; }
+.dk-msg { font-family: var(--f-mono); font-size: 14px; color: var(--text-2); padding: 18px 2px; }
+.dk-msg.bad { color: var(--down); }
+.dk-sec { margin-top: 14px; }
+.dk-sec-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.dk-sec-head .tr-h { margin-bottom: 0; }
+.dk-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; }
+.dk-tiles-sm { margin-top: 14px; grid-template-columns: repeat(auto-fit, minmax(150px, 220px)); }
+.dk-tile { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); }
+.dk-tl { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+.dk-tv { font-family: var(--f-mono); font-size: 26px; font-weight: 600; color: var(--text-hi); line-height: 1.15; font-variant-numeric: tabular-nums; }
+.dk-ts { font-size: 12.5px; color: var(--text-3); }
+.dk-scroll { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+.dk-t { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.dk-t th, .dk-t td { padding: 7px 7px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; white-space: nowrap; }
+.dk-t thead th { font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); border-bottom-color: var(--line-2); position: sticky; top: 0; background: rgba(12, 16, 26, 0.98); }
+.dk-t .num { text-align: right; font-variant-numeric: tabular-nums; }
+.dk-t tbody tr:hover { background: rgba(139, 92, 246, 0.06); }
+.dk-sort { appearance: none; background: none; border: 0; padding: 0; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; }
+.dk-sort:hover, th[aria-sort="ascending"] .dk-sort, th[aria-sort="descending"] .dk-sort { color: var(--text-hi); }
+.dk-mono { font-family: var(--f-mono); font-size: 12.5px; color: var(--text-2); }
+.dk-email { display: inline-block; max-width: 165px; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
+.dk-rank { font-size: 11px; letter-spacing: 0.05em; }
+.dk-roster .dk-pl b { max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+/* class heat map */
+.dk-heat th[scope="row"] { display: flex; align-items: baseline; gap: 10px; }
+.dk-hname { font-size: 13px; color: var(--text-2); }
+.dk-hbar { width: 40%; min-width: 180px; }
+.dk-hb { position: relative; display: block; height: 12px; border-radius: 6px; background: var(--well); border: 1px solid var(--line); overflow: visible; }
+.dk-hb .med { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: var(--text-3); }
+.dk-hrow.t-up .dk-hb .med { background: var(--up); } .dk-hrow.t-mid .dk-hb .med { background: var(--warn); } .dk-hrow.t-dn .dk-hb .med { background: var(--down); }
+.dk-hb .mean { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--text-hi); border-radius: 1px; box-shadow: 0 0 0 1px rgba(10, 13, 20, 0.8); }
+.dk-hrow.t-none .dk-med { color: var(--text-3); }
+.dk-days { list-style: none; margin: 8px 0 0; padding: 0 0 22px; display: grid; grid-template-columns: repeat(30, minmax(0, 1fr)); gap: 3px; height: 150px; align-items: end; }
+.dk-day { position: relative; height: 100%; display: flex; align-items: flex-end; }
+.dk-day i { display: block; width: 100%; border-radius: 3px 3px 0 0; background: linear-gradient(180deg, var(--accent-2), var(--accent)); }
+.dk-day.zero i { background: var(--line); }
+.dk-day:last-child i { background: linear-gradient(180deg, var(--warn), #d58e12); }
+.dk-dl { position: absolute; top: 100%; left: 0; margin-top: 5px; font-family: var(--f-mono); font-size: 10.5px; color: var(--text-3); white-space: nowrap; }
+.dk-day:last-child .dk-dl { left: auto; right: 0; }
+/* roster */
+.dk-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.dk-search { max-width: 340px; padding: 8px 12px; font-size: 15px; }
+.dk-count { font-family: var(--f-mono); font-size: 12.5px; color: var(--text-3); }
+.dk-legend { margin-left: auto; font-size: 12px; color: var(--text-3); display: inline-flex; align-items: center; gap: 5px; }
+.dk-pl { display: inline-flex; align-items: center; gap: 9px; }
+.dk-pl b { color: var(--text-hi); }
+.dk-yn.y { color: var(--up); } .dk-yn.n { color: var(--warn); }
+.dk-dots { display: inline-flex; gap: 2px; }
+.dk-dot { --f: 0; display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--line-3);
+  background: conic-gradient(var(--text-2) calc(var(--f) * 360deg), transparent 0); }
+.dk-dot.cr { border-color: var(--warn); background: conic-gradient(var(--warn) calc(var(--f) * 360deg), transparent 0); }
+.dk-dot.full { background: var(--text-2); } .dk-dot.cr.full { background: var(--warn); }
+.dk-pts { font-family: var(--f-mono); color: var(--text-hi); }
+.dk-pts.off { color: var(--text-3); text-decoration: line-through; text-decoration-color: rgba(122, 131, 152, 0.6); }
+.dk-fast { display: inline-block; min-width: 22px; padding: 1px 6px; border-radius: 9px; background: var(--down-bg); color: var(--down); font-weight: 700; text-align: center; }
+.dk-mult { background: var(--well); color: var(--text); border: 1px solid var(--line-2); border-radius: 6px; padding: 3px 2px; font-family: var(--f-mono); font-size: 12.5px; }
+.dk-reset { display: inline-flex; gap: 4px; }
+.dk-mini { padding: 3px 8px; font-size: 12.5px; }
+/* credit */
+.dk-cfg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 4px 16px; }
+.dk-f .af-in { padding: 7px 10px; font-size: 15px; color-scheme: dark; }
+.dk-lect { margin-top: 2px; }
+.dk-chips, .dk-seg { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.dk-chip { appearance: none; padding: 5px 11px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--panel); color: var(--text-2); font-family: var(--f-mono); font-size: 12.5px; }
+.dk-chip:hover { border-color: var(--line-3); color: var(--text); }
+.dk-chip[aria-pressed="true"] { border-color: var(--warn); color: var(--text-hi); background: var(--warn-bg); box-shadow: 0 0 0 1px var(--warn) inset; }
+.dk-sumbox { display: flex; align-items: flex-end; padding-bottom: 22px; }
+.dk-wsum { font-family: var(--f-mono); font-size: 13px; color: var(--up); }
+.dk-wsum.bad { color: var(--down); }
+.dk-cfg .row-actions { align-items: center; margin-top: 8px; }
+.dk-meter { display: inline-flex; align-items: center; gap: 7px; }
+.dk-mb { display: inline-block; width: 46px; height: 6px; border-radius: 3px; background: var(--well); border: 1px solid var(--line); overflow: hidden; }
+.dk-mb i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.dk-ok { color: var(--up); } .dk-no { color: var(--text-3); }
+.dk-csv { border-color: var(--warn); color: var(--warn); }
+/* flags */
+.dk-flags-h { margin: 0; }
+.dk-empty { margin-top: 6px; }
+.dk-flag { margin-top: 10px; border-left: 3px solid var(--down); }
+.dk-flag.done { border-left-color: var(--line-3); opacity: 0.8; }
+.dk-fh { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+.dk-tier, .dk-gen { font-family: var(--f-mono); font-size: 11.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; }
+.dk-gen { color: var(--pool); }
+.dk-key { color: var(--text-2); }
+.dk-fc { font-size: 13px; color: var(--down); font-weight: 700; }
+.dk-flag.done .dk-fc { color: var(--text-3); }
+.dk-resl { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text); cursor: pointer; }
+.dk-res { width: 18px; height: 18px; accent-color: var(--up); }
+.dk-fbody { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 18px; }
+.dk-stem { font-size: 15px; line-height: 1.5; color: var(--text); margin-bottom: 8px; white-space: pre-wrap; }
+.dk-q .exhibit, .dk-q .memo { margin: 6px 0 10px; font-size: 13px; }
+.dk-opts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.dk-opts li { display: flex; gap: 10px; align-items: baseline; padding: 6px 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--well); font-size: 14px; color: var(--text-2); }
+.dk-opts li.key { border-color: var(--up); background: var(--up-bg); color: var(--text); }
+.dk-let { font-family: var(--f-mono); color: var(--text-3); }
+.dk-keytag { margin-left: auto; font-family: var(--f-mono); font-size: 11px; color: var(--up); text-transform: uppercase; letter-spacing: 0.06em; }
+.dk-exp { margin-top: 8px; font-size: 13.5px; color: var(--text-2); }
+.dk-exp summary { cursor: pointer; color: var(--text-3); font-family: var(--f-mono); font-size: 12px; }
+.dk-exp p { margin-top: 6px; line-height: 1.5; }
+.dk-notes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.dk-notes li { padding: 9px 11px; border: 1px solid var(--line-2); border-radius: 8px; background: var(--panel); display: flex; flex-direction: column; gap: 4px; }
+.dk-notes li.done { opacity: 0.7; }
+.dk-nh { font-size: 12.5px; color: var(--text-3); }
+.dk-nh b { color: var(--text); }
+.dk-nt { font-size: 14.5px; color: var(--text-hi); line-height: 1.45; white-space: normal; }
+.dk-fastsec { margin-top: 20px; }
+.dk-fastt td { vertical-align: top; }
+.dk-fl { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; white-space: normal; }
+.dk-fl li { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; gap: 10px; align-items: baseline; font-size: 13px; }
+.dk-fq { color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; max-width: 60ch; }
+.dk-when { color: var(--text-3); font-family: var(--f-mono); font-size: 11.5px; }
+
+/* ---- "this question looks wrong" ---- */
+.flag-q { margin: 14px 0 2px; }
+.flag-link { appearance: none; background: none; border: 0; padding: 2px 0; font-size: 13.5px; color: var(--text-3); text-decoration: underline; text-decoration-color: rgba(122, 131, 152, 0.45); text-underline-offset: 3px; cursor: pointer; }
+.flag-link:hover { color: var(--warn); text-decoration-color: var(--warn); }
+.flag-box { margin-top: 4px; padding: 12px 14px; border: 1px solid var(--line-2); border-radius: 9px; background: var(--well); max-width: 560px; }
+.flag-note { resize: vertical; min-height: 72px; font-family: var(--f-ui); font-size: 15px; line-height: 1.45; }
+.flag-msg:empty { display: none; }
+.flag-cnt { font-family: var(--f-mono); font-weight: 400; font-size: 11.5px; color: var(--text-3); }
+.flag-box .row-actions { margin-top: 10px; flex-wrap: wrap; }
+.flag-sent { font-size: 14px; color: var(--up); font-weight: 700; }
+
+/* ---- the credit card on the profile ---- */
+.pf-credit .cr-top { display: grid; grid-template-columns: minmax(150px, 0.8fr) minmax(0, 3fr); gap: 14px; align-items: stretch; }
+.cr-pts { display: flex; flex-direction: column; gap: 4px; justify-content: center; padding: 12px 14px; border: 1px solid var(--warn); border-radius: 10px;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(245, 184, 61, 0.16), rgba(10, 13, 20, 0) 65%), var(--panel); }
+.cr-big { font-family: var(--f-mono); font-size: 34px; font-weight: 600; color: var(--warn); line-height: 1.05; font-variant-numeric: tabular-nums; }
+.cr-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.cr-m { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); min-width: 0; }
+.cr-l { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+.cr-v { font-family: var(--f-mono); font-size: 21px; font-weight: 600; color: var(--text-hi); font-variant-numeric: tabular-nums; }
+.cr-s { font-size: 12px; line-height: 1.35; color: var(--text-3); }
+.cr-bar { display: block; height: 6px; border-radius: 3px; background: var(--well); border: 1px solid var(--line); overflow: hidden; }
+.cr-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 3px; }
+.cr-dots { display: flex; flex-wrap: wrap; gap: 4px; padding: 1px 0; }
+.cr-dots i { width: 9px; height: 9px; border-radius: 2px; transform: rotate(45deg); background: var(--line-2); }
+.cr-dots i.on { background: var(--up); }
+.cr-days.met .cr-v { color: var(--up); }
+.cr-t { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13.5px; }
+.cr-t th, .cr-t td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; color: var(--text-2); }
+.cr-t th:first-child { text-align: left; color: var(--text); font-family: var(--f-mono); font-weight: 500; }
+.cr-t thead th { font-family: var(--f-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3); }
+.cr-note { margin-top: 10px; font-size: 12.5px; }
+
 @media (max-width: 699px) {
   .acct-bar { justify-content: center; margin: -6px 0 12px; }
   .ac-pitch { flex: 1 1 100%; text-align: center; margin: 0; }
@@ -1434,6 +1598,16 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
   .lb-me { flex-direction: column; align-items: flex-start; }
   .rc-box, .vf-box { flex-direction: column; align-items: flex-start; }
   .imp-sum { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .scr-desk { padding: calc(16px + env(safe-area-inset-top, 0px)) 8px calc(var(--tk-h) + 32px); }
+  .dk-wrap { padding: 16px 12px 18px; }
+  .dk-fbody { grid-template-columns: minmax(0, 1fr); }
+  .dk-legend { margin-left: 0; }
+  .pf-credit .cr-top { grid-template-columns: minmax(0, 1fr); }
+  .cr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cr-t { font-size: 12.5px; }
+  .cr-t th, .cr-t td { padding: 6px 4px; }
+  .cr-t thead th { font-size: 10px; letter-spacing: 0.02em; }
+  .flag-box { padding: 10px 10px; }
 }
 
 </style>
@@ -1510,7 +1684,7 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
       <div class="code-entry" hidden>
         <label class="code-label" for="code-input">Challenge code</label>
         <div class="code-row">
-          <input id="code-input" class="code-input" type="text" maxlength="11" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="A463-7KQ2M">
+          <input id="code-input" class="code-input" type="text" maxlength="13" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="A463-7KQ2M">
           <button class="btn btn-primary" type="button" data-act="code-solo">Play this board</button>
           <button class="btn" type="button" data-act="code-couch">On the couch</button>
         </div>
@@ -1688,6 +1862,10 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
   <section class="screen scr-lb" id="scr-lb" data-screen="lb" hidden aria-labelledby="lb-h">
     <div class="lb-wrap"></div>
   </section>
+
+  <section class="screen scr-desk" id="scr-desk" data-screen="desk" hidden aria-labelledby="dk-h">
+    <div class="dk-wrap"></div>
+  </section>
 </main>
 
 <nav class="dock" id="dock" aria-label="Account, market and news" hidden>
@@ -1798,7 +1976,7 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
 <script type="application/json" id="m2m-voice">[{"id":"welcome_01","event":"welcome","caption":"Welcome to Mark to Market, where every answer moves your price, up or down.","src":"audio/slide-001.mp3"},{"id":"welcome_02","event":"welcome","caption":"Welcome to Mark to Market, where every answer gets priced and nothing gets rounded in your favor.","src":"audio/slide-002.mp3"},{"id":"welcome_03","event":"welcome","caption":"Welcome to Mark to Market. Let's find out how much of the first twelve lectures is already yours.","src":"audio/slide-003.mp3"},{"id":"mode_solo_01","event":"mode_solo","caption":"It's just you and the board, so the bets tell me how sure you actually are.","src":"audio/slide-004.mp3"},{"id":"mode_solo_02","event":"mode_solo","caption":"Solo game, so take your time and read the explanations, including the ones on questions you got right.","src":"audio/slide-005.mp3"},{"id":"mode_couch_01","event":"mode_couch","caption":"Couch game. Everybody answers every clue on their own keys, so no peeking at your neighbor's.","src":"audio/slide-006.mp3"},{"id":"mode_couch_02","event":"mode_couch","caption":"Two or three players on one board, so keep your eyes on your own keys, please.","src":"audio/slide-007.mp3"},{"id":"mode_challenge_01","event":"mode_challenge","caption":"A challenge code gives you the same board and numbers as whoever sent it, so the only difference is how you play.","src":"audio/slide-008.mp3"},{"id":"mode_challenge_02","event":"mode_challenge","caption":"Somebody sent you a challenge on an identical board, so let's see which of you knows the material.","src":"audio/slide-009.mp3"},{"id":"desk_intern_01","event":"desk_intern","caption":"Intern desk, which is mostly recall and one-step problems, and a good place to build the habits.","src":"audio/slide-010.mp3"},{"id":"desk_analyst_01","event":"desk_analyst","caption":"Analyst desk, which runs the full range, from plain recall up to problems that pull two lectures together.","src":"audio/slide-011.mp3"},{"id":"desk_pm_01","event":"desk_pm","caption":"Portfolio manager desk, which is mostly the traps from the lectures plus the problems that tie them together.","src":"audio/slide-012.mp3"},{"id":"round1_intro_01","event":"round1_intro","caption":"The opening bell. Lectures one through seven are the accounting, and the accounting is the price of admission.","src":"audio/slide-013.mp3"},{"id":"round1_intro_02","event":"round1_intro","caption":"Opening bell for the first seven lectures, because before anybody forecasts anything, we clean up the past.","src":"audio/slide-014.mp3"},{"id":"round2_intro_01","event":"round2_intro","caption":"The levered round, where values double and so do the losses, which is essentially what leverage does.","src":"audio/slide-015.mp3"},{"id":"round2_intro_02","event":"round2_intro","caption":"Levered round. Leverage leaves the business alone and just widens how far the shareholders' return can swing, both ways.","src":"audio/slide-016.mp3"},{"id":"closing_intro_01","event":"closing_intro","caption":"The closing bell. It's one question, and it pulls from more than one lecture.","src":"audio/slide-017.mp3"},{"id":"closing_intro_02","event":"closing_intro","caption":"Closing bell, so read the category and then decide how sure you really are.","src":"audio/slide-018.mp3"},{"id":"closing_wager_01","event":"closing_wager","caption":"Size the wager to how sure you actually are, the way you'd size a position.","src":"audio/slide-019.mp3"},{"id":"closing_wager_02","event":"closing_wager","caption":"Wager what you'd bet if this were your own money.","src":"audio/slide-020.mp3"},{"id":"closing_reveal_right_01","event":"closing_reveal_right","caption":"That's correct at the bell, and a strong way to close!","src":"audio/slide-021.mp3"},{"id":"closing_reveal_right_02","event":"closing_reveal_right","caption":"You called it at the close, so go ahead and ring the bell.","src":"audio/slide-022.mp3"},{"id":"closing_reveal_wrong_01","event":"closing_reveal_wrong","caption":"Not this one, but the explanation pulls the pieces together, so it's worth reading slowly.","src":"audio/slide-023.mp3"},{"id":"closing_reveal_wrong_02","event":"closing_reveal_wrong","caption":"That one got away at the close, and the explanation is worth a read before you hit replay.","src":"audio/slide-024.mp3"},{"id":"correct_01","event":"correct","caption":"Yes, that's the one.","src":"audio/slide-037.mp3"},{"id":"correct_02","event":"correct","caption":"Correct, so we mark you up.","src":"audio/slide-038.mp3"},{"id":"correct_03","event":"correct","caption":"You didn't need a model to get there.","src":"audio/slide-039.mp3"},{"id":"correct_04","event":"correct","caption":"That's correct, and your quote just ticked up.","src":"audio/slide-040.mp3"},{"id":"correct_05","event":"correct","caption":"Got it, and that one is yours now.","src":"audio/slide-041.mp3"},{"id":"correct_06","event":"correct","caption":"Correct, and the why is still worth ten seconds, even when you're right.","src":"audio/slide-042.mp3"},{"id":"correct_07","event":"correct","caption":"That's correct, and I'd sign off on it.","src":"audio/slide-043.mp3"},{"id":"correct_08","event":"correct","caption":"Yes, and the market agrees with you.","src":"audio/slide-044.mp3"},{"id":"correct_09","event":"correct","caption":"Excellent, that's the answer!","src":"audio/slide-045.mp3"},{"id":"correct_10","event":"correct","caption":"That's it, on to the next tile.","src":"audio/slide-046.mp3"},{"id":"correct_11","event":"correct","caption":"There it is, and you can bank that one.","src":"audio/slide-047.mp3"},{"id":"correct_12","event":"correct","caption":"Good, that's one more for the track record.","src":"audio/slide-048.mp3"},{"id":"correct_13","event":"correct","caption":"Exactly, and you read it before you trusted it.","src":"audio/slide-049.mp3"},{"id":"correct_14","event":"correct","caption":"That's correct, and it shows you did the reading.","src":"audio/slide-050.mp3"},{"id":"correct_15","event":"correct","caption":"Nicely done, keep going.","src":"audio/slide-051.mp3"},{"id":"correct_16","event":"correct","caption":"Very nice, that's the one a careful analyst picks.","src":"audio/slide-052.mp3"},{"id":"correct_certain_01","event":"correct_certain","caption":"Certain, and correct, so that tile pays you triple!","src":"audio/slide-053.mp3"},{"id":"correct_certain_02","event":"correct_certain","caption":"You called it certain and it was, so your quote just jumped.","src":"audio/slide-054.mp3"},{"id":"correct_certain_03","event":"correct_certain","caption":"You put your name on it, and it held.","src":"audio/slide-055.mp3"},{"id":"correct_certain_04","event":"correct_certain","caption":"You were sure, and this time sure paid triple.","src":"audio/slide-056.mp3"},{"id":"correct_certain_05","event":"correct_certain","caption":"Correct, and if your Certain calls land more than four times in five, keep making them.","src":"audio/slide-057.mp3"},{"id":"correct_hunch_01","event":"correct_hunch","caption":"A hunch, and it landed, so you may know more than you think.","src":"audio/slide-058.mp3"},{"id":"correct_hunch_02","event":"correct_hunch","caption":"Correct, on a hunch, and if these keep landing, they aren't hunches.","src":"audio/slide-059.mp3"},{"id":"correct_hunch_03","event":"correct_hunch","caption":"Correct, on a hunch, so next time trust it enough to say Likely.","src":"audio/slide-060.mp3"},{"id":"wrong_01","event":"wrong","caption":"Not this time, but the explanation for your answer is already open, and it shows which step leads there.","src":"audio/slide-061.mp3"},{"id":"wrong_02","event":"wrong","caption":"That answer comes from a specific misstep, and the explanation names it.","src":"audio/slide-062.mp3"},{"id":"wrong_03","event":"wrong","caption":"No, but the why shows which step slipped.","src":"audio/slide-063.mp3"},{"id":"wrong_04","event":"wrong","caption":"Not quite. Before you move on, say the reason for the correct answer out loud, once.","src":"audio/slide-064.mp3"},{"id":"wrong_05","event":"wrong","caption":"That one goes on your study list, which is what the list is for.","src":"audio/slide-065.mp3"},{"id":"wrong_06","event":"wrong","caption":"Not this one, which means you've found exactly the thing worth going back to.","src":"audio/slide-066.mp3"},{"id":"wrong_07","event":"wrong","caption":"Read the why, and then the slides the review chip points to.","src":"audio/slide-067.mp3"},{"id":"wrong_08","event":"wrong","caption":"Ask yourself why that option was tempting, and then read the why.","src":"audio/slide-068.mp3"},{"id":"wrong_09","event":"wrong","caption":"Not quite, so read the worked solution once, slowly.","src":"audio/slide-069.mp3"},{"id":"wrong_10","event":"wrong","caption":"No, but that's what the pretend money is for.","src":"audio/slide-070.mp3"},{"id":"wrong_11","event":"wrong","caption":"Not this one, but it's a useful miss if you open the why.","src":"audio/slide-071.mp3"},{"id":"wrong_12","event":"wrong","caption":"Not quite, so find the step where your reasoning and the explanation part ways.","src":"audio/slide-072.mp3"},{"id":"wrong_13","event":"wrong","caption":"Not this one, so read the why, and then work it once more in your head.","src":"audio/slide-073.mp3"},{"id":"wrong_14","event":"wrong","caption":"Wrong one, and the explanation walks through it step by step.","src":"audio/slide-074.mp3"},{"id":"wrong_15","event":"wrong","caption":"Not this one, but the good news is the explanation is right there.","src":"audio/slide-075.mp3"},{"id":"wrong_16","event":"wrong","caption":"Ask what you'd have to believe for that answer to be correct, and then check that belief against the why.","src":"audio/slide-076.mp3"},{"id":"wrong_certain_01","event":"wrong_certain","caption":"You were certain on that one, so it's worth reading twice.","src":"audio/slide-077.mp3"},{"id":"wrong_certain_02","event":"wrong_certain","caption":"Confident misses tend to be the ones you remember once they're corrected, so read the why slowly.","src":"audio/slide-078.mp3"},{"id":"wrong_certain_03","event":"wrong_certain","caption":"That cost six times the tile, which is why Certain is for the questions you'd stake the fund on.","src":"audio/slide-079.mp3"},{"id":"wrong_certain_04","event":"wrong_certain","caption":"You were sure, so find the step where sure went wrong.","src":"audio/slide-080.mp3"},{"id":"wrong_certain_05","event":"wrong_certain","caption":"Find the sentence in the explanation you'd have argued with, and that's the one to remember.","src":"audio/slide-081.mp3"},{"id":"timeout_01","event":"timeout","caption":"That's time, and no answer costs the same as a wrong hunch, so the question goes on your study list.","src":"audio/slide-082.mp3"},{"id":"timeout_02","event":"timeout","caption":"The clock won that one, so it goes on your study list.","src":"audio/slide-083.mp3"},{"id":"timeout_03","event":"timeout","caption":"Out of time, which costs you what a wrong hunch would, and the study list keeps the question for later.","src":"audio/slide-084.mp3"},{"id":"show_choices_01","event":"show_choices","caption":"Choices it is, for half the tile, and the explanation is the same either way.","src":"audio/slide-085.mp3"},{"id":"show_choices_02","event":"show_choices","caption":"Fair enough, here are four options for half the money.","src":"audio/slide-086.mp3"},{"id":"audit_intro_01","event":"audit_intro","caption":"Applied AI. There's a memo, and it's very confident, so sign it or send it back.","src":"audio/slide-087.mp3"},{"id":"audit_intro_02","event":"audit_intro","caption":"Applied AI, where your name goes on the memo the model wrote, so read every line.","src":"audio/slide-088.mp3"},{"id":"audit_intro_03","event":"audit_intro","caption":"Applied AI. The arithmetic was the easy part, so check what went into it.","src":"audio/slide-089.mp3"},{"id":"audit_signed_right_01","event":"audit_signed_right","caption":"Signed, and it holds up, because sometimes the confident memo is simply correct.","src":"audio/slide-090.mp3"},{"id":"audit_signed_right_02","event":"audit_signed_right","caption":"Good call, since knowing when not to object is part of the job too.","src":"audio/slide-091.mp3"},{"id":"audit_signed_wrong_01","event":"audit_signed_wrong","caption":"The memo had an error in it, and the explanation shows the line where it broke.","src":"audio/slide-092.mp3"},{"id":"audit_signed_wrong_02","event":"audit_signed_wrong","caption":"The memo sounded sure of itself, and the line it got wrong is in the explanation.","src":"audio/slide-093.mp3"},{"id":"audit_sent_back_right_01","event":"audit_sent_back_right","caption":"You sent it back, and for the right reason.","src":"audio/slide-094.mp3"},{"id":"audit_sent_back_right_02","event":"audit_sent_back_right","caption":"Good catch, you found the line where the memo breaks.","src":"audio/slide-095.mp3"},{"id":"audit_sent_back_wrong_01","event":"audit_sent_back_wrong","caption":"Good instinct to push back, but that objection doesn't hold, and the explanation shows why.","src":"audio/slide-096.mp3"},{"id":"audit_sent_back_wrong_02","event":"audit_sent_back_wrong","caption":"The memo went back, but not for a reason that holds up, so read the why.","src":"audio/slide-097.mp3"},{"id":"streak3_01","event":"streak3","caption":"Three in a row could still be noise, but I doubt it.","src":"audio/slide-098.mp3"},{"id":"streak3_02","event":"streak3","caption":"Three straight, and your quote is trending up.","src":"audio/slide-099.mp3"},{"id":"streak3_03","event":"streak3","caption":"Three straight, so somebody's been reading the footnotes.","src":"audio/slide-100.mp3"},{"id":"streak5_01","event":"streak5","caption":"Five in a row, and at this point that's not noise anymore!","src":"audio/slide-101.mp3"},{"id":"streak5_02","event":"streak5","caption":"Five straight, and if these were earnings, I'd start checking the accruals.","src":"audio/slide-102.mp3"},{"id":"end_solo_up_01","event":"end_solo_up","caption":"You closed in the green, and the edge lives in knowing the nooks and crannies of the business better than the rest.","src":"audio/slide-103.mp3"},{"id":"end_solo_up_02","event":"end_solo_up","caption":"Long story short, you closed up, so check the calibration chart next, because that's where the next game's money is.","src":"audio/slide-104.mp3"},{"id":"end_solo_down_01","event":"end_solo_down","caption":"You closed down, and the study list has every question worth going back to, sorted by lecture, with the slides to reopen.","src":"audio/slide-105.mp3"},{"id":"end_solo_down_02","event":"end_solo_down","caption":"Down at the close, so check whether your Certain calls landed as often as you expected.","src":"audio/slide-106.mp3"},{"id":"end_couch_winner_01","event":"end_couch_winner","caption":"And the closing bell goes to our top player! Everyone's study list is waiting.","src":"audio/slide-107.mp3"},{"id":"end_couch_winner_02","event":"end_couch_winner","caption":"We have a winner, so everyone compare calibration charts before the rematch.","src":"audio/slide-108.mp3"},{"id":"end_tie_01","event":"end_tie","caption":"A tie, at the same closing price to the dollar, so it's going to take a rematch.","src":"audio/slide-109.mp3"},{"id":"game_resume_01","event":"game_resume","caption":"Welcome back, and your positions are exactly where you left them.","src":"audio/slide-110.mp3"},{"id":"margin_call_01","event":"margin_call","caption":"This is your broker. Margin call!","src":"audio/slide-111.mp3","speaker":"broker"},{"id":"margin_call_02","event":"margin_call","caption":"Margin call!","src":"audio/slide-112.mp3","speaker":"broker"},{"id":"margin_call_03","event":"margin_call","caption":"Your broker here. You've been margin called.","src":"audio/slide-113.mp3","speaker":"broker"},{"id":"dark_pool_01","event":"dark_pool","caption":"A dark pool. You size the order before you see the trade.","src":"audio/slide-114.mp3"},{"id":"dark_pool_02","event":"dark_pool","caption":"Dark pool. Nobody sees this question until your order is in.","src":"audio/slide-115.mp3"},{"id":"dark_pool_03","event":"dark_pool","caption":"Dark pool. If you're behind, this is where a comeback starts.","src":"audio/slide-116.mp3"},{"id":"cat_L01_02","event":"cat_L01","caption":"Noise versus bias. Noise averages away. Bias doesn't.","src":"audio/slide-117.mp3"},{"id":"cat_L02_02","event":"cat_L02","caption":"Stocks and flows. Two snapshots, and the movie in between.","src":"audio/slide-118.mp3"},{"id":"cat_L03_02","event":"cat_L03","caption":"Accruals. The economics and the cash rarely arrive together.","src":"audio/slide-119.mp3"},{"id":"cat_L04_02","event":"cat_L04","caption":"Follow the cash. Profit can be an opinion, but cash is a fact.","src":"audio/slide-120.mp3"},{"id":"cat_L05_02","event":"cat_L05","caption":"Top line. Revenue follows control, not cash.","src":"audio/slide-121.mp3"},{"id":"cat_L07I_02","event":"cat_L07I","caption":"LIFO and FIFO. Old layers can flatter profit.","src":"audio/slide-122.mp3"},{"id":"cat_L07A_02","event":"cat_L07A","caption":"Wear and tear. Check the useful life yourself.","src":"audio/slide-123.mp3"},{"id":"cat_L08_02","event":"cat_L08","caption":"Footnotes. That's where the opinions live.","src":"audio/slide-124.mp3"},{"id":"cat_L09_02","event":"cat_L09","caption":"Operating or financing? Every line on the balance sheet picks a side.","src":"audio/slide-125.mp3"},{"id":"cat_L10_02","event":"cat_L10","caption":"Margin times turnover. Two roads to the same return.","src":"audio/slide-126.mp3"},{"id":"cat_L11_02","event":"cat_L11","caption":"The spread. Borrowing helps only while you out-earn your debt.","src":"audio/slide-127.mp3"},{"id":"cat_L12_02","event":"cat_L12","caption":"Paid back? Lenders read the downside first.","src":"audio/slide-128.mp3"},{"id":"cat_L13_02","event":"cat_L13","caption":"Moats and the fade. Excess returns don't last on their own.","src":"audio/slide-129.mp3"},{"id":"cat_L14_02","event":"cat_L14","caption":"Forecasting. Growth costs capital, and somebody pays for it.","src":"audio/slide-130.mp3"},{"id":"cat_L15_02","event":"cat_L15","caption":"Cost of capital. Today's market sets the rate.","src":"audio/slide-131.mp3"}]</script>
 <script type="application/json" id="m2m-assets">{"sfx":{"bull":"sfx/bull.mp3","bear":"sfx/bear.mp3","bell_open":"sfx/bell_open.mp3","bell_close":"sfx/bell_close.mp3","cheer":"sfx/cheer.mp3","groan":"sfx/groan.mp3","cash":"sfx/cash.mp3","ticker_loop":"sfx/ticker_loop.mp3","whoosh":"sfx/whoosh.mp3"},"music":{"theme":"music/theme.mp3","stinger":"music/stinger.mp3","outro":"music/outro.mp3"}}</script>
 <script type="application/json" id="m2m-qa">{"CB-a01":["CB",0,104089],"CB-a02":["CB",104089,153461],"CB-a03":["CB",257550,119815],"CB-a04":["CB",377365,90741],"CB-a05":["CB",468106,96227],"CB-b01":["CB",564333,63861],"CB-b02":["CB",628194,192592],"CB-b03":["CB",820786,44112],"CB-b04":["CB",864898,69347],"CB-b05":["CB",934245,66604],"CB-cN01":["CB",1000849,147244],"CB-cN02":["CB",1148093,177415],"CB-cN03":["CB",1325508,186924],"CB-dN01":["CB",1512432,146695],"CB-dN02":["CB",1659127,137187],"CB-dN03":["CB",1796314,145049],"CB-eN01":["CB",1941363,181987],"CB-eN02":["CB",2123350,146695],"CB-eN03":["CB",2270045,200455],"CB-eN04":["CB",2470500,131518],"L01-1-01":["L01",0,50878],"L01-1-02":["L01",50878,57644],"L01-1-03":["L01",108522,60935],"L01-1-04":["L01",169457,59289],"L01-1-05":["L01",228746,55449],"L01-1-N01":["L01",284195,61484],"L01-1-N02":["L01",345679,85072],"L01-1-N03":["L01",430751,86169],"L01-1-N04":["L01",516920,88364],"L01-2-01":["L01",605284,101347],"L01-2-02":["L01",706631,114695],"L01-2-03":["L01",821326,63129],"L01-2-04":["L01",884455,79952],"L01-2-05":["L01",964407,69347],"L01-2-N01":["L01",1033754,104089],"L01-2-N02":["L01",1137843,137187],"L01-2-N03":["L01",1275030,110855],"L01-2-N04":["L01",1385885,130421],"L01-3-01":["L01",1516306,92935],"L01-3-02":["L01",1609241,154009],"L01-3-03":["L01",1763250,93484],"L01-3-04":["L01",1856734,104089],"L01-3-N01":["L01",1960823,125849],"L01-3-N02":["L01",2086672,174672],"L01-3-N03":["L01",2261344,170649],"L01-3-N04":["L01",2431993,180341],"L01-4-01":["L01",2612334,234101],"L01-4-02":["L01",2846435,185278],"L01-4-03":["L01",3031713,106832],"L01-4-04":["L01",3138545,145049],"L01-4-N01":["L01",3283594,177415],"L01-4-N02":["L01",3461009,162421],"L01-4-N03":["L01",3623430,138284],"L01-4-N04":["L01",3761714,142124],"L01-5-01":["L01",3903838,242329],"L01-5-02":["L01",4146167,116341],"L01-5-03":["L01",4262508,188021],"L01-5-04":["L01",4450529,188569],"L01-5-N01":["L01",4639098,145598],"L01-5-N02":["L01",4784696,249095],"L01-5-N03":["L01",5033791,234649],"L01-5-N04":["L01",5268440,231724],"L01-AI-01":["L01",5500164,96227],"L01-AI-02":["L01",5596391,114147],"L01-AI-N01":["L01",5710538,151632],"L02-1-01":["L02",0,50878],"L02-1-02":["L02",50878,50878],"L02-1-03":["L02",101756,43015],"L02-1-04":["L02",144771,27289],"L02-1-05":["L02",172060,73369],"L02-1-N01":["L02",245429,47587],"L02-1-N02":["L02",293016,50878],"L02-1-N03":["L02",343894,66055],"L02-1-N04":["L02",409949,55998],"L02-2-01":["L02",465947,47587],"L02-2-02":["L02",513534,36249],"L02-2-03":["L02",549783,49781],"L02-2-04":["L02",599564,115244],"L02-2-05":["L02",714808,72089],"L02-3-01":["L02",786897,86169],"L02-3-02":["L02",873066,69895],"L02-3-03":["L02",942961,106284],"L02-3-04":["L02",1049245,138284],"L02-4-01":["L02",1187529,103541],"L02-4-02":["L02",1291070,133712],"L02-4-03":["L02",1424782,75015],"L02-4-04":["L02",1499797,57095],"L02-4-N01":["L02",1556892,110307],"L02-4-N02":["L02",1667199,141027],"L02-4-N03":["L02",1808226,142672],"L02-5-01":["L02",1950898,71541],"L02-5-02":["L02",2022439,165164],"L02-5-03":["L02",2187603,155107],"L02-5-04":["L02",2342710,153461],"L02-5-N01":["L02",2496171,104638],"L02-5-N02":["L02",2600809,107381],"L02-5-N03":["L02",2708190,186924],"L02-5-N04":["L02",2895114,130969],"L02-AI-01":["L02",3026083,49232],"L02-AI-02":["L02",3075315,51427],"L02-AI-N01":["L02",3126742,38078],"L03-1-01":["L03",0,93484],"L03-1-02":["L03",93484,66055],"L03-1-03":["L03",159539,77209],"L03-1-04":["L03",236748,111952],"L03-1-N01":["L03",348700,65507],"L03-1-N02":["L03",414207,79404],"L03-1-N03":["L03",493611,83975],"L03-1-N04":["L03",577586,47038],"L03-2-01":["L03",624624,81049],"L03-2-02":["L03",705673,72089],"L03-2-03":["L03",777762,85621],"L03-2-04":["L03",863383,130969],"L03-3-01":["L03",994352,190398],"L03-3-02":["L03",1184750,166809],"L03-3-03":["L03",1351559,130969],"L03-3-04":["L03",1482528,147244],"L03-4-01":["L03",1629772,96227],"L03-4-02":["L03",1725999,152181],"L03-4-03":["L03",1878180,139929],"L03-4-04":["L03",2018109,65507],"L03-4-N01":["L03",2083616,77209],"L03-4-N02":["L03",2160825,201004],"L03-4-N03":["L03",2361829,105187],"L03-5-01":["L03",2467016,111404],"L03-5-02":["L03",2578420,185278],"L03-5-03":["L03",2763698,165164],"L03-5-04":["L03",2928862,121461],"L03-5-N01":["L03",3050323,157301],"L03-5-N02":["L03",3207624,118169],"L03-5-N03":["L03",3325793,159495],"L03-5-N04":["L03",3485288,134261],"L03-AI-01":["L03",3619549,70444],"L03-AI-02":["L03",3689993,49232],"L03-AI-N01":["L03",3739225,62581],"L04-1-01":["L04",0,87267],"L04-1-02":["L04",87267,80501],"L04-1-03":["L04",167768,73369],"L04-1-04":["L04",241137,54169],"L04-1-N01":["L04",295306,55449],"L04-1-N02":["L04",350755,68798],"L04-1-N03":["L04",419553,59289],"L04-1-N04":["L04",478842,85072],"L04-2-01":["L04",563914,81781],"L04-2-02":["L04",645695,98969],"L04-2-03":["L04",744664,94581],"L04-2-04":["L04",839245,97872],"L04-3-01":["L04",937117,119815],"L04-3-02":["L04",1056932,106284],"L04-3-03":["L04",1163216,98421],"L04-3-04":["L04",1261637,166809],"L04-4-01":["L04",1428446,112501],"L04-4-02":["L04",1540947,90741],"L04-4-03":["L04",1631688,79952],"L04-4-04":["L04",1711640,136089],"L04-5-01":["L04",1847729,165712],"L04-5-02":["L04",2013441,131518],"L04-5-03":["L04",2144959,81781],"L04-5-04":["L04",2226740,185827],"L04-5-N01":["L04",2412567,88912],"L04-5-N02":["L04",2501479,132615],"L04-5-N03":["L04",2634094,89461],"L04-5-N04":["L04",2723555,96227],"L04-AI-01":["L04",2819782,51427],"L04-AI-02":["L04",2871209,86169],"L04-AI-N01":["L04",2957378,50329],"L05-1-01":["L05",0,48684],"L05-1-02":["L05",48684,64409],"L05-1-03":["L05",113093,111404],"L05-1-04":["L05",224497,32958],"L05-1-05":["L05",257455,41918],"L05-1-N01":["L05",299373,77209],"L05-1-N02":["L05",376582,101895],"L05-1-N03":["L05",478477,43015],"L05-1-N04":["L05",521492,68798],"L05-2-01":["L05",590290,98969],"L05-2-02":["L05",689259,110855],"L05-2-03":["L05",800114,84524],"L05-2-04":["L05",884638,90741],"L05-2-05":["L05",975379,83427],"L05-3-01":["L05",1058806,109758],"L05-3-02":["L05",1168564,75015],"L05-3-03":["L05",1243579,116889],"L05-3-04":["L05",1360468,88364],"L05-3-05":["L05",1448832,88912],"L05-3-06":["L05",1537744,105735],"L05-3-07":["L05",1643479,165164],"L05-4-01":["L05",1808643,103541],"L05-4-02":["L05",1912184,142124],"L05-4-03":["L05",2054308,120912],"L05-4-04":["L05",2175220,136638],"L05-5-01":["L05",2311858,134809],"L05-5-02":["L05",2446667,241232],"L05-5-03":["L05",2687899,187472],"L05-5-04":["L05",2875371,107381],"L05-5-N01":["L05",2982752,109758],"L05-5-N02":["L05",3092510,127129],"L05-5-N03":["L05",3219639,130969],"L05-5-N04":["L05",3350608,167358],"L05-AI-01":["L05",3517966,73918],"L05-AI-02":["L05",3591884,62032],"L05-AI-03":["L05",3653916,78307],"L05-AI-N01":["L05",3732223,64958],"L07I-1-01":["L07I",0,53072],"L07I-1-02":["L07I",53072,79404],"L07I-1-03":["L07I",132476,74467],"L07I-1-04":["L07I",206943,28569],"L07I-1-05":["L07I",235512,44112],"L07I-1-N01":["L07I",279624,88364],"L07I-1-N02":["L07I",367988,88364],"L07I-1-N03":["L07I",456352,83975],"L07I-1-N04":["L07I",540327,61484],"L07I-2-01":["L07I",601811,106832],"L07I-2-02":["L07I",708643,96775],"L07I-2-03":["L07I",805418,157849],"L07I-2-04":["L07I",963267,90009],"L07I-2-05":["L07I",1053276,78307],"L07I-3-01":["L07I",1131583,133164],"L07I-3-02":["L07I",1264747,149987],"L07I-3-03":["L07I",1414734,124752],"L07I-3-04":["L07I",1539486,114147],"L07I-3-05":["L07I",1653633,149438],"L07I-3-06":["L07I",1803071,137187],"L07I-3-07":["L07I",1940258,81781],"L07I-4-01":["L07I",2022039,141027],"L07I-4-02":["L07I",2163066,141027],"L07I-4-03":["L07I",2304093,121461],"L07I-4-04":["L07I",2425554,156204],"L07I-4-05":["L07I",2581758,138284],"L07I-5-01":["L07I",2720042,155107],"L07I-5-02":["L07I",2875149,146147],"L07I-5-03":["L07I",3021296,145598],"L07I-5-04":["L07I",3166894,153461],"L07I-5-N01":["L07I",3320355,120364],"L07I-5-N02":["L07I",3440719,141027],"L07I-5-N03":["L07I",3581746,167907],"L07I-5-N04":["L07I",3749653,133712],"L07I-AI-01":["L07I",3883365,101347],"L07I-AI-02":["L07I",3984712,96775],"L07I-AI-N01":["L07I",4081487,120364],"L07A-1-01":["L07A",0,126581],"L07A-1-02":["L07A",126581,53072],"L07A-1-03":["L07A",179653,73369],"L07A-1-04":["L07A",253022,60935],"L07A-1-05":["L07A",313957,74467],"L07A-1-N01":["L07A",388424,75564],"L07A-1-N02":["L07A",463988,39724],"L07A-1-N03":["L07A",503712,46489],"L07A-1-N04":["L07A",550201,69895],"L07A-2-01":["L07A",620096,86718],"L07A-2-02":["L07A",706814,101347],"L07A-2-03":["L07A",808161,143221],"L07A-2-04":["L07A",951382,84524],"L07A-3-01":["L07A",1035906,127678],"L07A-3-02":["L07A",1163584,62581],"L07A-3-03":["L07A",1226165,95678],"L07A-3-04":["L07A",1321843,92387],"L07A-3-05":["L07A",1414230,124752],"L07A-4-01":["L07A",1538982,95678],"L07A-4-02":["L07A",1634660,70992],"L07A-4-03":["L07A",1705652,74467],"L07A-4-04":["L07A",1780119,72821],"L07A-4-05":["L07A",1852940,52524],"L07A-5-01":["L07A",1905464,109209],"L07A-5-02":["L07A",2014673,115792],"L07A-5-03":["L07A",2130465,100798],"L07A-5-04":["L07A",2231263,70444],"L07A-5-N01":["L07A",2301707,182535],"L07A-5-N02":["L07A",2484242,137735],"L07A-5-N03":["L07A",2621977,88912],"L07A-5-N04":["L07A",2710889,183084],"L07A-AI-01":["L07A",2893973,60387],"L07A-AI-02":["L07A",2954360,52524],"L07A-AI-N01":["L07A",3006884,82878],"L08-1-01":["L08",0,95129],"L08-1-02":["L08",95129,66055],"L08-1-03":["L08",161184,47587],"L08-1-04":["L08",208771,52524],"L08-1-05":["L08",261295,63129],"L08-1-N01":["L08",324424,87267],"L08-1-N02":["L08",411691,86169],"L08-1-N03":["L08",497860,68249],"L08-1-N04":["L08",566109,70444],"L08-2-01":["L08",636553,113598],"L08-2-02":["L08",750151,66604],"L08-2-03":["L08",816755,100249],"L08-2-04":["L08",917004,155107],"L08-2-05":["L08",1072111,93484],"L08-2-06":["L08",1165595,104638],"L08-2-07":["L08",1270233,101895],"L08-3-01":["L08",1372128,130421],"L08-3-02":["L08",1502549,84524],"L08-3-03":["L08",1587073,96775],"L08-3-04":["L08",1683848,72089],"L08-3-05":["L08",1755937,70992],"L08-3-06":["L08",1826929,139381],"L08-3-07":["L08",1966310,104638],"L08-4-01":["L08",2070948,85621],"L08-4-02":["L08",2156569,66604],"L08-4-03":["L08",2223173,148341],"L08-4-04":["L08",2371514,95129],"L08-4-05":["L08",2466643,117621],"L08-5-01":["L08",2584264,105187],"L08-5-02":["L08",2689451,105735],"L08-5-03":["L08",2795186,100798],"L08-5-04":["L08",2895984,87815],"L08-5-N01":["L08",2983799,129324],"L08-5-N02":["L08",3113123,160592],"L08-5-N03":["L08",3273715,95129],"L08-5-N04":["L08",3368844,101347],"L08-AI-01":["L08",3470191,46489],"L08-AI-02":["L08",3516680,54169],"L08-AI-03":["L08",3570849,41369],"L08-AI-N01":["L08",3612218,54169],"L09-1-01":["L09",0,70444],"L09-1-02":["L09",70444,68249],"L09-1-03":["L09",138693,125301],"L09-1-04":["L09",263994,95678],"L09-1-05":["L09",359672,73918],"L09-1-N01":["L09",433590,55449],"L09-1-N02":["L09",489039,68798],"L09-1-N03":["L09",557837,81049],"L09-1-N04":["L09",638886,103541],"L09-2-01":["L09",742427,64958],"L09-2-02":["L09",807385,97872],"L09-2-03":["L09",905257,93484],"L09-2-04":["L09",998741,50878],"L09-2-05":["L09",1049619,173575],"L09-3-01":["L09",1223194,97872],"L09-3-02":["L09",1321066,106832],"L09-3-03":["L09",1427898,131518],"L09-3-04":["L09",1559416,145049],"L09-3-05":["L09",1704465,137735],"L09-4-01":["L09",1842200,75564],"L09-4-02":["L09",1917764,170101],"L09-4-03":["L09",2087865,70992],"L09-4-04":["L09",2158857,63129],"L09-5-01":["L09",2221986,87267],"L09-5-02":["L09",2309253,155107],"L09-5-03":["L09",2464360,109209],"L09-5-04":["L09",2573569,113049],"L09-5-N01":["L09",2686618,165164],"L09-5-N02":["L09",2851782,78855],"L09-5-N03":["L09",2930637,111404],"L09-5-N04":["L09",3042041,83975],"L09-AI-01":["L09",3126016,65507],"L09-AI-02":["L09",3191523,92935],"L09-AI-03":["L09",3284458,54901],"L09-AI-N01":["L09",3339359,86169],"L10-1-01":["L10",0,92387],"L10-1-02":["L10",92387,78855],"L10-1-03":["L10",171242,94581],"L10-1-04":["L10",265823,70444],"L10-1-05":["L10",336267,74467],"L10-1-N01":["L10",410734,121461],"L10-1-N02":["L10",532195,85072],"L10-1-N03":["L10",617267,115792],"L10-1-N04":["L10",733059,111404],"L10-2-01":["L10",844463,84524],"L10-2-02":["L10",928987,92387],"L10-2-03":["L10",1021374,125301],"L10-2-04":["L10",1146675,82329],"L10-2-05":["L10",1229004,72089],"L10-3-01":["L10",1301093,81781],"L10-3-02":["L10",1382874,161689],"L10-3-03":["L10",1544563,124204],"L10-3-04":["L10",1668767,105735],"L10-3-05":["L10",1774502,40272],"L10-4-01":["L10",1814774,107381],"L10-4-02":["L10",1922155,119815],"L10-4-03":["L10",2041970,166809],"L10-4-04":["L10",2208779,173575],"L10-4-05":["L10",2382354,55449],"L10-5-01":["L10",2437803,115244],"L10-5-02":["L10",2553047,82878],"L10-5-03":["L10",2635925,111404],"L10-5-04":["L10",2747329,129872],"L10-5-N01":["L10",2877201,201004],"L10-5-N02":["L10",3078205,162421],"L10-5-N03":["L10",3240626,106284],"L10-5-N04":["L10",3346910,184181],"L10-AI-01":["L10",3531091,79952],"L10-AI-02":["L10",3611043,62032],"L10-AI-03":["L10",3673075,99701],"L10-AI-N01":["L10",3772776,136089],"L11-1-01":["L11",0,83975],"L11-1-02":["L11",83975,76112],"L11-1-03":["L11",160087,60387],"L11-1-04":["L11",220474,65507],"L11-1-05":["L11",285981,91838],"L11-1-N01":["L11",377819,91289],"L11-1-N02":["L11",469108,98421],"L11-1-N03":["L11",567529,127129],"L11-1-N04":["L11",694658,61484],"L11-2-01":["L11",756142,50329],"L11-2-02":["L11",806471,61484],"L11-2-03":["L11",867955,90009],"L11-2-04":["L11",957964,109758],"L11-2-05":["L11",1067722,46489],"L11-3-01":["L11",1114211,143221],"L11-3-02":["L11",1257432,39175],"L11-3-03":["L11",1296607,94032],"L11-3-04":["L11",1390639,170649],"L11-3-05":["L11",1561288,183632],"L11-3-06":["L11",1744920,102444],"L11-4-01":["L11",1847364,193141],"L11-4-02":["L11",2040505,52524],"L11-4-03":["L11",2093029,103541],"L11-4-04":["L11",2196570,101347],"L11-5-01":["L11",2297917,98421],"L11-5-02":["L11",2396338,180889],"L11-5-03":["L11",2577227,98969],"L11-5-04":["L11",2676196,147244],"L11-5-N01":["L11",2823440,196432],"L11-5-N02":["L11",3019872,179061],"L11-5-N03":["L11",3198933,106284],"L11-5-N04":["L11",3305217,137187],"L11-AI-01":["L11",3442404,133712],"L11-AI-02":["L11",3576116,68249],"L11-AI-03":["L11",3644365,69347],"L11-AI-N01":["L11",3713712,75015],"L12-1-01":["L12",0,56547],"L12-1-02":["L12",56547,48135],"L12-1-03":["L12",104682,39175],"L12-1-04":["L12",143857,38078],"L12-1-05":["L12",181935,69895],"L12-1-06":["L12",251830,91838],"L12-1-N01":["L12",343668,63129],"L12-1-N02":["L12",406797,94032],"L12-1-N03":["L12",500829,107929],"L12-1-N04":["L12",608758,97872],"L12-2-01":["L12",706630,47587],"L12-2-02":["L12",754217,161689],"L12-2-03":["L12",915906,143769],"L12-2-04":["L12",1059675,76661],"L12-2-05":["L12",1136336,38627],"L12-2-06":["L12",1174963,85621],"L12-3-01":["L12",1260584,104638],"L12-3-02":["L12",1365222,138284],"L12-3-03":["L12",1503506,110855],"L12-3-04":["L12",1614361,146147],"L12-3-05":["L12",1760508,152181],"L12-3-06":["L12",1912689,132615],"L12-3-07":["L12",2045304,104089],"L12-4-01":["L12",2149393,148341],"L12-4-02":["L12",2297734,49781],"L12-4-03":["L12",2347515,189849],"L12-4-04":["L12",2537364,81049],"L12-4-05":["L12",2618413,169004],"L12-5-01":["L12",2787417,150535],"L12-5-02":["L12",2937952,143769],"L12-5-03":["L12",3081721,110855],"L12-5-04":["L12",3192576,102444],"L12-5-N01":["L12",3295020,137735],"L12-5-N02":["L12",3432755,125849],"L12-5-N03":["L12",3558604,115792],"L12-5-N04":["L12",3674396,185278],"L12-AI-01":["L12",3859674,65507],"L12-AI-02":["L12",3925181,87815],"L12-AI-03":["L12",4012996,43564],"L12-AI-N01":["L12",4056560,64409]}</script>
-<script type="application/json" id="m2m-meta">{"built":"2026-10-18 10:13","items":620,"realItems":620,"sampleCats":[],"voice":119,"voiceSource":"voice/lines.json","audio":119,"sfx":["bear","bell_close","bell_open","bull","cash","cheer","groan","ticker_loop","whoosh"],"music":["outro","stinger","theme"],"questionsRead":461,"v3":true}</script>
+<script type="application/json" id="m2m-meta">{"built":"2026-10-18 15:51","items":620,"realItems":620,"sampleCats":[],"voice":119,"voiceSource":"voice/lines.json","audio":119,"sfx":["bear","bell_close","bell_open","bull","cash","cheer","groan","ticker_loop","whoosh"],"music":["outro","stinger","theme"],"questionsRead":461,"v3":true}</script>
 <script>
 /* MARK TO MARKET — shared helpers for number generators.
  * Works in the browser (window.M2M_H) and in Node (require('./helpers.js')).
@@ -10904,11 +11082,16 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
 
   // ---- challenge codes ------------------------------------------------------
   // DMMM-RRRRR: desk letter, the lecture selection as three base-31 characters, then five random characters.
+  // DMMMMM-RRRRR (18 Oct, for L16 and later): five selection characters (24 lectures and more), used only when the
+  // selection doesn't fit in three, so every code made before still decodes, and deals, exactly as it did.
   const ALPH = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
   D.ALPH = ALPH;
-  function encMask(m) {
+  const SHORT_MAX = ALPH.length * ALPH.length * ALPH.length - 1; // 29,790: the largest selection three characters hold
+  function encMask(m, len) {
     const n = ALPH.length;
-    return ALPH[Math.floor(m / (n * n)) % n] + ALPH[Math.floor(m / n) % n] + ALPH[m % n];
+    let s = "";
+    for (let i = 0; i < (len || 3); i++) { s = ALPH[m % n] + s; m = Math.floor(m / n); }
+    return s;
   }
   function decMask(s) {
     let v = 0;
@@ -10922,26 +11105,31 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     for (let i = 0; i < n; i++) s += ALPH[r[i] % ALPH.length];
     return s;
   }
+  /** desk + selection + "-" + tail: the short form whenever the selection fits */
+  D.codeFor = function (desk, mask, tail) {
+    return desk + encMask(mask, mask <= SHORT_MAX ? 3 : 5) + "-" + tail;
+  };
   D.newCode = function (desk, mask) {
-    return desk + encMask(mask) + "-" + randChars(5);
+    return D.codeFor(desk, mask, randChars(5));
   };
   /** accepts "a463-7kq2m", "A4637KQ2M", " A463 7KQ2M " ... -> {code, desk, mask, cats, chips} or {error} */
   D.parseCode = function (str) {
     const s = String(str || "").toUpperCase().replace(/[^0-9A-Z]/g, "");
     if (!s) return { error: "empty" };
     if (s.length === 7 && /^[IAP][FOL]/.test(s)) return { error: "v1" };
-    if (s.length !== 9) return { error: "format" };
+    if (s.length !== 9 && s.length !== 11) return { error: "format" };
     const desk = s[0];
     if (!D.DESKS[desk]) return { error: "format" };
-    const mask = decMask(s.slice(1, 4));
+    const w = s.length === 9 ? 3 : 5;
+    const mask = decMask(s.slice(1, 1 + w));
     if (mask < 1 || mask > D.ALL_MASK) return { error: "format" };
-    for (const ch of s.slice(4)) if (ALPH.indexOf(ch) < 0) return { error: "format" };
-    return { code: s.slice(0, 4) + "-" + s.slice(4), desk, mask, cats: D.catsFromMask(mask), chips: D.chipsFromMask(mask) };
+    for (const ch of s.slice(1 + w)) if (ALPH.indexOf(ch) < 0) return { error: "format" };
+    return { code: s.slice(0, 1 + w) + "-" + s.slice(1 + w), desk, mask, cats: D.catsFromMask(mask), chips: D.chipsFromMask(mask) };
   };
   D.codeError = function (err) {
     if (err === "v1") return "That code is from the first version of the game. Codes now carry the lecture selection, so ask for a new one.";
     if (err === "empty") return "Type a challenge code first. It looks like A463-7KQ2M.";
-    return "That code does not look right. It has nine letters and digits, like A463-7KQ2M.";
+    return "That code does not look right. It has nine or eleven letters and digits, like A463-7KQ2M.";
   };
 
   // ---- board assembly -------------------------------------------------------
@@ -12656,7 +12844,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (cs !== c || !c.reading) return;
     if (!url || !A().ready()) { done(); return; }
     M2M.host.stop();
-    A().playVoice(url, { onEnd: done, onFail: done, onStop: done });
+    A().playVoice(url, { onStart: () => { c.heard = true; }, onEnd: done, onFail: () => { c.heard = false; done(); }, onStop: done });
   }
   /** noClock: the player already answered, so don't start the clock */
   function stopReading(noClock) {
@@ -13017,7 +13205,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     area.classList.add("on");
     let res;
     try {
-      res = await c.opts.check({ chosen: pk.chosen, typed: pk.typed, bet: pk.bet, half: c.half, timeout: !!(pk.timeout || (pk.chosen == null && pk.typed == null)) });
+      res = await c.opts.check({ chosen: pk.chosen, typed: pk.typed, bet: pk.bet, half: c.half, heard: !!c.heard, timeout: !!(pk.timeout || (pk.chosen == null && pk.typed == null)) });
     } catch (e) {
       if (cs !== c) return;
       U.clear(note).append((e && e.message) || "Could not reach the desk.");
@@ -13297,6 +13485,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     }
     why.appendChild(h("p.wlist-h", { text: "Every option, and why" }));
     why.appendChild(Q.renderWhyList(it, mine, who, mine < 0));
+    if (cs.opts.flag) { try { cs.opts.flag(why); } catch (e) { console.warn("[m2m] flag box", e); } }
     const label = cs.kind === "cb" ? "See the close" : "Continue";
     const btn = h("button.btn-ink.cont", { type: "button" }, label, h("kbd", { text: "Enter" }));
     btn.addEventListener("click", cont);
@@ -14260,10 +14449,11 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     S.syncLectures();
     const ci = U.$("#code-input");
     ci.addEventListener("input", () => {
-      const raw = ci.value.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 9);
-      ci.value = raw.length > 4 ? raw.slice(0, 4) + "-" + raw.slice(4) : raw;
+      const raw = ci.value.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 11);
+      // nine characters (A463-7KQ2M), or eleven when the code carries lectures 16 and up (A46372-KQ2MX)
+      ci.value = raw.length > 9 ? raw.slice(0, 6) + "-" + raw.slice(6) : raw.length > 4 ? raw.slice(0, 4) + "-" + raw.slice(4) : raw;
       S.codeMsg("");
-      S.codePlan(raw.length === 9 ? D.parseCode(raw) : null);
+      S.codePlan(raw.length === 9 || raw.length === 11 ? D.parseCode(raw) : null);
     });
     ci.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); if (handlers["code-solo"]) handlers["code-solo"](); } });
     window.addEventListener("resize", () => {
@@ -15075,7 +15265,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     // step 1
     viewJoin = h("div.ol-join");
     const name = h("input.pl-name#ol-name", { type: "text", maxlength: "14", placeholder: "Your name", autocomplete: "off", spellcheck: "false", value: nick() });
-    const code = h("input.code-input#ol-code", { type: "text", maxlength: "11", autocomplete: "off", autocapitalize: "characters", spellcheck: "false", placeholder: "A463-7KQ2M" });
+    const code = h("input.code-input#ol-code", { type: "text", maxlength: "13", autocomplete: "off", autocapitalize: "characters", spellcheck: "false", placeholder: "A463-7KQ2M" });
     const msg = h("p.code-msg#ol-msg", { "aria-live": "polite" });
     const bCreate = h("button.btn.btn-primary", { type: "button" }, "Open a new floor");
     const bJoin = h("button.btn", { type: "button" }, "Join this floor");
@@ -15516,7 +15706,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     document.documentElement.classList.add("dof");
     M2M.floor.pause(true);
     try {
-      await M2M.clue.open(cell, { kind: "mc", check: served ? served.check : null });
+      await M2M.clue.open(cell, { kind: "mc", check: served ? served.check : null, flag: served ? served.flag : null });
     } catch (e) {
       console.warn("[m2m] training clue failed", e);
     }
@@ -15668,6 +15858,59 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     });
   };
 })();
+
+/* ---- v3/handles.js ---- */
+/* MARK TO MARKET v3 — the handle rules, shared by the server (require) and the page (window.M2M_HANDLES).
+ * One file, two places: build.py --v3 inlines this exact file into the page, so the "reserved" and "pick a
+ * different handle" verdicts the page shows before the taken check are the server's own (item E1, 18 Oct).
+ */
+(function (root) {
+  "use strict";
+  const HANDLE_RE = /^[A-Za-z0-9_]{3,16}$/;
+  const RESERVED = new Set(("admin administrator root system sysop support help staff mod moderator official owner sean seanwang " +
+    "prof professor teacher instructor ta tas grader rice owls owl busi busi401 m2m marktomarket mark_to_market host broker " +
+    "anonymous anon guest player players user users null undefined none nobody everyone test tester firebase google claude " +
+    "anthropic security account accounts login signin signup register password recovery leaderboard rank ranks").split(/\s+/));
+  // substrings that are never fine, after leetspeak folding (deliberately short; the reserved list covers impersonation)
+  const BLOCK_SUB = ["fuck", "fuk", "shit", "cunt", "nigg", "nigr", "fagg", "faggot", "bitch", "whore", "slut", "rape", "rapist",
+    "nazi", "hitler", "kike", "chink", "spic", "wetback", "tranny", "retard", "dyke", "pedo", "molest", "porn", "jizz", "cum_",
+    "penis", "vagina", "dildo", "kkk", "isis", "twat", "wank", "bollock", "asshole", "arsehole", "motherf", "blowjob", "handjob",
+    "boob", "titt", "pussy", "horny", "sexy", "xxx", "killyou", "kys"];
+  // whole words only (so "class", "assets", "peacock" and "hancock" are fine)
+  const BLOCK_WORD = new Set(["ass", "arse", "cock", "dick", "tit", "tits", "cum", "sex", "piss", "fag", "hoe", "hoes", "nut", "nuts", "anal", "anus", "coon", "gook", "jap", "fat", "die", "kill"]);
+
+  function foldLeet(s) {
+    return s.toLowerCase().replace(/0/g, "o").replace(/1/g, "i").replace(/3/g, "e").replace(/4/g, "a").replace(/5/g, "s").replace(/7/g, "t").replace(/8/g, "b").replace(/9/g, "g");
+  }
+
+  /** -> null if the handle is fine, else {code, msg}: code is one of format, underscore, digits, reserved, blocked */
+  function handleVerdict(handle, opts) {
+    const h = String(handle || "");
+    if (!HANDLE_RE.test(h)) return { code: "format", msg: "Handles are 3 to 16 letters, digits or underscores." };
+    const low = h.toLowerCase();
+    if (/^_|_$/.test(h) || /__/.test(h)) return { code: "underscore", msg: "Underscores go between letters, one at a time." };
+    if (/^\d+$/.test(h)) return { code: "digits", msg: "Use at least one letter." };
+    const bare = low.replace(/_/g, "");
+    if (!(opts && opts.owner) && (RESERVED.has(low) || RESERVED.has(bare) || /^(admin|mod|staff|prof|sean)/.test(bare))) return { code: "reserved", msg: "That handle is reserved. Pick another." };
+    const folded = foldLeet(low);
+    const flat = folded.replace(/_/g, "");
+    for (const w of BLOCK_SUB) if (flat.includes(w.replace(/_/g, "")) || folded.includes(w)) return { code: "blocked", msg: "Pick a different handle." };
+    // words: split on underscores and on letter/digit boundaries
+    const words = low.split(/_|(?<=[a-z])(?=\d)|(?<=\d)(?=[a-z])/).filter(Boolean).map(foldLeet);
+    for (const w of words.concat([flat])) if (BLOCK_WORD.has(w)) return { code: "blocked", msg: "Pick a different handle." };
+    return null;
+  }
+  /** -> null if the handle is fine, else a short reason the page can show */
+  function handleProblem(handle, opts) {
+    const v = handleVerdict(handle, opts);
+    return v ? v.msg : null;
+  }
+  const handleKey = (h) => String(h).toLowerCase();
+
+  const API = { HANDLE_RE, RESERVED, foldLeet, handleVerdict, handleProblem, handleKey };
+  if (typeof module !== "undefined" && module.exports) module.exports = API;
+  else root.M2M_HANDLES = API;
+})(typeof window !== "undefined" ? window : this);
 
 /* ---- v3/avatar.js ---- */
 /* MARK TO MARKET v3 — avatar.js
@@ -15959,10 +16202,14 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   const TRAIN_KEY = "m2m.train.v1", ASKED_KEY = "m2m.v3.importAsked";
   const RICE = /^[^\s@]+@rice\.edu$/i;
   const HANDLE_RE = /^[A-Za-z0-9_]{3,16}$/;
+  const OWNER_EMAIL = "sw48@rice.edu";
+  // the server's own handle rules (functions/lib/handles.js, inlined by the build): "reserved" shows up front
+  const HR = () => window.M2M_HANDLES || null;
+  const AVAIL_LABEL = { format: "3–16 letters, digits, _", underscore: "one _ between letters", digits: "add a letter", reserved: "reserved", blocked: "pick another" };
 
   let FB = null, app = null, auth = null, db = null, fns = null;
   let readyP = null, readyRes = null;
-  let user = null, profile = null, record = null, rankUpQ = null, busyAuth = false;
+  let user = null, profile = null, record = null, rankUpQ = null, busyAuth = false, credit = null;
 
   const cfg = () => window.M2M_NET || null;
   A.available = () => !!(cfg() && cfg().firebase);
@@ -15974,6 +16221,28 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   A.avatar = () => (profile && AV.clean(profile.avatar)) || null;
   A.tier = () => (record && record.rank ? record.rank.tier : 0);
   A.record = () => record;
+  /** the course owner, signed in with his verified Rice address (the page shows the Desk; the server decides) */
+  A.isOwner = () => !!(A.verified() && String(user.email || "").toLowerCase() === OWNER_EMAIL);
+  /** for the handle check: the owner's verified sign-in may take a reserved handle (as on the server) */
+  const ownerToken = () => { const u = auth && auth.currentUser; return !!(u && !u.isAnonymous && u.emailVerified && String(u.email || "").toLowerCase() === OWNER_EMAIL); };
+  /** the Desk: claim the admin claim once, then refresh the ID token so it rides on every call */
+  A.ensureAdmin = async function () {
+    const u = auth && auth.currentUser;
+    if (!u || !A.isOwner()) return false;
+    let t = await u.getIdTokenResult();
+    if (t.claims && t.claims.admin === true) return true;
+    await call("claimAdmin", {});
+    await u.getIdToken(true);
+    t = await u.getIdTokenResult();
+    return !!(t.claims && t.claims.admin === true);
+  };
+  /** the Desk's "Send reset email": Firebase's own reset email to a student's address */
+  A.sendReset = async function (email) {
+    if (!RICE.test(email || "")) throw new Error("That isn't a Rice address.");
+    await FB.sendPasswordResetEmail(auth, email);
+  };
+  /** a handle verdict the page can show before asking whether it is taken: null or {code, msg} */
+  A.handleVerdict = (v) => (HR() ? HR().handleVerdict(v, { owner: ownerToken() }) : (HANDLE_RE.test(v) ? null : { code: "format", msg: "Handles are 3 to 16 letters, digits or underscores." }));
 
   // =================================================================== backend
   function loadScript(src) {
@@ -16003,6 +16272,14 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     await onUser(auth.currentUser);
   }
 
+  /** keyless builds: guests sign in anonymously so the server can deal to them (no account, no credit) */
+  A.anon = async function () {
+    if (!A.available()) throw new Error("This copy of the game needs its server, and it isn't connected.");
+    await A.ready();
+    if (!auth) throw new Error("Could not reach the server. Check the connection and try again.");
+    if (!auth.currentUser) await FB.signInAnonymously(auth);
+  };
+
   /** online.js shares this app (one sign-in, one database connection) */
   A.handles = async function () {
     if (!A.available()) return null;
@@ -16016,7 +16293,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if ((real ? real.uid : null) === lastUid) return;
     lastUid = real ? real.uid : null;
     user = real;
-    profile = null; record = null;
+    profile = null; record = null; credit = null;
     if (real) {
       try {
         profile = (await FB.get(FB.ref(db, "players/" + real.uid + "/profile"))).val();
@@ -16065,15 +16342,20 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       record = r.record;
       if (r.abandoned) U.toast("The question you left open counted as a miss.");
       const item = itemFrom(r.item);
+      let answered = false;
       return {
         item,
         check: async (pick) => {
-          const res = await call("submitAnswer", { qid: r.qid, choice: pick.chosen, typed: pick.typed, bet: pick.bet, timeout: pick.timeout, half: !!pick.half });
+          const res = await call("submitAnswer", { qid: r.qid, choice: pick.chosen, typed: pick.typed, bet: pick.bet, timeout: pick.timeout, half: !!pick.half, heard: !!pick.heard });
           record = res.record;
+          credit = null;
+          answered = !!res.flaggable;
           if (res.rankUp) rankUpQ = res.rankUp;
           A.refresh();
           return res;
-        }
+        },
+        // "this question looks wrong": a small link under the explanation (clue.js calls this with the why panel)
+        flag: (why) => { if (answered) why.appendChild(flagBox(r.qid)); }
       };
     },
     after: async () => {
@@ -16137,6 +16419,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       bar.append(chip);
       if (!A.verified()) bar.append(h("button.btn.ac-verify", { type: "button", dataset: { acct: "verify" } }, "Verify your Rice email"));
       bar.append(h("button.btn.btn-quiet.ac-lb", { type: "button", dataset: { acct: "leaderboard" } }, "Leaderboard"));
+      if (A.isOwner() && M2M.desk) bar.append(h("button.btn.ac-desk", { type: "button", dataset: { acct: "desk" } }, h("span.ac-desk-i", { "aria-hidden": "true", text: "▦" }), "Desk"));
     } else {
       bar.append(
         h("span.ac-pitch", { text: "Play for credit: sign in with your Rice email" }),
@@ -16243,7 +16526,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         e.preventDefault();
         const em = fe.inp.value.trim(), hd = fh.inp.value.trim();
         if (!RICE.test(em)) { say("Use your Rice email (it ends in @rice.edu).", true); fe.inp.focus(); return; }
-        if (!HANDLE_RE.test(hd)) { say("Handles are 3 to 16 letters, digits or underscores.", true); fh.inp.focus(); return; }
+        const hv = A.handleVerdict(hd);
+        if (hv) { say(hv.msg, true); fh.inp.focus(); return; }
         if (fp.inp.value.length < 8) { say("Passwords need at least 8 characters.", true); fp.inp.focus(); return; }
         if (fp.inp.value !== fp2.inp.value) { say("The two passwords don't match.", true); fp2.inp.focus(); return; }
         go.disabled = true; say("Opening your account…");
@@ -16284,8 +16568,12 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       clearTimeout(availT);
       const v = fh.inp.value.trim(), seq = ++availSeq;
       avail.textContent = ""; avail.className = "af-avail";
+      avail.removeAttribute("title");
       if (!v) return;
-      if (!HANDLE_RE.test(v)) { avail.textContent = "3–16 letters, digits, _"; avail.classList.add("bad"); return; }
+      // the server's rules first (reserved names, the prof/sean/admin/mod/staff prefixes, the filter), then "taken"
+      const verdict = A.handleVerdict(v);
+      if (verdict) { avail.textContent = AVAIL_LABEL[verdict.code] || "pick another"; avail.title = verdict.msg; avail.dataset.code = verdict.code; avail.classList.add("bad"); return; }
+      delete avail.dataset.code;
       availT = setTimeout(async () => {
         try {
           const taken = (await FB.get(FB.ref(db, "handles/" + v.toLowerCase()))).exists();
@@ -16339,7 +16627,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const hd = fh.inp.value.trim();
-      if (!HANDLE_RE.test(hd)) { say("Handles are 3 to 16 letters, digits or underscores.", true); fh.inp.focus(); return; }
+      const hv = A.handleVerdict(hd);
+      if (hv) { say(hv.msg, true); fh.inp.focus(); return; }
       go.disabled = true; say("Opening your account…");
       try {
         await call("createPlayer", { handle: hd, avatar: picker.value() });
@@ -16451,6 +16740,73 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     setTimeout(() => yes.focus(), 60);
   }
 
+  // =================================================================== "this question looks wrong"
+  function flagBox(qid) {
+    const wrap = h("div.flag-q");
+    const link = h("button.flag-link", { type: "button" }, h("span", { "aria-hidden": "true", text: "⚑ " }), "Flag this question");
+    wrap.appendChild(link);
+    link.addEventListener("click", () => {
+      link.hidden = true;
+      const ta = h("textarea.af-in.flag-note#flag-note", { maxlength: "280", rows: "3", placeholder: "What looks wrong? A wrong key, a typo, a number that doesn't add up…" });
+      const cnt = h("span.flag-cnt", { text: "0 / 280" });
+      const send = h("button.btn.btn-primary.flag-send", { type: "button" }, "Send to Prof. Wang");
+      const cancel = h("button.btn.btn-quiet.flag-cancel", { type: "button" }, "Cancel");
+      const msg = h("p.af-msg.flag-msg", { role: "status", "aria-live": "polite" });
+      const box = h("div.flag-box", null, h("label.af-label", { for: "flag-note" }, h("span", { text: "This question looks wrong" }), cnt), ta,
+        h("p.af-hint", { text: "Optional note, up to 280 characters. Prof. Wang sees it with the question you got." }), h("div.row-actions", null, send, cancel), msg);
+      ta.addEventListener("input", () => { cnt.textContent = ta.value.length + " / 280"; });
+      ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); send.click(); } e.stopPropagation(); });
+      cancel.addEventListener("click", () => { box.remove(); link.hidden = false; try { link.focus({ preventScroll: true }); } catch (x) { link.focus(); } });
+      send.addEventListener("click", async () => {
+        send.disabled = true; cancel.disabled = true; msg.classList.remove("bad"); msg.textContent = "Sending…";
+        try {
+          await call("flagQuestion", { qid, note: ta.value.slice(0, 280) });
+          U.clear(wrap).appendChild(h("p.flag-sent", { role: "status" }, h("span", { "aria-hidden": "true", text: "✓ " }), "Sent to Prof. Wang."));
+          const c = document.querySelector(".card .cont");
+          if (c) try { c.focus({ preventScroll: true }); } catch (x) { c.focus(); }
+        } catch (err) { msg.textContent = (err && err.message) || "Could not send it."; msg.classList.add("bad"); send.disabled = false; cancel.disabled = false; }
+      });
+      wrap.appendChild(box);
+      setTimeout(() => { try { ta.focus({ preventScroll: true }); } catch (x) { ta.focus(); } }, 30);
+    });
+    return wrap;
+  }
+
+  // =================================================================== the credit card on the profile
+  const dLabel = (d) => { const [y, m, dd] = d.split("-").map(Number); return new Date(Date.UTC(y, m - 1, dd, 12)).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }); };
+  function creditCard() {
+    const sec = h("section.tr-panel.pf-credit", { "aria-labelledby": "pf-cr-h" });
+    const c = credit;
+    const cfg = c && c.cfg;
+    const win = !cfg ? "" : !cfg.start && !cfg.end ? "counting now" : (cfg.start ? dLabel(cfg.start) : "now") + " to " + (cfg.end ? dLabel(cfg.end) : "the end of term");
+    sec.appendChild(h("h3#pf-cr-h.tr-h", null, "Credit", h("span.tr-h-note", { text: cfg ? win + " · " + cfg.lectures.map((L) => (D().CATS[L] ? D().CATS[L].tag : L)).join(", ") : "practice that counts" })));
+    if (!c) { sec.appendChild(h("p.af-note", { text: "Loading…" })); return sec; }
+    if (c.error) { sec.appendChild(h("p.af-note", { text: "Could not load your credit. Try again later." })); return sec; }
+    if (!c.verified) { sec.appendChild(h("p.af-note", { text: "Verify your Rice email to start counting. Only answers the server checks count: Training while signed in." })); return sec; }
+    const x = c.credit;
+    const meter = (k, label, v, sub) => h("div.cr-m", { dataset: { k } }, h("span.cr-l", { text: label }), h("b.cr-v", { text: Math.round(v * 100) + "%" }),
+      h("span.cr-bar", { "aria-hidden": "true" }, h("i", { style: { width: Math.round(v * 100) + "%" } })), h("span.cr-s", { text: sub }));
+    const gateLeft = Math.max(0, cfg.days - x.days);
+    sec.append(
+      h("div.cr-top", null,
+        h("div.cr-pts", null, h("span.cr-l", { text: "Points so far" }), h("b.cr-big", { text: x.points.toFixed(2) }), h("span.cr-s", { text: "of " + cfg.cap + (x.gate ? "" : " · counts once you practice on " + cfg.days + " days") })),
+        h("div.cr-grid", null,
+          meter("c", "Coverage", x.coverage, "different questions, up to " + cfg.N + " a lecture"),
+          meter("m", "Mastery", x.mastery, "rating above 50%, full at " + Math.round(cfg.bar * 100) + "%"),
+          meter("s", "Speed", x.speed, "quick, right first tries, up to " + cfg.N + " a lecture"),
+          h("div.cr-m.cr-days" + (x.gate ? ".met" : ""), { dataset: { k: "d" } }, h("span.cr-l", { text: "Days" }), h("b.cr-v", { text: x.days + " of " + cfg.days }),
+            h("span.cr-dots", { "aria-hidden": "true" }, Array.from({ length: Math.min(cfg.days, 14) }, (_, i) => h("i" + (i < x.days ? ".on" : "")))),
+            h("span.cr-s", { text: x.gate ? "gate met" : gateLeft + " more day" + (gateLeft === 1 ? "" : "s") + " to unlock points" })))),
+      h("table.cr-t", null,
+        h("thead", null, h("tr", null, h("th", { text: "Lecture" }), h("th", { text: "Questions" }), h("th", { text: "Rating" }), h("th", { text: "Mastery" }), h("th", { text: "Speed" }))),
+        h("tbody", null, cfg.lectures.map((L) => {
+          const y = x.lectures[L] || { distinct: 0, rating: 0.5, mastery: 0, speed: 0 };
+          return h("tr", null, h("th", { text: D().CATS[L] ? D().CATS[L].tag : L }), h("td", { text: Math.min(y.distinct, cfg.N) + " / " + cfg.N }), h("td", { text: U.pct(y.rating) }), h("td", { text: U.pct(y.mastery) }), h("td", { text: U.pct(y.speed) }));
+        }))),
+      h("p.af-note.cr-note", { text: "Points = " + cfg.cap + " × (" + cfg.w[0] + " coverage + " + cfg.w[1] + " mastery + " + cfg.w[2] + " speed). Only answers the server checks count: Training while signed in." }));
+    return sec;
+  }
+
   // =================================================================== profile
   A.openProfile = async function () {
     if (!A.signedIn()) { A.open("signin"); return; }
@@ -16460,6 +16816,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     M2M.panels.show(false);
     renderProfile();
     try { record = (await call("getRecord", {})).record; renderProfile(); A.refresh(); } catch (e) { /* show what we have */ }
+    try { credit = await call("myCredit", {}); renderProfile(); } catch (e) { credit = { error: true }; renderProfile(); }
   };
 
   function rankBlock(rk, big) {
@@ -16501,6 +16858,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     root.appendChild(h("div.tr-stats.pf-stats", { role: "group", "aria-label": "Totals" },
       stat("Answered", String(r.answered)), stat("Right", r.answered ? U.pct(r.right / r.answered) : "—"),
       stat("Days practiced", String((r.days || []).length)), stat("Sessions", String(r.sessions || 0))));
+    // credit (map §4): what counts, so far
+    root.appendChild(creditCard());
     // the ladder
     root.appendChild(h("section.tr-panel", { "aria-labelledby": "pf-rank-h" }, h("h3#pf-rank-h.tr-h", null, "Rank", h("span.tr-h-note", { text: "your rating across lectures, and how many lectures it covers" })), rankBlock(rk, true)));
     // heat map
@@ -16704,6 +17063,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       if (!b) return;
       const a = b.dataset.acct;
       if (a === "profile") A.openProfile();
+      else if (a === "desk") { if (M2M.desk) M2M.desk.open(); }
       else if (a === "leaderboard") A.openBoard();
       else if (a === "verify") A.openVerify();
       else A.open(a);
@@ -16723,8 +17083,469 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     google: (cred) => A.google(cred).then(() => true, (e) => e.message),
     state: () => ({ signedIn: A.signedIn(), verified: A.verified(), email: A.email(), handle: A.handle(), avatar: A.avatar(), uid: user ? user.uid : null, tier: A.tier(), record }),
     ready: () => A.ready(),
-    remoteOn: () => !!(M2M.training && M2M.training.remote)
+    remoteOn: () => !!(M2M.training && M2M.training.remote),
+    claims: async () => { const u = auth && auth.currentUser; return u ? (await u.getIdTokenResult()).claims : null; }
   };
+})();
+
+/* ---- v3/desk.js ---- */
+/* MARK TO MARKET v3 — desk.js: Sean's Desk (the dashboard), inside the v3 game, for the owner only.
+ *
+ * The button shows only when the signed-in, verified account is the owner's (sw48@rice.edu); the server enforces
+ * everything: the first open calls claimAdmin (his verified Rice sign-in gets the custom claim admin), refreshes
+ * the ID token, and every tab reads an admin callable that aggregates on the server (deskClass, deskRoster,
+ * deskCredit, deskFlags). Nothing here reads private/ or the answer logs directly.
+ *   Class   heat map by lecture, answers per day (30 days), totals
+ *   Roster  one row per player: sort, search, reset email / reset link, accommodation
+ *   Credit  the settings editor, the report, Export CSV
+ *   Flags   "this question looks wrong", grouped by question, with a Resolved toggle; the too-fast list
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h, AV = M2M.avatar;
+  const D = () => M2M.data;
+  const A = () => M2M.acct;
+  const K = (M2M.desk = {});
+  const OWNER = "sw48@rice.edu";
+  const TABS = [["class", "Class"], ["roster", "Roster"], ["credit", "Credit"], ["flags", "Flags"]];
+  const LETTERS = ["A", "B", "C", "D"];
+  const CSV_COLS = ["netid", "email", "handle", "verified", "coverage", "mastery", "speed", "days", "gate_met", "credit_points", "too_fast", "multiplier", "answers", "last_active"];
+  let tab = "class", data = {}, sorts = { roster: { k: "handle", d: 1 }, credit: { k: "credit_points", d: -1 } }, query = "", flagView = "open";
+
+  K.isOwner = () => !!(A() && A().verified() && A().email().toLowerCase() === OWNER);
+  const call = (name, d) => A()._call(name, d);
+
+  // ---------------------------------------------------------------- formatting
+  const tz = { timeZone: "America/Chicago" };
+  const fmtDay = (ms) => (ms ? new Date(ms).toLocaleDateString("en-US", Object.assign({ month: "short", day: "numeric" }, tz)) : "—");
+  const fmtWhen = (ms) => (ms ? new Date(ms).toLocaleString("en-US", Object.assign({ month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }, tz)) : "—");
+  const dayLabel = (d) => { const [y, m, dd] = d.split("-").map(Number); return new Date(Date.UTC(y, m - 1, dd, 12)).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }); };
+  const pc = (x) => (x == null ? "—" : Math.round(x * 100) + "%");
+  const n2 = (x) => (x == null ? "—" : Number(x).toFixed(2));
+  const sec = (ms) => (ms == null ? "—" : (ms / 1000).toFixed(ms < 10000 ? 1 : 0) + " s");
+  const tag = (L) => (D().CATS[L] ? D().CATS[L].tag : L);
+  const toneOf = (v) => (v == null ? "none" : v >= 0.75 ? "up" : v >= 0.55 ? "mid" : "dn");
+
+  // ---------------------------------------------------------------- open / frame
+  K.open = async function (which) {
+    if (!K.isOwner()) { U.toast("The Desk is for Prof. Wang."); return; }
+    tab = which || tab;
+    M2M.screens.hideTitle();
+    M2M.screens.show("desk");
+    M2M.topbar.show(false);
+    M2M.panels.show(false);
+    frame("Opening the Desk…");
+    try {
+      const ok = await A().ensureAdmin();
+      if (!ok) throw new Error("The server didn't grant Desk access. Sign out and in again, then retry.");
+    } catch (e) {
+      frame((e && e.message) || "Could not open the Desk.", true);
+      return;
+    }
+    data = {};
+    show(tab);
+  };
+
+  function root() { return document.querySelector("#scr-desk .dk-wrap"); }
+
+  function frame(msg, bad) {
+    const r = root();
+    U.clear(r);
+    const tabs = h("div.dk-tabs", { role: "tablist", "aria-label": "Desk" },
+      TABS.map(([k, t]) => h("button.dk-tab", { type: "button", role: "tab", id: "dk-tab-" + k, "aria-controls": "dk-panel", "aria-selected": tab === k ? "true" : "false", dataset: { tab: k } }, t,
+        k === "flags" && data.cls && data.cls.totals.flagsOpen ? h("span.dk-badge", { text: String(data.cls.totals.flagsOpen) }) : null)));
+    tabs.addEventListener("click", (e) => { const b = e.target.closest("[data-tab]"); if (b) show(b.dataset.tab); });
+    tabs.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const i = TABS.findIndex(([k]) => k === tab), j = (i + (e.key === "ArrowRight" ? 1 : TABS.length - 1)) % TABS.length;
+      e.preventDefault(); show(TABS[j][0]); const b = document.getElementById("dk-tab-" + TABS[j][0]); if (b) b.focus();
+    });
+    const refresh = h("button.btn.btn-quiet.dk-refresh", { type: "button" }, "Refresh");
+    refresh.addEventListener("click", () => { delete data[tab === "class" ? "cls" : tab]; show(tab); });
+    const back = h("button.btn.btn-quiet", { type: "button" }, "Back to the title");
+    back.addEventListener("click", () => M2M.app.title());
+    r.append(
+      h("header.dk-head", null,
+        h("div.dk-id", null, h("p.eyebrow", null, "// sean's desk · only you see this"), h("h2.scr-h#dk-h", { text: "The Desk" })),
+        h("div.dk-acts", null, refresh, back)),
+      tabs,
+      h("section.dk-panel#dk-panel", { role: "tabpanel", "aria-labelledby": "dk-tab-" + tab }, msg ? h("p.dk-msg" + (bad ? ".bad" : ""), { role: "status", text: msg }) : null));
+  }
+  const panel = () => document.getElementById("dk-panel");
+
+  async function show(k) {
+    tab = k;
+    const key = k === "class" ? "cls" : k;
+    frame(data[key] ? null : "Loading…");
+    if (!data[key]) {
+      try {
+        data[key] = await call({ cls: "deskClass", roster: "deskRoster", credit: "deskCredit", flags: "deskFlags" }[key], {});
+        if (key !== "cls" && !data.cls) call("deskClass", {}).then((c) => { data.cls = c; badge(); }, () => {});
+      } catch (e) {
+        if (tab === k) frame((e && e.message) || "Could not load this tab.", true);
+        return;
+      }
+      if (tab !== k) return;
+      frame(null);
+    }
+    const p = panel();
+    U.clear(p);
+    ({ class: renderClass, roster: renderRoster, credit: renderCredit, flags: renderFlags })[k](p);
+  }
+  function badge() {
+    const b = document.getElementById("dk-tab-flags");
+    if (!b || !data.cls) return;
+    const n = data.cls.totals.flagsOpen;
+    let s = b.querySelector(".dk-badge");
+    if (n && !s) b.appendChild(h("span.dk-badge", { text: String(n) }));
+    else if (s && !n) s.remove();
+    else if (s) s.textContent = String(n);
+  }
+
+  // ---------------------------------------------------------------- 1 · Class
+  function renderClass(p) {
+    const c = data.cls, T = c.totals;
+    const tile = (label, val, sub) => h("div.dk-tile", null, h("span.dk-tl", { text: label }), h("b.dk-tv", { text: val }), sub ? h("span.dk-ts", { text: sub }) : null);
+    p.append(h("div.dk-tiles", { role: "group", "aria-label": "Totals" },
+      tile("Players", String(T.players), T.verified + " verified"),
+      tile("Answers checked", U.int(T.answers), T.today + " today"),
+      tile("Active, last 7 days", String(T.active7), T.players ? pc(T.active7 / T.players) + " of players" : ""),
+      tile("On the leaderboard", String(T.onBoard), "opted in"),
+      tile("Open flags", String(T.flagsOpen), T.flagsOpen ? "see Flags" : "none")));
+    // heat map by lecture
+    const rows = c.lectures.map((x) => h("tr.dk-hrow.t-" + toneOf(x.median), { dataset: { cat: x.L } },
+      h("th", { scope: "row" }, h("span.tr-tag", { text: tag(x.L) }), h("span.dk-hname", { text: D().CATS[x.L] ? D().CATS[x.L].name : "" })),
+      h("td.dk-hbar", null, h("span.dk-hb", { "aria-hidden": "true" },
+        h("i.med", { style: { width: (x.median == null ? 0 : Math.round(x.median * 100)) + "%" } }),
+        x.mean == null ? null : h("i.mean", { style: { left: Math.round(x.mean * 100) + "%" } }))),
+      h("td.num.dk-med", { text: pc(x.median) }), h("td.num", { text: pc(x.mean) }), h("td.num", { text: String(x.players) }), h("td.num", { text: U.int(x.answers) })));
+    p.append(h("section.tr-panel.dk-sec", { "aria-labelledby": "dk-heat-h" },
+      h("h3#dk-heat-h.tr-h", null, "By lecture", h("span.tr-h-note", { text: "σ(θ), expected share right on a middle question · verified players with " + c.minN + "+ answers in that lecture" })),
+      h("div.dk-scroll", null, h("table.dk-t.dk-heat", null,
+        h("thead", null, h("tr", null, h("th", { scope: "col", text: "Lecture" }), h("th", { scope: "col", text: "Median (bar) · mean (tick)" }), h("th.num", { scope: "col", text: "Median" }), h("th.num", { scope: "col", text: "Mean" }), h("th.num", { scope: "col", text: "Players" }), h("th.num", { scope: "col", text: "Answers" }))),
+        h("tbody", null, rows)))));
+    // activity
+    const max = Math.max(1, ...c.days.map((d) => d.answers));
+    const bars = c.days.map((d, i) => h("li.dk-day" + (d.answers ? "" : ".zero"), { title: dayLabel(d.day) + ": " + d.answers + " answer" + (d.answers === 1 ? "" : "s") },
+      h("i", { style: { height: Math.max(d.answers ? 3 : 1, Math.round(d.answers / max * 100)) + "%" } }),
+      i === c.days.length - 1 || (i % 7 === 0 && i < c.days.length - 4) ? h("span.dk-dl", { text: dayLabel(d.day) }) : null));
+    p.append(h("section.tr-panel.dk-sec", { "aria-labelledby": "dk-act-h" },
+      h("h3#dk-act-h.tr-h", null, "Activity", h("span.tr-h-note", { text: "server-checked answers per day, Houston time, last 30 days · peak " + max })),
+      h("ol.dk-days", { "aria-label": "Answers per day" }, bars)));
+  }
+
+  // ---------------------------------------------------------------- sortable tables
+  function sortTable(name, cols, rows, onRow) {
+    const s = sorts[name];
+    const col = cols.find((c) => c.k === s.k) || cols[0];
+    const val = (r) => (col.sort ? col.sort(r) : r[col.k]);
+    const out = rows.slice().sort((a, b) => {
+      const x = val(a), y = val(b);
+      if (x == null && y == null) return 0;
+      if (x == null) return 1;
+      if (y == null) return -1;
+      return (typeof x === "string" ? x.localeCompare(y) : x - y) * s.d;
+    });
+    const head = h("tr", null, cols.map((c) => {
+      const on = c.k === s.k;
+      const b = h("button.dk-sort", { type: "button", dataset: { k: c.k } }, c.label, h("i", { "aria-hidden": "true", text: on ? (s.d > 0 ? " ▲" : " ▼") : "" }));
+      return h("th" + (c.num ? ".num" : ""), { scope: "col", "aria-sort": on ? (s.d > 0 ? "ascending" : "descending") : "none", title: c.tip || null }, c.nosort ? c.label : b);
+    }));
+    const t = h("table.dk-t.dk-" + name, null, h("thead", null, head), h("tbody", null, out.map((r) => {
+      const tr = h("tr", { dataset: { uid: r.uid || "" } }, cols.map((c) => h("td" + (c.num ? ".num" : "") + (c.cls ? "." + c.cls : ""), null, c.cell ? c.cell(r) : r[c.k] == null ? "—" : String(r[c.k]))));
+      if (onRow) onRow(tr, r);
+      return tr;
+    })));
+    head.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-k]");
+      if (!b) return;
+      if (s.k === b.dataset.k) s.d = -s.d; else { s.k = b.dataset.k; const c = cols.find((x) => x.k === s.k); s.d = c && c.num ? -1 : 1; }
+      show(tab);
+      const nb = panel().querySelector('.dk-sort[data-k="' + s.k + '"]');
+      if (nb) nb.focus();
+    });
+    return t;
+  }
+
+  // ---------------------------------------------------------------- 2 · Roster
+  function dots(r, released, lect, N) {
+    const set = new Set(lect);
+    return h("span.dk-dots", { "aria-label": released.map((L) => tag(L) + " " + (r.cov[L] || 0) + " of " + N).join(", ") },
+      released.map((L) => {
+        const f = Math.min(1, (r.cov[L] || 0) / N);
+        return h("i.dk-dot" + (set.has(L) ? ".cr" : "") + (f >= 1 ? ".full" : f > 0 ? ".part" : ""), { title: tag(L) + ": " + (r.cov[L] || 0) + " of " + N + " questions" + (set.has(L) ? " (credit lecture)" : ""), style: { "--f": f } });
+      }));
+  }
+
+  function renderRoster(p) {
+    const R = data.roster;
+    const search = h("input.af-in.dk-search#dk-search", { type: "search", placeholder: "Search handle, email or NetID", value: query, autocomplete: "off", spellcheck: "false", "aria-label": "Search the roster" });
+    const count = h("span.dk-count", { "aria-live": "polite" });
+    const tableBox = h("div.dk-scroll.dk-roster-box");
+    const cols = [
+      { k: "handle", label: "Player", sort: (r) => r.handle.toLowerCase(), cell: (r) => h("span.dk-pl", null, AV.el(AV.clean(r.avatar), { size: 28, handle: r.handle, tier: r.tier }), h("b", { text: r.handle })) },
+      { k: "email", label: "Rice email", cell: (r) => h("span.dk-mono.dk-email", { title: r.email || "", text: r.email || "—" }) },
+      { k: "netid", label: "NetID", cell: (r) => h("span.dk-mono", { text: r.netid || "—" }) },
+      { k: "verified", label: "Verified", sort: (r) => (r.verified ? 1 : 0), cell: (r) => h("span.dk-yn." + (r.verified ? "y" : "n"), { text: r.verified ? "yes" : "no" }) },
+      { k: "tier", label: "Rank", cell: (r) => h("span.rk-name.dk-rank", { dataset: { t: String(r.tier) }, text: r.rank }) },
+      { k: "answers", label: "Answers", num: true, tip: "server-checked answers, all lectures" },
+      { k: "days", label: "Days", num: true, tip: "Houston days with a server-checked answer" },
+      { k: "last", label: "Last active", num: true, cell: (r) => h("span", { title: fmtWhen(r.last), text: fmtDay(r.last) }) },
+      { k: "cov", label: "Coverage", num: true, tip: "questions answered in the window, per lecture (credit lectures ringed)", sort: (r) => R.released.reduce((a, L) => a + Math.min(1, (r.cov[L] || 0) / R.N) * (R.lectures.includes(L) ? 100 : 1), 0), cell: (r) => dots(r, R.released, R.lectures, R.N) },
+      { k: "c", label: "C", num: true, tip: "coverage", cell: (r) => pc(r.c) },
+      { k: "m", label: "M", num: true, tip: "mastery", cell: (r) => pc(r.m) },
+      { k: "s", label: "S", num: true, tip: "speed", cell: (r) => pc(r.s) },
+      { k: "points", label: "Points", num: true, cell: (r) => h("b.dk-pts" + (r.gate ? "" : ".off"), { title: r.gate ? "" : "day gate not met (" + r.gdays + " days)", text: n2(r.points) }) },
+      { k: "tooFast", label: "Too fast", num: true, cell: (r) => (r.tooFast ? h("span.dk-fast", { text: String(r.tooFast) }) : "0") },
+      { k: "mult", label: "Time", num: true, tip: "accommodation multiplier", cell: (r) => multSelect(r) },
+      { k: "act", label: "Password reset", nosort: true, cell: (r) => resetCell(r) }
+    ];
+    const draw = () => {
+      const q = query.trim().toLowerCase();
+      const rows = R.rows.filter((r) => !q || [r.handle, r.email, r.netid].some((x) => String(x || "").toLowerCase().includes(q)));
+      count.textContent = rows.length + " of " + R.rows.length + " player" + (R.rows.length === 1 ? "" : "s");
+      U.clear(tableBox).appendChild(rows.length ? sortTable("roster", cols, rows) : h("p.af-note", { text: R.rows.length ? "No player matches." : "No players yet." }));
+    };
+    search.addEventListener("input", () => { query = search.value; draw(); });
+    p.append(h("div.dk-bar", null, search, count,
+      h("span.dk-legend", null, h("i.dk-dot.cr.part", { style: { "--f": 0.5 } }), " credit lecture · ", h("i.dk-dot.full"), " " + R.N + "+ questions in the window")));
+    p.appendChild(tableBox);
+    draw();
+  }
+
+  function multSelect(r) {
+    const sel = h("select.dk-mult", { "aria-label": "Accommodation for " + r.handle, dataset: { uid: r.uid } },
+      (data.roster.mults || [1, 1.25, 1.5, 2]).map((m) => h("option", { value: String(m), selected: m === r.mult ? true : null }, m + "×")));
+    sel.addEventListener("change", async () => {
+      const m = Number(sel.value), was = r.mult;
+      sel.disabled = true;
+      try {
+        await call("setAccommodation", { uid: r.uid, mult: m });
+        r.mult = m;
+        U.toast(r.handle + ": " + m + "× time");
+        delete data.credit;
+        // speed (and points) move with it: reload this tab's numbers
+        data.roster = await call("deskRoster", {});
+        if (tab === "roster") show("roster");
+      } catch (e) { sel.value = String(was); U.toast((e && e.message) || "Could not change it."); }
+      sel.disabled = false;
+    });
+    return sel;
+  }
+
+  function resetCell(r) {
+    const box = h("span.dk-reset");
+    if (!r.email) { box.textContent = "—"; return box; }
+    const send = h("button.btn.btn-quiet.dk-mini", { type: "button", title: "Send reset email: Firebase emails " + r.email + " a link to set a new password", "aria-label": "Send reset email to " + r.handle }, "Email");
+    const copy = h("button.btn.btn-quiet.dk-mini", { type: "button", title: "Copy reset link: a one-time link you can send yourself", "aria-label": "Copy reset link for " + r.handle }, "Copy link");
+    send.addEventListener("click", async () => {
+      send.disabled = true;
+      try { await A().sendReset(r.email); U.toast("Reset email sent to " + r.email + "."); }
+      catch (e) { U.toast((e && e.message) || "Could not send it."); }
+      send.disabled = false;
+    });
+    copy.addEventListener("click", async () => {
+      copy.disabled = true;
+      try {
+        const res = await call("adminResetPassword", { handle: r.handle });
+        K.lastLink = res.link;
+        const ok = await U.copy(res.link, null);
+        U.toast(ok ? "Reset link for " + r.handle + " copied." : "Could not copy. The link: " + res.link);
+      } catch (e) { U.toast((e && e.message) || "Could not make a link."); }
+      copy.disabled = false;
+    });
+    box.append(send, copy);
+    return box;
+  }
+
+  // ---------------------------------------------------------------- 3 · Credit
+  function renderCredit(p) {
+    const C = data.credit, cfg = C.cfg;
+    p.appendChild(settingsForm(C));
+    const S = C.summary;
+    p.append(h("div.dk-tiles.dk-tiles-sm", { role: "group", "aria-label": "Credit summary" },
+      h("div.dk-tile", null, h("span.dk-tl", { text: "Verified players" }), h("b.dk-tv", { text: String(S.players) })),
+      h("div.dk-tile", null, h("span.dk-tl", { text: "Day gate met" }), h("b.dk-tv", { text: String(S.gateMet) }), h("span.dk-ts", { text: cfg.days + "+ days" })),
+      h("div.dk-tile", null, h("span.dk-tl", { text: "Mean points" }), h("b.dk-tv", { text: n2(S.mean) }), h("span.dk-ts", { text: "of " + n2(S.cap) }))));
+    const exp = h("button.btn.dk-csv", { type: "button" }, "Export CSV");
+    exp.addEventListener("click", () => exportCsv(C));
+    const cols = [
+      { k: "handle", label: "Player", sort: (r) => r.handle.toLowerCase(), cell: (r) => h("b", { text: r.handle }) },
+      { k: "netid", label: "NetID", cell: (r) => h("span.dk-mono", { text: r.netid }) },
+      { k: "coverage", label: "Coverage", num: true, cell: (r) => meter(r.coverage) },
+      { k: "mastery", label: "Mastery", num: true, cell: (r) => meter(r.mastery) },
+      { k: "speed", label: "Speed", num: true, cell: (r) => meter(r.speed) },
+      { k: "days", label: "Days", num: true, cell: (r) => h("span" + (r.gate_met ? ".dk-ok" : ".dk-no"), { text: r.days + " / " + cfg.days }) },
+      { k: "credit_points", label: "Points", num: true, cell: (r) => h("b.dk-pts" + (r.gate_met ? "" : ".off"), { title: r.gate_met ? "" : "before the gate: " + n2(r.before_gate), text: n2(r.credit_points) }) },
+      { k: "too_fast", label: "Too fast", num: true, cell: (r) => (r.too_fast ? h("span.dk-fast", { text: String(r.too_fast) }) : "0") },
+      { k: "multiplier", label: "Time", num: true, cell: (r) => r.multiplier + "×" },
+      { k: "answers", label: "Answers", num: true, tip: "answers counted: credit lectures, inside the window" },
+      { k: "last_active", label: "Last active", cell: (r) => r.last_active || "—" }
+    ];
+    p.append(h("section.tr-panel.dk-sec", { "aria-labelledby": "dk-rep-h" },
+      h("div.dk-sec-head", null, h("h3#dk-rep-h.tr-h", null, "The report", h("span.tr-h-note", { text: windowText(cfg) + " · " + cfg.lectures.map(tag).join(", ") })), exp),
+      C.rows.length ? h("div.dk-scroll", null, sortTable("credit", cols, C.rows)) : h("p.af-note", { text: "No verified players yet." })));
+  }
+  function meter(v) {
+    return h("span.dk-meter", { title: pc(v) }, h("span.dk-mb", { "aria-hidden": "true" }, h("i", { style: { width: Math.round((v || 0) * 100) + "%" } })), h("span", { text: pc(v) }));
+  }
+  function windowText(cfg) {
+    if (!cfg.start && !cfg.end) return "no window set: every answer counts";
+    return (cfg.start ? dayLabel(cfg.start) : "the start") + " to " + (cfg.end ? dayLabel(cfg.end) : "now") + " (Houston dates)";
+  }
+
+  function settingsForm(C) {
+    const cfg = C.cfg;
+    const f = h("form.tr-panel.dk-sec.dk-cfg", { novalidate: true, "aria-labelledby": "dk-cfg-h" });
+    const inp = (id, label, attrs, hint) => {
+      const el = h("input.af-in#" + id, Object.assign({ autocomplete: "off" }, attrs));
+      return { el, wrap: h("div.af.dk-f", null, h("label.af-label", { for: id, text: label }), el, hint ? h("p.af-hint", { text: hint }) : null) };
+    };
+    const start = inp("dk-start", "Window opens", { type: "date", value: cfg.start || "" }, "Houston date. Empty: from the first answer.");
+    const end = inp("dk-end", "Window closes", { type: "date", value: cfg.end || "" }, "Last day that counts. Empty: no end.");
+    const N = inp("dk-n", "N, questions per lecture", { type: "number", min: "1", max: "200", step: "1", value: String(cfg.N) }, "Coverage and speed both count up to N.");
+    const bar = inp("dk-bar", "Mastery bar", { type: "number", min: "51", max: "99", step: "1", value: String(Math.round(cfg.bar * 100)) }, "Percent: 50% scores 0, the bar scores full.");
+    const w0 = inp("dk-w0", "Coverage weight", { type: "number", min: "0", max: "1", step: "0.01", value: String(cfg.w[0]) });
+    const w1 = inp("dk-w1", "Mastery weight", { type: "number", min: "0", max: "1", step: "0.01", value: String(cfg.w[1]) });
+    const w2 = inp("dk-w2", "Speed weight", { type: "number", min: "0", max: "1", step: "0.01", value: String(cfg.w[2]) });
+    const cap = inp("dk-cap", "Cap, points", { type: "number", min: "0", max: "100", step: "0.25", value: String(cfg.cap) });
+    const days = inp("dk-days", "Day gate", { type: "number", min: "0", max: "120", step: "1", value: String(cfg.days) }, "Days with a credit answer; fewer means 0 points.");
+    const sum = h("span.dk-wsum", { "aria-live": "polite" });
+    const upd = () => { const s = [w0, w1, w2].reduce((a, x) => a + (Number(x.el.value) || 0), 0); sum.textContent = "sum " + s.toFixed(2); sum.classList.toggle("bad", Math.abs(s - 1) > 0.0015); };
+    [w0, w1, w2].forEach((x) => x.el.addEventListener("input", upd));
+    upd();
+    let picked = new Set(cfg.lectures);
+    const chips = h("div.dk-chips", { role: "group", "aria-label": "Credit lectures" });
+    const drawChips = () => {
+      U.clear(chips);
+      for (const L of C.released) {
+        const b = h("button.dk-chip", { type: "button", "aria-pressed": picked.has(L) ? "true" : "false", dataset: { cat: L } }, tag(L));
+        b.addEventListener("click", () => { if (picked.has(L)) picked.delete(L); else picked.add(L); drawChips(); });
+        chips.appendChild(b);
+      }
+      const dflt = h("button.btn.btn-quiet.dk-mini", { type: "button" }, "Default: L13 and later");
+      dflt.addEventListener("click", () => { picked = new Set(cfg.defaultLectures); drawChips(); });
+      chips.appendChild(dflt);
+    };
+    drawChips();
+    const msg = h("p.af-msg", { role: "status", "aria-live": "polite" });
+    const save = h("button.btn.btn-primary", { type: "submit" }, "Save settings");
+    f.append(
+      h("h3#dk-cfg-h.tr-h", null, "Settings", h("span.tr-h-note", { text: "points = cap × (coverage weight · C + mastery weight · M + speed weight · S), once the day gate is met" })),
+      h("div.dk-cfg-grid", null, start.wrap, end.wrap, N.wrap, bar.wrap, days.wrap, cap.wrap),
+      h("div.af.dk-f.dk-lect", null, h("p.af-label", { text: "Credit lectures" }), chips,
+        h("p.af-hint", { text: cfg.lecturesDefault ? "Now the default: lectures released later join on their own." : "A custom list: lectures released later stay out until you add them." })),
+      h("div.dk-cfg-grid.dk-w", null, w0.wrap, w1.wrap, w2.wrap, h("div.dk-f.dk-sumbox", null, sum)),
+      h("div.row-actions", null, save, msg));
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const lect = C.released.filter((L) => picked.has(L));
+      if (!lect.length) { msg.textContent = "Pick at least one credit lecture."; msg.classList.add("bad"); return; }
+      const isDefault = lect.join() === (cfg.defaultLectures || []).join();
+      const body = { start: start.el.value || null, end: end.el.value || null, lectures: isDefault ? null : lect, N: Number(N.el.value), bar: Number(bar.el.value) / 100,
+        w: [Number(w0.el.value), Number(w1.el.value), Number(w2.el.value)], cap: Number(cap.el.value), days: Number(days.el.value) };
+      save.disabled = true; msg.classList.remove("bad"); msg.textContent = "Saving…";
+      try {
+        await call("setCreditConfig", body);
+        data.credit = await call("deskCredit", {});
+        delete data.roster;
+        show("credit");
+        U.toast("Credit settings saved.");
+      } catch (err) { msg.textContent = (err && err.message) || "Could not save."; msg.classList.add("bad"); save.disabled = false; }
+    });
+    return f;
+  }
+
+  function csvCell(v) {
+    const s = v == null ? "" : String(v);
+    return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+  K.csv = function (C) {
+    const lines = [CSV_COLS.join(",")];
+    const rows = C.rows.slice().sort((a, b) => String(a.netid).localeCompare(String(b.netid)));
+    for (const r of rows) lines.push(CSV_COLS.map((c) => csvCell(r[c])).join(","));
+    return lines.join("\r\n") + "\r\n";
+  };
+  function exportCsv(C) {
+    const today = new Intl.DateTimeFormat("en-CA", Object.assign({ year: "numeric", month: "2-digit", day: "2-digit" }, tz)).format(new Date());
+    const blob = new Blob([K.csv(C)], { type: "text/csv;charset=utf-8" });
+    const a = h("a", { href: URL.createObjectURL(blob), download: "m2m-credit-" + today + ".csv" });
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    U.toast("CSV saved: " + C.rows.length + " verified player" + (C.rows.length === 1 ? "" : "s") + ".");
+  }
+
+  // ---------------------------------------------------------------- 4 · Flags
+  function questionBlock(s) {
+    const box = h("div.dk-q");
+    if (!s) { box.appendChild(h("p.af-note", { text: "No snapshot of this question." })); return box; }
+    box.appendChild(h("p.dk-stem", { text: s.stem }));
+    try {
+      if (s.exhibit && M2M.clue.renderExhibit) box.appendChild(M2M.clue.renderExhibit(s.exhibit));
+      if (s.memo && M2M.clue.renderMemo) box.appendChild(M2M.clue.renderMemo(s.memo));
+    } catch (e) { /* the text is enough */ }
+    box.appendChild(h("ol.dk-opts", null, (s.options || []).map((t, i) => h("li" + (i === s.answer ? ".key" : ""), null,
+      h("b.dk-let", { text: LETTERS[i] }), h("span", { text: t }), i === s.answer ? h("span.dk-keytag", { text: "key" }) : null))));
+    if (s.explain) box.appendChild(h("details.dk-exp", null, h("summary", { text: "Explanation" + (s.ref ? " · " + s.ref : "") }), h("p", { text: s.explain })));
+    return box;
+  }
+
+  function renderFlags(p) {
+    const F = data.flags;
+    const open = F.groups.filter((g) => g.open > 0).length;
+    const view = h("div.dk-seg", { role: "group", "aria-label": "Show" },
+      [["open", "Open questions (" + open + ")"], ["all", "All (" + F.groups.length + ")"]].map(([k, t]) => {
+        const b = h("button.dk-chip", { type: "button", "aria-pressed": flagView === k ? "true" : "false" }, t);
+        b.addEventListener("click", () => { flagView = k; show("flags"); });
+        return b;
+      }));
+    p.append(h("div.dk-bar", null, h("h3.tr-h.dk-flags-h", { text: "Questions flagged as wrong" }), view));
+    const list = F.groups.filter((g) => flagView === "all" || g.open > 0);
+    if (!list.length) p.appendChild(h("p.af-note.dk-empty", { text: F.groups.length ? "Nothing open. Every flag is resolved." : "No flags yet. Players flag a question from its explanation after a server-checked answer." }));
+    for (const g of list) {
+      const res = h("input.dk-res", { type: "checkbox", checked: g.open === 0 ? true : null, "aria-label": "Resolved: " + g.key });
+      res.addEventListener("change", async () => {
+        res.disabled = true;
+        try {
+          await call("resolveFlag", { key: g.key, resolved: res.checked });
+          for (const f of g.flags) f.resolved = res.checked;
+          g.open = res.checked ? 0 : g.flags.length;
+          if (data.cls) { delete data.cls; call("deskClass", {}).then((c) => { data.cls = c; badge(); }, () => {}); }
+          U.toast(res.checked ? "Marked resolved." : "Reopened.");
+          setTimeout(() => { if (tab === "flags") show("flags"); }, 250);
+        } catch (e) { res.checked = !res.checked; U.toast((e && e.message) || "Could not change it."); }
+        res.disabled = false;
+      });
+      const notes = h("ul.dk-notes", null, g.flags.map((f) => h("li" + (f.resolved ? ".done" : ""), null,
+        h("span.dk-nh", null, h("b", { text: f.h || "?" }), " · " + fmtWhen(f.t)),
+        h("span.dk-nt", { text: f.note ? "“" + f.note + "”" : "(no note)" }),
+        g.gen && f.snap && f.snap.stem !== (g.snap && g.snap.stem) ? h("details.dk-exp", null, h("summary", { text: "The version this player saw" }), questionBlock(f.snap)) : null)));
+      p.appendChild(h("article.tr-panel.dk-flag" + (g.open ? ".open" : ".done"), { dataset: { key: g.key } },
+        h("header.dk-fh", null,
+          h("span.tr-tag", { text: tag(g.L) }), h("span.dk-tier", { text: "tier " + g.T }), h("span.dk-mono.dk-key", { text: g.key }),
+          g.gen ? h("span.dk-gen", { text: "generated numbers" }) : null,
+          h("span.dk-fc", { text: g.flags.length + " flag" + (g.flags.length === 1 ? "" : "s") + (g.open && g.open < g.flags.length ? " · " + g.open + " open" : "") }),
+          h("label.dk-resl", null, res, h("span", { text: "Resolved" }))),
+        h("div.dk-fbody", null, questionBlock(g.snap), notes)));
+    }
+    // too fast
+    const fast = F.fast || [];
+    const fastRow = (x) => h("tr", null,
+      h("td", null, h("b", { text: x.handle })), h("td.num", { text: String(x.n) }), h("td.num", { text: x.mult + "×" }),
+      h("td", null, h("ul.dk-fl", null, x.items.map((it) => h("li", null,
+        h("span.tr-tag", { text: tag(it.L) }), h("span.dk-mono", { text: sec(it.ms) + " vs " + sec(it.ref) }),
+        h("span.dk-fq", { text: it.stem || it.q + " (generated)" }), h("span.dk-when", { text: fmtDay(it.t) }))))));
+    const fastTable = h("div.dk-scroll", null, h("table.dk-t.dk-fastt", null,
+      h("thead", null, h("tr", null, h("th", { scope: "col", text: "Player" }), h("th.num", { scope: "col", text: "Answers" }), h("th.num", { scope: "col", text: "Time" }), h("th", { scope: "col", text: "Questions (newest first)" }))),
+      h("tbody", null, fast.map(fastRow))));
+    p.append(h("section.tr-panel.dk-sec.dk-fastsec", { "aria-labelledby": "dk-fast-h" },
+      h("h3#dk-fast-h.tr-h", null, "Too fast", h("span.tr-h-note", { text: "correct, first-time credit answers under " + Math.round(F.floor * 100) + "% of the question's reference time; they earn no speed credit" })),
+      fast.length ? fastTable : h("p.af-note", { text: "No answer under the floor." })));
+  }
+
+  // test hooks (test_desk.py)
+  M2M.debugDesk = { data: () => data, tab: () => tab, csv: () => (data.credit ? K.csv(data.credit) : null) };
 })();
 
 /* ---- main.js ---- */
@@ -17277,7 +18098,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       try {
         App.title();
         // an invite link: ?floor=A463-7KQ2M opens the join screen with the code filled in
-        const m = /[?&]floor=([0-9A-Za-z-]{9,11})/.exec(location.search || "");
+        const m = /[?&]floor=([0-9A-Za-z-]{9,13})/.exec(location.search || "");
         if (m && M2M.net && M2M.net.available()) M2M.net.showJoin(m[1].toUpperCase());
       } catch (err) { fatal(err); }
     };
