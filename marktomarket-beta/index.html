@@ -1234,6 +1234,208 @@ html.reduced .flash { display: none; }
 .row-actions { flex-wrap: wrap; }
 .scr-players .code-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 
+/* ================= v3: accounts, badges, profile, ranks, leaderboard (only in --v3 builds) ================= */
+:root {
+  --t0: #7A8398; --t1: #A7B0C2; --t2: #4CC3FF; --t3: #2DD4BF; --t4: #D7DDEA; --t5: #F5B83D; --t6: #C4A5FF;
+}
+.av { display: inline-flex; flex: none; width: var(--av, 48px); height: var(--av, 48px); line-height: 0; }
+.av svg { width: 100%; height: 100%; display: block; overflow: visible; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45)); }
+
+/* ---- the account bar on the title ---- */
+.acct-bar { align-self: stretch; display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin: -14px 0 10px; min-height: 44px; flex-wrap: wrap; }
+.ac-pitch { font-family: var(--f-mono); font-size: 12.5px; color: var(--text-3); margin-right: 4px; }
+.acct-bar .btn { padding: 7px 14px; font-size: 14px; }
+.acct-chip { appearance: none; display: inline-grid; grid-template-columns: auto auto; grid-template-rows: auto auto; column-gap: 10px; align-items: center; text-align: left;
+  padding: 5px 14px 5px 6px; border: 1px solid var(--line-2); border-radius: 999px; background: rgba(14, 19, 32, 0.92); color: var(--text); transition: border-color 0.15s, background 0.15s; }
+.acct-chip:hover { border-color: var(--line-3); background: var(--panel-2); }
+.acct-chip .av { grid-row: 1 / span 2; }
+.ac-txt { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.ac-handle { font-weight: 700; font-size: 14.5px; color: var(--text-hi); max-width: 16ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ac-rank { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; }
+.ac-tier { width: 7px; height: 7px; border-radius: 2px; transform: rotate(45deg); background: var(--t0); }
+.ac-tier[data-t="1"] { background: var(--t1); } .ac-tier[data-t="2"] { background: var(--t2); } .ac-tier[data-t="3"] { background: var(--t3); }
+.ac-tier[data-t="4"] { background: var(--t4); } .ac-tier[data-t="5"] { background: var(--t5); } .ac-tier[data-t="6"] { background: linear-gradient(135deg, var(--t6), var(--t5)); }
+.ac-prog { grid-column: 2; height: 3px; border-radius: 2px; background: var(--line); overflow: hidden; margin-top: 3px; width: 100%; min-width: 90px; }
+.ac-prog i { display: block; height: 100%; background: var(--accent-2); border-radius: 2px; }
+.tb-av { display: inline-flex; align-items: center; }
+
+/* ---- shared screen frame ---- */
+.scr-acct, .scr-profile, .scr-lb { min-height: 100vh; display: flex; justify-content: center; padding: max(48px, 8vh) 24px calc(var(--tk-h) + 48px); }
+.acct-wrap, .pf-wrap, .lb-wrap { width: 100%; max-width: 800px; padding: 26px 28px 24px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(12, 16, 26, 0.94); align-self: flex-start;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.9); }
+.acct-wrap .scr-h, .pf-wrap .scr-h, .lb-wrap .scr-h { margin-bottom: 16px; }
+
+/* ---- sign in / create / recover ---- */
+.acct-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+.acct-tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 12px 9px; margin-bottom: -1px; font-size: 14.5px; color: var(--text-2); }
+.acct-tab:hover { color: var(--text); }
+.acct-tab[aria-selected="true"] { color: var(--text-hi); border-bottom-color: var(--accent); font-weight: 700; }
+.acct-form { display: block; }
+.acct-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 26px; align-items: start; }
+.acct-badge .avp-line { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+.acct-badge .avp-sw { width: 38px; height: 38px; }
+.acct-badge .avp-sw svg { width: 31px; height: 31px; }
+.af { margin-bottom: 14px; }
+.af-label { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text-2); margin-bottom: 6px; }
+.af-in { width: 100%; background: var(--well); border: 1px solid var(--line-2); border-radius: 6px; padding: 9px 12px; font-size: 16px; color: var(--text); }
+.af-in:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 1px; }
+.af-in::placeholder { color: rgba(167, 176, 194, 0.35); }
+.af-in.af-code { font-family: var(--f-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.af-hint { margin-top: 6px; font-size: 12.5px; line-height: 1.45; color: var(--text-3); }
+.af-avail { font-family: var(--f-mono); font-weight: 500; font-size: 11.5px; letter-spacing: 0.04em; }
+.af-avail.ok { color: var(--up); } .af-avail.bad { color: var(--down); }
+.af-msg { min-height: 1.4em; font-size: 14px; color: var(--text-2); margin-top: 4px; }
+.af-msg.bad { color: var(--down); }
+.af-note { margin-top: 18px; font-size: 13.5px; line-height: 1.55; color: var(--text-3); max-width: 68ch; }
+.acct-wrap .row-actions { flex-wrap: wrap; margin-top: 16px; }
+
+.af-why { margin: -4px 0 18px; padding: 10px 14px; border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; background: var(--accent-bg); font-size: 14.5px; line-height: 1.5; color: var(--text); max-width: 70ch; }
+.af-first { margin: 0 0 14px; }
+.af-or { display: flex; align-items: center; gap: 12px; margin: 18px 0 12px; color: var(--text-3); font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; max-width: 420px; }
+.af-or::before, .af-or::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.acct-google { gap: 10px; padding: 9px 16px; background: #F4F6FB; border-color: #F4F6FB; color: #10131B; font-weight: 700; }
+.acct-google:hover { background: #FFFFFF; border-color: #FFFFFF; }
+.g-mark { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-weight: 800; font-size: 14px; color: #fff; background: conic-gradient(#EA4335 0 25%, #FBBC05 0 50%, #34A853 0 75%, #4285F4 0); }
+.ac-verify { padding: 7px 14px; font-size: 14px; border-color: var(--warn); color: var(--warn); background: var(--warn-bg); }
+.ac-verify:hover { color: var(--text-hi); border-color: var(--warn); }
+.vf-box { display: flex; align-items: center; gap: 18px; padding: 16px 18px; border: 1px dashed var(--warn); border-radius: 10px; background: var(--warn-bg); }
+.vf-line { font-size: 17px; color: var(--text); }
+.vf-email { font-family: var(--f-mono); font-weight: 600; color: var(--text-hi); word-break: break-all; }
+.vf-sub { margin-top: 6px; font-size: 14px; color: var(--text-2); line-height: 1.5; }
+.pf-unverified { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; justify-content: space-between; padding: 12px 14px; margin-bottom: 12px; border: 1px solid var(--warn); border-radius: 10px; background: var(--warn-bg); font-size: 14px; color: var(--text-2); }
+.pf-unverified b { color: var(--warn); }
+.pf-email { margin: -6px 0 12px; font-size: 13px; color: var(--text-3); }
+.pf-email b { font-family: var(--f-mono); font-weight: 500; color: var(--text-2); }
+
+/* ---- the badge picker ---- */
+.avp { display: flex; flex-direction: column; gap: 10px; }
+.avp-top { display: flex; align-items: center; gap: 16px; padding: 12px; border: 1px solid var(--line); border-radius: 10px;
+  background: radial-gradient(120% 120% at 20% 0%, rgba(139, 92, 246, 0.14), rgba(10, 13, 20, 0) 60%), var(--well); }
+.avp-preview { flex: none; display: grid; place-items: center; }
+.avp-preview.spin .av { animation: avSpin 0.5s var(--ease); }
+@keyframes avSpin { 0% { transform: rotateY(90deg) scale(0.86); } 100% { transform: none; } }
+.avp-meta { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.avp-name { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.03em; color: var(--text-2); }
+.avp-note { font-size: 12px; color: var(--text-3); }
+.avp-shuffle { padding: 6px 12px; font-size: 14px; border-color: var(--line-2); color: var(--text); }
+.avp-dice { font-size: 17px; line-height: 1; }
+.avp-line { display: grid; grid-template-columns: 62px minmax(0, 1fr); align-items: center; gap: 8px; }
+.avp-label { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+.avp-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.avp-sw { appearance: none; width: 42px; height: 42px; padding: 3px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); transition: border-color 0.12s, background 0.12s, transform 0.12s; }
+.avp-sw svg { width: 34px; height: 34px; filter: none; }
+.avp-sw:hover { border-color: var(--line-3); transform: translateY(-1px); }
+.avp-sw[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-bg); box-shadow: 0 0 0 1px var(--accent) inset; }
+
+/* ---- recovery code ---- */
+.rc-box { display: flex; align-items: center; gap: 18px; padding: 16px 18px; border: 1px dashed var(--warn); border-radius: 10px; background: var(--warn-bg); }
+.rc-main { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; min-width: 0; }
+.rc-code { font-family: var(--f-mono); font-size: clamp(22px, 4.4vw, 32px); font-weight: 600; letter-spacing: 0.14em; color: var(--text-hi); user-select: all; word-break: break-all; }
+.rc-note { margin-top: 14px; font-size: 14.5px; line-height: 1.55; color: var(--text-2); max-width: 62ch; }
+.rc-check { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 15px; color: var(--text); cursor: pointer; }
+.rc-check input, .pf-opt input { width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+.imp-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; max-width: 460px; }
+
+/* ---- rank ---- */
+.rk-name { font-family: var(--f-mono); font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t0); }
+.rk-name[data-t="1"] { color: var(--t1); } .rk-name[data-t="2"] { color: var(--t2); } .rk-name[data-t="3"] { color: var(--t3); }
+.rk-name[data-t="4"] { color: var(--t4); } .rk-name[data-t="5"] { color: var(--t5); }
+.rk-name[data-t="6"] { background: linear-gradient(90deg, var(--t6), var(--t5)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.rk-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.rk-next { font-size: 12.5px; color: var(--text-3); }
+.rk-bar { margin-top: 8px; height: 8px; border-radius: 4px; background: var(--well); border: 1px solid var(--line); overflow: hidden; }
+.rk-bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.8s var(--ease); }
+.rk-need { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 13px; color: var(--text-3); }
+.rk-need li::before { content: "○ "; color: var(--text-3); }
+.rk-need li.met::before { content: "● "; color: var(--up); }
+.rk-need b { color: var(--text); font-family: var(--f-mono); font-weight: 500; }
+.rk-ladder { list-style: none; margin: 14px 0 2px; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+.rk-ladder li { padding: 7px 6px 6px; border: 1px solid var(--line); border-radius: 7px; background: var(--well); display: flex; flex-direction: column; gap: 2px; min-width: 0; opacity: 0.6; }
+.rk-ladder li.past { opacity: 0.85; }
+.rk-ladder li.on { opacity: 1; border-color: var(--accent); background: var(--accent-bg); box-shadow: 0 0 0 1px var(--accent) inset; }
+.rl-name { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.rl-req { font-family: var(--f-mono); font-size: 10.5px; color: var(--text-3); }
+
+/* ---- profile ---- */
+.pf-head { display: flex; align-items: center; gap: 22px; margin-bottom: 18px; }
+.pf-id { flex: 1 1 auto; min-width: 0; }
+.pf-h { margin: 6px 0 10px !important; overflow-wrap: anywhere; }
+.pf-stats { margin-bottom: 4px; }
+.tr-row.pf-counts .tr-n { color: var(--text-2); }
+.pf-badge .avp-top { background: var(--well); }
+.pf-badge .row-actions { margin-top: 12px; align-items: center; }
+.pf-more { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.pf-opt { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
+.pf-opt b { display: block; font-size: 15px; color: var(--text); }
+.pf-sub { display: block; font-size: 13px; color: var(--text-3); }
+.pf-del { color: var(--text-3); }
+.pf-del:hover { color: var(--down); }
+.pf-delbox { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid rgba(240, 68, 78, 0.4); border-radius: 8px; background: var(--down-bg); }
+.pf-delbox p { flex: 1 1 100%; font-size: 14px; color: var(--text); }
+.pf-del-yes { border-color: var(--down); color: #fff; background: rgba(240, 68, 78, 0.8); }
+.pf-acts { flex-wrap: wrap; }
+
+/* ---- leaderboard ---- */
+.lb-me { display: flex; gap: 18px; align-items: center; padding: 16px 18px; border: 1px solid var(--line-2); border-radius: 12px;
+  background: radial-gradient(140% 140% at 0% 0%, rgba(139, 92, 246, 0.16), rgba(10, 13, 20, 0) 60%), var(--panel); margin-bottom: 18px; }
+.lb-me-main { flex: 1 1 auto; min-width: 0; }
+.lb-me-h { font-size: 16px; color: var(--text-2); margin-bottom: 8px; }
+.lb-me-h b { color: var(--text-hi); }
+.lb-me-sub { margin-top: 10px; font-size: 13px; color: var(--text-3); }
+.lb-div { margin-top: 14px; }
+.lb-div-h { display: flex; align-items: baseline; gap: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.lb-n { font-size: 12.5px; color: var(--text-3); }
+.lb-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px; }
+.lb-row { display: grid; grid-template-columns: 36px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 10px; align-items: center; padding: 6px 10px 6px 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.lb-row .av { grid-row: 1 / span 2; }
+.lb-row.me { border-color: var(--accent); background: var(--accent-bg); }
+.lb-h { font-weight: 700; font-size: 14px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-p { height: 4px; border-radius: 2px; background: var(--well); overflow: hidden; }
+.lb-p i { display: block; height: 100%; background: var(--text-3); border-radius: 2px; }
+.lb-div[data-t="4"] .lb-p i { background: var(--t4); } .lb-div[data-t="5"] .lb-p i { background: var(--t5); }
+.lb-div[data-t="2"] .lb-p i { background: var(--t2); } .lb-div[data-t="3"] .lb-p i { background: var(--t3); }
+.lb-top { font-family: var(--f-mono); font-size: 11px; color: var(--t5); }
+
+/* ---- the rank-up moment ---- */
+.rankup { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 20px; background: rgba(4, 6, 11, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity 0.22s; }
+.rankup.on { opacity: 1; }
+.ru-card { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; padding: 26px 28px 24px; border-radius: 14px; border: 1px solid var(--line-2);
+  background: radial-gradient(90% 70% at 50% 0%, rgba(245, 184, 61, 0.14), rgba(10, 13, 20, 0) 70%), rgba(12, 16, 26, 0.97); box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.9); max-width: min(760px, 100%); }
+.ru-ey { color: var(--warn); }
+.ru-flap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.ru-flap .f-big { --fg: 5px; --cw: min(46px, calc((100vw - 80px - 12 * 5px) / 13)); --ch: calc(var(--cw) * 1.42); --fs: calc(var(--ch) * 0.64); --fr: 4px; }
+.ru-flap .f-rank { --fcol: var(--warn); }
+.ru-badge .av { animation: ruPop 0.9s 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+@keyframes ruPop { 0% { transform: scale(0.4) rotate(-12deg); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.ru-line { font-size: 15px; color: var(--text-2); max-width: 40ch; }
+html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none; }
+
+/* ---- clue: waiting on the server's check ---- */
+.chk-note { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; font-family: var(--f-mono); font-size: 13px; color: var(--text-2); }
+.chk-retry { padding: 6px 12px; font-size: 13.5px; }
+
+/* ---- online seats with a badge ---- */
+.pl-row .ol-av { --av: 28px; margin-left: -8px; }
+
+@media (max-width: 699px) {
+  .acct-bar { justify-content: center; margin: -6px 0 12px; }
+  .ac-pitch { flex: 1 1 100%; text-align: center; margin: 0; }
+  .scr-acct, .scr-profile, .scr-lb { padding: calc(20px + env(safe-area-inset-top, 0px)) 12px calc(var(--tk-h) + 40px); }
+  .acct-wrap, .pf-wrap, .lb-wrap { padding: 18px 16px 18px; }
+  .acct-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .acct-tab { padding: 8px 8px 9px; font-size: 13.5px; }
+  .avp-line { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .avp-row { gap: 4px; }
+  .avp-sw, .acct-badge .avp-sw { width: 36px; height: 36px; padding: 2px; }
+  .avp-sw svg, .acct-badge .avp-sw svg { width: 30px; height: 30px; }
+  .pf-head { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .pf-head .pf-av { --av: 88px !important; }
+  .rk-ladder { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .lb-me { flex-direction: column; align-items: flex-start; }
+  .rc-box, .vf-box { flex-direction: column; align-items: flex-start; }
+  .imp-sum { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 </style>
 </head>
 <body>
@@ -1242,6 +1444,7 @@ html.reduced .flash { display: none; }
 
 <header class="topbar" id="topbar" hidden>
   <div class="tb-left">
+    <span class="tb-av" hidden></span>
     <span class="tb-desk"></span>
     <button class="tb-code" type="button" title="Copy the challenge code"></button>
   </div>
@@ -1275,6 +1478,7 @@ html.reduced .flash { display: none; }
 <main id="screens">
   <section class="screen scr-title" id="scr-title" data-screen="title" aria-labelledby="title-h">
     <div class="title-wrap">
+      <div class="acct-bar" id="acct-bar" hidden></div>
       <p class="title-eyebrow"><span>// a game of financial statement analysis</span><span class="ey-2"> · BUSI 401</span></p>
       <h1 id="title-h" class="title-flap" aria-label="Mark to Market"></h1>
       <div class="title-quote" aria-hidden="true"></div>
@@ -1473,6 +1677,17 @@ html.reduced .flash { display: none; }
   <section class="screen scr-close" id="scr-close" data-screen="close" hidden aria-label="The Close">
     <div class="close-wrap"></div>
   </section>
+  <section class="screen scr-acct" id="scr-acct" data-screen="acct" hidden aria-labelledby="acct-h">
+    <div class="acct-wrap"></div>
+  </section>
+
+  <section class="screen scr-profile" id="scr-profile" data-screen="profile" hidden aria-labelledby="pf-h">
+    <div class="pf-wrap"></div>
+  </section>
+
+  <section class="screen scr-lb" id="scr-lb" data-screen="lb" hidden aria-labelledby="lb-h">
+    <div class="lb-wrap"></div>
+  </section>
 </main>
 
 <nav class="dock" id="dock" aria-label="Account, market and news" hidden>
@@ -1557,6 +1772,7 @@ html.reduced .flash { display: none; }
 <footer class="ticker" id="ticker" aria-hidden="true"><div class="ticker-track"></div></footer>
 <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
 <div class="flash" id="flash" aria-hidden="true"></div>
+<div class="rankup" id="rankup" hidden></div>
 <div class="sr-only" id="live" aria-live="polite"></div>
 <div class="toast" id="toast" role="status"></div>
 <script>
@@ -1582,7 +1798,7 @@ html.reduced .flash { display: none; }
 <script type="application/json" id="m2m-voice">[{"id":"welcome_01","event":"welcome","caption":"Welcome to Mark to Market, where every answer moves your price, up or down.","src":"audio/slide-001.mp3"},{"id":"welcome_02","event":"welcome","caption":"Welcome to Mark to Market, where every answer gets priced and nothing gets rounded in your favor.","src":"audio/slide-002.mp3"},{"id":"welcome_03","event":"welcome","caption":"Welcome to Mark to Market. Let's find out how much of the first twelve lectures is already yours.","src":"audio/slide-003.mp3"},{"id":"mode_solo_01","event":"mode_solo","caption":"It's just you and the board, so the bets tell me how sure you actually are.","src":"audio/slide-004.mp3"},{"id":"mode_solo_02","event":"mode_solo","caption":"Solo game, so take your time and read the explanations, including the ones on questions you got right.","src":"audio/slide-005.mp3"},{"id":"mode_couch_01","event":"mode_couch","caption":"Couch game. Everybody answers every clue on their own keys, so no peeking at your neighbor's.","src":"audio/slide-006.mp3"},{"id":"mode_couch_02","event":"mode_couch","caption":"Two or three players on one board, so keep your eyes on your own keys, please.","src":"audio/slide-007.mp3"},{"id":"mode_challenge_01","event":"mode_challenge","caption":"A challenge code gives you the same board and numbers as whoever sent it, so the only difference is how you play.","src":"audio/slide-008.mp3"},{"id":"mode_challenge_02","event":"mode_challenge","caption":"Somebody sent you a challenge on an identical board, so let's see which of you knows the material.","src":"audio/slide-009.mp3"},{"id":"desk_intern_01","event":"desk_intern","caption":"Intern desk, which is mostly recall and one-step problems, and a good place to build the habits.","src":"audio/slide-010.mp3"},{"id":"desk_analyst_01","event":"desk_analyst","caption":"Analyst desk, which runs the full range, from plain recall up to problems that pull two lectures together.","src":"audio/slide-011.mp3"},{"id":"desk_pm_01","event":"desk_pm","caption":"Portfolio manager desk, which is mostly the traps from the lectures plus the problems that tie them together.","src":"audio/slide-012.mp3"},{"id":"round1_intro_01","event":"round1_intro","caption":"The opening bell. Lectures one through seven are the accounting, and the accounting is the price of admission.","src":"audio/slide-013.mp3"},{"id":"round1_intro_02","event":"round1_intro","caption":"Opening bell for the first seven lectures, because before anybody forecasts anything, we clean up the past.","src":"audio/slide-014.mp3"},{"id":"round2_intro_01","event":"round2_intro","caption":"The levered round, where values double and so do the losses, which is essentially what leverage does.","src":"audio/slide-015.mp3"},{"id":"round2_intro_02","event":"round2_intro","caption":"Levered round. Leverage leaves the business alone and just widens how far the shareholders' return can swing, both ways.","src":"audio/slide-016.mp3"},{"id":"closing_intro_01","event":"closing_intro","caption":"The closing bell. It's one question, and it pulls from more than one lecture.","src":"audio/slide-017.mp3"},{"id":"closing_intro_02","event":"closing_intro","caption":"Closing bell, so read the category and then decide how sure you really are.","src":"audio/slide-018.mp3"},{"id":"closing_wager_01","event":"closing_wager","caption":"Size the wager to how sure you actually are, the way you'd size a position.","src":"audio/slide-019.mp3"},{"id":"closing_wager_02","event":"closing_wager","caption":"Wager what you'd bet if this were your own money.","src":"audio/slide-020.mp3"},{"id":"closing_reveal_right_01","event":"closing_reveal_right","caption":"That's correct at the bell, and a strong way to close!","src":"audio/slide-021.mp3"},{"id":"closing_reveal_right_02","event":"closing_reveal_right","caption":"You called it at the close, so go ahead and ring the bell.","src":"audio/slide-022.mp3"},{"id":"closing_reveal_wrong_01","event":"closing_reveal_wrong","caption":"Not this one, but the explanation pulls the pieces together, so it's worth reading slowly.","src":"audio/slide-023.mp3"},{"id":"closing_reveal_wrong_02","event":"closing_reveal_wrong","caption":"That one got away at the close, and the explanation is worth a read before you hit replay.","src":"audio/slide-024.mp3"},{"id":"correct_01","event":"correct","caption":"Yes, that's the one.","src":"audio/slide-037.mp3"},{"id":"correct_02","event":"correct","caption":"Correct, so we mark you up.","src":"audio/slide-038.mp3"},{"id":"correct_03","event":"correct","caption":"You didn't need a model to get there.","src":"audio/slide-039.mp3"},{"id":"correct_04","event":"correct","caption":"That's correct, and your quote just ticked up.","src":"audio/slide-040.mp3"},{"id":"correct_05","event":"correct","caption":"Got it, and that one is yours now.","src":"audio/slide-041.mp3"},{"id":"correct_06","event":"correct","caption":"Correct, and the why is still worth ten seconds, even when you're right.","src":"audio/slide-042.mp3"},{"id":"correct_07","event":"correct","caption":"That's correct, and I'd sign off on it.","src":"audio/slide-043.mp3"},{"id":"correct_08","event":"correct","caption":"Yes, and the market agrees with you.","src":"audio/slide-044.mp3"},{"id":"correct_09","event":"correct","caption":"Excellent, that's the answer!","src":"audio/slide-045.mp3"},{"id":"correct_10","event":"correct","caption":"That's it, on to the next tile.","src":"audio/slide-046.mp3"},{"id":"correct_11","event":"correct","caption":"There it is, and you can bank that one.","src":"audio/slide-047.mp3"},{"id":"correct_12","event":"correct","caption":"Good, that's one more for the track record.","src":"audio/slide-048.mp3"},{"id":"correct_13","event":"correct","caption":"Exactly, and you read it before you trusted it.","src":"audio/slide-049.mp3"},{"id":"correct_14","event":"correct","caption":"That's correct, and it shows you did the reading.","src":"audio/slide-050.mp3"},{"id":"correct_15","event":"correct","caption":"Nicely done, keep going.","src":"audio/slide-051.mp3"},{"id":"correct_16","event":"correct","caption":"Very nice, that's the one a careful analyst picks.","src":"audio/slide-052.mp3"},{"id":"correct_certain_01","event":"correct_certain","caption":"Certain, and correct, so that tile pays you triple!","src":"audio/slide-053.mp3"},{"id":"correct_certain_02","event":"correct_certain","caption":"You called it certain and it was, so your quote just jumped.","src":"audio/slide-054.mp3"},{"id":"correct_certain_03","event":"correct_certain","caption":"You put your name on it, and it held.","src":"audio/slide-055.mp3"},{"id":"correct_certain_04","event":"correct_certain","caption":"You were sure, and this time sure paid triple.","src":"audio/slide-056.mp3"},{"id":"correct_certain_05","event":"correct_certain","caption":"Correct, and if your Certain calls land more than four times in five, keep making them.","src":"audio/slide-057.mp3"},{"id":"correct_hunch_01","event":"correct_hunch","caption":"A hunch, and it landed, so you may know more than you think.","src":"audio/slide-058.mp3"},{"id":"correct_hunch_02","event":"correct_hunch","caption":"Correct, on a hunch, and if these keep landing, they aren't hunches.","src":"audio/slide-059.mp3"},{"id":"correct_hunch_03","event":"correct_hunch","caption":"Correct, on a hunch, so next time trust it enough to say Likely.","src":"audio/slide-060.mp3"},{"id":"wrong_01","event":"wrong","caption":"Not this time, but the explanation for your answer is already open, and it shows which step leads there.","src":"audio/slide-061.mp3"},{"id":"wrong_02","event":"wrong","caption":"That answer comes from a specific misstep, and the explanation names it.","src":"audio/slide-062.mp3"},{"id":"wrong_03","event":"wrong","caption":"No, but the why shows which step slipped.","src":"audio/slide-063.mp3"},{"id":"wrong_04","event":"wrong","caption":"Not quite. Before you move on, say the reason for the correct answer out loud, once.","src":"audio/slide-064.mp3"},{"id":"wrong_05","event":"wrong","caption":"That one goes on your study list, which is what the list is for.","src":"audio/slide-065.mp3"},{"id":"wrong_06","event":"wrong","caption":"Not this one, which means you've found exactly the thing worth going back to.","src":"audio/slide-066.mp3"},{"id":"wrong_07","event":"wrong","caption":"Read the why, and then the slides the review chip points to.","src":"audio/slide-067.mp3"},{"id":"wrong_08","event":"wrong","caption":"Ask yourself why that option was tempting, and then read the why.","src":"audio/slide-068.mp3"},{"id":"wrong_09","event":"wrong","caption":"Not quite, so read the worked solution once, slowly.","src":"audio/slide-069.mp3"},{"id":"wrong_10","event":"wrong","caption":"No, but that's what the pretend money is for.","src":"audio/slide-070.mp3"},{"id":"wrong_11","event":"wrong","caption":"Not this one, but it's a useful miss if you open the why.","src":"audio/slide-071.mp3"},{"id":"wrong_12","event":"wrong","caption":"Not quite, so find the step where your reasoning and the explanation part ways.","src":"audio/slide-072.mp3"},{"id":"wrong_13","event":"wrong","caption":"Not this one, so read the why, and then work it once more in your head.","src":"audio/slide-073.mp3"},{"id":"wrong_14","event":"wrong","caption":"Wrong one, and the explanation walks through it step by step.","src":"audio/slide-074.mp3"},{"id":"wrong_15","event":"wrong","caption":"Not this one, but the good news is the explanation is right there.","src":"audio/slide-075.mp3"},{"id":"wrong_16","event":"wrong","caption":"Ask what you'd have to believe for that answer to be correct, and then check that belief against the why.","src":"audio/slide-076.mp3"},{"id":"wrong_certain_01","event":"wrong_certain","caption":"You were certain on that one, so it's worth reading twice.","src":"audio/slide-077.mp3"},{"id":"wrong_certain_02","event":"wrong_certain","caption":"Confident misses tend to be the ones you remember once they're corrected, so read the why slowly.","src":"audio/slide-078.mp3"},{"id":"wrong_certain_03","event":"wrong_certain","caption":"That cost six times the tile, which is why Certain is for the questions you'd stake the fund on.","src":"audio/slide-079.mp3"},{"id":"wrong_certain_04","event":"wrong_certain","caption":"You were sure, so find the step where sure went wrong.","src":"audio/slide-080.mp3"},{"id":"wrong_certain_05","event":"wrong_certain","caption":"Find the sentence in the explanation you'd have argued with, and that's the one to remember.","src":"audio/slide-081.mp3"},{"id":"timeout_01","event":"timeout","caption":"That's time, and no answer costs the same as a wrong hunch, so the question goes on your study list.","src":"audio/slide-082.mp3"},{"id":"timeout_02","event":"timeout","caption":"The clock won that one, so it goes on your study list.","src":"audio/slide-083.mp3"},{"id":"timeout_03","event":"timeout","caption":"Out of time, which costs you what a wrong hunch would, and the study list keeps the question for later.","src":"audio/slide-084.mp3"},{"id":"show_choices_01","event":"show_choices","caption":"Choices it is, for half the tile, and the explanation is the same either way.","src":"audio/slide-085.mp3"},{"id":"show_choices_02","event":"show_choices","caption":"Fair enough, here are four options for half the money.","src":"audio/slide-086.mp3"},{"id":"audit_intro_01","event":"audit_intro","caption":"Applied AI. There's a memo, and it's very confident, so sign it or send it back.","src":"audio/slide-087.mp3"},{"id":"audit_intro_02","event":"audit_intro","caption":"Applied AI, where your name goes on the memo the model wrote, so read every line.","src":"audio/slide-088.mp3"},{"id":"audit_intro_03","event":"audit_intro","caption":"Applied AI. The arithmetic was the easy part, so check what went into it.","src":"audio/slide-089.mp3"},{"id":"audit_signed_right_01","event":"audit_signed_right","caption":"Signed, and it holds up, because sometimes the confident memo is simply correct.","src":"audio/slide-090.mp3"},{"id":"audit_signed_right_02","event":"audit_signed_right","caption":"Good call, since knowing when not to object is part of the job too.","src":"audio/slide-091.mp3"},{"id":"audit_signed_wrong_01","event":"audit_signed_wrong","caption":"The memo had an error in it, and the explanation shows the line where it broke.","src":"audio/slide-092.mp3"},{"id":"audit_signed_wrong_02","event":"audit_signed_wrong","caption":"The memo sounded sure of itself, and the line it got wrong is in the explanation.","src":"audio/slide-093.mp3"},{"id":"audit_sent_back_right_01","event":"audit_sent_back_right","caption":"You sent it back, and for the right reason.","src":"audio/slide-094.mp3"},{"id":"audit_sent_back_right_02","event":"audit_sent_back_right","caption":"Good catch, you found the line where the memo breaks.","src":"audio/slide-095.mp3"},{"id":"audit_sent_back_wrong_01","event":"audit_sent_back_wrong","caption":"Good instinct to push back, but that objection doesn't hold, and the explanation shows why.","src":"audio/slide-096.mp3"},{"id":"audit_sent_back_wrong_02","event":"audit_sent_back_wrong","caption":"The memo went back, but not for a reason that holds up, so read the why.","src":"audio/slide-097.mp3"},{"id":"streak3_01","event":"streak3","caption":"Three in a row could still be noise, but I doubt it.","src":"audio/slide-098.mp3"},{"id":"streak3_02","event":"streak3","caption":"Three straight, and your quote is trending up.","src":"audio/slide-099.mp3"},{"id":"streak3_03","event":"streak3","caption":"Three straight, so somebody's been reading the footnotes.","src":"audio/slide-100.mp3"},{"id":"streak5_01","event":"streak5","caption":"Five in a row, and at this point that's not noise anymore!","src":"audio/slide-101.mp3"},{"id":"streak5_02","event":"streak5","caption":"Five straight, and if these were earnings, I'd start checking the accruals.","src":"audio/slide-102.mp3"},{"id":"end_solo_up_01","event":"end_solo_up","caption":"You closed in the green, and the edge lives in knowing the nooks and crannies of the business better than the rest.","src":"audio/slide-103.mp3"},{"id":"end_solo_up_02","event":"end_solo_up","caption":"Long story short, you closed up, so check the calibration chart next, because that's where the next game's money is.","src":"audio/slide-104.mp3"},{"id":"end_solo_down_01","event":"end_solo_down","caption":"You closed down, and the study list has every question worth going back to, sorted by lecture, with the slides to reopen.","src":"audio/slide-105.mp3"},{"id":"end_solo_down_02","event":"end_solo_down","caption":"Down at the close, so check whether your Certain calls landed as often as you expected.","src":"audio/slide-106.mp3"},{"id":"end_couch_winner_01","event":"end_couch_winner","caption":"And the closing bell goes to our top player! Everyone's study list is waiting.","src":"audio/slide-107.mp3"},{"id":"end_couch_winner_02","event":"end_couch_winner","caption":"We have a winner, so everyone compare calibration charts before the rematch.","src":"audio/slide-108.mp3"},{"id":"end_tie_01","event":"end_tie","caption":"A tie, at the same closing price to the dollar, so it's going to take a rematch.","src":"audio/slide-109.mp3"},{"id":"game_resume_01","event":"game_resume","caption":"Welcome back, and your positions are exactly where you left them.","src":"audio/slide-110.mp3"},{"id":"margin_call_01","event":"margin_call","caption":"This is your broker. Margin call!","src":"audio/slide-111.mp3","speaker":"broker"},{"id":"margin_call_02","event":"margin_call","caption":"Margin call!","src":"audio/slide-112.mp3","speaker":"broker"},{"id":"margin_call_03","event":"margin_call","caption":"Your broker here. You've been margin called.","src":"audio/slide-113.mp3","speaker":"broker"},{"id":"dark_pool_01","event":"dark_pool","caption":"A dark pool. You size the order before you see the trade.","src":"audio/slide-114.mp3"},{"id":"dark_pool_02","event":"dark_pool","caption":"Dark pool. Nobody sees this question until your order is in.","src":"audio/slide-115.mp3"},{"id":"dark_pool_03","event":"dark_pool","caption":"Dark pool. If you're behind, this is where a comeback starts.","src":"audio/slide-116.mp3"},{"id":"cat_L01_02","event":"cat_L01","caption":"Noise versus bias. Noise averages away. Bias doesn't.","src":"audio/slide-117.mp3"},{"id":"cat_L02_02","event":"cat_L02","caption":"Stocks and flows. Two snapshots, and the movie in between.","src":"audio/slide-118.mp3"},{"id":"cat_L03_02","event":"cat_L03","caption":"Accruals. The economics and the cash rarely arrive together.","src":"audio/slide-119.mp3"},{"id":"cat_L04_02","event":"cat_L04","caption":"Follow the cash. Profit can be an opinion, but cash is a fact.","src":"audio/slide-120.mp3"},{"id":"cat_L05_02","event":"cat_L05","caption":"Top line. Revenue follows control, not cash.","src":"audio/slide-121.mp3"},{"id":"cat_L07I_02","event":"cat_L07I","caption":"LIFO and FIFO. Old layers can flatter profit.","src":"audio/slide-122.mp3"},{"id":"cat_L07A_02","event":"cat_L07A","caption":"Wear and tear. Check the useful life yourself.","src":"audio/slide-123.mp3"},{"id":"cat_L08_02","event":"cat_L08","caption":"Footnotes. That's where the opinions live.","src":"audio/slide-124.mp3"},{"id":"cat_L09_02","event":"cat_L09","caption":"Operating or financing? Every line on the balance sheet picks a side.","src":"audio/slide-125.mp3"},{"id":"cat_L10_02","event":"cat_L10","caption":"Margin times turnover. Two roads to the same return.","src":"audio/slide-126.mp3"},{"id":"cat_L11_02","event":"cat_L11","caption":"The spread. Borrowing helps only while you out-earn your debt.","src":"audio/slide-127.mp3"},{"id":"cat_L12_02","event":"cat_L12","caption":"Paid back? Lenders read the downside first.","src":"audio/slide-128.mp3"},{"id":"cat_L13_02","event":"cat_L13","caption":"Moats and the fade. Excess returns don't last on their own.","src":"audio/slide-129.mp3"},{"id":"cat_L14_02","event":"cat_L14","caption":"Forecasting. Growth costs capital, and somebody pays for it.","src":"audio/slide-130.mp3"},{"id":"cat_L15_02","event":"cat_L15","caption":"Cost of capital. Today's market sets the rate.","src":"audio/slide-131.mp3"}]</script>
 <script type="application/json" id="m2m-assets">{"sfx":{"bull":"sfx/bull.mp3","bear":"sfx/bear.mp3","bell_open":"sfx/bell_open.mp3","bell_close":"sfx/bell_close.mp3","cheer":"sfx/cheer.mp3","groan":"sfx/groan.mp3","cash":"sfx/cash.mp3","ticker_loop":"sfx/ticker_loop.mp3","whoosh":"sfx/whoosh.mp3"},"music":{"theme":"music/theme.mp3","stinger":"music/stinger.mp3","outro":"music/outro.mp3"}}</script>
 <script type="application/json" id="m2m-qa">{"CB-a01":["CB",0,104089],"CB-a02":["CB",104089,153461],"CB-a03":["CB",257550,119815],"CB-a04":["CB",377365,90741],"CB-a05":["CB",468106,96227],"CB-b01":["CB",564333,63861],"CB-b02":["CB",628194,192592],"CB-b03":["CB",820786,44112],"CB-b04":["CB",864898,69347],"CB-b05":["CB",934245,66604],"CB-cN01":["CB",1000849,147244],"CB-cN02":["CB",1148093,177415],"CB-cN03":["CB",1325508,186924],"CB-dN01":["CB",1512432,146695],"CB-dN02":["CB",1659127,137187],"CB-dN03":["CB",1796314,145049],"CB-eN01":["CB",1941363,181987],"CB-eN02":["CB",2123350,146695],"CB-eN03":["CB",2270045,200455],"CB-eN04":["CB",2470500,131518],"L01-1-01":["L01",0,50878],"L01-1-02":["L01",50878,57644],"L01-1-03":["L01",108522,60935],"L01-1-04":["L01",169457,59289],"L01-1-05":["L01",228746,55449],"L01-1-N01":["L01",284195,61484],"L01-1-N02":["L01",345679,85072],"L01-1-N03":["L01",430751,86169],"L01-1-N04":["L01",516920,88364],"L01-2-01":["L01",605284,101347],"L01-2-02":["L01",706631,114695],"L01-2-03":["L01",821326,63129],"L01-2-04":["L01",884455,79952],"L01-2-05":["L01",964407,69347],"L01-2-N01":["L01",1033754,104089],"L01-2-N02":["L01",1137843,137187],"L01-2-N03":["L01",1275030,110855],"L01-2-N04":["L01",1385885,130421],"L01-3-01":["L01",1516306,92935],"L01-3-02":["L01",1609241,154009],"L01-3-03":["L01",1763250,93484],"L01-3-04":["L01",1856734,104089],"L01-3-N01":["L01",1960823,125849],"L01-3-N02":["L01",2086672,174672],"L01-3-N03":["L01",2261344,170649],"L01-3-N04":["L01",2431993,180341],"L01-4-01":["L01",2612334,234101],"L01-4-02":["L01",2846435,185278],"L01-4-03":["L01",3031713,106832],"L01-4-04":["L01",3138545,145049],"L01-4-N01":["L01",3283594,177415],"L01-4-N02":["L01",3461009,162421],"L01-4-N03":["L01",3623430,138284],"L01-4-N04":["L01",3761714,142124],"L01-5-01":["L01",3903838,242329],"L01-5-02":["L01",4146167,116341],"L01-5-03":["L01",4262508,188021],"L01-5-04":["L01",4450529,188569],"L01-5-N01":["L01",4639098,145598],"L01-5-N02":["L01",4784696,249095],"L01-5-N03":["L01",5033791,234649],"L01-5-N04":["L01",5268440,231724],"L01-AI-01":["L01",5500164,96227],"L01-AI-02":["L01",5596391,114147],"L01-AI-N01":["L01",5710538,151632],"L02-1-01":["L02",0,50878],"L02-1-02":["L02",50878,50878],"L02-1-03":["L02",101756,43015],"L02-1-04":["L02",144771,27289],"L02-1-05":["L02",172060,73369],"L02-1-N01":["L02",245429,47587],"L02-1-N02":["L02",293016,50878],"L02-1-N03":["L02",343894,66055],"L02-1-N04":["L02",409949,55998],"L02-2-01":["L02",465947,47587],"L02-2-02":["L02",513534,36249],"L02-2-03":["L02",549783,49781],"L02-2-04":["L02",599564,115244],"L02-2-05":["L02",714808,72089],"L02-3-01":["L02",786897,86169],"L02-3-02":["L02",873066,69895],"L02-3-03":["L02",942961,106284],"L02-3-04":["L02",1049245,138284],"L02-4-01":["L02",1187529,103541],"L02-4-02":["L02",1291070,133712],"L02-4-03":["L02",1424782,75015],"L02-4-04":["L02",1499797,57095],"L02-4-N01":["L02",1556892,110307],"L02-4-N02":["L02",1667199,141027],"L02-4-N03":["L02",1808226,142672],"L02-5-01":["L02",1950898,71541],"L02-5-02":["L02",2022439,165164],"L02-5-03":["L02",2187603,155107],"L02-5-04":["L02",2342710,153461],"L02-5-N01":["L02",2496171,104638],"L02-5-N02":["L02",2600809,107381],"L02-5-N03":["L02",2708190,186924],"L02-5-N04":["L02",2895114,130969],"L02-AI-01":["L02",3026083,49232],"L02-AI-02":["L02",3075315,51427],"L02-AI-N01":["L02",3126742,38078],"L03-1-01":["L03",0,93484],"L03-1-02":["L03",93484,66055],"L03-1-03":["L03",159539,77209],"L03-1-04":["L03",236748,111952],"L03-1-N01":["L03",348700,65507],"L03-1-N02":["L03",414207,79404],"L03-1-N03":["L03",493611,83975],"L03-1-N04":["L03",577586,47038],"L03-2-01":["L03",624624,81049],"L03-2-02":["L03",705673,72089],"L03-2-03":["L03",777762,85621],"L03-2-04":["L03",863383,130969],"L03-3-01":["L03",994352,190398],"L03-3-02":["L03",1184750,166809],"L03-3-03":["L03",1351559,130969],"L03-3-04":["L03",1482528,147244],"L03-4-01":["L03",1629772,96227],"L03-4-02":["L03",1725999,152181],"L03-4-03":["L03",1878180,139929],"L03-4-04":["L03",2018109,65507],"L03-4-N01":["L03",2083616,77209],"L03-4-N02":["L03",2160825,201004],"L03-4-N03":["L03",2361829,105187],"L03-5-01":["L03",2467016,111404],"L03-5-02":["L03",2578420,185278],"L03-5-03":["L03",2763698,165164],"L03-5-04":["L03",2928862,121461],"L03-5-N01":["L03",3050323,157301],"L03-5-N02":["L03",3207624,118169],"L03-5-N03":["L03",3325793,159495],"L03-5-N04":["L03",3485288,134261],"L03-AI-01":["L03",3619549,70444],"L03-AI-02":["L03",3689993,49232],"L03-AI-N01":["L03",3739225,62581],"L04-1-01":["L04",0,87267],"L04-1-02":["L04",87267,80501],"L04-1-03":["L04",167768,73369],"L04-1-04":["L04",241137,54169],"L04-1-N01":["L04",295306,55449],"L04-1-N02":["L04",350755,68798],"L04-1-N03":["L04",419553,59289],"L04-1-N04":["L04",478842,85072],"L04-2-01":["L04",563914,81781],"L04-2-02":["L04",645695,98969],"L04-2-03":["L04",744664,94581],"L04-2-04":["L04",839245,97872],"L04-3-01":["L04",937117,119815],"L04-3-02":["L04",1056932,106284],"L04-3-03":["L04",1163216,98421],"L04-3-04":["L04",1261637,166809],"L04-4-01":["L04",1428446,112501],"L04-4-02":["L04",1540947,90741],"L04-4-03":["L04",1631688,79952],"L04-4-04":["L04",1711640,136089],"L04-5-01":["L04",1847729,165712],"L04-5-02":["L04",2013441,131518],"L04-5-03":["L04",2144959,81781],"L04-5-04":["L04",2226740,185827],"L04-5-N01":["L04",2412567,88912],"L04-5-N02":["L04",2501479,132615],"L04-5-N03":["L04",2634094,89461],"L04-5-N04":["L04",2723555,96227],"L04-AI-01":["L04",2819782,51427],"L04-AI-02":["L04",2871209,86169],"L04-AI-N01":["L04",2957378,50329],"L05-1-01":["L05",0,48684],"L05-1-02":["L05",48684,64409],"L05-1-03":["L05",113093,111404],"L05-1-04":["L05",224497,32958],"L05-1-05":["L05",257455,41918],"L05-1-N01":["L05",299373,77209],"L05-1-N02":["L05",376582,101895],"L05-1-N03":["L05",478477,43015],"L05-1-N04":["L05",521492,68798],"L05-2-01":["L05",590290,98969],"L05-2-02":["L05",689259,110855],"L05-2-03":["L05",800114,84524],"L05-2-04":["L05",884638,90741],"L05-2-05":["L05",975379,83427],"L05-3-01":["L05",1058806,109758],"L05-3-02":["L05",1168564,75015],"L05-3-03":["L05",1243579,116889],"L05-3-04":["L05",1360468,88364],"L05-3-05":["L05",1448832,88912],"L05-3-06":["L05",1537744,105735],"L05-3-07":["L05",1643479,165164],"L05-4-01":["L05",1808643,103541],"L05-4-02":["L05",1912184,142124],"L05-4-03":["L05",2054308,120912],"L05-4-04":["L05",2175220,136638],"L05-5-01":["L05",2311858,134809],"L05-5-02":["L05",2446667,241232],"L05-5-03":["L05",2687899,187472],"L05-5-04":["L05",2875371,107381],"L05-5-N01":["L05",2982752,109758],"L05-5-N02":["L05",3092510,127129],"L05-5-N03":["L05",3219639,130969],"L05-5-N04":["L05",3350608,167358],"L05-AI-01":["L05",3517966,73918],"L05-AI-02":["L05",3591884,62032],"L05-AI-03":["L05",3653916,78307],"L05-AI-N01":["L05",3732223,64958],"L07I-1-01":["L07I",0,53072],"L07I-1-02":["L07I",53072,79404],"L07I-1-03":["L07I",132476,74467],"L07I-1-04":["L07I",206943,28569],"L07I-1-05":["L07I",235512,44112],"L07I-1-N01":["L07I",279624,88364],"L07I-1-N02":["L07I",367988,88364],"L07I-1-N03":["L07I",456352,83975],"L07I-1-N04":["L07I",540327,61484],"L07I-2-01":["L07I",601811,106832],"L07I-2-02":["L07I",708643,96775],"L07I-2-03":["L07I",805418,157849],"L07I-2-04":["L07I",963267,90009],"L07I-2-05":["L07I",1053276,78307],"L07I-3-01":["L07I",1131583,133164],"L07I-3-02":["L07I",1264747,149987],"L07I-3-03":["L07I",1414734,124752],"L07I-3-04":["L07I",1539486,114147],"L07I-3-05":["L07I",1653633,149438],"L07I-3-06":["L07I",1803071,137187],"L07I-3-07":["L07I",1940258,81781],"L07I-4-01":["L07I",2022039,141027],"L07I-4-02":["L07I",2163066,141027],"L07I-4-03":["L07I",2304093,121461],"L07I-4-04":["L07I",2425554,156204],"L07I-4-05":["L07I",2581758,138284],"L07I-5-01":["L07I",2720042,155107],"L07I-5-02":["L07I",2875149,146147],"L07I-5-03":["L07I",3021296,145598],"L07I-5-04":["L07I",3166894,153461],"L07I-5-N01":["L07I",3320355,120364],"L07I-5-N02":["L07I",3440719,141027],"L07I-5-N03":["L07I",3581746,167907],"L07I-5-N04":["L07I",3749653,133712],"L07I-AI-01":["L07I",3883365,101347],"L07I-AI-02":["L07I",3984712,96775],"L07I-AI-N01":["L07I",4081487,120364],"L07A-1-01":["L07A",0,126581],"L07A-1-02":["L07A",126581,53072],"L07A-1-03":["L07A",179653,73369],"L07A-1-04":["L07A",253022,60935],"L07A-1-05":["L07A",313957,74467],"L07A-1-N01":["L07A",388424,75564],"L07A-1-N02":["L07A",463988,39724],"L07A-1-N03":["L07A",503712,46489],"L07A-1-N04":["L07A",550201,69895],"L07A-2-01":["L07A",620096,86718],"L07A-2-02":["L07A",706814,101347],"L07A-2-03":["L07A",808161,143221],"L07A-2-04":["L07A",951382,84524],"L07A-3-01":["L07A",1035906,127678],"L07A-3-02":["L07A",1163584,62581],"L07A-3-03":["L07A",1226165,95678],"L07A-3-04":["L07A",1321843,92387],"L07A-3-05":["L07A",1414230,124752],"L07A-4-01":["L07A",1538982,95678],"L07A-4-02":["L07A",1634660,70992],"L07A-4-03":["L07A",1705652,74467],"L07A-4-04":["L07A",1780119,72821],"L07A-4-05":["L07A",1852940,52524],"L07A-5-01":["L07A",1905464,109209],"L07A-5-02":["L07A",2014673,115792],"L07A-5-03":["L07A",2130465,100798],"L07A-5-04":["L07A",2231263,70444],"L07A-5-N01":["L07A",2301707,182535],"L07A-5-N02":["L07A",2484242,137735],"L07A-5-N03":["L07A",2621977,88912],"L07A-5-N04":["L07A",2710889,183084],"L07A-AI-01":["L07A",2893973,60387],"L07A-AI-02":["L07A",2954360,52524],"L07A-AI-N01":["L07A",3006884,82878],"L08-1-01":["L08",0,95129],"L08-1-02":["L08",95129,66055],"L08-1-03":["L08",161184,47587],"L08-1-04":["L08",208771,52524],"L08-1-05":["L08",261295,63129],"L08-1-N01":["L08",324424,87267],"L08-1-N02":["L08",411691,86169],"L08-1-N03":["L08",497860,68249],"L08-1-N04":["L08",566109,70444],"L08-2-01":["L08",636553,113598],"L08-2-02":["L08",750151,66604],"L08-2-03":["L08",816755,100249],"L08-2-04":["L08",917004,155107],"L08-2-05":["L08",1072111,93484],"L08-2-06":["L08",1165595,104638],"L08-2-07":["L08",1270233,101895],"L08-3-01":["L08",1372128,130421],"L08-3-02":["L08",1502549,84524],"L08-3-03":["L08",1587073,96775],"L08-3-04":["L08",1683848,72089],"L08-3-05":["L08",1755937,70992],"L08-3-06":["L08",1826929,139381],"L08-3-07":["L08",1966310,104638],"L08-4-01":["L08",2070948,85621],"L08-4-02":["L08",2156569,66604],"L08-4-03":["L08",2223173,148341],"L08-4-04":["L08",2371514,95129],"L08-4-05":["L08",2466643,117621],"L08-5-01":["L08",2584264,105187],"L08-5-02":["L08",2689451,105735],"L08-5-03":["L08",2795186,100798],"L08-5-04":["L08",2895984,87815],"L08-5-N01":["L08",2983799,129324],"L08-5-N02":["L08",3113123,160592],"L08-5-N03":["L08",3273715,95129],"L08-5-N04":["L08",3368844,101347],"L08-AI-01":["L08",3470191,46489],"L08-AI-02":["L08",3516680,54169],"L08-AI-03":["L08",3570849,41369],"L08-AI-N01":["L08",3612218,54169],"L09-1-01":["L09",0,70444],"L09-1-02":["L09",70444,68249],"L09-1-03":["L09",138693,125301],"L09-1-04":["L09",263994,95678],"L09-1-05":["L09",359672,73918],"L09-1-N01":["L09",433590,55449],"L09-1-N02":["L09",489039,68798],"L09-1-N03":["L09",557837,81049],"L09-1-N04":["L09",638886,103541],"L09-2-01":["L09",742427,64958],"L09-2-02":["L09",807385,97872],"L09-2-03":["L09",905257,93484],"L09-2-04":["L09",998741,50878],"L09-2-05":["L09",1049619,173575],"L09-3-01":["L09",1223194,97872],"L09-3-02":["L09",1321066,106832],"L09-3-03":["L09",1427898,131518],"L09-3-04":["L09",1559416,145049],"L09-3-05":["L09",1704465,137735],"L09-4-01":["L09",1842200,75564],"L09-4-02":["L09",1917764,170101],"L09-4-03":["L09",2087865,70992],"L09-4-04":["L09",2158857,63129],"L09-5-01":["L09",2221986,87267],"L09-5-02":["L09",2309253,155107],"L09-5-03":["L09",2464360,109209],"L09-5-04":["L09",2573569,113049],"L09-5-N01":["L09",2686618,165164],"L09-5-N02":["L09",2851782,78855],"L09-5-N03":["L09",2930637,111404],"L09-5-N04":["L09",3042041,83975],"L09-AI-01":["L09",3126016,65507],"L09-AI-02":["L09",3191523,92935],"L09-AI-03":["L09",3284458,54901],"L09-AI-N01":["L09",3339359,86169],"L10-1-01":["L10",0,92387],"L10-1-02":["L10",92387,78855],"L10-1-03":["L10",171242,94581],"L10-1-04":["L10",265823,70444],"L10-1-05":["L10",336267,74467],"L10-1-N01":["L10",410734,121461],"L10-1-N02":["L10",532195,85072],"L10-1-N03":["L10",617267,115792],"L10-1-N04":["L10",733059,111404],"L10-2-01":["L10",844463,84524],"L10-2-02":["L10",928987,92387],"L10-2-03":["L10",1021374,125301],"L10-2-04":["L10",1146675,82329],"L10-2-05":["L10",1229004,72089],"L10-3-01":["L10",1301093,81781],"L10-3-02":["L10",1382874,161689],"L10-3-03":["L10",1544563,124204],"L10-3-04":["L10",1668767,105735],"L10-3-05":["L10",1774502,40272],"L10-4-01":["L10",1814774,107381],"L10-4-02":["L10",1922155,119815],"L10-4-03":["L10",2041970,166809],"L10-4-04":["L10",2208779,173575],"L10-4-05":["L10",2382354,55449],"L10-5-01":["L10",2437803,115244],"L10-5-02":["L10",2553047,82878],"L10-5-03":["L10",2635925,111404],"L10-5-04":["L10",2747329,129872],"L10-5-N01":["L10",2877201,201004],"L10-5-N02":["L10",3078205,162421],"L10-5-N03":["L10",3240626,106284],"L10-5-N04":["L10",3346910,184181],"L10-AI-01":["L10",3531091,79952],"L10-AI-02":["L10",3611043,62032],"L10-AI-03":["L10",3673075,99701],"L10-AI-N01":["L10",3772776,136089],"L11-1-01":["L11",0,83975],"L11-1-02":["L11",83975,76112],"L11-1-03":["L11",160087,60387],"L11-1-04":["L11",220474,65507],"L11-1-05":["L11",285981,91838],"L11-1-N01":["L11",377819,91289],"L11-1-N02":["L11",469108,98421],"L11-1-N03":["L11",567529,127129],"L11-1-N04":["L11",694658,61484],"L11-2-01":["L11",756142,50329],"L11-2-02":["L11",806471,61484],"L11-2-03":["L11",867955,90009],"L11-2-04":["L11",957964,109758],"L11-2-05":["L11",1067722,46489],"L11-3-01":["L11",1114211,143221],"L11-3-02":["L11",1257432,39175],"L11-3-03":["L11",1296607,94032],"L11-3-04":["L11",1390639,170649],"L11-3-05":["L11",1561288,183632],"L11-3-06":["L11",1744920,102444],"L11-4-01":["L11",1847364,193141],"L11-4-02":["L11",2040505,52524],"L11-4-03":["L11",2093029,103541],"L11-4-04":["L11",2196570,101347],"L11-5-01":["L11",2297917,98421],"L11-5-02":["L11",2396338,180889],"L11-5-03":["L11",2577227,98969],"L11-5-04":["L11",2676196,147244],"L11-5-N01":["L11",2823440,196432],"L11-5-N02":["L11",3019872,179061],"L11-5-N03":["L11",3198933,106284],"L11-5-N04":["L11",3305217,137187],"L11-AI-01":["L11",3442404,133712],"L11-AI-02":["L11",3576116,68249],"L11-AI-03":["L11",3644365,69347],"L11-AI-N01":["L11",3713712,75015],"L12-1-01":["L12",0,56547],"L12-1-02":["L12",56547,48135],"L12-1-03":["L12",104682,39175],"L12-1-04":["L12",143857,38078],"L12-1-05":["L12",181935,69895],"L12-1-06":["L12",251830,91838],"L12-1-N01":["L12",343668,63129],"L12-1-N02":["L12",406797,94032],"L12-1-N03":["L12",500829,107929],"L12-1-N04":["L12",608758,97872],"L12-2-01":["L12",706630,47587],"L12-2-02":["L12",754217,161689],"L12-2-03":["L12",915906,143769],"L12-2-04":["L12",1059675,76661],"L12-2-05":["L12",1136336,38627],"L12-2-06":["L12",1174963,85621],"L12-3-01":["L12",1260584,104638],"L12-3-02":["L12",1365222,138284],"L12-3-03":["L12",1503506,110855],"L12-3-04":["L12",1614361,146147],"L12-3-05":["L12",1760508,152181],"L12-3-06":["L12",1912689,132615],"L12-3-07":["L12",2045304,104089],"L12-4-01":["L12",2149393,148341],"L12-4-02":["L12",2297734,49781],"L12-4-03":["L12",2347515,189849],"L12-4-04":["L12",2537364,81049],"L12-4-05":["L12",2618413,169004],"L12-5-01":["L12",2787417,150535],"L12-5-02":["L12",2937952,143769],"L12-5-03":["L12",3081721,110855],"L12-5-04":["L12",3192576,102444],"L12-5-N01":["L12",3295020,137735],"L12-5-N02":["L12",3432755,125849],"L12-5-N03":["L12",3558604,115792],"L12-5-N04":["L12",3674396,185278],"L12-AI-01":["L12",3859674,65507],"L12-AI-02":["L12",3925181,87815],"L12-AI-03":["L12",4012996,43564],"L12-AI-N01":["L12",4056560,64409]}</script>
-<script type="application/json" id="m2m-meta">{"built":"2026-10-17 22:51","items":620,"realItems":620,"sampleCats":[],"voice":119,"voiceSource":"voice/lines.json","audio":119,"sfx":["bear","bell_close","bell_open","bull","cash","cheer","groan","ticker_loop","whoosh"],"music":["outro","stinger","theme"],"questionsRead":461}</script>
+<script type="application/json" id="m2m-meta">{"built":"2026-10-18 10:13","items":620,"realItems":620,"sampleCats":[],"voice":119,"voiceSource":"voice/lines.json","audio":119,"sfx":["bear","bell_close","bell_open","bull","cash","cheer","groan","ticker_loop","whoosh"],"music":["outro","stinger","theme"],"questionsRead":461,"v3":true}</script>
 <script>
 /* MARK TO MARKET — shared helpers for number generators.
  * Works in the browser (window.M2M_H) and in Node (require('./helpers.js')).
@@ -6788,7 +7004,7 @@ try {
 </script>
 <script src="three-lite.min.js"></script>
 <script>
-window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3U", "authDomain": "mark-to-market-188f3.firebaseapp.com", "databaseURL": "https://mark-to-market-188f3-default-rtdb.firebaseio.com", "projectId": "mark-to-market-188f3", "storageBucket": "mark-to-market-188f3.firebasestorage.app", "messagingSenderId": "500954135261", "appId": "1:500954135261:web:852c761533697dcb6d7934"}};
+window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3U", "authDomain": "mark-to-market-188f3.firebaseapp.com", "databaseURL": "https://mark-to-market-188f3-default-rtdb.firebaseio.com", "projectId": "mark-to-market-188f3", "storageBucket": "mark-to-market-188f3.firebasestorage.app", "messagingSenderId": "500954135261", "appId": "1:500954135261:web:852c761533697dcb6d7934"}, "sdk": "fb-v3.js"};
 </script>
 <script>
 /* ---- util.js ---- */
@@ -12788,9 +13004,47 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     afterLock();
   }
 
+  // ---- v3: the server checks the answer --------------------------------------------------
+  async function remoteCheck() {
+    const c = cs, pk = c.picks[0];
+    c.phase = "checking";
+    stopClock();
+    A().heartbeat(false);
+    const area = c.els.bet;
+    let note = area.querySelector(".chk-note");
+    if (!note) { note = h("p.chk-note", { role: "status" }); area.appendChild(note); }
+    U.clear(note).append("Checking with the desk…");
+    area.classList.add("on");
+    let res;
+    try {
+      res = await c.opts.check({ chosen: pk.chosen, typed: pk.typed, bet: pk.bet, half: c.half, timeout: !!(pk.timeout || (pk.chosen == null && pk.typed == null)) });
+    } catch (e) {
+      if (cs !== c) return;
+      U.clear(note).append((e && e.message) || "Could not reach the desk.");
+      const retry = h("button.btn-ink.chk-retry", { type: "button" }, "Try again");
+      retry.addEventListener("click", () => remoteCheck());
+      note.appendChild(retry);
+      try { retry.focus({ preventScroll: true }); } catch (x) { retry.focus(); }
+      return;
+    }
+    if (cs !== c) return;
+    note.remove();
+    const it = c.item, rv = res.reveal || {};
+    it.answer = rv.answer; it.explain = rv.explain || ""; it.ref = rv.ref || "";
+    (rv.whys || []).forEach((w, i) => { if (it.options[i]) it.options[i].why = w || ""; });
+    if (pk.typed != null) {
+      pk.match = res.match || { ok: false, path: null, optIndex: -1 };
+      pk.chosen = pk.match.optIndex >= 0 ? pk.match.optIndex : null;
+    }
+    c.checked = true;
+    c.phase = "bet";
+    reveal();
+  }
+
   // ---- reveal ----------------------------------------------------------------------------
   function reveal() {
-    if (!cs || cs.phase === "reveal" || cs.phase === "done") return;
+    if (!cs || cs.phase === "reveal" || cs.phase === "done" || cs.phase === "checking") return;
+    if (cs.opts.check && !cs.checked) { remoteCheck(); return; }
     cs.phase = "reveal";
     A().heartbeat(false);
     stopClock();
@@ -14603,12 +14857,17 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       name: "firebase",
       get uid() { return uid; },
       async signIn() {
-        app = FB.initializeApp(c.firebase);
-        auth = FB.getAuth(app);
-        db = FB.getDatabase(app);
-        if (c.emulator) {
-          FB.connectAuthEmulator(auth, c.emulator.auth, { disableWarnings: true });
-          FB.connectDatabaseEmulator(db, c.emulator.dbHost, c.emulator.dbPort);
+        // v3: share the account's app, so a signed-in player sits down under their own account
+        const shared = M2M.acct && M2M.acct.handles ? await M2M.acct.handles() : null;
+        if (shared) { app = shared.app; auth = shared.auth; db = shared.db; }
+        else {
+          app = FB.initializeApp(c.firebase);
+          auth = FB.getAuth(app);
+          db = FB.getDatabase(app);
+          if (c.emulator) {
+            FB.connectAuthEmulator(auth, c.emulator.auth, { disableWarnings: true });
+            FB.connectDatabaseEmulator(db, c.emulator.dbHost, c.emulator.dbPort);
+          }
         }
         await auth.authStateReady();
         if (!auth.currentUser) await FB.signInAnonymously(auth);
@@ -14649,7 +14908,9 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
 
   // =================================================================== reading the snapshot
   const pn = (obj, i) => (obj == null ? undefined : obj[i]);
-  const seatList = (snap) => [0, 1, 2].map((i) => pn(snap && snap.seats, i)).map((s, i) => (s && s.uid ? { slot: i, uid: s.uid, name: s.name } : null));
+  const seatList = (snap) => [0, 1, 2].map((i) => pn(snap && snap.seats, i)).map((s, i) => (s && s.uid ? { slot: i, uid: s.uid, name: s.name, a: s.a || null } : null));
+  /** v3: a signed-in player's seat carries their badge */
+  const seatRec = (uid, name) => { const a = M2M.acct && M2M.acct.seatAvatar ? M2M.acct.seatAvatar() : ""; return a ? { uid, name, a } : { uid, name }; };
   const rosterOf = (snap) => seatList(snap).filter(Boolean);
   const lockOf = (snap, uid, key) => { const t = snap && snap.p && snap.p[uid] && snap.p[uid].t; return t && t[key] ? t[key] : null; };
   const wagerOf = (snap, uid, key) => { const w = snap && snap.p && snap.p[uid] && snap.p[uid].w; return w && w[key] != null ? w[key] : null; };
@@ -14753,7 +15014,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       try {
         await b.set(code, "meta", { host: b.uid, v: 1, created: nowMs(), bets: s.bets !== false });
       } catch (e) { fl = null; continue; }
-      await b.set(code, "seats/0", { uid: b.uid, name });
+      await b.set(code, "seats/0", seatRec(b.uid, name));
       await openWatch(code);
       return code;
     }
@@ -14772,7 +15033,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       let slot = -1;
       for (let i = 0; i < 3; i++) {
         if (seatList(snap)[i]) continue;
-        try { await b.set(p.code, "seats/" + i, { uid: b.uid, name }); slot = i; break; } catch (e) { /* taken a moment ago: try the next */ }
+        try { await b.set(p.code, "seats/" + i, seatRec(b.uid, name)); slot = i; break; } catch (e) { /* taken a moment ago: try the next */ }
       }
       if (slot < 0) throw new Error("That floor is full.");
     }
@@ -14895,7 +15156,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     for (let i = 0; i < 3; i++) {
       const s = seats[i];
       rows.appendChild(h("div.pl-row" + (s ? "" : ".ol-empty"), { style: { "--pc": E().COLORS[i] } },
-        h("i.pl-chip"), h("span.pl-label", { text: "Seat " + (i + 1) }),
+        s && s.a && M2M.avatar && M2M.avatar.decode(s.a) ? M2M.avatar.el(M2M.avatar.decode(s.a), { size: 28, handle: s.name, cls: "ol-av" }) : h("i.pl-chip"),
+        h("span.pl-label", { text: "Seat " + (i + 1) }),
         h("span.ol-seat", { text: s ? s.name + (s.uid === fl.uid ? " (you)" : "") + (i === 0 ? " · host" : "") : "waiting…" })));
     }
     viewLobby.appendChild(rows);
@@ -15134,13 +15396,14 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     return { v: 1, theta: {}, cal: {}, hist: {}, days: [], answered: 0, right: 0, sessions: 0, created: Date.now() };
   }
   function load() {
+    if (TR.remote) return TR.remote.record(); // v3, signed in: the server's record
     const r = U.store.get(KEY, null);
     if (!r || r.v !== 1 || typeof r.theta !== "object") return blank();
     for (const k of ["cal", "hist"]) if (!r[k] || typeof r[k] !== "object") r[k] = {};
     if (!Array.isArray(r.days)) r.days = [];
     return r;
   }
-  function save(r) { U.store.set(KEY, r); }
+  function save(r) { if (TR.remote) return; U.store.set(KEY, r); }
   TR.record = () => load();
   TR.reset = () => U.store.del(KEY);
 
@@ -15227,11 +15490,21 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   TR.next = async function () {
     if (!TR.isOn() || ses.busy || ses.ended || M2M.clue.isOpen()) return;
     const st = ses.st, r = load();
-    const cat = chooseCat(r, ses.cats, ses.recent, ses.rng);
-    const L = r.theta[cat] || { t: 0 };
-    const tier = targetTier(L.t);
-    const item = D().trainPick(cat, tier, ses.rng, { exclude: ses.seen });
-    if (!item) { U.toast("No questions left for " + D().CATS[cat].tag + "."); return; }
+    let cat, item, served = null;
+    if (TR.remote) {
+      // v3, signed in: the server picks the question and keeps its key until the answer is in
+      ses.busy = true;
+      try { served = await TR.remote.serve(ses.cats, ses.n === 0); }
+      catch (err) { ses.busy = false; U.toast((err && err.message) || "Could not reach the desk."); render(); focusNext(); return; }
+      if (!TR.isOn() || ses.ended) { ses.busy = false; return; }
+      item = served.item; cat = item.cat;
+    } else {
+      cat = chooseCat(r, ses.cats, ses.recent, ses.rng);
+      const L = r.theta[cat] || { t: 0 };
+      const tier = targetTier(L.t);
+      item = D().trainPick(cat, tier, ses.rng, { exclude: ses.seen });
+      if (!item) { U.toast("No questions left for " + D().CATS[cat].tag + "."); return; }
+    }
     ses.busy = true;
     ses.n += 1;
     if (!item.gen) ses.seen.add(item.id);
@@ -15243,7 +15516,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     document.documentElement.classList.add("dof");
     M2M.floor.pause(true);
     try {
-      await M2M.clue.open(cell, { kind: "mc" });
+      await M2M.clue.open(cell, { kind: "mc", check: served ? served.check : null });
     } catch (e) {
       console.warn("[m2m] training clue failed", e);
     }
@@ -15253,9 +15526,11 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const e = st.log.filter((x) => x.key === cell.key).pop();
     if (e) {
       const y = e.correct ? 1 : 0;
-      const r2 = load();
-      learn(r2, cat, item.tier, y, st.bets && !e.timeout ? e.bet : null, item.id, !!item.gen);
-      save(r2);
+      if (!served) {
+        const r2 = load();
+        learn(r2, cat, item.tier, y, st.bets && !e.timeout ? e.bet : null, item.id, !!item.gen);
+        save(r2);
+      }
       ses.right += y;
       ses.pnl += e.delta;
       ses.streak = y ? ses.streak + 1 : 0;
@@ -15263,6 +15538,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     }
     ses.busy = false;
     render();
+    if (served && TR.remote && TR.remote.after) await TR.remote.after();
     focusNext();
   };
 
@@ -15356,7 +15632,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const acts = root.querySelector(".tr-actions");
     U.clear(acts);
     if (ses.ended) {
-      acts.appendChild(h("p.tr-done", { text: "Session closed: " + (ses.n) + " answered, " + ses.right + " right, " + U.signed(ses.pnl) + ". Your record stays in this browser for next time." }));
+      acts.appendChild(h("p.tr-done", { text: "Session closed: " + (ses.n) + " answered, " + ses.right + " right, " + U.signed(ses.pnl) + (TR.remote ? ". Your record is saved to your account." : ". Your record stays in this browser for next time.") }));
       acts.appendChild(h("button.btn.btn-primary", { type: "button", dataset: { tr: "title" } }, "Back to the title"));
     } else {
       acts.appendChild(h("button.btn.btn-primary", { type: "button", dataset: { tr: "next" } }, ses.n ? "Next question" : "First question", h("kbd", { text: "Enter" })));
@@ -15390,6 +15666,1064 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         if (ses.ended) TR.leave(); else TR.next();
       }
     });
+  };
+})();
+
+/* ---- v3/avatar.js ---- */
+/* MARK TO MARKET v3 — avatar.js
+ * Trader badges: procedural inline SVG, no uploads. A badge is four small numbers, {s, c, p, g}:
+ *   s  base shape   hexagon, shield, coin, tile, diamond, octagon
+ *   c  color        the terminal palette: violet, bull, bear, gold, pool, wire, crimson, steel
+ *   p  pattern      plain, pinstripe, chart paper, candles, rays, LED dots
+ *   g  glyph        candles, bull, bear, arrow, chart, monogram, bell, bolt, ledger scale, gem
+ * Ranks add a rim (cosmetic): Senior Trader silver, Head of Desk gold, Market Maker gold with a crown notch.
+ * Drawn in a 64-unit box, so it stays crisp from 24 px (the header chip) to 128 px (the profile).
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h;
+  const AV = (M2M.avatar = {});
+
+  AV.SHAPES = ["Hexagon", "Shield", "Coin", "Tile", "Diamond", "Octagon"];
+  AV.COLORS = [
+    { name: "Violet", base: "#8B5CF6", ink: "#EEE7FF" },
+    { name: "Bull", base: "#1FCB7A", ink: "#E3FFF1" },
+    { name: "Bear", base: "#F0444E", ink: "#FFE6E8" },
+    { name: "Gold", base: "#F5B83D", ink: "#FFF6E0" },
+    { name: "Pool", base: "#2DD4BF", ink: "#E2FFFB" },
+    { name: "Wire", base: "#4CC3FF", ink: "#E4F6FF" },
+    { name: "Crimson", base: "#C43A32", ink: "#FFE9E6" },
+    { name: "Steel", base: "#8D99B3", ink: "#F4F6FB" }
+  ];
+  AV.PATTERNS = ["Plain", "Pinstripe", "Chart paper", "Candles", "Rays", "LED dots"];
+  AV.GLYPHS = ["Candles", "Bull", "Bear", "Arrow", "Chart", "Monogram", "Bell", "Bolt", "Scale", "Gem"];
+  AV.RANGE = { s: AV.SHAPES.length, c: AV.COLORS.length, p: AV.PATTERNS.length, g: AV.GLYPHS.length };
+  AV.DEFAULT = { s: 0, c: 0, p: 2, g: 3 };
+
+  AV.valid = (a) => !!a && ["s", "c", "p", "g"].every((k) => Number.isInteger(a[k]) && a[k] >= 0 && a[k] < AV.RANGE[k]);
+  AV.clean = (a) => (AV.valid(a) ? { s: a.s, c: a.c, p: a.p, g: a.g } : Object.assign({}, AV.DEFAULT));
+  /** "s.c.p.g", for an online seat */
+  AV.encode = (a) => (AV.valid(a) ? [a.s, a.c, a.p, a.g].join(".") : "");
+  AV.decode = (str) => {
+    const m = /^(\d)\.(\d)\.(\d)\.(\d)$/.exec(String(str || ""));
+    if (!m) return null;
+    const a = { s: +m[1], c: +m[2], p: +m[3], g: +m[4] };
+    return AV.valid(a) ? a : null;
+  };
+  AV.random = function (rng) {
+    rng = rng || Math.random;
+    const r = (n) => Math.floor(rng() * n);
+    return { s: r(AV.RANGE.s), c: r(AV.RANGE.c), p: r(AV.RANGE.p), g: r(AV.RANGE.g) };
+  };
+
+  // ---- color math -----------------------------------------------------------------------------
+  function hex(c) { const n = parseInt(c.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+  function mix(a, b, t) { const A = hex(a), B = hex(b); return "#" + A.map((x, i) => Math.round(x + (B[i] - x) * t).toString(16).padStart(2, "0")).join(""); }
+  const BG = "#0A0D14";
+
+  // ---- geometry (64 × 64) ---------------------------------------------------------------------
+  function poly(n, r, rot) {
+    const pts = [];
+    for (let i = 0; i < n; i++) { const a = rot + (i * 2 * Math.PI) / n; pts.push((32 + r * Math.cos(a)).toFixed(2) + " " + (32 + r * Math.sin(a)).toFixed(2)); }
+    return "M" + pts.join(" L") + " Z";
+  }
+  const SHAPE_D = [
+    poly(6, 30.5, -Math.PI / 2),
+    "M32 2.5 L56.5 10.5 V29.5 C56.5 45.5 46.5 56 32 61.5 C17.5 56 7.5 45.5 7.5 29.5 V10.5 Z",
+    null, // the coin is a circle
+    "M17 3 H47 C55.3 3 61 8.7 61 17 V47 C61 55.3 55.3 61 47 61 H17 C8.7 61 3 55.3 3 47 V17 C3 8.7 8.7 3 17 3 Z",
+    "M32 1.5 L62.5 32 L32 62.5 L1.5 32 Z",
+    poly(8, 30.5, Math.PI / 8)
+  ];
+  // how big the glyph sits in each shape (the diamond and shield have less room in the middle)
+  const GLYPH_FIT = [0.9, 0.84, 0.92, 0.96, 0.74, 0.92];
+  const GLYPH_DY = [0, -1.5, 0, 0, 0, 0];
+
+  function shapeEl(s, attrs) {
+    if (s === 2) return `<circle cx="32" cy="32" r="30" ${attrs}/>`;
+    return `<path d="${SHAPE_D[s]}" ${attrs}/>`;
+  }
+
+  function patternSvg(p, col, id) {
+    const line = mix(col.base, "#FFFFFF", 0.35);
+    switch (p) {
+      case 1: { // pinstripe
+        let d = "";
+        for (let x = -64; x < 64; x += 6) d += `M${x} 64 L${x + 64} 0 `;
+        return `<path d="${d}" stroke="${line}" stroke-width="1" opacity="0.16"/>`;
+      }
+      case 2: { // chart paper
+        let d = "";
+        for (let x = 8; x < 64; x += 8) d += `M${x} 0 V64 M0 ${x} H64 `;
+        return `<path d="${d}" stroke="${line}" stroke-width="0.6" opacity="0.2"/><path d="M0 46 L14 40 L24 44 L36 30 L48 33 L64 20" fill="none" stroke="${line}" stroke-width="1.2" opacity="0.28"/>`;
+      }
+      case 3: { // candle field along the bottom
+        let out = "";
+        const hs = [9, 14, 7, 18, 11, 22, 15, 26, 13, 20];
+        hs.forEach((hh, i) => {
+          const x = 3 + i * 6.3, top = 62 - hh;
+          out += `<path d="M${x + 1.6} ${top - 3} V${top + hh}" stroke="${line}" stroke-width="0.7" opacity="0.26"/>`;
+          out += `<rect x="${x}" y="${top}" width="3.2" height="${hh * 0.7}" rx="0.6" fill="${line}" opacity="${i % 3 === 1 ? 0.14 : 0.24}"/>`;
+        });
+        return out;
+      }
+      case 4: { // rays from below the glyph
+        let d = "";
+        for (let i = 0; i < 16; i++) {
+          const a0 = (i / 16) * Math.PI * 2, a1 = a0 + Math.PI / 32;
+          d += `M32 40 L${(32 + 60 * Math.cos(a0)).toFixed(1)} ${(40 + 60 * Math.sin(a0)).toFixed(1)} L${(32 + 60 * Math.cos(a1)).toFixed(1)} ${(40 + 60 * Math.sin(a1)).toFixed(1)} Z `;
+        }
+        return `<path d="${d}" fill="${line}" opacity="0.11"/>`;
+      }
+      case 5: { // LED dot matrix
+        let out = "";
+        for (let y = 5; y < 64; y += 5) for (let x = 5; x < 64; x += 5) out += `<circle cx="${x}" cy="${y}" r="${(x + y) % 10 === 0 ? 0.95 : 0.7}"/>`;
+        return `<g fill="${line}" opacity="0.22">${out}</g>`;
+      }
+      default: return "";
+    }
+  }
+
+  function glyphSvg(g, ink, dark, letter) {
+    switch (g) {
+      case 0: // two candles: one filled (up), one hollow (down)
+        return `<path d="M25 13 V51 M39 18 V47" stroke="${ink}" stroke-width="2.4" stroke-linecap="round"/>` +
+          `<rect x="20" y="21" width="10" height="21" rx="2" fill="${ink}"/>` +
+          `<rect x="34.2" y="26.2" width="9.6" height="13.6" rx="2" fill="${dark}" stroke="${ink}" stroke-width="2.4"/>`;
+      case 1: // bull: swept horns and a nose ring
+        return `<path d="M23.5 25 C15.5 25.5 10 20 9.5 10 C13.5 16.5 18.5 18.6 26.5 19 Z M40.5 25 C48.5 25.5 54 20 54.5 10 C50.5 16.5 45.5 18.6 37.5 19 Z" fill="${ink}"/>` +
+          `<path d="M24.5 20.5 H39.5 C41.9 20.5 43.4 22.5 43 24.8 L40.6 38.8 C39.9 43.6 36.3 46.8 32 46.8 C27.7 46.8 24.1 43.6 23.4 38.8 L21 24.8 C20.6 22.5 22.1 20.5 24.5 20.5 Z" fill="${ink}"/>` +
+          `<path d="M24.5 27.6 L29.6 29.6 M39.5 27.6 L34.4 29.6" stroke="${dark}" stroke-width="2.3" stroke-linecap="round"/>` +
+          `<ellipse cx="32" cy="40.2" rx="6.2" ry="3.7" fill="${dark}" opacity="0.5"/><circle cx="29.7" cy="40.2" r="1.15" fill="${ink}"/><circle cx="34.3" cy="40.2" r="1.15" fill="${ink}"/>` +
+          `<circle cx="32" cy="47.2" r="3.4" fill="none" stroke="${ink}" stroke-width="1.7"/>`;
+      case 2: // bear
+        return `<circle cx="20.5" cy="20.5" r="6.6" fill="${ink}"/><circle cx="43.5" cy="20.5" r="6.6" fill="${ink}"/>` +
+          `<circle cx="20.5" cy="20.5" r="3" fill="${dark}" opacity="0.5"/><circle cx="43.5" cy="20.5" r="3" fill="${dark}" opacity="0.5"/>` +
+          `<path d="M32 18.5 C41.5 18.5 47.5 25 47.5 33.5 C47.5 42.5 40.5 49 32 49 C23.5 49 16.5 42.5 16.5 33.5 C16.5 25 22.5 18.5 32 18.5 Z" fill="${ink}"/>` +
+          `<circle cx="26.6" cy="30.4" r="2" fill="${dark}"/><circle cx="37.4" cy="30.4" r="2" fill="${dark}"/>` +
+          `<ellipse cx="32" cy="39.4" rx="6.6" ry="5" fill="${dark}" opacity="0.4"/><path d="M29.2 37.2 H34.8 L32 40.4 Z" fill="${dark}"/>`;
+      case 3: // the ticker arrow
+        return `<path d="M32 12 L49.5 33.5 H39.5 V51.5 H24.5 V33.5 H14.5 Z" fill="${ink}" stroke="${ink}" stroke-width="1.6" stroke-linejoin="round"/>` +
+          `<path d="M28.5 38 H35.5 M28.5 43.5 H35.5" stroke="${dark}" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>`;
+      case 4: // a chart that goes up
+        return `<path d="M12 50 H52" stroke="${ink}" stroke-width="1.6" stroke-linecap="round" opacity="0.5"/>` +
+          `<path d="M13 43 L23 33 L30.5 38.5 L41 23.5 L50.5 18" fill="none" stroke="${ink}" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>` +
+          `<circle cx="50.5" cy="18" r="4.6" fill="${ink}"/><circle cx="50.5" cy="18" r="1.8" fill="${dark}"/>`;
+      case 5: // monogram: the handle's first letter
+        return `<text x="32" y="44.5" text-anchor="middle" font-family="Newsreader, Cambria, Georgia, serif" font-weight="600" font-size="35" fill="${ink}">${letter}</text>` +
+          `<path d="M19 50.5 H45" stroke="${ink}" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>`;
+      case 6: // the bell
+        return `<path d="M32 12.5 C30.2 12.5 29 13.7 29 15.5 V16.9 C22.7 18.4 19 24.1 19 30.8 V37.6 L15 43 H49 L45 37.6 V30.8 C45 24.1 41.3 18.4 35 16.9 V15.5 C35 13.7 33.8 12.5 32 12.5 Z" fill="${ink}"/>` +
+          `<path d="M27 47 C27 50 29.2 52 32 52 C34.8 52 37 50 37 47 Z" fill="${ink}"/><path d="M23 30 C23 25.5 25.4 22.5 28.5 21.4" fill="none" stroke="${dark}" stroke-width="1.6" stroke-linecap="round" opacity="0.4"/>`;
+      case 7: // the bolt (a bull run)
+        return `<path d="M36.5 10.5 L17.5 36.5 H30 L26.5 53.5 L46.5 26.5 H34 Z" fill="${ink}" stroke="${ink}" stroke-width="1.6" stroke-linejoin="round"/>`;
+      case 8: // the ledger scale: debits = credits
+        return `<path d="M32 15 V48 M22.5 50 H41.5 M15 22 H49" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/>` +
+          `<circle cx="32" cy="15" r="2.6" fill="${ink}"/>` +
+          `<path d="M15 22 L10 35 M15 22 L20 35 M49 22 L44 35 M49 22 L54 35" stroke="${ink}" stroke-width="1.4" opacity="0.8"/>` +
+          `<path d="M8.5 35 H21.5 C21.5 39 18.6 41.5 15 41.5 C11.4 41.5 8.5 39 8.5 35 Z M42.5 35 H55.5 C55.5 39 52.6 41.5 49 41.5 C45.4 41.5 42.5 39 42.5 35 Z" fill="${ink}"/>`;
+      case 9: // the gem
+        return `<path d="M19 23.5 L25.5 14.5 H38.5 L45 23.5 L32 51 Z" fill="${ink}"/>` +
+          `<path d="M19 23.5 H45 M25.5 14.5 L29 23.5 L32 51 L35 23.5 L38.5 14.5" fill="none" stroke="${dark}" stroke-width="1.3" stroke-linejoin="round" opacity="0.45"/>`;
+      default: return "";
+    }
+  }
+
+  let uid = 0;
+  /**
+   * The badge as an SVG string. o: {size (px), handle (for the monogram), tier (rank rim), title}
+   */
+  AV.svgString = function (a, o) {
+    o = o || {};
+    a = AV.clean(a);
+    const col = AV.COLORS[a.c];
+    const id = "m2mav" + ++uid;
+    const top = mix(col.base, BG, 0.38), bot = mix(col.base, BG, 0.78), dark = mix(col.base, BG, 0.86);
+    const edge = mix(col.base, "#FFFFFF", 0.18);
+    const letter = String(o.handle || "M").replace(/[^A-Za-z0-9]/g, "").charAt(0).toUpperCase() || "M";
+    const tier = o.tier | 0;
+    const rim = tier >= 5 ? "gold" : tier >= 4 ? "silver" : null;
+    const fit = GLYPH_FIT[a.s];
+    const gT = `translate(${32 - 32 * fit} ${32 - 32 * fit + GLYPH_DY[a.s]}) scale(${fit})`;
+    const size = o.size || 48;
+    const rimStops = rim === "gold"
+      ? '<stop offset="0" stop-color="#FFF1C2"/><stop offset="0.45" stop-color="#F5B83D"/><stop offset="1" stop-color="#9A6A12"/>'
+      : '<stop offset="0" stop-color="#FFFFFF"/><stop offset="0.5" stop-color="#C9D1E0"/><stop offset="1" stop-color="#6E7891"/>';
+    return `<svg class="av-svg" viewBox="0 0 64 64" width="${size}" height="${size}" role="img" aria-label="${o.title ? escapeAttr(o.title) : "Trader badge"}" xmlns="http://www.w3.org/2000/svg">` +
+      `<defs>` +
+      `<linearGradient id="${id}f" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${bot}"/></linearGradient>` +
+      `<radialGradient id="${id}g" cx="0.3" cy="0.18" r="0.75"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/><stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>` +
+      (rim ? `<linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="1">${rimStops}</linearGradient>` : "") +
+      `<clipPath id="${id}c">${shapeEl(a.s, "")}</clipPath>` +
+      `</defs>` +
+      `<g clip-path="url(#${id}c)">` +
+      shapeEl(a.s, `fill="url(#${id}f)"`) +
+      patternSvg(a.p, col, id) +
+      shapeEl(a.s, `fill="url(#${id}g)"`) +
+      `</g>` +
+      `<g transform="${gT}"><g transform="translate(0 1.4)" opacity="0.35">${glyphSvg(a.g, dark, dark, letter)}</g>${glyphSvg(a.g, col.ink, dark, letter)}</g>` +
+      shapeEl(a.s, `fill="none" stroke="${edge}" stroke-opacity="0.55" stroke-width="1.4" transform="translate(32 32) scale(0.93) translate(-32 -32)"`) +
+      (rim ? shapeEl(a.s, `fill="none" stroke="url(#${id}r)" stroke-width="3.2"`) : shapeEl(a.s, `fill="none" stroke="${col.base}" stroke-opacity="0.9" stroke-width="1.6"`)) +
+      (tier >= 6 ? `<path d="M24.5 12 L23.2 3.8 L28.2 7.4 L32 1.8 L35.8 7.4 L40.8 3.8 L39.5 12 Z" fill="url(#${id}r)" stroke="#0A0D14" stroke-width="0.9" stroke-linejoin="round"/>` : "") +
+      `</svg>`;
+  };
+  function escapeAttr(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+
+  /** the badge as an element (a span holding the SVG) */
+  AV.el = function (a, o) {
+    o = o || {};
+    const s = h("span.av" + (o.cls ? "." + o.cls : ""), { style: { "--av": (o.size || 48) + "px" } });
+    s.innerHTML = AV.svgString(a, o);
+    return s;
+  };
+
+  /**
+   * The picker: a big preview, then shape, color, pattern and glyph as rows of small swatches, and Shuffle.
+   * Returns {el, value(), set(a)}. onChange(a) fires on every change.
+   */
+  AV.picker = function (initial, opts) {
+    opts = opts || {};
+    let v = AV.clean(initial || AV.random());
+    const handle = () => (typeof opts.handle === "function" ? opts.handle() : opts.handle) || "M";
+    const preview = h("div.avp-preview");
+    const name = h("p.avp-name");
+    const rows = {};
+    const wrap = h("div.avp", { role: "group", "aria-label": "Trader badge" });
+    const paint = () => {
+      U.clear(preview).appendChild(AV.el(v, { size: opts.big || 112, handle: handle(), tier: opts.tier || 0, title: "Your badge" }));
+      name.textContent = AV.COLORS[v.c].name + " " + AV.SHAPES[v.s].toLowerCase() + " · " + AV.GLYPHS[v.g].toLowerCase() + (v.p ? " · " + AV.PATTERNS[v.p].toLowerCase() : "");
+      for (const k of ["s", "c", "p", "g"]) {
+        rows[k].querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", +b.dataset.v === v[k] ? "true" : "false"));
+      }
+    };
+    const set = (k, x) => { v = Object.assign({}, v, { [k]: x }); refreshSwatches(k); paint(); if (opts.onChange) opts.onChange(Object.assign({}, v)); };
+    // each swatch previews that choice on the current badge
+    const labels = { s: ["Shape", AV.SHAPES], c: ["Color", AV.COLORS.map((c) => c.name)], p: ["Pattern", AV.PATTERNS], g: ["Glyph", AV.GLYPHS] };
+    function refreshSwatches(changed) {
+      for (const k of ["s", "c", "p", "g"]) {
+        if (k === changed) continue;
+        rows[k].querySelectorAll("button").forEach((b) => {
+          const a = Object.assign({}, v, { [k]: +b.dataset.v });
+          b.innerHTML = AV.svgString(a, { size: 34, handle: handle(), title: labels[k][1][+b.dataset.v] });
+        });
+      }
+    }
+    const shuffle = h("button.btn.btn-quiet.avp-shuffle", { type: "button" }, h("span.avp-dice", { "aria-hidden": "true", text: "⚄" }), "Shuffle");
+    shuffle.addEventListener("click", () => {
+      v = AV.random();
+      refreshSwatches(null); paint();
+      if (M2M.audio && M2M.audio.select) M2M.audio.select();
+      preview.classList.remove("spin"); void preview.offsetWidth; preview.classList.add("spin");
+      if (opts.onChange) opts.onChange(Object.assign({}, v));
+    });
+    const top = h("div.avp-top", null, preview, h("div.avp-meta", null, name, shuffle, opts.note ? h("p.avp-note", { text: opts.note }) : null));
+    wrap.appendChild(top);
+    for (const k of ["s", "c", "p", "g"]) {
+      const row = h("div.avp-row", { role: "radiogroup", "aria-label": labels[k][0] });
+      for (let i = 0; i < AV.RANGE[k]; i++) {
+        const b = h("button.avp-sw", { type: "button", dataset: { v: String(i), k }, "aria-label": labels[k][0] + ": " + labels[k][1][i], title: labels[k][1][i] });
+        b.addEventListener("click", () => { set(k, i); if (M2M.audio && M2M.audio.select) M2M.audio.select(); });
+        row.appendChild(b);
+      }
+      rows[k] = row;
+      wrap.appendChild(h("div.avp-line", null, h("span.avp-label", { text: labels[k][0] }), row));
+    }
+    refreshSwatches(null);
+    paint();
+    return {
+      el: wrap,
+      value: () => Object.assign({}, v),
+      set: (a) => { v = AV.clean(a); refreshSwatches(null); paint(); },
+      refresh: () => { refreshSwatches(null); paint(); }
+    };
+  };
+})();
+
+/* ---- v3/account.js ---- */
+/* MARK TO MARKET v3 — account.js
+ * Accounts (opt-in), trader badges, Training synced to the server, ranks and the leaderboard.
+ * Guests keep playing everything exactly as before; nothing here runs until someone signs in.
+ *
+ * Credit needs identity (Sean, 18 Oct): an account is a verified @rice.edu email (password, or Google with a
+ * Rice account) plus a public handle and badge. Classmates see only the handle and badge; the email is kept
+ * server-side for Sean. Until the email is verified, Training stays in the browser and nothing earns credit.
+ * "Forgot password" sends Firebase's reset email.
+ * Signed-in Training asks the server for each question (serveQuestion: no key in the page) and sends the
+ * answer back (submitAnswer: the server checks it, times it, rates it, ranks it).
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h, AV = M2M.avatar;
+  const D = () => M2M.data;
+  const A = (M2M.acct = {});
+  const TRAIN_KEY = "m2m.train.v1", ASKED_KEY = "m2m.v3.importAsked";
+  const RICE = /^[^\s@]+@rice\.edu$/i;
+  const HANDLE_RE = /^[A-Za-z0-9_]{3,16}$/;
+
+  let FB = null, app = null, auth = null, db = null, fns = null;
+  let readyP = null, readyRes = null;
+  let user = null, profile = null, record = null, rankUpQ = null, busyAuth = false;
+
+  const cfg = () => window.M2M_NET || null;
+  A.available = () => !!(cfg() && cfg().firebase);
+  A.signedIn = () => !!(user && profile && profile.handle);
+  /** a verified Rice address: Training on the server, leaderboard, import */
+  A.verified = () => !!(A.signedIn() && user.emailVerified && RICE.test(user.email || ""));
+  A.email = () => (user && user.email) || "";
+  A.handle = () => (profile && profile.handle) || "";
+  A.avatar = () => (profile && AV.clean(profile.avatar)) || null;
+  A.tier = () => (record && record.rank ? record.rank.tier : 0);
+  A.record = () => record;
+
+  // =================================================================== backend
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement("script");
+      s.src = src; s.async = true;
+      s.onload = () => res(); s.onerror = () => rej(new Error("Could not load " + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function connect() {
+    const c = cfg();
+    if (!window.M2M_FB || !window.M2M_FB.v3) await loadScript(c.sdk || "fb-v3.js");
+    FB = window.M2M_FB;
+    app = FB.initializeApp(c.firebase);
+    auth = FB.getAuth(app);
+    db = FB.getDatabase(app);
+    fns = FB.getFunctions(app, c.region || "us-central1");
+    if (c.emulator) {
+      FB.connectAuthEmulator(auth, c.emulator.auth, { disableWarnings: true });
+      FB.connectDatabaseEmulator(db, c.emulator.dbHost, c.emulator.dbPort);
+      FB.connectFunctionsEmulator(fns, c.emulator.fnHost || c.emulator.dbHost, c.emulator.fnPort || 5001);
+    }
+    await auth.authStateReady();
+    FB.onAuthStateChanged(auth, (u) => { onUser(u); });
+    await onUser(auth.currentUser);
+  }
+
+  /** online.js shares this app (one sign-in, one database connection) */
+  A.handles = async function () {
+    if (!A.available()) return null;
+    try { await readyP; } catch (e) { return null; }
+    return app ? { app, auth, db } : null;
+  };
+
+  let lastUid = undefined;
+  async function onUser(u) {
+    const real = u && !u.isAnonymous ? u : null;
+    if ((real ? real.uid : null) === lastUid) return;
+    lastUid = real ? real.uid : null;
+    user = real;
+    profile = null; record = null;
+    if (real) {
+      try {
+        profile = (await FB.get(FB.ref(db, "players/" + real.uid + "/profile"))).val();
+        if (!profile && googleFlow) { hookTraining(); A.refresh(); return; } // the Google flow finishes the account
+        if (profile && profile.handle) {
+          const r = await call("getRecord", {});
+          record = r.record;
+          applySettings(profile.settings);
+          if (!U.store.get("m2m.nick", "")) U.store.set("m2m.nick", profile.handle.slice(0, 14));
+        }
+      } catch (e) { console.warn("[m2m] could not load the account", e); }
+    }
+    hookTraining();
+    A.refresh();
+  }
+
+  async function call(name, data) {
+    if (!fns) throw new Error("Accounts are not available in this copy of the game.");
+    try {
+      const r = await FB.httpsCallable(fns, name, { timeout: 20000 })(data || {});
+      return r.data;
+    } catch (e) {
+      const code = String((e && e.code) || "");
+      if (/unavailable|deadline|internal/.test(code) && !/[a-z]\s/.test((e && e.message) || "")) throw new Error("Could not reach the server. Check the connection and try again.");
+      throw new Error((e && e.message) || "Something went wrong. Try again.");
+    }
+  }
+  A._call = call;
+
+  // =================================================================== Training on the server
+  function trainShape(r) {
+    return { v: 1, theta: r.theta || {}, cal: r.cal || {}, hist: {}, days: r.days || [], answered: r.answered || 0, right: r.right || 0, sessions: r.sessions || 0, created: 0 };
+  }
+  function itemFrom(k) {
+    return {
+      id: k.id, cat: k.cat, tier: k.tier, topic: k.topic || "", type: k.type || "mc", ref: "", stem: k.stem,
+      exhibit: k.exhibit || null, memo: k.memo || null, options: k.options.map((o) => ({ text: o.text, why: "" })),
+      answer: -1, explain: "", num: k.num ? { unit: k.num.unit, decimals: k.num.decimals } : null,
+      gen: k.gen ? "server" : null, remote: true
+    };
+  }
+  const remote = {
+    record: () => trainShape(record || {}),
+    serve: async (cats, fresh) => {
+      const r = await call("serveQuestion", { cats, fresh: !!fresh });
+      record = r.record;
+      if (r.abandoned) U.toast("The question you left open counted as a miss.");
+      const item = itemFrom(r.item);
+      return {
+        item,
+        check: async (pick) => {
+          const res = await call("submitAnswer", { qid: r.qid, choice: pick.chosen, typed: pick.typed, bet: pick.bet, timeout: pick.timeout, half: !!pick.half });
+          record = res.record;
+          if (res.rankUp) rankUpQ = res.rankUp;
+          A.refresh();
+          return res;
+        }
+      };
+    },
+    after: async () => {
+      if (!rankUpQ) return;
+      const r = rankUpQ; rankUpQ = null;
+      await A.rankUp(r);
+    }
+  };
+  function hookTraining() {
+    if (!M2M.training) return;
+    M2M.training.remote = A.verified() ? remote : null;
+    const lede = document.querySelector("#scr-train .tr-lede");
+    if (lede) {
+      lede.textContent = "Each question is chosen for you: your weakest lecture first, pitched so you get about six in ten right. Leverage still counts, so every answer also tests whether your confidence is honest. " +
+        (A.verified() ? "Signed in as " + A.handle() + ": every answer is checked and saved to your account." : A.signedIn() ? "Verify your Rice email to save Training to your account; until then it stays in this browser." : "Your record stays in this browser.");
+    }
+  }
+
+  // =================================================================== settings follow the account
+  const SYNC = ["desk", "mask", "bets", "clock"];
+  let setT = 0;
+  A.settingsChanged = function (s) {
+    if (!A.signedIn()) return;
+    clearTimeout(setT);
+    setT = setTimeout(() => {
+      const out = {};
+      for (const k of SYNC) if (s[k] != null) out[k] = s[k];
+      FB.set(FB.ref(db, "players/" + user.uid + "/profile/settings"), out).catch(() => {});
+    }, 700);
+  };
+  function applySettings(ss) {
+    if (!ss || typeof ss !== "object" || M2M.state) return; // never in the middle of a game
+    const s = M2M.settings;
+    if (!s) return;
+    let changed = false;
+    if (D().DESKS[ss.desk] && ss.desk !== s.desk) { s.desk = ss.desk; changed = true; }
+    if (Number.isInteger(ss.mask) && ss.mask >= 1 && ss.mask <= D().ALL_MASK && ss.mask !== s.mask) { s.mask = ss.mask; changed = true; }
+    if (typeof ss.bets === "boolean" && ss.bets !== s.bets) { s.bets = ss.bets; changed = true; }
+    if (typeof ss.clock === "boolean" && ss.clock !== s.clock) { s.clock = ss.clock; changed = true; }
+    if (!changed) return;
+    U.store.set("m2m.settings.v2", s);
+    const val = { desk: s.desk, bets: s.bets ? "on" : "off", clock: s.clock ? "exam" : "off" };
+    U.$$(".settings input[type=radio]").forEach((r) => { if (r.name in val) r.checked = val[r.name] === r.value; });
+    try { M2M.screens.blurbs(); M2M.screens.syncLectures(); } catch (e) { /* title not built yet */ }
+  }
+
+  // =================================================================== the account bar (title) and the top-bar badge
+  A.refresh = function () {
+    const bar = document.getElementById("acct-bar");
+    const tbav = document.querySelector(".tb-av");
+    if (!bar) return;
+    if (!A.available()) { bar.hidden = true; if (tbav) tbav.hidden = true; return; }
+    bar.hidden = false;
+    U.clear(bar);
+    if (A.signedIn()) {
+      const rk = record && record.rank;
+      const chip = h("button.acct-chip", { type: "button", dataset: { acct: "profile" }, "aria-label": "Your profile: " + A.handle() + ", " + (rk ? rk.name : "Runner") },
+        AV.el(A.avatar(), { size: 34, handle: A.handle(), tier: A.tier() }),
+        h("span.ac-txt", null, h("b.ac-handle", { text: A.handle() }), h("span.ac-rank", null, h("i.ac-tier", { dataset: { t: String(A.tier()) } }), rk ? rk.name : "Runner")),
+        rk && rk.next ? h("span.ac-prog", { "aria-hidden": "true" }, h("i", { style: { width: Math.round(rk.progress * 100) + "%" } })) : null);
+      bar.append(chip);
+      if (!A.verified()) bar.append(h("button.btn.ac-verify", { type: "button", dataset: { acct: "verify" } }, "Verify your Rice email"));
+      bar.append(h("button.btn.btn-quiet.ac-lb", { type: "button", dataset: { acct: "leaderboard" } }, "Leaderboard"));
+    } else {
+      bar.append(
+        h("span.ac-pitch", { text: "Play for credit: sign in with your Rice email" }),
+        h("button.btn.btn-quiet.ac-in", { type: "button", dataset: { acct: "signin" } }, "Sign in"),
+        h("button.btn.ac-up", { type: "button", dataset: { acct: "create" } }, "Create account"));
+    }
+    if (tbav) {
+      U.clear(tbav);
+      tbav.hidden = !A.signedIn();
+      if (A.signedIn()) tbav.append(AV.el(A.avatar(), { size: 26, handle: A.handle(), tier: A.tier(), title: A.handle() }));
+    }
+    const pf = document.getElementById("scr-profile");
+    if (pf && !pf.hidden) renderProfile();
+  };
+
+  // =================================================================== the account screen: sign in / create / recover
+  let mode = "signin", picker = null, availT = 0, availSeq = 0;
+  A.open = function (m) {
+    mode = m || "signin";
+    if (!A.available()) { U.toast("Accounts are not available in this copy of the game."); return; }
+    M2M.screens.hideTitle();
+    M2M.screens.show("acct");
+    M2M.topbar.show(false);
+    M2M.panels.show(false);
+    renderAcct();
+  };
+
+  function field(id, label, attrs, hint) {
+    const inp = h("input.af-in#" + id, Object.assign({ type: "text", autocomplete: "off", spellcheck: "false" }, attrs || {}));
+    return { wrap: h("div.af", null, h("label.af-label", { for: id, text: label }), inp, hint ? h("p.af-hint#" + id + "-hint", { text: hint }) : null), inp };
+  }
+
+  function googleButton(say) {
+    const g = h("button.btn.acct-google", { type: "button" }, h("span.g-mark", { "aria-hidden": "true", text: "G" }), "Sign in with Google (Rice account)");
+    g.addEventListener("click", async () => {
+      g.disabled = true; say("Opening Google…");
+      try { await A.google(); say(""); } catch (err) { say((err && err.message) || "Could not sign in with Google.", true); }
+      g.disabled = false;
+    });
+    return g;
+  }
+  const authMsg = (err) => {
+    const c = String((err && (err.code || err.message)) || "");
+    if (/user-not-found|wrong-password|invalid-credential|INVALID_LOGIN/.test(c)) return "That email and password don't match.";
+    if (/too-many-requests/.test(c)) return "Too many tries. Wait a few minutes and try again.";
+    if (/popup-closed|cancelled-popup/.test(c)) return "The Google window closed before signing in.";
+    if (/popup-blocked/.test(c)) return "Your browser blocked the Google window. Allow pop-ups for this site and try again.";
+    return (err && err.message) || "Could not sign in.";
+  };
+
+  function renderAcct() {
+    const root = document.querySelector("#scr-acct .acct-wrap");
+    U.clear(root);
+    const tabs = h("div.acct-tabs", { role: "tablist", "aria-label": "Account" },
+      [["signin", "Sign in"], ["create", "Create account"], ["recover", "Forgot password"]].map(([k, t]) =>
+        h("button.acct-tab", { type: "button", role: "tab", "aria-selected": mode === k ? "true" : "false", dataset: { mode: k } }, t)));
+    tabs.addEventListener("click", (e) => { const b = e.target.closest("[data-mode]"); if (b) { mode = b.dataset.mode; renderAcct(); } });
+    root.append(h("p.eyebrow", null, "// trading account · optional · for credit"), h("h2.scr-h#acct-h", { text: mode === "create" ? "Open a trading account" : mode === "recover" ? "Reset your password" : "Sign in" }), tabs);
+    const msg = h("p.af-msg", { role: "status", "aria-live": "polite" });
+    const say = (t, bad) => { msg.textContent = t || ""; msg.classList.toggle("bad", !!bad); };
+    const body = h("form.acct-form", { novalidate: true });
+    root.appendChild(body);
+    const back = h("button.btn.btn-quiet", { type: "button" }, "Back to the title");
+    back.addEventListener("click", () => M2M.app.title());
+    const why = h("p.af-why", { text: "Use your Rice email. Your classmates only see your handle and badge. Prof. Wang sees your email so practice can count for credit." });
+    const guest = h("p.af-note", { text: "No account? You can still play everything as a guest. Guests just don't earn credit." });
+
+    if (mode === "signin") {
+      const fe = field("af-email", "Rice email", { type: "email", maxlength: "120", autocapitalize: "off", autocomplete: "username", placeholder: "netid@rice.edu" });
+      const fp = field("af-pass", "Password", { type: "password", maxlength: "128", autocomplete: "current-password" });
+      const go = h("button.btn.btn-primary", { type: "submit" }, "Sign in");
+      body.append(fe.wrap, fp.wrap, msg, h("div.row-actions", null, go, back), h("div.af-or", null, h("span", { text: "or" })), googleButton(say), guest);
+      body.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const em = fe.inp.value.trim();
+        if (!RICE.test(em)) { say("Use your Rice email (it ends in @rice.edu).", true); fe.inp.focus(); return; }
+        if (!fp.inp.value) { say("Type your password.", true); fp.inp.focus(); return; }
+        go.disabled = true; say("Signing in…");
+        try {
+          await FB.signInWithEmailAndPassword(auth, em, fp.inp.value);
+          await waitSignedIn();
+          say("");
+          afterSignIn(false);
+        } catch (err) { say(authMsg(err), true); go.disabled = false; }
+      });
+      setTimeout(() => fe.inp.focus(), 60);
+    }
+
+    if (mode === "create") {
+      const fe = field("af-email", "Rice email", { type: "email", maxlength: "120", autocapitalize: "off", autocomplete: "username", placeholder: "netid@rice.edu" }, "Only Prof. Wang sees it. We send a link to check it's yours.");
+      const fh = field("af-handle", "Handle", { maxlength: "16", autocapitalize: "off", autocomplete: "nickname" }, "3 to 16 letters, digits or underscores. This is what classmates see. Pick a trader name.");
+      const fp = field("af-pass", "Password", { type: "password", maxlength: "128", autocomplete: "new-password" }, "At least 8 characters. Not your NetID password.");
+      const fp2 = field("af-pass2", "Password again", { type: "password", maxlength: "128", autocomplete: "new-password" });
+      const avail = handleAvail(fh);
+      picker = AV.picker(AV.random(), { handle: () => fh.inp.value.trim() || "M", note: "Higher ranks add a silver or gold rim." });
+      const go = h("button.btn.btn-primary", { type: "submit" }, "Open my account");
+      body.append(why, h("div.acct-grid", null,
+        h("div.acct-col", null, fe.wrap, fh.wrap, fp.wrap, fp2.wrap),
+        h("div.acct-col.acct-badge", null, h("p.af-label", { text: "Your badge" }), picker.el)),
+        msg, h("div.row-actions", null, go, back), h("div.af-or", null, h("span", { text: "or" })), googleButton(say), guest);
+      fh.inp.addEventListener("input", () => { picker.refresh(); avail(); });
+      fe.inp.addEventListener("blur", () => { const v = fe.inp.value.trim(); if (v && !RICE.test(v)) say("Use your Rice email (it ends in @rice.edu).", true); else if (msg.classList.contains("bad")) say(""); });
+      body.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const em = fe.inp.value.trim(), hd = fh.inp.value.trim();
+        if (!RICE.test(em)) { say("Use your Rice email (it ends in @rice.edu).", true); fe.inp.focus(); return; }
+        if (!HANDLE_RE.test(hd)) { say("Handles are 3 to 16 letters, digits or underscores.", true); fh.inp.focus(); return; }
+        if (fp.inp.value.length < 8) { say("Passwords need at least 8 characters.", true); fp.inp.focus(); return; }
+        if (fp.inp.value !== fp2.inp.value) { say("The two passwords don't match.", true); fp2.inp.focus(); return; }
+        go.disabled = true; say("Opening your account…");
+        try {
+          await call("createPlayer", { email: em, handle: hd, password: fp.inp.value, avatar: picker.value() });
+          await FB.signInWithEmailAndPassword(auth, em, fp.inp.value);
+          await waitSignedIn();
+          try { await FB.sendEmailVerification(auth.currentUser); } catch (x) { /* the verify screen offers Resend */ }
+          say("");
+          showVerify(true);
+        } catch (err) { say((err && err.message) || "Could not open the account.", true); go.disabled = false; }
+      });
+      setTimeout(() => fe.inp.focus(), 60);
+    }
+
+    if (mode === "recover") {
+      const fe = field("af-email", "Rice email", { type: "email", maxlength: "120", autocapitalize: "off", autocomplete: "username", placeholder: "netid@rice.edu" });
+      const go = h("button.btn.btn-primary", { type: "submit" }, "Email me a reset link");
+      body.append(h("p.af-note.af-first", { text: "We'll email a link to set a new password. Signed up with Google? Just use Sign in with Google." }), fe.wrap, msg, h("div.row-actions", null, go, back));
+      body.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const em = fe.inp.value.trim();
+        if (!RICE.test(em)) { say("Use your Rice email (it ends in @rice.edu).", true); fe.inp.focus(); return; }
+        go.disabled = true; say("Sending…");
+        try { await FB.sendPasswordResetEmail(auth, em); } catch (err) { if (!/user-not-found/.test(String(err && err.code))) { say(authMsg(err), true); go.disabled = false; return; } }
+        // the same answer whether or not the address has an account
+        say("If that address has an account, a reset link is on its way. Check your Rice inbox (and junk folder).");
+        go.disabled = false;
+      });
+      setTimeout(() => fe.inp.focus(), 60);
+    }
+  }
+
+  function handleAvail(fh) {
+    const avail = h("span.af-avail", { "aria-live": "polite" });
+    fh.wrap.querySelector(".af-label").appendChild(avail);
+    return () => {
+      clearTimeout(availT);
+      const v = fh.inp.value.trim(), seq = ++availSeq;
+      avail.textContent = ""; avail.className = "af-avail";
+      if (!v) return;
+      if (!HANDLE_RE.test(v)) { avail.textContent = "3–16 letters, digits, _"; avail.classList.add("bad"); return; }
+      availT = setTimeout(async () => {
+        try {
+          const taken = (await FB.get(FB.ref(db, "handles/" + v.toLowerCase()))).exists();
+          if (seq !== availSeq) return;
+          avail.textContent = taken ? "taken" : "available";
+          avail.classList.add(taken ? "bad" : "ok");
+        } catch (e) { /* the server will say */ }
+      }, 350);
+    };
+  }
+
+  // ---- Google: accepted only for a verified @rice.edu account ----------------------------------
+  let googleFlow = false;
+  A.google = async function (testCredential) {
+    googleFlow = true;
+    try {
+      if (testCredential) await FB.signInWithCredential(auth, FB.GoogleAuthProvider.credential(testCredential)); // tests only
+      else {
+        const prov = new FB.GoogleAuthProvider();
+        prov.setCustomParameters({ hd: "rice.edu", prompt: "select_account" });
+        await FB.signInWithPopup(auth, prov);
+      }
+      const u = auth.currentUser;
+      if (!u || !u.emailVerified || !RICE.test(u.email || "")) {
+        await FB.signOut(auth);
+        throw new Error("Use your Rice email and a password instead.");
+      }
+      const prof = (await FB.get(FB.ref(db, "players/" + u.uid + "/profile"))).val();
+      if (prof && prof.handle) { lastUid = undefined; await onUser(u); await waitSignedIn(); afterSignIn(false); return; }
+      showFinish();
+    } finally { googleFlow = false; }
+  };
+
+  /** a Google sign-in with no player yet: pick a handle and a badge */
+  function showFinish() {
+    M2M.screens.show("acct");
+    const root = document.querySelector("#scr-acct .acct-wrap");
+    U.clear(root);
+    const msg = h("p.af-msg", { role: "status", "aria-live": "polite" });
+    const say = (t, bad) => { msg.textContent = t || ""; msg.classList.toggle("bad", !!bad); };
+    const fh = field("af-handle", "Handle", { maxlength: "16", autocapitalize: "off", autocomplete: "nickname" }, "3 to 16 letters, digits or underscores. This is what classmates see.");
+    const avail = handleAvail(fh);
+    picker = AV.picker(AV.random(), { handle: () => fh.inp.value.trim() || "M" });
+    fh.inp.addEventListener("input", () => { picker.refresh(); avail(); });
+    const go = h("button.btn.btn-primary", { type: "submit" }, "Open my account");
+    const cancel = h("button.btn.btn-quiet", { type: "button" }, "Cancel");
+    cancel.addEventListener("click", async () => { await FB.signOut(auth); M2M.app.title(); });
+    const form = h("form.acct-form", { novalidate: true }, h("div.acct-grid", null, h("div.acct-col", null, fh.wrap), h("div.acct-col.acct-badge", null, h("p.af-label", { text: "Your badge" }), picker.el)), msg, h("div.row-actions", null, go, cancel));
+    root.append(h("p.eyebrow", null, "// signed in with Google · " + (auth.currentUser && auth.currentUser.email)), h("h2.scr-h#acct-h", { text: "Pick your handle" }),
+      h("p.af-why", { text: "Your classmates only see your handle and badge. Prof. Wang sees your email so practice can count for credit." }), form);
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const hd = fh.inp.value.trim();
+      if (!HANDLE_RE.test(hd)) { say("Handles are 3 to 16 letters, digits or underscores.", true); fh.inp.focus(); return; }
+      go.disabled = true; say("Opening your account…");
+      try {
+        await call("createPlayer", { handle: hd, avatar: picker.value() });
+        lastUid = undefined; await onUser(auth.currentUser); await waitSignedIn();
+        afterSignIn(true);
+      } catch (err) { say((err && err.message) || "Could not open the account.", true); go.disabled = false; }
+    });
+    setTimeout(() => fh.inp.focus(), 60);
+  }
+
+  function waitSignedIn() {
+    return new Promise((res, rej) => {
+      const t0 = Date.now();
+      const tick = () => {
+        if (A.signedIn() && record) return res();
+        if (Date.now() - t0 > 15000) return rej(new Error("Signed in, but the account did not load. Reload the page."));
+        setTimeout(tick, 80);
+      };
+      tick();
+    });
+  }
+
+  /** "check your Rice inbox": resend, and "I've verified" re-reads the account */
+  function showVerify(fresh) {
+    M2M.screens.hideTitle();
+    M2M.screens.show("acct");
+    M2M.topbar.show(false);
+    const root = document.querySelector("#scr-acct .acct-wrap");
+    U.clear(root);
+    const msg = h("p.af-msg", { role: "status", "aria-live": "polite" });
+    const say = (t, bad) => { msg.textContent = t || ""; msg.classList.toggle("bad", !!bad); };
+    const done = h("button.btn.btn-primary", { type: "button" }, "I've verified");
+    const resend = h("button.btn", { type: "button" }, "Resend the email");
+    const later = h("button.btn.btn-quiet", { type: "button" }, "Later");
+    root.append(
+      h("p.eyebrow", null, (fresh ? "// account open · " : "// almost there · ") + A.handle()),
+      h("h2.scr-h#acct-h", { text: "Check your Rice inbox" }),
+      h("div.vf-box", null, AV.el(A.avatar(), { size: 64, handle: A.handle(), tier: A.tier() }),
+        h("div.vf-main", null, h("p.vf-line", null, "We sent a link to ", h("b.vf-email", { text: A.email() }), "."),
+          h("p.vf-sub", { text: "Open it, then come back and tap \"I've verified\". No email after a few minutes? Check junk, then resend." }))),
+      h("p.af-note", { text: "Until you verify, you can play everything, but Training stays in this browser and nothing counts for credit." }),
+      msg, h("div.row-actions", null, done, resend, later));
+    done.addEventListener("click", async () => {
+      done.disabled = true; say("Checking…");
+      try {
+        await FB.reload(auth.currentUser);
+        await auth.currentUser.getIdToken(true); // a fresh token carries email_verified to the server
+        user = auth.currentUser;
+        if (!A.verified()) { say("Not verified yet. Open the link in the email first.", true); done.disabled = false; return; }
+        hookTraining(); A.refresh();
+        say("");
+        afterSignIn(fresh);
+      } catch (err) { say(authMsg(err), true); done.disabled = false; }
+    });
+    resend.addEventListener("click", async () => {
+      resend.disabled = true;
+      try { await FB.sendEmailVerification(auth.currentUser); say("Sent again. Check your Rice inbox."); }
+      catch (err) { say(/too-many-requests/.test(String(err && err.code)) ? "Already sent a moment ago. Give it a few minutes." : authMsg(err), true); }
+      setTimeout(() => { resend.disabled = false; }, 4000);
+    });
+    later.addEventListener("click", () => M2M.app.title());
+    setTimeout(() => done.focus(), 60);
+  }
+  A.openVerify = () => showVerify(false);
+
+  /** after signing in: offer to bring the browser's Training record in (once), else go to the title */
+  function afterSignIn(fresh) {
+    if (!A.verified()) { showVerify(fresh); return; }
+    const local = U.store.get(TRAIN_KEY, null);
+    const asked = U.store.get(ASKED_KEY, {}) || {};
+    if (record && !record.imported && local && local.answered > 0 && !asked[user.uid]) { showImport(local); return; }
+    M2M.app.title();
+    U.toast((fresh ? "Account open. " : "") + "Signed in as " + A.handle() + ".");
+  }
+
+  function localSummary(local) {
+    const cats = Object.keys(local.theta || {}).filter((c) => local.theta[c] && local.theta[c].n > 0);
+    return { answered: local.answered || 0, lectures: cats.length, days: (local.days || []).length };
+  }
+
+  function showImport(local) {
+    M2M.screens.show("acct");
+    const root = document.querySelector("#scr-acct .acct-wrap");
+    U.clear(root);
+    const s = localSummary(local);
+    const msg = h("p.af-msg", { role: "status" });
+    const yes = h("button.btn.btn-primary", { type: "button" }, "Bring it in");
+    const no = h("button.btn.btn-quiet", { type: "button" }, "Not now");
+    root.append(
+      h("p.eyebrow", null, "// this browser has a Training record"),
+      h("h2.scr-h#acct-h", { text: "Bring your Training record in?" }),
+      h("div.imp-sum", null,
+        h("div.tr-stat", null, h("span", { text: "Answered" }), h("b", { text: String(s.answered) })),
+        h("div.tr-stat", null, h("span", { text: "Lectures" }), h("b", { text: String(s.lectures) })),
+        h("div.tr-stat", null, h("span", { text: "Days" }), h("b", { text: String(s.days) }))),
+      h("p.af-note", { text: "Your ratings and calibration come with you. Each account can do this once. Imported answers were checked in this browser, so they don't count toward a rank: ranks need answers the server checked. Your browser copy stays as it is." }),
+      msg, h("div.row-actions", null, yes, no));
+    const mark = () => { const a = U.store.get(ASKED_KEY, {}) || {}; a[user.uid] = Date.now(); U.store.set(ASKED_KEY, a); };
+    yes.addEventListener("click", async () => {
+      yes.disabled = true; no.disabled = true; msg.textContent = "Bringing it in…";
+      try {
+        const r = await call("importTraining", { record: local });
+        record = r.record; mark(); A.refresh();
+        M2M.app.title();
+        U.toast("Brought in " + r.answers + " answers across " + r.lectures + " lecture" + (r.lectures === 1 ? "" : "s") + ".");
+      } catch (err) { msg.textContent = (err && err.message) || "Could not bring it in."; msg.classList.add("bad"); yes.disabled = false; no.disabled = false; }
+    });
+    no.addEventListener("click", () => { mark(); M2M.app.title(); U.toast("Signed in as " + A.handle() + ". You can bring it in later from your profile."); });
+    setTimeout(() => yes.focus(), 60);
+  }
+
+  // =================================================================== profile
+  A.openProfile = async function () {
+    if (!A.signedIn()) { A.open("signin"); return; }
+    M2M.screens.hideTitle();
+    M2M.screens.show("profile");
+    M2M.topbar.show(false);
+    M2M.panels.show(false);
+    renderProfile();
+    try { record = (await call("getRecord", {})).record; renderProfile(); A.refresh(); } catch (e) { /* show what we have */ }
+  };
+
+  function rankBlock(rk, big) {
+    const ladder = (record && record.tiers) || [];
+    const box = h("div.rk" + (big ? ".rk-big" : ""));
+    box.append(h("div.rk-top", null, h("span.rk-name", { dataset: { t: String(rk.tier) }, text: rk.name }), rk.next ? h("span.rk-next", { text: "next: " + rk.next.name }) : h("span.rk-next", { text: "top of the ladder" })));
+    if (rk.next) {
+      box.append(h("div.rk-bar", { role: "progressbar", "aria-valuemin": "0", "aria-valuemax": "100", "aria-valuenow": String(Math.round(rk.progress * 100)), "aria-label": "Progress to " + rk.next.name },
+        h("i", { style: { width: Math.round(rk.progress * 100) + "%" } })));
+      const scoreOk = rk.next.scoreNow >= rk.next.score, covOk = rk.next.covNow >= rk.next.cov;
+      box.append(h("ul.rk-need", null,
+        h("li" + (scoreOk ? ".met" : ""), null, h("b", { text: "Rating " + U.pct(rk.next.scoreNow) }), " of " + U.pct(rk.next.score) + " needed"),
+        h("li" + (covOk ? ".met" : ""), null, h("b", { text: rk.next.covNow + " of " + rk.next.cov }), " lectures with " + ((record && record.minN) || 5) + "+ answers checked")));
+    }
+    if (big && ladder.length) {
+      box.append(h("ol.rk-ladder", { "aria-label": "The ladder" }, ladder.map((T, i) => h("li" + (i === rk.tier ? ".on" : i < rk.tier ? ".past" : ""), { dataset: { t: String(i) } },
+        h("span.rl-name", { text: T.name }), h("span.rl-req", { text: i === 0 ? "start" : U.pct(T.score) + " · " + T.cov + " lec" })))));
+    }
+    return box;
+  }
+
+  function renderProfile() {
+    const root = document.querySelector("#scr-profile .pf-wrap");
+    if (!root || !A.signedIn()) return;
+    const r = record || { theta: {}, cal: {}, days: [], answered: 0, right: 0, sessions: 0, rank: { tier: 0, name: "Runner", progress: 0, next: null }, released: [] };
+    const rk = r.rank;
+    U.clear(root);
+    const head = h("header.pf-head", null,
+      AV.el(A.avatar(), { size: 112, handle: A.handle(), tier: rk.tier, title: A.handle() + "'s badge", cls: "pf-av" }),
+      h("div.pf-id", null, h("p.eyebrow", null, "// trader profile"), h("h2.scr-h.pf-h#pf-h", { text: A.handle() }), rankBlock(rk, false)));
+    root.appendChild(head);
+    if (!A.verified()) {
+      const vb = h("button.btn.btn-primary", { type: "button" }, "Verify now");
+      vb.addEventListener("click", () => A.openVerify());
+      root.appendChild(h("div.pf-unverified", { role: "note" }, h("p", null, h("b", { text: "Your Rice email isn't verified yet." }), " Until it is, Training stays in this browser and nothing counts for credit."), vb));
+    }
+    root.appendChild(h("p.pf-email", null, "Signed in as ", h("b", { text: A.email() }), " · only you and Prof. Wang see this"));
+    const stat = (label, val) => h("div.tr-stat", null, h("span", { text: label }), h("b", { text: val }));
+    root.appendChild(h("div.tr-stats.pf-stats", { role: "group", "aria-label": "Totals" },
+      stat("Answered", String(r.answered)), stat("Right", r.answered ? U.pct(r.right / r.answered) : "—"),
+      stat("Days practiced", String((r.days || []).length)), stat("Sessions", String(r.sessions || 0))));
+    // the ladder
+    root.appendChild(h("section.tr-panel", { "aria-labelledby": "pf-rank-h" }, h("h3#pf-rank-h.tr-h", null, "Rank", h("span.tr-h-note", { text: "your rating across lectures, and how many lectures it covers" })), rankBlock(rk, true)));
+    // heat map
+    const CATS = D().CATS;
+    const cats = (r.released && r.released.length ? r.released : Object.keys(r.theta)).filter((c) => CATS[c]);
+    const minN = r.minN || 5;
+    const rows = cats.map((c) => {
+      const L = r.theta[c];
+      const has = L && L.n > 0;
+      const v = has ? 1 / (1 + Math.exp(-L.t)) : null;
+      const tone = v == null ? "none" : v >= 0.75 ? "up" : v >= 0.55 ? "mid" : "dn";
+      const counts = L && (L.s || 0) >= minN;
+      return h("li.tr-row.t-" + tone + (counts ? ".pf-counts" : ""), { dataset: { cat: c } },
+        h("span.tr-tag", { text: CATS[c].tag }), h("span.tr-name", { text: CATS[c].name }),
+        h("span.tr-bar", { "aria-hidden": "true" }, h("i", { style: { width: (v == null ? 0 : Math.round(v * 100)) + "%" } })),
+        h("span.tr-val", { text: v == null ? "—" : U.pct(v) }),
+        h("span.tr-n", { text: has ? L.n + " answered" + (counts ? " · counts" : " · " + Math.max(0, minN - (L.s || 0)) + " to count") : "not yet" }));
+    });
+    root.appendChild(h("section.tr-panel", { "aria-labelledby": "pf-heat-h" },
+      h("h3#pf-heat-h.tr-h", null, "By lecture", h("span.tr-h-note", { text: "expected share right on a middle-difficulty question · same on every device" })),
+      h("ol.tr-heat", null, rows)));
+    // calibration
+    const tot = { H: { n: 0, k: 0 }, L: { n: 0, k: 0 }, C: { n: 0, k: 0 } };
+    for (const c of Object.keys(r.cal || {})) for (const b of ["H", "L", "C"]) { const x = r.cal[c][b]; if (x) { tot[b].n += x.n || 0; tot[b].k += x.k || 0; } }
+    const LEV = M2M.engine.LEV;
+    root.appendChild(h("section.tr-panel", { "aria-labelledby": "pf-cal-h" },
+      h("h3#pf-cal-h.tr-h", null, "Calibration", h("span.tr-h-note", { text: "does your leverage match how often you're right?" })),
+      h("table.tr-cal-t", null,
+        h("thead", null, h("tr", null, h("th", { text: "Bet" }), h("th", { text: "Best when you're" }), h("th", { text: "You were right" }), h("th", { text: "" }))),
+        h("tbody", null, ["H", "L", "C"].map((b) => {
+          const t = tot[b], rate = t.n ? t.k / t.n : null;
+          const verdict = rate == null ? "" : t.n < 4 ? "too few to judge" : rate < LEV[b].lo - 0.05 ? "overconfident" : rate > LEV[b].hi + 0.05 ? "underconfident" : "well calibrated";
+          return h("tr", null, h("th", { text: LEV[b].x + " " + LEV[b].name }), h("td", { text: LEV[b].band }), h("td", { text: t.n ? U.pct(rate) + " of " + t.n : "—" }),
+            h("td.tr-verdict" + (verdict === "overconfident" ? ".dn" : verdict === "well calibrated" ? ".up" : ""), { text: verdict }));
+        })))));
+    // badge editor + leaderboard opt-in
+    const edit = h("section.tr-panel.pf-badge", { "aria-labelledby": "pf-badge-h" });
+    const ed = AV.picker(A.avatar(), { handle: A.handle(), tier: rk.tier, big: 96, note: rk.tier >= 4 ? "Your rank adds the rim." : "Senior Trader adds a silver rim; Head of Desk, gold." });
+    const save = h("button.btn.btn-primary", { type: "button" }, "Save badge");
+    const smsg = h("span.af-msg", { role: "status" });
+    save.addEventListener("click", async () => {
+      save.disabled = true;
+      try {
+        const a = ed.value();
+        await FB.set(FB.ref(db, "players/" + user.uid + "/profile/avatar"), a);
+        profile.avatar = a; A.refresh(); smsg.textContent = "Saved.";
+      } catch (e) { smsg.textContent = "Could not save. Try again."; }
+      save.disabled = false;
+    });
+    edit.append(h("h3#pf-badge-h.tr-h", null, "Badge", h("span.tr-h-note", { text: "shown on your account, online seats and the leaderboard" })), ed.el, h("div.row-actions", null, save, smsg));
+    root.appendChild(edit);
+    const lbBox = h("input#pf-lb", { type: "checkbox" });
+    lbBox.checked = !!profile.lb;
+    if (!A.verified()) lbBox.disabled = true;
+    lbBox.addEventListener("change", async () => {
+      lbBox.disabled = true;
+      try { await FB.set(FB.ref(db, "players/" + user.uid + "/profile/lb"), lbBox.checked); profile.lb = lbBox.checked; U.toast(lbBox.checked ? "You're on the leaderboard." : "You're off the leaderboard."); }
+      catch (e) { lbBox.checked = !lbBox.checked; U.toast("Could not change that. Try again."); }
+      lbBox.disabled = false;
+    });
+    const acts = h("div.row-actions.pf-acts");
+    const lb = h("button.btn", { type: "button" }, "Leaderboard");
+    lb.addEventListener("click", () => A.openBoard());
+    const back = h("button.btn.btn-quiet", { type: "button" }, "Back to the title");
+    back.addEventListener("click", () => M2M.app.title());
+    const out = h("button.btn.btn-quiet", { type: "button" }, "Sign out");
+    out.addEventListener("click", () => A.signOut());
+    acts.append(lb, back, out);
+    const local = U.store.get(TRAIN_KEY, null);
+    const more = h("section.tr-panel.pf-more", { "aria-label": "Account settings" },
+      h("label.pf-opt", { for: "pf-lb" }, lbBox, h("span", null, h("b", { text: "Show me on the leaderboard" }), h("span.pf-sub", { text: A.verified() ? "Your handle, badge and rank only. Off unless you turn it on." : "Verify your Rice email first." }))));
+    if (A.verified() && !r.imported && local && local.answered > 0) {
+      const imp = h("button.btn.btn-quiet", { type: "button" }, "Bring in this browser's Training record");
+      imp.addEventListener("click", () => showImport(local));
+      more.appendChild(imp);
+    }
+    const del = h("button.btn.btn-quiet.pf-del", { type: "button" }, "Delete my account");
+    const delBox = h("div.pf-delbox", { hidden: true },
+      h("p", { text: "Delete " + A.handle() + " and its Training record for good? The handle becomes free for anyone." }),
+      h("button.btn.pf-del-yes", { type: "button" }, "Delete it"), h("button.btn.btn-quiet.pf-del-no", { type: "button" }, "Keep it"));
+    del.addEventListener("click", () => { delBox.hidden = false; delBox.querySelector(".pf-del-no").focus(); });
+    delBox.querySelector(".pf-del-no").addEventListener("click", () => { delBox.hidden = true; });
+    delBox.querySelector(".pf-del-yes").addEventListener("click", async (e) => {
+      e.target.disabled = true;
+      try { await call("deleteAccount", {}); await FB.signOut(auth); M2M.app.title(); U.toast("Account deleted."); }
+      catch (err) { U.toast((err && err.message) || "Could not delete it."); e.target.disabled = false; }
+    });
+    more.append(del, delBox);
+    root.append(more, acts);
+  }
+
+  A.signOut = async function () {
+    try { if (M2M.net && M2M.net.floor && M2M.net.floor()) M2M.net.leave(); } catch (e) { /* not on a floor */ }
+    await FB.signOut(auth);
+    M2M.app.title();
+    U.toast("Signed out. Guest play keeps working as before.");
+  };
+
+  // =================================================================== leaderboard
+  A.openBoard = async function () {
+    if (!A.signedIn()) { A.open("signin"); return; }
+    M2M.screens.hideTitle();
+    M2M.screens.show("lb");
+    M2M.topbar.show(false);
+    M2M.panels.show(false);
+    const root = document.querySelector("#scr-lb .lb-wrap");
+    U.clear(root).append(h("p.eyebrow", null, "// leaderboard"), h("h2.scr-h#lb-h", { text: "The floor" }), h("p.af-note", { text: "Loading…" }));
+    let rows = {};
+    try {
+      record = (await call("getRecord", {})).record;
+      rows = (await FB.get(FB.ref(db, "leaderboard"))).val() || {};
+    } catch (e) { rows = null; }
+    renderBoard(rows);
+  };
+
+  function renderBoard(rows) {
+    const root = document.querySelector("#scr-lb .lb-wrap");
+    U.clear(root);
+    const rk = (record && record.rank) || { tier: 0, name: "Runner", progress: 0, next: null };
+    root.append(h("p.eyebrow", null, "// leaderboard · divisions by rank"), h("h2.scr-h#lb-h", { text: "The floor" }));
+    const best = record && record.best ? (record.tiers || [])[record.best] : null;
+    // personal best first
+    const me = h("section.lb-me", { "aria-label": "You" },
+      AV.el(A.avatar(), { size: 72, handle: A.handle(), tier: rk.tier }),
+      h("div.lb-me-main", null,
+        h("p.lb-me-h", null, h("b", { text: A.handle() }), h("span", { text: best && record.best > rk.tier ? " · best: " + best.name : "" })),
+        rankBlock(rk, false),
+        h("p.lb-me-sub", { text: profile.lb ? "You're on the board." : A.verified() ? "Only you see this card. Turn on \"Show me on the leaderboard\" in your profile to join." : "Only you see this card. Verify your Rice email to join the board." })));
+    root.appendChild(me);
+    if (rows == null) { root.appendChild(h("p.af-msg.bad", { text: "Could not load the leaderboard. Try again." })); }
+    else {
+      const list = Object.entries(rows).map(([uid, r]) => Object.assign({ uid }, r)).filter((r) => r && r.h);
+      const tiers = (record && record.tiers) || [];
+      if (!list.length) root.appendChild(h("p.af-note", { text: "Nobody has joined the board yet." }));
+      for (let t = tiers.length - 1; t >= 0; t--) {
+        const div = list.filter((r) => (r.t | 0) === t).sort((a, b) => (b.p | 0) - (a.p | 0) || String(a.h).localeCompare(String(b.h)));
+        if (!div.length) continue;
+        root.appendChild(h("section.lb-div", { dataset: { t: String(t) }, "aria-label": tiers[t].name + " division" },
+          h("h3.lb-div-h", null, h("span.rk-name", { dataset: { t: String(t) }, text: tiers[t].name }), h("span.lb-n", { text: div.length + " trader" + (div.length === 1 ? "" : "s") })),
+          h("ol.lb-list", null, div.map((r) => h("li.lb-row" + (user && r.uid === user.uid ? ".me" : ""), null,
+            AV.el(AV.clean(r.a), { size: 36, handle: r.h, tier: t }),
+            h("span.lb-h", { text: r.h }),
+            t < tiers.length - 1 ? h("span.lb-p", { title: "Progress to " + tiers[t + 1].name, "aria-label": (r.p | 0) + "% of the way to " + tiers[t + 1].name }, h("i", { style: { width: (r.p | 0) + "%" } })) : h("span.lb-top", { text: "top tier" }))))));
+      }
+    }
+    const acts = h("div.row-actions");
+    const pf = h("button.btn", { type: "button" }, "Profile");
+    pf.addEventListener("click", () => A.openProfile());
+    const back = h("button.btn.btn-quiet", { type: "button" }, "Back to the title");
+    back.addEventListener("click", () => M2M.app.title());
+    acts.append(pf, back);
+    root.appendChild(acts);
+  }
+
+  // =================================================================== the rank-up moment
+  A.rankUp = function (r) {
+    return new Promise((resolve) => {
+      const layer = document.getElementById("rankup");
+      if (!layer) { resolve(); return; }
+      U.clear(layer);
+      const F = M2M.flap;
+      const name = String(r.to || "").toUpperCase();
+      const n = Math.max(7, Math.min(13, name.length));
+      const row1 = F.row(7, "f-big"), row2 = F.row(n, "f-big f-rank");
+      const go = h("button.btn.btn-primary", { type: "button" }, "Back to the desk", h("kbd", { text: "Enter" }));
+      const card = h("div.ru-card", { role: "dialog", "aria-modal": "true", "aria-label": "Rank up: " + r.to },
+        h("p.eyebrow.ru-ey", { text: "// rank up · " + r.from + " → " + r.to }),
+        h("div.ru-flap", null, row1, row2),
+        h("div.ru-badge", null, AV.el(A.avatar(), { size: 96, handle: A.handle(), tier: r.tier })),
+        h("p.ru-line", { text: r.tier >= 4 ? "Your badge earns a " + (r.tier >= 5 ? "gold" : "silver") + " rim." : "Keep going: the next tier needs a higher rating and more lectures." }),
+        go);
+      layer.appendChild(card);
+      layer.hidden = false;
+      requestAnimationFrame(() => layer.classList.add("on"));
+      F.set(row1, "RANK UP", { delay: 120, stagger: 50, min: 8, max: 16 });
+      F.set(row2, name, { delay: 520, stagger: 45, min: 8, max: 18, sound: "arp" });
+      try { M2M.audio.bellOpen(); setTimeout(() => M2M.audio.cash(), 900); if (!U.reduced()) setTimeout(() => M2M.fx.parade(2200, 24), 700); } catch (e) { /* sound is optional */ }
+      let done = false;
+      const close = () => {
+        if (done) return; done = true;
+        document.removeEventListener("keydown", onKey, true);
+        layer.classList.remove("on");
+        setTimeout(() => { layer.hidden = true; U.clear(layer); resolve(); }, 220);
+      };
+      const onKey = (e) => { if (e.key === "Enter" || e.key === "Escape" || e.key === " ") { e.preventDefault(); e.stopPropagation(); close(); } };
+      document.addEventListener("keydown", onKey, true);
+      go.addEventListener("click", close);
+      layer.addEventListener("click", (e) => { if (e.target === layer) close(); });
+      setTimeout(() => go.focus({ preventScroll: true }), 500);
+    });
+  };
+
+  // =================================================================== online seats
+  A.seatAvatar = () => (A.signedIn() ? AV.encode(A.avatar()) : "");
+
+  // =================================================================== boot
+  A.init = function () {
+    const bar = document.getElementById("acct-bar");
+    if (bar) bar.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-acct]");
+      if (!b) return;
+      const a = b.dataset.acct;
+      if (a === "profile") A.openProfile();
+      else if (a === "leaderboard") A.openBoard();
+      else if (a === "verify") A.openVerify();
+      else A.open(a);
+    });
+    // the title redraws the account bar each time it shows
+    const show = M2M.screens.showTitle;
+    M2M.screens.showTitle = function () { const r = show.apply(this, arguments); A.refresh(); return r; };
+    if (!A.available()) { A.refresh(); return; }
+    readyP = new Promise((res) => { readyRes = res; });
+    connect().then(() => readyRes(), (e) => { console.warn("[m2m] accounts unavailable", e); app = null; readyRes(); A.refresh(); });
+    A.refresh();
+  };
+  A.ready = () => readyP || Promise.resolve();
+
+  // test hooks (test_accounts.py)
+  M2M.debugAcct = {
+    google: (cred) => A.google(cred).then(() => true, (e) => e.message),
+    state: () => ({ signedIn: A.signedIn(), verified: A.verified(), email: A.email(), handle: A.handle(), avatar: A.avatar(), uid: user ? user.uid : null, tier: A.tier(), record }),
+    ready: () => A.ready(),
+    remoteOn: () => !!(M2M.training && M2M.training.remote)
   };
 })();
 
@@ -15431,7 +16765,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     s.musicVol = isFinite(s.musicVol) ? U.clamp(+s.musicVol, 0, 1) : 0.35;
     M2M.settings = s;
   }
-  function saveSettings() { U.store.set(SET_KEY, M2M.settings); }
+  function saveSettings() { U.store.set(SET_KEY, M2M.settings); if (M2M.acct) M2M.acct.settingsChanged(M2M.settings); }
   function applyMotion() {
     const red = M2M.settings.motion === "reduced";
     document.documentElement.classList.toggle("reduced", red);
@@ -15884,6 +17218,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     M2M.clue.init();
     M2M.panels.init();
     if (M2M.training) M2M.training.init();
+    if (M2M.acct) M2M.acct.init();
     const root = U.$("#scr-board");
     root.querySelector(".board-head").addEventListener("click", (e) => {
       const b = e.target.closest("[data-act]");
