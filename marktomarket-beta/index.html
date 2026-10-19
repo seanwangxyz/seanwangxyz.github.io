@@ -1435,6 +1435,10 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
   font-family: var(--f-mono); letter-spacing: 0.04em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
 .dk-tab:hover { color: var(--text); }
 .dk-tab[aria-selected="true"] { color: var(--text-hi); border-bottom-color: var(--warn); font-weight: 600; }
+.dk-care { display: inline-block; padding: 1px 7px; border-radius: 4px; background: var(--down); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .06em; }
+.dk-care-mail { font-size: 12px; color: var(--down); }
+.dk-cx.care { border-left: 3px solid var(--down); padding-left: 9px; }
+.dk-tile-care .dk-tv { color: var(--down); }
 .dk-badge { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: var(--down); color: #fff; font-size: 11.5px; font-weight: 700; }
 .dk-msg { font-family: var(--f-mono); font-size: 14px; color: var(--text-2); padding: 18px 2px; }
 .dk-msg.bad { color: var(--down); }
@@ -1625,7 +1629,7 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
 .coach-reply { display: flex; flex-direction: column; gap: 7px; align-items: flex-start; }
 .coach-chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; border: 1px solid rgba(167, 139, 250, 0.6); background: var(--accent-bg);
   color: var(--accent-2); font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.02em; }
-.coach-text { margin: 0; font-size: 15px; line-height: 1.5; color: var(--text-hi); }
+.coach-text { margin: 0; font-size: 15px; line-height: 1.5; color: var(--text-hi); white-space: pre-line; }
 .coach-next { margin: 0; font-size: 13.5px; color: var(--text-2); font-family: var(--f-mono); }
 .pf-more .pf-coach { margin-top: 14px; }
 .pf-state { font-family: var(--f-mono); font-size: 13px; color: var(--accent-2); }
@@ -1783,6 +1787,260 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
   .tn-wrap { padding: 18px 16px 18px; }
   .lb-tab { padding: 8px 10px 9px; font-size: 13.5px; }
 }
+
+/* ================= host mode: the live in-class game (projector, setup, Live games; phones below) ================= */
+.scr-host { min-height: 100vh; display: flex; justify-content: center; padding: max(20px, 2.4vh) 22px calc(var(--tk-h) + 96px); }
+.hs-wrap { width: 100%; max-width: 1560px; display: flex; flex-direction: column; gap: 14px; }
+.hs-wrap > .scr-h, .hs-wrap > .eyebrow { margin: 0; }
+html.hs-live .host { bottom: calc(var(--tk-h) + 92px); }
+/* setup */
+.hs-setup { padding: 20px 24px 22px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(12, 16, 26, 0.96); display: flex; flex-direction: column; gap: 18px; }
+.hs-lede { max-width: 880px; }
+.hs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 16px 22px; }
+.hs-f { border: 0; margin: 0; padding: 0; min-width: 0; }
+.hs-f legend { padding: 0; margin-bottom: 7px; }
+.hs-seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.hs-opt { position: relative; display: inline-flex; }
+.hs-opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.hs-opt span { padding: 7px 12px; border: 1px solid var(--line-2); border-radius: 7px; background: var(--panel); color: var(--text-2); font-size: 14px; }
+.hs-opt input:checked + span { border-color: var(--accent); color: var(--text-hi); background: var(--accent-bg); box-shadow: 0 0 0 1px var(--accent) inset; }
+.hs-opt input:focus-visible + span { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+.hs-creditbox { padding: 12px 14px; border: 1px dashed var(--line-2); border-radius: 10px; }
+.hs-chips { flex-wrap: wrap; }
+/* the frame on the projector */
+.hs-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; flex-wrap: wrap; padding: 4px 4px 10px; border-bottom: 1px solid var(--line); }
+.hs-roomline { margin: 4px 0 0; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.hs-rl { font-family: var(--f-mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+.hs-rc { font-family: var(--f-mono); font-size: 30px; font-weight: 700; letter-spacing: 0.18em; color: var(--warn); }
+.hs-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.hs-stat { font-family: var(--f-mono); font-size: 15px; color: var(--text-2); padding: 6px 12px; border: 1px solid var(--line-2); border-radius: 999px; background: rgba(14, 19, 32, 0.9); }
+.hs-stat b { color: var(--text-hi); font-size: 18px; }
+.hs-locked { color: var(--warn); border-color: var(--warn); }
+.hs-stage { min-height: calc(100vh - 290px); display: flex; flex-direction: column; }
+/* lobby */
+.hs-lobby { flex: 1; display: grid; grid-template-columns: minmax(0, 1.25fr) auto; gap: clamp(24px, 4vw, 70px); align-items: center; padding: 22px 28px; border-radius: 14px; background: rgba(10, 13, 21, 0.9); border: 1px solid var(--line); }
+.hs-join { display: flex; flex-direction: column; gap: 6px; }
+.hs-k { margin: 10px 0 0; font-family: var(--f-mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+.hs-url { margin: 0; font-family: var(--f-mono); font-size: clamp(22px, 2.3vw, 34px); color: var(--text-hi); word-break: break-all; }
+.hs-code { margin: 4px 0 6px; display: flex; gap: clamp(8px, 1vw, 16px); }
+.hs-code span { display: inline-flex; align-items: center; justify-content: center; width: clamp(82px, 8.4vw, 132px); height: clamp(104px, 10.6vw, 166px); border-radius: 12px;
+  font-family: var(--f-mono); font-weight: 700; font-size: clamp(64px, 7vw, 116px); color: var(--text-hi); background: linear-gradient(180deg, #1C2540 0%, #141B2E 55%, #10172A 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 0 0 1px rgba(120, 136, 186, 0.28), 0 18px 40px -18px rgba(0, 0, 0, 0.9); }
+.hs-count { margin: 10px 0 0; font-size: clamp(20px, 1.8vw, 28px); color: var(--text-2); }
+.hs-joined-big { font-family: var(--f-mono); font-size: clamp(42px, 4vw, 64px); color: var(--up); }
+.hs-sum { margin: 8px 0 0; font-family: var(--f-mono); font-size: 15px; color: var(--text-2); }
+.hs-note { margin: 4px 0 0; color: var(--text-3); font-size: 16px; max-width: 640px; }
+.hs-wall { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; min-height: 0; max-height: 132px; overflow: hidden; align-content: flex-start; }
+.hs-wall:empty { display: none; }
+.hs-wc { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 5px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(23, 32, 54, 0.85); font-size: 16px; color: var(--text-hi); animation: hsPop 0.35s var(--ease); }
+.hs-wc.g { padding-left: 11px; color: var(--text-2); }
+.hs-wc.more { padding-left: 11px; color: var(--text-3); font-family: var(--f-mono); font-size: 14px; }
+.hs-wt { font-style: normal; font-family: var(--f-mono); font-size: 12px; color: var(--warn); }
+@keyframes hsPop { from { transform: scale(0.85); opacity: 0; } to { transform: none; opacity: 1; } }
+html.reduced .hs-wc { animation: none; }
+.hs-qrbox { margin: 0; padding: 18px 18px 10px; background: #fff; border-radius: 16px; box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.9); text-align: center; }
+.hs-qr { line-height: 0; }
+.hs-qr svg { width: clamp(240px, 24vw, 380px); height: auto; display: block; }
+.hs-qrbox figcaption { margin-top: 6px; font-family: var(--f-mono); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #333; }
+/* a clue */
+.hs-clue { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 18px 22px 16px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(12, 16, 26, 0.95); position: relative; overflow: hidden; }
+.hs-chead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hs-ctag { font-family: var(--f-mono); font-size: 16px; font-weight: 700; color: var(--accent-2); letter-spacing: 0.04em; }
+.hs-cname { font-weight: 700; font-size: 17px; color: var(--text-hi); letter-spacing: 0.02em; }
+.hs-cv { font-family: var(--f-mono); font-size: 20px; color: var(--warn); }
+.hs-cai { font-family: var(--f-mono); font-size: 13px; color: var(--warn); border: 1px solid var(--warn); border-radius: 4px; padding: 2px 7px; }
+.hs-revote { font-family: var(--f-mono); font-size: 14px; color: #04201D; background: var(--pool); border-radius: 4px; padding: 2px 8px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+.hs-sp { flex: 1; }
+.hs-timer b { font-family: var(--f-mono); font-size: clamp(30px, 3vw, 46px); color: var(--text-hi); }
+.hs-stem { margin: 0; font-family: var(--f-display); font-size: clamp(24px, 2.05vw, 34px); line-height: 1.32; color: var(--text-hi); max-width: 1300px; }
+.hs-stem.small { font-size: clamp(18px, 1.35vw, 22px); color: var(--text-2); }
+.hs-cbody { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
+.hs-cbody .exhibit { margin: 0; flex: 1 1 420px; font-size: 17px; }
+.hs-cbody .exhibit table { font-size: 17px; }
+.hs-cbody .memo { flex: 1 1 480px; font-size: 17px; }
+.hs-opts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hs-opts li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; border-radius: 10px; background: linear-gradient(180deg, #172036, #111829); border: 1px solid var(--line-2);
+  font-size: clamp(19px, 1.5vw, 25px); line-height: 1.3; color: var(--text-hi); }
+.hs-ol { flex: none; font-family: var(--f-mono); display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 21px; }
+.hs-foot { display: flex; align-items: center; gap: 16px; margin-top: auto; }
+.hs-live { margin: 0; font-size: clamp(20px, 1.7vw, 28px); color: var(--text-2); }
+.hs-ans { font-family: var(--f-mono); color: var(--up); font-size: 1.4em; }
+.hs-paused { margin: 0; font-family: var(--f-mono); font-size: 22px; color: var(--warn); letter-spacing: 0.1em; text-transform: uppercase; }
+.hs-tbar { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--line); }
+.hs-tfill { display: block; height: 100%; width: 100%; background: var(--accent); transition: width 0.2s linear; }
+.hs-tfill.low { background: var(--down); }
+/* distributions */
+.hs-bars { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.hs-bars-h { margin: 0; font-family: var(--f-mono); font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+.hs-dist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.hs-dist li { display: grid; grid-template-columns: 40px minmax(0, 1.25fr) minmax(120px, 1fr) 110px 30px; gap: 12px; align-items: center; padding: 8px 12px; border-radius: 9px; background: rgba(23, 32, 54, 0.7); border: 1px solid var(--line); }
+.hs-dist li.none { grid-template-columns: 40px minmax(0, 1.25fr) minmax(120px, 1fr) 110px 30px; background: transparent; border-style: dashed; }
+.hs-dist li.none .hs-dt { grid-column: 2 / 4; color: var(--text-3); }
+.hs-dl { font-family: var(--f-mono); display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 7px; background: var(--panel-3); color: var(--text-hi); font-size: 19px; }
+.hs-dt { font-size: clamp(16px, 1.2vw, 20px); color: var(--text-hi); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.hs-db { height: 26px; border-radius: 5px; background: var(--well); overflow: hidden; }
+.hs-db i { display: block; height: 100%; background: var(--accent-2); border-radius: 5px; transition: width 0.6s var(--ease); }
+.hs-dn { font-family: var(--f-mono); font-size: 18px; color: var(--text-hi); text-align: right; }
+.hs-ok { font-size: 24px; color: var(--up); font-weight: 700; }
+.hs-dist li.right { border-color: var(--up); background: var(--up-bg); }
+.hs-dist li.right .hs-dl { background: var(--up); color: #04170D; }
+.hs-dist li.right .hs-db i { background: var(--up); }
+.hs-dist li.wrong { opacity: 0.72; }
+.hs-dist li.wrong .hs-db i { background: var(--text-3); }
+.hs-bars.small .hs-dist li { padding: 5px 10px; }
+.hs-sbs { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.hs-sbs .hs-dist li { grid-template-columns: 36px minmax(0, 1fr) minmax(80px, 0.9fr) 96px 24px; }
+.hs-shift { margin: 0; font-family: var(--f-mono); font-size: 17px; color: var(--pool); }
+.hs-next { margin: 0; color: var(--text-3); font-size: 17px; }
+.hs-think { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 10px 0 6px; }
+.hs-sat { margin: 0; font-family: var(--f-mono); font-weight: 700; font-size: clamp(54px, 6vw, 96px); letter-spacing: 0.06em; color: var(--warn); line-height: 1; }
+.hs-sat-sub { margin: 0; font-size: clamp(22px, 2vw, 32px); color: var(--text-hi); }
+.hs-revgrid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.hs-left-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.hs-revgrid .hs-dist li { grid-template-columns: 36px minmax(0, 1fr) minmax(70px, 0.7fr) 92px 24px; padding: 6px 10px; }
+.hs-revgrid .hs-dist li.none { grid-template-columns: 36px minmax(0, 1fr) minmax(70px, 0.7fr) 92px 24px; }
+.hs-revgrid .hs-dt { font-size: 16px; }
+.hs-sbs.compact .hs-dt { display: none; }
+.hs-sbs.compact .hs-dist li, .hs-sbs.compact .hs-dist li.none { grid-template-columns: 36px minmax(50px, 1fr) 86px 22px; }
+.hs-sbs.compact .hs-dist li.none { display: flex; justify-content: space-between; }
+.hs-sbs.compact .hs-dist li.none .hs-dt { display: block; }
+.hs-rtext { margin: 0; font-size: clamp(19px, 1.45vw, 24px); color: var(--text-hi); font-weight: 700; line-height: 1.3; }
+.hs-reveal { display: flex; flex-direction: column; gap: 8px; padding: 14px 18px; border-radius: 10px; border: 1px solid var(--line-2); border-left: 4px solid var(--up); background: rgba(10, 18, 16, 0.6); }
+.hs-rk { margin: 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: clamp(19px, 1.5vw, 24px); color: var(--text-hi); }
+.hs-rkl { font-family: var(--f-mono); display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; background: var(--up); color: #04170D; font-size: 22px; }
+.hs-right { margin-left: auto; font-family: var(--f-mono); font-size: 22px; color: var(--up); }
+.hs-explain { margin: 0; font-size: clamp(17px, 1.3vw, 21px); line-height: 1.45; color: var(--text); max-width: 1300px; }
+.hs-why { margin: 0; font-size: 16px; color: var(--text-2); max-width: 1300px; }
+.hs-ref { margin: 0; font-family: var(--f-mono); font-size: 13px; color: var(--text-3); }
+/* the board */
+.hs-boardwrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; padding-top: 10px; }
+.hs-bh { margin: 0; font-size: 18px; color: var(--text-2); }
+.hs-bh b { color: var(--text-hi); }
+.hs-board { display: grid; grid-template-columns: repeat(var(--cols, 6), minmax(120px, 190px)); gap: 12px; padding: 16px; border-radius: 14px;
+  background: linear-gradient(180deg, rgba(19, 25, 40, 0.94), rgba(10, 14, 23, 0.96)); box-shadow: inset 0 0 0 1px rgba(110, 125, 170, 0.2), 0 50px 90px -30px rgba(0, 0, 0, 0.9); }
+.hs-bcol { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.hs-bplate { height: 76px; display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 6px 10px; border-radius: 8px; background: linear-gradient(180deg, #0D1220, #090D17);
+  box-shadow: inset 0 0 0 1px rgba(110, 125, 170, 0.14); border-top: 2px solid var(--accent); }
+.hs-bplate .bp-tag { font-size: 14px; }
+.hs-bplate .bp-name { font-size: 15px; }
+.hs-tile { appearance: none; height: clamp(70px, 9vh, 104px); border-radius: 8px; border: 0; color: var(--text-hi); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background: linear-gradient(180deg, #1C2540 0%, #141B2E 55%, #10172A 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 0 0 1px rgba(120, 136, 186, 0.22), 0 8px 0 #080B13;
+  transition: transform 0.15s var(--ease), box-shadow 0.15s; }
+.hs-tile:hover:not(:disabled), .hs-tile:focus-visible { transform: translateY(-3px); box-shadow: inset 0 0 0 2px var(--accent-2), 0 11px 0 #080B13, 0 0 26px -4px rgba(139, 92, 246, 0.6); outline: none; }
+.hs-tv { font-family: var(--f-mono); font-size: clamp(24px, 2.2vw, 34px); font-weight: 600; color: var(--warn); }
+.hs-tv .cur { font-size: 0.6em; margin-right: 2px; opacity: 0.8; }
+.hs-tai { font-family: var(--f-mono); font-size: 10.5px; color: var(--accent-2); }
+.hs-tile.used { cursor: default; background: linear-gradient(180deg, #0E1424, #0B101C); box-shadow: inset 0 0 0 1px rgba(120, 136, 186, 0.1); transform: translateY(6px); }
+.hs-tile.used .hs-tv { color: var(--text-3); opacity: 0.35; }
+.hs-tile.void { opacity: 0.2; }
+/* top 10 and the close */
+.hs-top { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 18px 22px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(12, 16, 26, 0.95); }
+.hs-th { margin: 0; font-family: var(--f-mono); font-size: clamp(30px, 3vw, 48px); font-weight: 700; letter-spacing: 0.06em; color: var(--warn); }
+.hs-topgrid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 26px; align-items: start; }
+.hs-toplist, .hs-teamlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.hs-toplist li, .hs-teamlist li { display: flex; align-items: center; gap: 14px; padding: 9px 14px; border-radius: 9px; background: rgba(23, 32, 54, 0.7); border: 1px solid var(--line); font-size: clamp(19px, 1.6vw, 26px); }
+.hs-tr { font-family: var(--f-mono); width: 40px; text-align: right; color: var(--text-3); }
+.hs-tn { color: var(--text-hi); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.hs-tt, .hs-tm { font-family: var(--f-mono); font-size: 0.7em; color: var(--text-3); }
+.hs-tp { margin-left: auto; font-family: var(--f-mono); color: var(--text-hi); white-space: nowrap; }
+li.up .hs-tp { color: var(--up); }
+li.dn .hs-tp { color: var(--down); }
+.hs-gav { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 34px; height: 34px; border-radius: 9px; background: var(--panel-3); color: var(--text-3); font-family: var(--f-mono); font-style: normal; font-size: 15px; }
+.hs-close { flex: 1; display: flex; flex-direction: column; gap: 14px; align-items: stretch; }
+.hs-close > .hs-sat, .hs-close > .hs-sat-sub { text-align: center; }
+/* the console bar */
+.hs-console { position: fixed; left: 0; right: 0; bottom: var(--tk-h); z-index: 31; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 22px; background: rgba(6, 9, 15, 0.96); border-top: 1px solid var(--line-2); }
+.hs-console kbd { font-family: var(--f-mono); font-size: 11.5px; padding: 1px 6px; border: 1px solid currentColor; border-radius: 4px; opacity: 0.7; }
+.hs-main { font-size: 20px; padding: 13px 26px; min-width: 260px; }
+.hs-sm { font-size: 16px; padding: 10px 14px; color: var(--text); border-color: var(--line-2); }
+.hs-sm:disabled { opacity: 0.35; }
+.hs-hint { font-size: 17px; color: var(--text-2); padding: 0 8px; }
+/* the Desk's Live games */
+.hs-games td { vertical-align: middle; }
+.hs-games .btn { padding: 5px 10px; font-size: 13.5px; }
+.hs-mini { display: inline-flex; gap: 6px; font-family: var(--f-mono); font-size: 12.5px; color: var(--text-2); white-space: nowrap; }
+.hs-mini .k { color: var(--up); font-weight: 700; }
+.hs-q { max-width: 380px; color: var(--text-2); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hs-who { margin: 0; color: var(--text-2); }
+.hs-who b { color: var(--text-hi); }
+.hs-teamlist.dk li { font-size: 15px; }
+.dk-hostlive { border-color: var(--warn); color: var(--text-hi); }
+@media (max-width: 1100px) {
+  .hs-lobby { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .hs-join { align-items: center; }
+  .hs-opts, .hs-sbs, .hs-topgrid { grid-template-columns: 1fr; }
+}
+
+/* ================= host mode: a phone in the room (and Sean's Host controls) ================= */
+.scr-room { min-height: 100vh; display: flex; justify-content: center; padding: max(18px, 3vh) 14px calc(var(--tk-h) + 40px); }
+.rm-wrap { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 12px; align-self: flex-start; }
+.rm-wrap > .scr-h { margin: 0; font-size: 26px; }
+.rm-wrap > .eyebrow { margin: 0; }
+.rm-card { display: flex; flex-direction: column; gap: 12px; padding: 18px 16px; border-radius: 12px; border: 1px solid var(--line-2); background: rgba(12, 16, 26, 0.96); }
+.rm-big { margin: 0; font-size: 26px; font-weight: 700; color: var(--text-hi); line-height: 1.2; }
+.rm-sub { margin: 0; color: var(--text-2); font-size: 16px; line-height: 1.4; }
+.rm-as { margin: 0; display: flex; align-items: center; gap: 12px; font-size: 18px; color: var(--text-hi); }
+.rm-join { font-size: 19px; padding: 14px 18px; width: 100%; }
+.rm-signin { align-self: center; }
+.rm-codebox { margin-top: 6px; }
+.rm-top { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(14, 19, 32, 0.92); }
+.rm-who { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.rm-who b { color: var(--text-hi); font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rm-team { font-family: var(--f-mono); font-size: 12px; color: var(--text-3); }
+.rm-pnl { margin-left: auto; font-family: var(--f-mono); font-size: 18px; color: var(--text-hi); white-space: nowrap; }
+.rm-pnl.up, .rm-delta.up { color: var(--up); }
+.rm-pnl.dn, .rm-delta.dn { color: var(--down); }
+.rm-label { margin: 0 0 6px; font-family: var(--f-mono); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+.rm-teams { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.rm-tm { appearance: none; height: 52px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text-hi); font-family: var(--f-mono); font-size: 22px; font-weight: 700; }
+.rm-tm[aria-pressed="true"] { border-color: var(--warn); background: var(--warn-bg); box-shadow: 0 0 0 1px var(--warn) inset; }
+.rm-qhead { display: flex; align-items: center; gap: 10px; }
+.rm-qtag { font-family: var(--f-mono); font-size: 14px; color: var(--accent-2); }
+.rm-rv { font-family: var(--f-mono); font-size: 12px; color: #04201D; background: var(--pool); border-radius: 4px; padding: 1px 6px; text-transform: uppercase; font-weight: 700; }
+.rm-sp { flex: 1; }
+.rm-left { font-family: var(--f-mono); font-size: 28px; color: var(--text-hi); }
+.rm-q.timeup .rm-left { color: var(--down); }
+.rm-stem summary { cursor: pointer; color: var(--text-2); font-size: 14.5px; }
+.rm-stem p { margin: 8px 0 0; font-family: var(--f-display); font-size: 17px; line-height: 1.4; color: var(--text); }
+.rm-opts { display: flex; flex-direction: column; gap: 10px; }
+.rm-opt { appearance: none; display: flex; align-items: flex-start; gap: 12px; text-align: left; min-height: 62px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line-2);
+  background: linear-gradient(180deg, #172036, #111829); color: var(--text-hi); font-size: 17px; line-height: 1.3; -webkit-tap-highlight-color: transparent; }
+.rm-opt b { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 8px; background: var(--panel-3); font-family: var(--f-mono); font-size: 19px; }
+.rm-opt.on { border-color: var(--accent); background: var(--accent-bg); box-shadow: 0 0 0 2px var(--accent) inset; }
+.rm-opt.on b { background: var(--accent); color: #fff; }
+.rm-opt:disabled, .rm-lv:disabled { opacity: 0.55; }
+.rm-lev { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.rm-lv { appearance: none; display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 10px 6px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text-2); }
+.rm-lv b { font-family: var(--f-mono); font-size: 20px; color: var(--text-hi); }
+.rm-lv span { font-size: 13px; }
+.rm-lv.on { border-color: var(--warn); background: var(--warn-bg); box-shadow: 0 0 0 1px var(--warn) inset; }
+.rm-status { margin: 0; min-height: 2.6em; font-size: 15px; color: var(--text-2); }
+.rm-status.ok { color: var(--up); }
+.rm-status.bad { color: var(--down); }
+.rm-paused { margin: 0; font-family: var(--f-mono); color: var(--warn); text-transform: uppercase; letter-spacing: 0.1em; }
+.rm-mine { margin: 0; font-size: 17px; color: var(--text-2); }
+.rm-mine b { font-family: var(--f-mono); color: var(--text-hi); }
+.rm-sat { border-color: var(--warn); }
+.rm-satk { margin: 0; font-family: var(--f-mono); font-weight: 700; font-size: 26px; letter-spacing: 0.06em; color: var(--warn); }
+.rm-clock { margin: 0; }
+.rm-res { text-align: center; align-items: center; }
+.rm-verdict { margin: 0; font-size: 34px; font-weight: 800; }
+.rm-res.right .rm-verdict { color: var(--up); }
+.rm-res.wrong .rm-verdict { color: var(--down); }
+.rm-res.none .rm-verdict { color: var(--text-3); }
+.rm-delta { margin: 0; font-family: var(--f-mono); font-size: 30px; color: var(--text-hi); }
+.rm-stand { margin: 0; font-size: 17px; color: var(--text-2); }
+.rm-stand b { font-family: var(--f-mono); color: var(--text-hi); }
+.rm-fin { text-align: center; align-items: center; }
+/* Sean's Host controls on his phone */
+.hc-sub { margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-family: var(--f-mono); font-size: 15px; color: var(--text-2); }
+.hc-left { font-size: 30px; color: var(--text-hi); }
+.hc-counts { margin: 0; font-family: var(--f-mono); font-size: 18px; color: var(--up); }
+.hc-rev { margin: 0; font-size: 17px; color: var(--text-hi); }
+.hc-btn { min-height: 54px; font-size: 18px; }
+.hc-main { min-height: 84px; font-size: 24px; width: 100%; }
+.hc-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.hc-row .btn { color: var(--text); border-color: var(--line-2); }
 
 </style>
 </head>
@@ -2041,6 +2299,14 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
     <div class="dk-wrap"></div>
   </section>
 
+  <section class="screen scr-host" id="scr-host" data-screen="host" hidden aria-labelledby="hs-h">
+    <div class="hs-wrap"></div>
+  </section>
+
+  <section class="screen scr-room" id="scr-room" data-screen="room" hidden aria-labelledby="rm-h">
+    <div class="rm-wrap"></div>
+  </section>
+
   <section class="screen scr-tourney" id="scr-tourney" data-screen="tourney" hidden aria-labelledby="tn-h">
     <div class="tn-wrap"></div>
   </section>
@@ -2154,7 +2420,7 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
 <script type="application/json" id="m2m-voice">[{"id":"welcome_01","event":"welcome","caption":"Welcome to Mark to Market, where every answer moves your price, up or down.","src":"audio/slide-001.mp3"},{"id":"welcome_02","event":"welcome","caption":"Welcome to Mark to Market, where every answer gets priced and nothing gets rounded in your favor.","src":"audio/slide-002.mp3"},{"id":"welcome_03","event":"welcome","caption":"Welcome to Mark to Market. Let's find out how much of the first twelve lectures is already yours.","src":"audio/slide-003.mp3"},{"id":"mode_solo_01","event":"mode_solo","caption":"It's just you and the board, so the bets tell me how sure you actually are.","src":"audio/slide-004.mp3"},{"id":"mode_solo_02","event":"mode_solo","caption":"Solo game, so take your time and read the explanations, including the ones on questions you got right.","src":"audio/slide-005.mp3"},{"id":"mode_couch_01","event":"mode_couch","caption":"Couch game. Everybody answers every clue on their own keys, so no peeking at your neighbor's.","src":"audio/slide-006.mp3"},{"id":"mode_couch_02","event":"mode_couch","caption":"Two or three players on one board, so keep your eyes on your own keys, please.","src":"audio/slide-007.mp3"},{"id":"mode_challenge_01","event":"mode_challenge","caption":"A challenge code gives you the same board and numbers as whoever sent it, so the only difference is how you play.","src":"audio/slide-008.mp3"},{"id":"mode_challenge_02","event":"mode_challenge","caption":"Somebody sent you a challenge on an identical board, so let's see which of you knows the material.","src":"audio/slide-009.mp3"},{"id":"desk_intern_01","event":"desk_intern","caption":"Intern desk, which is mostly recall and one-step problems, and a good place to build the habits.","src":"audio/slide-010.mp3"},{"id":"desk_analyst_01","event":"desk_analyst","caption":"Analyst desk, which runs the full range, from plain recall up to problems that pull two lectures together.","src":"audio/slide-011.mp3"},{"id":"desk_pm_01","event":"desk_pm","caption":"Portfolio manager desk, which is mostly the traps from the lectures plus the problems that tie them together.","src":"audio/slide-012.mp3"},{"id":"round1_intro_01","event":"round1_intro","caption":"The opening bell. Lectures one through seven are the accounting, and the accounting is the price of admission.","src":"audio/slide-013.mp3"},{"id":"round1_intro_02","event":"round1_intro","caption":"Opening bell for the first seven lectures, because before anybody forecasts anything, we clean up the past.","src":"audio/slide-014.mp3"},{"id":"round2_intro_01","event":"round2_intro","caption":"The levered round, where values double and so do the losses, which is essentially what leverage does.","src":"audio/slide-015.mp3"},{"id":"round2_intro_02","event":"round2_intro","caption":"Levered round. Leverage leaves the business alone and just widens how far the shareholders' return can swing, both ways.","src":"audio/slide-016.mp3"},{"id":"closing_intro_01","event":"closing_intro","caption":"The closing bell. It's one question, and it pulls from more than one lecture.","src":"audio/slide-017.mp3"},{"id":"closing_intro_02","event":"closing_intro","caption":"Closing bell, so read the category and then decide how sure you really are.","src":"audio/slide-018.mp3"},{"id":"closing_wager_01","event":"closing_wager","caption":"Size the wager to how sure you actually are, the way you'd size a position.","src":"audio/slide-019.mp3"},{"id":"closing_wager_02","event":"closing_wager","caption":"Wager what you'd bet if this were your own money.","src":"audio/slide-020.mp3"},{"id":"closing_reveal_right_01","event":"closing_reveal_right","caption":"That's correct at the bell, and a strong way to close!","src":"audio/slide-021.mp3"},{"id":"closing_reveal_right_02","event":"closing_reveal_right","caption":"You called it at the close, so go ahead and ring the bell.","src":"audio/slide-022.mp3"},{"id":"closing_reveal_wrong_01","event":"closing_reveal_wrong","caption":"Not this one, but the explanation pulls the pieces together, so it's worth reading slowly.","src":"audio/slide-023.mp3"},{"id":"closing_reveal_wrong_02","event":"closing_reveal_wrong","caption":"That one got away at the close, and the explanation is worth a read before you hit replay.","src":"audio/slide-024.mp3"},{"id":"correct_01","event":"correct","caption":"Yes, that's the one.","src":"audio/slide-037.mp3"},{"id":"correct_02","event":"correct","caption":"Correct, so we mark you up.","src":"audio/slide-038.mp3"},{"id":"correct_03","event":"correct","caption":"You didn't need a model to get there.","src":"audio/slide-039.mp3"},{"id":"correct_04","event":"correct","caption":"That's correct, and your quote just ticked up.","src":"audio/slide-040.mp3"},{"id":"correct_05","event":"correct","caption":"Got it, and that one is yours now.","src":"audio/slide-041.mp3"},{"id":"correct_06","event":"correct","caption":"Correct, and the why is still worth ten seconds, even when you're right.","src":"audio/slide-042.mp3"},{"id":"correct_07","event":"correct","caption":"That's correct, and I'd sign off on it.","src":"audio/slide-043.mp3"},{"id":"correct_08","event":"correct","caption":"Yes, and the market agrees with you.","src":"audio/slide-044.mp3"},{"id":"correct_09","event":"correct","caption":"Excellent, that's the answer!","src":"audio/slide-045.mp3"},{"id":"correct_10","event":"correct","caption":"That's it, on to the next tile.","src":"audio/slide-046.mp3"},{"id":"correct_11","event":"correct","caption":"There it is, and you can bank that one.","src":"audio/slide-047.mp3"},{"id":"correct_12","event":"correct","caption":"Good, that's one more for the track record.","src":"audio/slide-048.mp3"},{"id":"correct_13","event":"correct","caption":"Exactly, and you read it before you trusted it.","src":"audio/slide-049.mp3"},{"id":"correct_14","event":"correct","caption":"That's correct, and it shows you did the reading.","src":"audio/slide-050.mp3"},{"id":"correct_15","event":"correct","caption":"Nicely done, keep going.","src":"audio/slide-051.mp3"},{"id":"correct_16","event":"correct","caption":"Very nice, that's the one a careful analyst picks.","src":"audio/slide-052.mp3"},{"id":"correct_certain_01","event":"correct_certain","caption":"Certain, and correct, so that tile pays you triple!","src":"audio/slide-053.mp3"},{"id":"correct_certain_02","event":"correct_certain","caption":"You called it certain and it was, so your quote just jumped.","src":"audio/slide-054.mp3"},{"id":"correct_certain_03","event":"correct_certain","caption":"You put your name on it, and it held.","src":"audio/slide-055.mp3"},{"id":"correct_certain_04","event":"correct_certain","caption":"You were sure, and this time sure paid triple.","src":"audio/slide-056.mp3"},{"id":"correct_certain_05","event":"correct_certain","caption":"Correct, and if your Certain calls land more than four times in five, keep making them.","src":"audio/slide-057.mp3"},{"id":"correct_hunch_01","event":"correct_hunch","caption":"A hunch, and it landed, so you may know more than you think.","src":"audio/slide-058.mp3"},{"id":"correct_hunch_02","event":"correct_hunch","caption":"Correct, on a hunch, and if these keep landing, they aren't hunches.","src":"audio/slide-059.mp3"},{"id":"correct_hunch_03","event":"correct_hunch","caption":"Correct, on a hunch, so next time trust it enough to say Likely.","src":"audio/slide-060.mp3"},{"id":"wrong_01","event":"wrong","caption":"Not this time, but the explanation for your answer is already open, and it shows which step leads there.","src":"audio/slide-061.mp3"},{"id":"wrong_02","event":"wrong","caption":"That answer comes from a specific misstep, and the explanation names it.","src":"audio/slide-062.mp3"},{"id":"wrong_03","event":"wrong","caption":"No, but the why shows which step slipped.","src":"audio/slide-063.mp3"},{"id":"wrong_04","event":"wrong","caption":"Not quite. Before you move on, say the reason for the correct answer out loud, once.","src":"audio/slide-064.mp3"},{"id":"wrong_05","event":"wrong","caption":"That one goes on your study list, which is what the list is for.","src":"audio/slide-065.mp3"},{"id":"wrong_06","event":"wrong","caption":"Not this one, which means you've found exactly the thing worth going back to.","src":"audio/slide-066.mp3"},{"id":"wrong_07","event":"wrong","caption":"Read the why, and then the slides the review chip points to.","src":"audio/slide-067.mp3"},{"id":"wrong_08","event":"wrong","caption":"Ask yourself why that option was tempting, and then read the why.","src":"audio/slide-068.mp3"},{"id":"wrong_09","event":"wrong","caption":"Not quite, so read the worked solution once, slowly.","src":"audio/slide-069.mp3"},{"id":"wrong_10","event":"wrong","caption":"No, but that's what the pretend money is for.","src":"audio/slide-070.mp3"},{"id":"wrong_11","event":"wrong","caption":"Not this one, but it's a useful miss if you open the why.","src":"audio/slide-071.mp3"},{"id":"wrong_12","event":"wrong","caption":"Not quite, so find the step where your reasoning and the explanation part ways.","src":"audio/slide-072.mp3"},{"id":"wrong_13","event":"wrong","caption":"Not this one, so read the why, and then work it once more in your head.","src":"audio/slide-073.mp3"},{"id":"wrong_14","event":"wrong","caption":"Wrong one, and the explanation walks through it step by step.","src":"audio/slide-074.mp3"},{"id":"wrong_15","event":"wrong","caption":"Not this one, but the good news is the explanation is right there.","src":"audio/slide-075.mp3"},{"id":"wrong_16","event":"wrong","caption":"Ask what you'd have to believe for that answer to be correct, and then check that belief against the why.","src":"audio/slide-076.mp3"},{"id":"wrong_certain_01","event":"wrong_certain","caption":"You were certain on that one, so it's worth reading twice.","src":"audio/slide-077.mp3"},{"id":"wrong_certain_02","event":"wrong_certain","caption":"Confident misses tend to be the ones you remember once they're corrected, so read the why slowly.","src":"audio/slide-078.mp3"},{"id":"wrong_certain_03","event":"wrong_certain","caption":"That cost six times the tile, which is why Certain is for the questions you'd stake the fund on.","src":"audio/slide-079.mp3"},{"id":"wrong_certain_04","event":"wrong_certain","caption":"You were sure, so find the step where sure went wrong.","src":"audio/slide-080.mp3"},{"id":"wrong_certain_05","event":"wrong_certain","caption":"Find the sentence in the explanation you'd have argued with, and that's the one to remember.","src":"audio/slide-081.mp3"},{"id":"timeout_01","event":"timeout","caption":"That's time, and no answer costs the same as a wrong hunch, so the question goes on your study list.","src":"audio/slide-082.mp3"},{"id":"timeout_02","event":"timeout","caption":"The clock won that one, so it goes on your study list.","src":"audio/slide-083.mp3"},{"id":"timeout_03","event":"timeout","caption":"Out of time, which costs you what a wrong hunch would, and the study list keeps the question for later.","src":"audio/slide-084.mp3"},{"id":"show_choices_01","event":"show_choices","caption":"Choices it is, for half the tile, and the explanation is the same either way.","src":"audio/slide-085.mp3"},{"id":"show_choices_02","event":"show_choices","caption":"Fair enough, here are four options for half the money.","src":"audio/slide-086.mp3"},{"id":"audit_intro_01","event":"audit_intro","caption":"Applied AI. There's a memo, and it's very confident, so sign it or send it back.","src":"audio/slide-087.mp3"},{"id":"audit_intro_02","event":"audit_intro","caption":"Applied AI, where your name goes on the memo the model wrote, so read every line.","src":"audio/slide-088.mp3"},{"id":"audit_intro_03","event":"audit_intro","caption":"Applied AI. The arithmetic was the easy part, so check what went into it.","src":"audio/slide-089.mp3"},{"id":"audit_signed_right_01","event":"audit_signed_right","caption":"Signed, and it holds up, because sometimes the confident memo is simply correct.","src":"audio/slide-090.mp3"},{"id":"audit_signed_right_02","event":"audit_signed_right","caption":"Good call, since knowing when not to object is part of the job too.","src":"audio/slide-091.mp3"},{"id":"audit_signed_wrong_01","event":"audit_signed_wrong","caption":"The memo had an error in it, and the explanation shows the line where it broke.","src":"audio/slide-092.mp3"},{"id":"audit_signed_wrong_02","event":"audit_signed_wrong","caption":"The memo sounded sure of itself, and the line it got wrong is in the explanation.","src":"audio/slide-093.mp3"},{"id":"audit_sent_back_right_01","event":"audit_sent_back_right","caption":"You sent it back, and for the right reason.","src":"audio/slide-094.mp3"},{"id":"audit_sent_back_right_02","event":"audit_sent_back_right","caption":"Good catch, you found the line where the memo breaks.","src":"audio/slide-095.mp3"},{"id":"audit_sent_back_wrong_01","event":"audit_sent_back_wrong","caption":"Good instinct to push back, but that objection doesn't hold, and the explanation shows why.","src":"audio/slide-096.mp3"},{"id":"audit_sent_back_wrong_02","event":"audit_sent_back_wrong","caption":"The memo went back, but not for a reason that holds up, so read the why.","src":"audio/slide-097.mp3"},{"id":"streak3_01","event":"streak3","caption":"Three in a row could still be noise, but I doubt it.","src":"audio/slide-098.mp3"},{"id":"streak3_02","event":"streak3","caption":"Three straight, and your quote is trending up.","src":"audio/slide-099.mp3"},{"id":"streak3_03","event":"streak3","caption":"Three straight, so somebody's been reading the footnotes.","src":"audio/slide-100.mp3"},{"id":"streak5_01","event":"streak5","caption":"Five in a row, and at this point that's not noise anymore!","src":"audio/slide-101.mp3"},{"id":"streak5_02","event":"streak5","caption":"Five straight, and if these were earnings, I'd start checking the accruals.","src":"audio/slide-102.mp3"},{"id":"end_solo_up_01","event":"end_solo_up","caption":"You closed in the green, and the edge lives in knowing the nooks and crannies of the business better than the rest.","src":"audio/slide-103.mp3"},{"id":"end_solo_up_02","event":"end_solo_up","caption":"Long story short, you closed up, so check the calibration chart next, because that's where the next game's money is.","src":"audio/slide-104.mp3"},{"id":"end_solo_down_01","event":"end_solo_down","caption":"You closed down, and the study list has every question worth going back to, sorted by lecture, with the slides to reopen.","src":"audio/slide-105.mp3"},{"id":"end_solo_down_02","event":"end_solo_down","caption":"Down at the close, so check whether your Certain calls landed as often as you expected.","src":"audio/slide-106.mp3"},{"id":"end_couch_winner_01","event":"end_couch_winner","caption":"And the closing bell goes to our top player! Everyone's study list is waiting.","src":"audio/slide-107.mp3"},{"id":"end_couch_winner_02","event":"end_couch_winner","caption":"We have a winner, so everyone compare calibration charts before the rematch.","src":"audio/slide-108.mp3"},{"id":"end_tie_01","event":"end_tie","caption":"A tie, at the same closing price to the dollar, so it's going to take a rematch.","src":"audio/slide-109.mp3"},{"id":"game_resume_01","event":"game_resume","caption":"Welcome back, and your positions are exactly where you left them.","src":"audio/slide-110.mp3"},{"id":"margin_call_01","event":"margin_call","caption":"This is your broker. Margin call!","src":"audio/slide-111.mp3","speaker":"broker"},{"id":"margin_call_02","event":"margin_call","caption":"Margin call!","src":"audio/slide-112.mp3","speaker":"broker"},{"id":"margin_call_03","event":"margin_call","caption":"Your broker here. You've been margin called.","src":"audio/slide-113.mp3","speaker":"broker"},{"id":"dark_pool_01","event":"dark_pool","caption":"A dark pool. You size the order before you see the trade.","src":"audio/slide-114.mp3"},{"id":"dark_pool_02","event":"dark_pool","caption":"Dark pool. Nobody sees this question until your order is in.","src":"audio/slide-115.mp3"},{"id":"dark_pool_03","event":"dark_pool","caption":"Dark pool. If you're behind, this is where a comeback starts.","src":"audio/slide-116.mp3"},{"id":"cat_L01_02","event":"cat_L01","caption":"Noise versus bias. Noise averages away. Bias doesn't.","src":"audio/slide-117.mp3"},{"id":"cat_L02_02","event":"cat_L02","caption":"Stocks and flows. Two snapshots, and the movie in between.","src":"audio/slide-118.mp3"},{"id":"cat_L03_02","event":"cat_L03","caption":"Accruals. The economics and the cash rarely arrive together.","src":"audio/slide-119.mp3"},{"id":"cat_L04_02","event":"cat_L04","caption":"Follow the cash. Profit can be an opinion, but cash is a fact.","src":"audio/slide-120.mp3"},{"id":"cat_L05_02","event":"cat_L05","caption":"Top line. Revenue follows control, not cash.","src":"audio/slide-121.mp3"},{"id":"cat_L07I_02","event":"cat_L07I","caption":"LIFO and FIFO. Old layers can flatter profit.","src":"audio/slide-122.mp3"},{"id":"cat_L07A_02","event":"cat_L07A","caption":"Wear and tear. Check the useful life yourself.","src":"audio/slide-123.mp3"},{"id":"cat_L08_02","event":"cat_L08","caption":"Footnotes. That's where the opinions live.","src":"audio/slide-124.mp3"},{"id":"cat_L09_02","event":"cat_L09","caption":"Operating or financing? Every line on the balance sheet picks a side.","src":"audio/slide-125.mp3"},{"id":"cat_L10_02","event":"cat_L10","caption":"Margin times turnover. Two roads to the same return.","src":"audio/slide-126.mp3"},{"id":"cat_L11_02","event":"cat_L11","caption":"The spread. Borrowing helps only while you out-earn your debt.","src":"audio/slide-127.mp3"},{"id":"cat_L12_02","event":"cat_L12","caption":"Paid back? Lenders read the downside first.","src":"audio/slide-128.mp3"},{"id":"cat_L13_02","event":"cat_L13","caption":"Moats and the fade. Excess returns don't last on their own.","src":"audio/slide-129.mp3"},{"id":"cat_L14_02","event":"cat_L14","caption":"Forecasting. Growth costs capital, and somebody pays for it.","src":"audio/slide-130.mp3"},{"id":"cat_L15_02","event":"cat_L15","caption":"Cost of capital. Today's market sets the rate.","src":"audio/slide-131.mp3"}]</script>
 <script type="application/json" id="m2m-assets">{"sfx":{"bull":"sfx/bull.mp3","bear":"sfx/bear.mp3","bell_open":"sfx/bell_open.mp3","bell_close":"sfx/bell_close.mp3","cheer":"sfx/cheer.mp3","groan":"sfx/groan.mp3","cash":"sfx/cash.mp3","ticker_loop":"sfx/ticker_loop.mp3","whoosh":"sfx/whoosh.mp3"},"music":{"theme":"music/theme.mp3","stinger":"music/stinger.mp3","outro":"music/outro.mp3"}}</script>
 <script type="application/json" id="m2m-qa">{"CB-a01":["CB",0,104089],"CB-a02":["CB",104089,153461],"CB-a03":["CB",257550,119815],"CB-a04":["CB",377365,90741],"CB-a05":["CB",468106,96227],"CB-b01":["CB",564333,63861],"CB-b02":["CB",628194,192592],"CB-b03":["CB",820786,44112],"CB-b04":["CB",864898,69347],"CB-b05":["CB",934245,66604],"CB-cN01":["CB",1000849,147244],"CB-cN02":["CB",1148093,177415],"CB-cN03":["CB",1325508,186924],"CB-dN01":["CB",1512432,146695],"CB-dN02":["CB",1659127,137187],"CB-dN03":["CB",1796314,145049],"CB-eN01":["CB",1941363,181987],"CB-eN02":["CB",2123350,146695],"CB-eN03":["CB",2270045,200455],"CB-eN04":["CB",2470500,131518],"L01-1-01":["L01",0,50878],"L01-1-02":["L01",50878,57644],"L01-1-03":["L01",108522,60935],"L01-1-04":["L01",169457,59289],"L01-1-05":["L01",228746,55449],"L01-1-N01":["L01",284195,61484],"L01-1-N02":["L01",345679,85072],"L01-1-N03":["L01",430751,86169],"L01-1-N04":["L01",516920,88364],"L01-2-01":["L01",605284,101347],"L01-2-02":["L01",706631,114695],"L01-2-03":["L01",821326,63129],"L01-2-04":["L01",884455,79952],"L01-2-05":["L01",964407,69347],"L01-2-N01":["L01",1033754,104089],"L01-2-N02":["L01",1137843,137187],"L01-2-N03":["L01",1275030,110855],"L01-2-N04":["L01",1385885,130421],"L01-3-01":["L01",1516306,92935],"L01-3-02":["L01",1609241,154009],"L01-3-03":["L01",1763250,93484],"L01-3-04":["L01",1856734,104089],"L01-3-N01":["L01",1960823,125849],"L01-3-N02":["L01",2086672,174672],"L01-3-N03":["L01",2261344,170649],"L01-3-N04":["L01",2431993,180341],"L01-4-01":["L01",2612334,234101],"L01-4-02":["L01",2846435,185278],"L01-4-03":["L01",3031713,106832],"L01-4-04":["L01",3138545,145049],"L01-4-N01":["L01",3283594,177415],"L01-4-N02":["L01",3461009,162421],"L01-4-N03":["L01",3623430,138284],"L01-4-N04":["L01",3761714,142124],"L01-5-01":["L01",3903838,242329],"L01-5-02":["L01",4146167,116341],"L01-5-03":["L01",4262508,188021],"L01-5-04":["L01",4450529,188569],"L01-5-N01":["L01",4639098,145598],"L01-5-N02":["L01",4784696,249095],"L01-5-N03":["L01",5033791,234649],"L01-5-N04":["L01",5268440,231724],"L01-AI-01":["L01",5500164,96227],"L01-AI-02":["L01",5596391,114147],"L01-AI-N01":["L01",5710538,151632],"L02-1-01":["L02",0,50878],"L02-1-02":["L02",50878,50878],"L02-1-03":["L02",101756,43015],"L02-1-04":["L02",144771,27289],"L02-1-05":["L02",172060,73369],"L02-1-N01":["L02",245429,47587],"L02-1-N02":["L02",293016,50878],"L02-1-N03":["L02",343894,66055],"L02-1-N04":["L02",409949,55998],"L02-2-01":["L02",465947,47587],"L02-2-02":["L02",513534,36249],"L02-2-03":["L02",549783,49781],"L02-2-04":["L02",599564,115244],"L02-2-05":["L02",714808,72089],"L02-3-01":["L02",786897,86169],"L02-3-02":["L02",873066,69895],"L02-3-03":["L02",942961,106284],"L02-3-04":["L02",1049245,138284],"L02-4-01":["L02",1187529,103541],"L02-4-02":["L02",1291070,133712],"L02-4-03":["L02",1424782,75015],"L02-4-04":["L02",1499797,57095],"L02-4-N01":["L02",1556892,110307],"L02-4-N02":["L02",1667199,141027],"L02-4-N03":["L02",1808226,142672],"L02-5-01":["L02",1950898,71541],"L02-5-02":["L02",2022439,165164],"L02-5-03":["L02",2187603,155107],"L02-5-04":["L02",2342710,153461],"L02-5-N01":["L02",2496171,104638],"L02-5-N02":["L02",2600809,107381],"L02-5-N03":["L02",2708190,186924],"L02-5-N04":["L02",2895114,130969],"L02-AI-01":["L02",3026083,49232],"L02-AI-02":["L02",3075315,51427],"L02-AI-N01":["L02",3126742,38078],"L03-1-01":["L03",0,93484],"L03-1-02":["L03",93484,66055],"L03-1-03":["L03",159539,77209],"L03-1-04":["L03",236748,111952],"L03-1-N01":["L03",348700,65507],"L03-1-N02":["L03",414207,79404],"L03-1-N03":["L03",493611,83975],"L03-1-N04":["L03",577586,47038],"L03-2-01":["L03",624624,81049],"L03-2-02":["L03",705673,72089],"L03-2-03":["L03",777762,85621],"L03-2-04":["L03",863383,130969],"L03-3-01":["L03",994352,190398],"L03-3-02":["L03",1184750,166809],"L03-3-03":["L03",1351559,130969],"L03-3-04":["L03",1482528,147244],"L03-4-01":["L03",1629772,96227],"L03-4-02":["L03",1725999,152181],"L03-4-03":["L03",1878180,139929],"L03-4-04":["L03",2018109,65507],"L03-4-N01":["L03",2083616,77209],"L03-4-N02":["L03",2160825,201004],"L03-4-N03":["L03",2361829,105187],"L03-5-01":["L03",2467016,111404],"L03-5-02":["L03",2578420,185278],"L03-5-03":["L03",2763698,165164],"L03-5-04":["L03",2928862,121461],"L03-5-N01":["L03",3050323,157301],"L03-5-N02":["L03",3207624,118169],"L03-5-N03":["L03",3325793,159495],"L03-5-N04":["L03",3485288,134261],"L03-AI-01":["L03",3619549,70444],"L03-AI-02":["L03",3689993,49232],"L03-AI-N01":["L03",3739225,62581],"L04-1-01":["L04",0,87267],"L04-1-02":["L04",87267,80501],"L04-1-03":["L04",167768,73369],"L04-1-04":["L04",241137,54169],"L04-1-N01":["L04",295306,55449],"L04-1-N02":["L04",350755,68798],"L04-1-N03":["L04",419553,59289],"L04-1-N04":["L04",478842,85072],"L04-2-01":["L04",563914,81781],"L04-2-02":["L04",645695,98969],"L04-2-03":["L04",744664,94581],"L04-2-04":["L04",839245,97872],"L04-3-01":["L04",937117,119815],"L04-3-02":["L04",1056932,106284],"L04-3-03":["L04",1163216,98421],"L04-3-04":["L04",1261637,166809],"L04-4-01":["L04",1428446,112501],"L04-4-02":["L04",1540947,90741],"L04-4-03":["L04",1631688,79952],"L04-4-04":["L04",1711640,136089],"L04-5-01":["L04",1847729,165712],"L04-5-02":["L04",2013441,131518],"L04-5-03":["L04",2144959,81781],"L04-5-04":["L04",2226740,185827],"L04-5-N01":["L04",2412567,88912],"L04-5-N02":["L04",2501479,132615],"L04-5-N03":["L04",2634094,89461],"L04-5-N04":["L04",2723555,96227],"L04-AI-01":["L04",2819782,51427],"L04-AI-02":["L04",2871209,86169],"L04-AI-N01":["L04",2957378,50329],"L05-1-01":["L05",0,48684],"L05-1-02":["L05",48684,64409],"L05-1-03":["L05",113093,111404],"L05-1-04":["L05",224497,32958],"L05-1-05":["L05",257455,41918],"L05-1-N01":["L05",299373,77209],"L05-1-N02":["L05",376582,101895],"L05-1-N03":["L05",478477,43015],"L05-1-N04":["L05",521492,68798],"L05-2-01":["L05",590290,98969],"L05-2-02":["L05",689259,110855],"L05-2-03":["L05",800114,84524],"L05-2-04":["L05",884638,90741],"L05-2-05":["L05",975379,83427],"L05-3-01":["L05",1058806,109758],"L05-3-02":["L05",1168564,75015],"L05-3-03":["L05",1243579,116889],"L05-3-04":["L05",1360468,88364],"L05-3-05":["L05",1448832,88912],"L05-3-06":["L05",1537744,105735],"L05-3-07":["L05",1643479,165164],"L05-4-01":["L05",1808643,103541],"L05-4-02":["L05",1912184,142124],"L05-4-03":["L05",2054308,120912],"L05-4-04":["L05",2175220,136638],"L05-5-01":["L05",2311858,134809],"L05-5-02":["L05",2446667,241232],"L05-5-03":["L05",2687899,187472],"L05-5-04":["L05",2875371,107381],"L05-5-N01":["L05",2982752,109758],"L05-5-N02":["L05",3092510,127129],"L05-5-N03":["L05",3219639,130969],"L05-5-N04":["L05",3350608,167358],"L05-AI-01":["L05",3517966,73918],"L05-AI-02":["L05",3591884,62032],"L05-AI-03":["L05",3653916,78307],"L05-AI-N01":["L05",3732223,64958],"L07I-1-01":["L07I",0,53072],"L07I-1-02":["L07I",53072,79404],"L07I-1-03":["L07I",132476,74467],"L07I-1-04":["L07I",206943,28569],"L07I-1-05":["L07I",235512,44112],"L07I-1-N01":["L07I",279624,88364],"L07I-1-N02":["L07I",367988,88364],"L07I-1-N03":["L07I",456352,83975],"L07I-1-N04":["L07I",540327,61484],"L07I-2-01":["L07I",601811,106832],"L07I-2-02":["L07I",708643,96775],"L07I-2-03":["L07I",805418,157849],"L07I-2-04":["L07I",963267,90009],"L07I-2-05":["L07I",1053276,78307],"L07I-3-01":["L07I",1131583,133164],"L07I-3-02":["L07I",1264747,149987],"L07I-3-03":["L07I",1414734,124752],"L07I-3-04":["L07I",1539486,114147],"L07I-3-05":["L07I",1653633,149438],"L07I-3-06":["L07I",1803071,137187],"L07I-3-07":["L07I",1940258,81781],"L07I-4-01":["L07I",2022039,141027],"L07I-4-02":["L07I",2163066,141027],"L07I-4-03":["L07I",2304093,121461],"L07I-4-04":["L07I",2425554,156204],"L07I-4-05":["L07I",2581758,138284],"L07I-5-01":["L07I",2720042,155107],"L07I-5-02":["L07I",2875149,146147],"L07I-5-03":["L07I",3021296,145598],"L07I-5-04":["L07I",3166894,153461],"L07I-5-N01":["L07I",3320355,120364],"L07I-5-N02":["L07I",3440719,141027],"L07I-5-N03":["L07I",3581746,167907],"L07I-5-N04":["L07I",3749653,133712],"L07I-AI-01":["L07I",3883365,101347],"L07I-AI-02":["L07I",3984712,96775],"L07I-AI-N01":["L07I",4081487,120364],"L07A-1-01":["L07A",0,126581],"L07A-1-02":["L07A",126581,53072],"L07A-1-03":["L07A",179653,73369],"L07A-1-04":["L07A",253022,60935],"L07A-1-05":["L07A",313957,74467],"L07A-1-N01":["L07A",388424,75564],"L07A-1-N02":["L07A",463988,39724],"L07A-1-N03":["L07A",503712,46489],"L07A-1-N04":["L07A",550201,69895],"L07A-2-01":["L07A",620096,86718],"L07A-2-02":["L07A",706814,101347],"L07A-2-03":["L07A",808161,143221],"L07A-2-04":["L07A",951382,84524],"L07A-3-01":["L07A",1035906,127678],"L07A-3-02":["L07A",1163584,62581],"L07A-3-03":["L07A",1226165,95678],"L07A-3-04":["L07A",1321843,92387],"L07A-3-05":["L07A",1414230,124752],"L07A-4-01":["L07A",1538982,95678],"L07A-4-02":["L07A",1634660,70992],"L07A-4-03":["L07A",1705652,74467],"L07A-4-04":["L07A",1780119,72821],"L07A-4-05":["L07A",1852940,52524],"L07A-5-01":["L07A",1905464,109209],"L07A-5-02":["L07A",2014673,115792],"L07A-5-03":["L07A",2130465,100798],"L07A-5-04":["L07A",2231263,70444],"L07A-5-N01":["L07A",2301707,182535],"L07A-5-N02":["L07A",2484242,137735],"L07A-5-N03":["L07A",2621977,88912],"L07A-5-N04":["L07A",2710889,183084],"L07A-AI-01":["L07A",2893973,60387],"L07A-AI-02":["L07A",2954360,52524],"L07A-AI-N01":["L07A",3006884,82878],"L08-1-01":["L08",0,95129],"L08-1-02":["L08",95129,66055],"L08-1-03":["L08",161184,47587],"L08-1-04":["L08",208771,52524],"L08-1-05":["L08",261295,63129],"L08-1-N01":["L08",324424,87267],"L08-1-N02":["L08",411691,86169],"L08-1-N03":["L08",497860,68249],"L08-1-N04":["L08",566109,70444],"L08-2-01":["L08",636553,113598],"L08-2-02":["L08",750151,66604],"L08-2-03":["L08",816755,100249],"L08-2-04":["L08",917004,155107],"L08-2-05":["L08",1072111,93484],"L08-2-06":["L08",1165595,104638],"L08-2-07":["L08",1270233,101895],"L08-3-01":["L08",1372128,130421],"L08-3-02":["L08",1502549,84524],"L08-3-03":["L08",1587073,96775],"L08-3-04":["L08",1683848,72089],"L08-3-05":["L08",1755937,70992],"L08-3-06":["L08",1826929,139381],"L08-3-07":["L08",1966310,104638],"L08-4-01":["L08",2070948,85621],"L08-4-02":["L08",2156569,66604],"L08-4-03":["L08",2223173,148341],"L08-4-04":["L08",2371514,95129],"L08-4-05":["L08",2466643,117621],"L08-5-01":["L08",2584264,105187],"L08-5-02":["L08",2689451,105735],"L08-5-03":["L08",2795186,100798],"L08-5-04":["L08",2895984,87815],"L08-5-N01":["L08",2983799,129324],"L08-5-N02":["L08",3113123,160592],"L08-5-N03":["L08",3273715,95129],"L08-5-N04":["L08",3368844,101347],"L08-AI-01":["L08",3470191,46489],"L08-AI-02":["L08",3516680,54169],"L08-AI-03":["L08",3570849,41369],"L08-AI-N01":["L08",3612218,54169],"L09-1-01":["L09",0,70444],"L09-1-02":["L09",70444,68249],"L09-1-03":["L09",138693,125301],"L09-1-04":["L09",263994,95678],"L09-1-05":["L09",359672,73918],"L09-1-N01":["L09",433590,55449],"L09-1-N02":["L09",489039,68798],"L09-1-N03":["L09",557837,81049],"L09-1-N04":["L09",638886,103541],"L09-2-01":["L09",742427,64958],"L09-2-02":["L09",807385,97872],"L09-2-03":["L09",905257,93484],"L09-2-04":["L09",998741,50878],"L09-2-05":["L09",1049619,173575],"L09-3-01":["L09",1223194,97872],"L09-3-02":["L09",1321066,106832],"L09-3-03":["L09",1427898,131518],"L09-3-04":["L09",1559416,145049],"L09-3-05":["L09",1704465,137735],"L09-4-01":["L09",1842200,75564],"L09-4-02":["L09",1917764,170101],"L09-4-03":["L09",2087865,70992],"L09-4-04":["L09",2158857,63129],"L09-5-01":["L09",2221986,87267],"L09-5-02":["L09",2309253,155107],"L09-5-03":["L09",2464360,109209],"L09-5-04":["L09",2573569,113049],"L09-5-N01":["L09",2686618,165164],"L09-5-N02":["L09",2851782,78855],"L09-5-N03":["L09",2930637,111404],"L09-5-N04":["L09",3042041,83975],"L09-AI-01":["L09",3126016,65507],"L09-AI-02":["L09",3191523,92935],"L09-AI-03":["L09",3284458,54901],"L09-AI-N01":["L09",3339359,86169],"L10-1-01":["L10",0,92387],"L10-1-02":["L10",92387,78855],"L10-1-03":["L10",171242,94581],"L10-1-04":["L10",265823,70444],"L10-1-05":["L10",336267,74467],"L10-1-N01":["L10",410734,121461],"L10-1-N02":["L10",532195,85072],"L10-1-N03":["L10",617267,115792],"L10-1-N04":["L10",733059,111404],"L10-2-01":["L10",844463,84524],"L10-2-02":["L10",928987,92387],"L10-2-03":["L10",1021374,125301],"L10-2-04":["L10",1146675,82329],"L10-2-05":["L10",1229004,72089],"L10-3-01":["L10",1301093,81781],"L10-3-02":["L10",1382874,161689],"L10-3-03":["L10",1544563,124204],"L10-3-04":["L10",1668767,105735],"L10-3-05":["L10",1774502,40272],"L10-4-01":["L10",1814774,107381],"L10-4-02":["L10",1922155,119815],"L10-4-03":["L10",2041970,166809],"L10-4-04":["L10",2208779,173575],"L10-4-05":["L10",2382354,55449],"L10-5-01":["L10",2437803,115244],"L10-5-02":["L10",2553047,82878],"L10-5-03":["L10",2635925,111404],"L10-5-04":["L10",2747329,129872],"L10-5-N01":["L10",2877201,201004],"L10-5-N02":["L10",3078205,162421],"L10-5-N03":["L10",3240626,106284],"L10-5-N04":["L10",3346910,184181],"L10-AI-01":["L10",3531091,79952],"L10-AI-02":["L10",3611043,62032],"L10-AI-03":["L10",3673075,99701],"L10-AI-N01":["L10",3772776,136089],"L11-1-01":["L11",0,83975],"L11-1-02":["L11",83975,76112],"L11-1-03":["L11",160087,60387],"L11-1-04":["L11",220474,65507],"L11-1-05":["L11",285981,91838],"L11-1-N01":["L11",377819,91289],"L11-1-N02":["L11",469108,98421],"L11-1-N03":["L11",567529,127129],"L11-1-N04":["L11",694658,61484],"L11-2-01":["L11",756142,50329],"L11-2-02":["L11",806471,61484],"L11-2-03":["L11",867955,90009],"L11-2-04":["L11",957964,109758],"L11-2-05":["L11",1067722,46489],"L11-3-01":["L11",1114211,143221],"L11-3-02":["L11",1257432,39175],"L11-3-03":["L11",1296607,94032],"L11-3-04":["L11",1390639,170649],"L11-3-05":["L11",1561288,183632],"L11-3-06":["L11",1744920,102444],"L11-4-01":["L11",1847364,193141],"L11-4-02":["L11",2040505,52524],"L11-4-03":["L11",2093029,103541],"L11-4-04":["L11",2196570,101347],"L11-5-01":["L11",2297917,98421],"L11-5-02":["L11",2396338,180889],"L11-5-03":["L11",2577227,98969],"L11-5-04":["L11",2676196,147244],"L11-5-N01":["L11",2823440,196432],"L11-5-N02":["L11",3019872,179061],"L11-5-N03":["L11",3198933,106284],"L11-5-N04":["L11",3305217,137187],"L11-AI-01":["L11",3442404,133712],"L11-AI-02":["L11",3576116,68249],"L11-AI-03":["L11",3644365,69347],"L11-AI-N01":["L11",3713712,75015],"L12-1-01":["L12",0,56547],"L12-1-02":["L12",56547,48135],"L12-1-03":["L12",104682,39175],"L12-1-04":["L12",143857,38078],"L12-1-05":["L12",181935,69895],"L12-1-06":["L12",251830,91838],"L12-1-N01":["L12",343668,63129],"L12-1-N02":["L12",406797,94032],"L12-1-N03":["L12",500829,107929],"L12-1-N04":["L12",608758,97872],"L12-2-01":["L12",706630,47587],"L12-2-02":["L12",754217,161689],"L12-2-03":["L12",915906,143769],"L12-2-04":["L12",1059675,76661],"L12-2-05":["L12",1136336,38627],"L12-2-06":["L12",1174963,85621],"L12-3-01":["L12",1260584,104638],"L12-3-02":["L12",1365222,138284],"L12-3-03":["L12",1503506,110855],"L12-3-04":["L12",1614361,146147],"L12-3-05":["L12",1760508,152181],"L12-3-06":["L12",1912689,132615],"L12-3-07":["L12",2045304,104089],"L12-4-01":["L12",2149393,148341],"L12-4-02":["L12",2297734,49781],"L12-4-03":["L12",2347515,189849],"L12-4-04":["L12",2537364,81049],"L12-4-05":["L12",2618413,169004],"L12-5-01":["L12",2787417,150535],"L12-5-02":["L12",2937952,143769],"L12-5-03":["L12",3081721,110855],"L12-5-04":["L12",3192576,102444],"L12-5-N01":["L12",3295020,137735],"L12-5-N02":["L12",3432755,125849],"L12-5-N03":["L12",3558604,115792],"L12-5-N04":["L12",3674396,185278],"L12-AI-01":["L12",3859674,65507],"L12-AI-02":["L12",3925181,87815],"L12-AI-03":["L12",4012996,43564],"L12-AI-N01":["L12",4056560,64409]}</script>
-<script type="application/json" id="m2m-meta">{"built":"2026-10-18 20:34","items":620,"realItems":620,"sampleCats":[],"voice":119,"voiceSource":"voice/lines.json","audio":119,"sfx":["bear","bell_close","bell_open","bull","cash","cheer","groan","ticker_loop","whoosh"],"music":["outro","stinger","theme"],"questionsRead":461,"v3":true}</script>
+<script type="application/json" id="m2m-meta">{"built":"2026-10-19 09:11","items":620,"realItems":620,"sampleCats":[],"voice":119,"voiceSource":"voice/lines.json","audio":119,"sfx":["bear","bell_close","bell_open","bull","cash","cheer","groan","ticker_loop","whoosh"],"music":["outro","stinger","theme"],"questionsRead":461,"v3":true}</script>
 <script>
 /* MARK TO MARKET — shared helpers for number generators.
  * Works in the browser (window.M2M_H) and in Node (require('./helpers.js')).
@@ -17373,6 +17639,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
  *   Flags   "this question looks wrong", grouped by question, with a Resolved toggle; the too-fast list
  *   Coach   the // APPLIED AI coach: the switch, what the class gets wrong, recent exchanges
  *   Versus, Tournaments   drawn by versus.js (deskVersus, tourneyAdmin)
+ *   Live games            drawn by host.js (hostRoom): host a live game in class, past games, distributions, CSV
  */
 (function () {
   "use strict";
@@ -17381,7 +17648,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   const A = () => M2M.acct;
   const K = (M2M.desk = {});
   const OWNER = "sw48@rice.edu";
-  const TABS = [["class", "Class"], ["roster", "Roster"], ["credit", "Credit"], ["flags", "Flags"], ["coach", "Coach"], ["versus", "Versus"], ["tourneys", "Tournaments"]];
+  const TABS = [["class", "Class"], ["roster", "Roster"], ["credit", "Credit"], ["flags", "Flags"], ["coach", "Coach"], ["versus", "Versus"], ["tourneys", "Tournaments"], ["live", "Live games"]];
   const LETTERS = ["A", "B", "C", "D"];
   const CSV_COLS = ["netid", "email", "handle", "verified", "coverage", "mastery", "speed", "days", "gate_met", "credit_points", "too_fast", "multiplier", "answers", "last_active"];
   let tab = "class", data = {}, sorts = { roster: { k: "handle", d: 1 }, credit: { k: "credit_points", d: -1 } }, query = "", flagView = "open";
@@ -17439,10 +17706,12 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     refresh.addEventListener("click", () => { delete data[tab === "class" ? "cls" : tab]; show(tab); });
     const back = h("button.btn.btn-quiet", { type: "button" }, "Back to the title");
     back.addEventListener("click", () => M2M.app.title());
+    const host = M2M.live ? h("button.btn.dk-hostlive", { type: "button" }, "Host a live game") : null;
+    if (host) host.addEventListener("click", () => M2M.live.setup());
     r.append(
       h("header.dk-head", null,
         h("div.dk-id", null, h("p.eyebrow", null, "// sean's desk · only you see this"), h("h2.scr-h#dk-h", { text: "The Desk" })),
-        h("div.dk-acts", null, refresh, back)),
+        h("div.dk-acts", null, host, refresh, back)),
       tabs,
       h("section.dk-panel#dk-panel", { role: "tabpanel", "aria-labelledby": "dk-tab-" + tab }, msg ? h("p.dk-msg" + (bad ? ".bad" : ""), { role: "status", text: msg }) : null));
     // on a phone the five tabs scroll sideways: keep the open one in view
@@ -17451,28 +17720,32 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   }
   const panel = () => document.getElementById("dk-panel");
 
+  // only the newest show() draws: returning from the projector opens the Live games tab while a click can open it again,
+  // and the slower of two loads must not redraw the panel under a Details view the first one already opened
+  let showSeq = 0;
   async function show(k) {
+    const seq = ++showSeq;
     tab = k;
     const key = k === "class" ? "cls" : k;
     frame(data[key] ? null : "Loading…");
     if (!data[key]) {
       try {
-        data[key] = await call({ cls: "deskClass", roster: "deskRoster", credit: "deskCredit", flags: "deskFlags", coach: "deskCoach", versus: "deskVersus", tourneys: "tourneyAdmin" }[key], {});
+        data[key] = await call({ cls: "deskClass", roster: "deskRoster", credit: "deskCredit", flags: "deskFlags", coach: "deskCoach", versus: "deskVersus", tourneys: "tourneyAdmin", live: "hostRoom" }[key], {});
         if (key !== "cls" && !data.cls) call("deskClass", {}).then((c) => { data.cls = c; badge(); }, () => {});
       } catch (e) {
-        if (tab === k) frame((e && e.message) || "Could not load this tab.", true);
+        if (seq === showSeq) frame((e && e.message) || "Could not load this tab.", true);
         return;
       }
-      if (tab !== k) return;
+      if (seq !== showSeq) return;
       frame(null);
     }
     const p = panel();
     U.clear(p);
     // Versus and Tournaments come from versus.js; a change there reloads the tab (and the credit report, which shows tournament points)
-    const vctx = { reload: () => { delete data[key]; delete data.credit; if (tab === k) show(k); } };
+    const vctx = { reload: () => { delete data[key]; delete data.credit; if (tab === k) show(k); }, reloadCredit: () => { delete data.credit; } };
     const VD = M2M.versus && M2M.versus.desk;
     ({ class: renderClass, roster: renderRoster, credit: renderCredit, flags: renderFlags, coach: renderCoach,
-      versus: (q) => VD.versus(q, data.versus, vctx), tourneys: (q) => VD.tourneys(q, data.tourneys, vctx) })[k](p);
+      versus: (q) => VD.versus(q, data.versus, vctx), tourneys: (q) => VD.tourneys(q, data.tourneys, vctx), live: (q) => M2M.live.desk(q, data.live, vctx) })[k](p);
   }
   function badge() {
     const b = document.getElementById("dk-tab-flags");
@@ -17837,17 +18110,29 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const top = Object.entries(counts || {}).sort((a, b) => b[1] - a[1]).slice(0, n || 4);
     return top.length ? top.map(([t, c]) => h("span.dk-ctag", { title: labels[t] || t, dataset: { tag: t } }, labels[t] || t, h("b", { text: String(c) }))) : [h("span.dk-dim", { text: "—" })];
   }
+  /** what the care email did, in words */
+  function alertWords(a) {
+    if (!a) return "no email (before alerts existed)";
+    if (a === "sent") return "email sent";
+    if (a === "repeat") return "no email: one already went out for this player in the last 6 hours";
+    if (a === "cap") return "no email: 10 already today";
+    if (a === "mock") return "email: test mode";
+    if (/^off/.test(a)) return "email not set up";
+    return "email failed (" + String(a).replace(/^failed:\s*/, "") + ")";
+  }
   function renderCoach(p) {
     const c = data.coach, T = c.totals;
     const labels = Object.fromEntries(c.tags.map((t) => [t.id, t.label]));
     const tile = (label, val, sub) => h("div.dk-tile", null, h("span.dk-tl", { text: label }), h("b.dk-tv", { text: val }), sub ? h("span.dk-ts", { text: sub }) : null);
     const fbs = (T.invalid || 0) + (T.error || 0) + (T.timeout || 0);
+    const careN = c.recent.filter((r) => r.care).length;
     p.append(h("div.dk-tiles", { role: "group", "aria-label": "Coach totals" },
       tile("Coach asks", U.int(T.calls), T.today + " today"),
       tile("Players who asked", String(T.players), ""),
       tile("Fell back", String(fbs), (T.invalid || 0) + " rule break · " + (T.error || 0) + " error · " + (T.timeout || 0) + " timeout"),
       tile("Tokens", U.int(T.tin) + " in", U.int(T.tout) + " out"),
-      tile("Estimated spend", usd(T.spend), "list price $" + c.price.inPerM.toFixed(2) + " / $" + c.price.outPerM.toFixed(2) + " per M tokens" + (T.mock ? " · " + T.mock + " mock" : ""))));
+      tile("Estimated spend", usd(T.spend), "list price $" + c.price.inPerM.toFixed(2) + " / $" + c.price.outPerM.toFixed(2) + " per M tokens" + (T.mock ? " · " + T.mock + " mock" : "")),
+      careN ? h("div.dk-tile.dk-tile-care", null, h("span.dk-tl", { text: "Care notes" }), h("b.dk-tv", { text: String(careN) }), h("span.dk-ts", { text: "in the recent list below; each emailed you" })) : null));
     // the kill switch and the daily cap
     const on = h("input#dk-coach-on", { type: "checkbox" }); on.checked = c.cfg.on;
     const cap = h("input.af-in#dk-coach-cap", { type: "number", min: "0", max: "200", step: "1", value: String(c.cfg.dailyCap), "aria-label": "Daily cap per player" });
@@ -17892,9 +18177,11 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       if (!rows.length) { list.appendChild(h("li.dk-dim", { text: c.recent.length ? "Nothing matches." : "No one has asked the coach yet." })); return; }
       for (const r of rows.slice(0, 120)) {
         const pick = r.c != null ? "picked " + LETTERS[r.c] : r.y ? "typed " + r.y : "";
-        list.appendChild(h("li.dk-cx" + (r.fb ? ".fb" : ""), { dataset: { id: r.id } },
+        list.appendChild(h("li.dk-cx" + (r.fb ? ".fb" : "") + (r.care ? ".care" : ""), { dataset: { id: r.id } },
           h("div.dk-cx-head", null, h("b", { text: r.h }), h("span", { text: fmtWhen(r.t) }), h("span.tr-tag", { text: tag(r.L) }), h("span.dk-dim", { text: r.q + " · T" + r.T + (pick ? " · " + pick : "") }),
-            r.fb ? h("span.dk-fb", { text: r.fb === "invalid" ? "fallback: " + (r.why || "rule break") : "coach out: " + r.fb }) : null),
+            r.fb ? h("span.dk-fb", { text: r.fb === "invalid" ? "fallback: " + (r.why || "rule break") : "coach out: " + r.fb }) : null,
+            r.care ? h("span.dk-care", { "aria-label": "care note" + (r.care === "model" ? ", flagged by the coach" : "") }, "CARE") : null,
+            r.care ? h("span.dk-care-mail", { text: alertWords(r.alert) + (r.care === "model" ? " · flagged by the coach" : "") }) : null),
           r.note ? h("p.dk-cx-note", null, h("span.dk-dim", { text: "Note: " }), r.note) : null,
           h("p.dk-cx-text", null, r.tag ? h("span.dk-ctag", { dataset: { tag: r.tag } }, labels[r.tag] || r.tag) : null, r.text || "—"),
           h("p.dk-cx-meta.dk-dim", { text: [r.bank && r.bank !== r.tag ? "bank tag " + (labels[r.bank] || r.bank) : null, r.focus ? "focus " + (labels[r.focus] || r.focus) : null, sec(r.ms), r.tin + " / " + r.tout + " tokens", r.model].filter(Boolean).join(" · ") })));
@@ -18457,6 +18744,1249 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   M2M.debugVersus = { pub: () => pub, list: () => tnList, check: () => checkRes };
 })();
 
+/* ---- v3/qr.js ---- */
+/* MARK TO MARKET v3 — qr.js: a QR code made in the page (no external service), for the live game's join link.
+ *
+ * Byte mode, versions 1 to 10, error correction M by default, the eight masks scored by the standard's four penalty
+ * rules. Written from the QR code specification (ISO/IEC 18004): Reed-Solomon over GF(256) with 0x11D, the format and
+ * version bits with their BCH codes, finder, timing and alignment patterns, the zigzag placement.
+ *   M2M.qr.matrix(text, ecl) -> [[bool]] (true = dark), M2M.qr.svg(text, {size, ecl, quiet}) -> SVG markup
+ * A test decodes the projector's code with OpenCV (game/test_host.py) and checks the module patterns here against
+ * several lengths.
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M || (window.M2M = {});
+  const ECL = { L: { i: 0, bits: 1 }, M: { i: 1, bits: 0 }, Q: { i: 2, bits: 3 }, H: { i: 3, bits: 2 } };
+  // per version 1..10: error-correction codewords per block, and the number of blocks, for L, M, Q, H
+  const ECC_PER_BLOCK = [
+    [7, 10, 15, 20, 26, 18, 20, 24, 30, 18],
+    [10, 16, 26, 18, 24, 16, 18, 22, 22, 26],
+    [13, 22, 18, 26, 18, 24, 18, 22, 20, 24],
+    [17, 28, 22, 16, 22, 28, 26, 26, 24, 28]
+  ];
+  const BLOCKS = [
+    [1, 1, 1, 1, 1, 2, 2, 2, 2, 4],
+    [1, 1, 1, 2, 2, 4, 4, 4, 5, 5],
+    [1, 1, 2, 2, 4, 4, 6, 6, 8, 8],
+    [1, 1, 2, 4, 4, 4, 5, 6, 8, 8]
+  ];
+  const MAX_V = 10;
+
+  function rawModules(v) {
+    let r = (16 * v + 128) * v + 64;
+    if (v >= 2) { const na = Math.floor(v / 7) + 2; r -= (25 * na - 10) * na - 55; if (v >= 7) r -= 36; }
+    return r;
+  }
+  const dataCodewords = (v, e) => Math.floor(rawModules(v) / 8) - ECC_PER_BLOCK[e][v - 1] * BLOCKS[e][v - 1];
+
+  // ---- Reed-Solomon over GF(2^8), primitive polynomial x^8 + x^4 + x^3 + x^2 + 1 (0x11D)
+  function gfMul(x, y) {
+    let z = 0;
+    for (let i = 7; i >= 0; i--) { z = (z << 1) ^ ((z >>> 7) * 0x11d); z ^= ((y >>> i) & 1) * x; }
+    return z & 0xff;
+  }
+  function rsDivisor(deg) {
+    const r = new Array(deg).fill(0);
+    r[deg - 1] = 1;
+    let root = 1;
+    for (let i = 0; i < deg; i++) {
+      for (let j = 0; j < r.length; j++) { r[j] = gfMul(r[j], root); if (j + 1 < r.length) r[j] ^= r[j + 1]; }
+      root = gfMul(root, 2);
+    }
+    return r;
+  }
+  function rsRemainder(data, div) {
+    const r = div.map(() => 0);
+    for (const b of data) {
+      const f = b ^ r.shift();
+      r.push(0);
+      div.forEach((c, i) => { r[i] ^= gfMul(c, f); });
+    }
+    return r;
+  }
+
+  function utf8(s) {
+    if (typeof TextEncoder !== "undefined") return Array.from(new TextEncoder().encode(s));
+    return Array.from(unescape(encodeURIComponent(s))).map((c) => c.charCodeAt(0));
+  }
+
+  /** the codewords for text at version v: mode, count, data, terminator, padding, then the blocks' ECC interleaved */
+  function codewords(bytes, v, e) {
+    const bits = [];
+    const put = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+    put(4, 4); // byte mode
+    put(bytes.length, v <= 9 ? 8 : 16);
+    for (const b of bytes) put(b, 8);
+    const cap = dataCodewords(v, e) * 8;
+    put(0, Math.min(4, cap - bits.length));
+    put(0, (8 - (bits.length % 8)) % 8);
+    for (let pad = 0xec; bits.length < cap; pad ^= 0xec ^ 0x11) put(pad, 8);
+    const data = [];
+    for (let i = 0; i < bits.length; i += 8) { let x = 0; for (let j = 0; j < 8; j++) x = (x << 1) | bits[i + j]; data.push(x); }
+    const nb = BLOCKS[e][v - 1], eccLen = ECC_PER_BLOCK[e][v - 1];
+    const raw = Math.floor(rawModules(v) / 8);
+    const nShort = nb - (raw % nb), shortLen = Math.floor(raw / nb);
+    const div = rsDivisor(eccLen);
+    const blocks = [];
+    for (let i = 0, k = 0; i < nb; i++) {
+      const dat = data.slice(k, k + shortLen - eccLen + (i < nShort ? 0 : 1));
+      k += dat.length;
+      const ecc = rsRemainder(dat, div);
+      if (i < nShort) dat.push(0);
+      blocks.push(dat.concat(ecc));
+    }
+    const out = [];
+    for (let i = 0; i < blocks[0].length; i++) for (let j = 0; j < blocks.length; j++) if (i !== shortLen - eccLen || j >= nShort) out.push(blocks[j][i]);
+    return out;
+  }
+
+  function alignPos(v) {
+    if (v === 1) return [];
+    const na = Math.floor(v / 7) + 2, size = v * 4 + 17;
+    const step = Math.ceil((v * 4 + 4) / (na * 2 - 2)) * 2;
+    const out = [6];
+    for (let i = 0, p = size - 7; i < na - 1; i++, p -= step) out.splice(1, 0, p);
+    return out;
+  }
+
+  function build(bytes, v, e, mask) {
+    const size = v * 4 + 17;
+    const mod = Array.from({ length: size }, () => new Array(size).fill(false));
+    const fn = Array.from({ length: size }, () => new Array(size).fill(false));
+    const set = (x, y, d) => { mod[y][x] = d; fn[y][x] = true; };
+    for (let i = 0; i < size; i++) { set(6, i, i % 2 === 0); set(i, 6, i % 2 === 0); }
+    for (const [cx, cy] of [[3, 3], [size - 4, 3], [3, size - 4]]) {
+      for (let dy = -4; dy <= 4; dy++) for (let dx = -4; dx <= 4; dx++) {
+        const x = cx + dx, y = cy + dy;
+        if (x < 0 || y < 0 || x >= size || y >= size) continue;
+        const d = Math.max(Math.abs(dx), Math.abs(dy));
+        set(x, y, d !== 2 && d !== 4);
+      }
+    }
+    const ap = alignPos(v), last = ap.length - 1;
+    for (let i = 0; i < ap.length; i++) for (let j = 0; j < ap.length; j++) {
+      if ((i === 0 && j === 0) || (i === 0 && j === last) || (i === last && j === 0)) continue;
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) set(ap[i] + dx, ap[j] + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+    }
+    const format = (m) => {
+      const d = (ECL[e === 0 ? "L" : e === 1 ? "M" : e === 2 ? "Q" : "H"].bits << 3) | m;
+      let r = d;
+      for (let i = 0; i < 10; i++) r = (r << 1) ^ ((r >>> 9) * 0x537);
+      const bits = ((d << 10) | r) ^ 0x5412;
+      const b = (i) => ((bits >>> i) & 1) !== 0;
+      for (let i = 0; i <= 5; i++) set(8, i, b(i));
+      set(8, 7, b(6)); set(8, 8, b(7)); set(7, 8, b(8));
+      for (let i = 9; i < 15; i++) set(14 - i, 8, b(i));
+      for (let i = 0; i < 8; i++) set(size - 1 - i, 8, b(i));
+      for (let i = 8; i < 15; i++) set(8, size - 15 + i, b(i));
+      set(8, size - 8, true);
+    };
+    format(0); // reserve the format area before the data goes in
+    if (v >= 7) {
+      let r = v;
+      for (let i = 0; i < 12; i++) r = (r << 1) ^ ((r >>> 11) * 0x1f25);
+      const bits = (v << 12) | r;
+      for (let i = 0; i < 18; i++) { const d = ((bits >>> i) & 1) !== 0, a = size - 11 + (i % 3), bb = Math.floor(i / 3); set(a, bb, d); set(bb, a, d); }
+    }
+    const cw = codewords(bytes, v, e);
+    let k = 0;
+    for (let right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (let vert = 0; vert < size; vert++) for (let j = 0; j < 2; j++) {
+        const x = right - j, up = ((right + 1) & 2) === 0, y = up ? size - 1 - vert : vert;
+        if (!fn[y][x] && k < cw.length * 8) { mod[y][x] = ((cw[k >>> 3] >>> (7 - (k & 7))) & 1) !== 0; k++; }
+      }
+    }
+    const MASKS = [
+      (x, y) => (x + y) % 2 === 0, (x, y) => y % 2 === 0, (x) => x % 3 === 0, (x, y) => (x + y) % 3 === 0,
+      (x, y) => (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0, (x, y) => ((x * y) % 2) + ((x * y) % 3) === 0,
+      (x, y) => (((x * y) % 2) + ((x * y) % 3)) % 2 === 0, (x, y) => (((x + y) % 2) + ((x * y) % 3)) % 2 === 0
+    ];
+    const apply = (m) => { for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) if (!fn[y][x] && MASKS[m](x, y)) mod[y][x] = !mod[y][x]; };
+    if (mask == null) {
+      let best = 0, bestP = Infinity;
+      for (let m = 0; m < 8; m++) { apply(m); format(m); const p = penalty(mod); if (p < bestP) { bestP = p; best = m; } apply(m); }
+      mask = best;
+    }
+    apply(mask);
+    format(mask);
+    return mod;
+  }
+
+  /** the standard's four penalty rules: runs of five or more, 2x2 blocks, finder-like patterns, dark/light balance */
+  function penalty(m) {
+    const n = m.length;
+    let p = 0;
+    const line = (get) => {
+      for (let a = 0; a < n; a++) {
+        let run = 1;
+        for (let b = 1; b <= n; b++) {
+          if (b < n && get(a, b) === get(a, b - 1)) run++;
+          else { if (run >= 5) p += run - 2; run = 1; }
+        }
+        // 1:1:3:1:1 with four light modules on a side (outside the symbol counts as light, as the standard says)
+        let t = "0000";
+        for (let b = 0; b < n; b++) t += get(a, b) ? "1" : "0";
+        t += "0000";
+        for (let b = 0; b + 11 <= t.length; b++) { const w = t.substr(b, 11); if (w === "10111010000" || w === "00001011101") p += 40; }
+      }
+    };
+    line((y, x) => m[y][x]);
+    line((x, y) => m[y][x]);
+    for (let y = 0; y + 1 < n; y++) for (let x = 0; x + 1 < n; x++) { const c = m[y][x]; if (c === m[y][x + 1] && c === m[y + 1][x] && c === m[y + 1][x + 1]) p += 3; }
+    let dark = 0;
+    for (const row of m) for (const c of row) if (c) dark++;
+    const k = Math.ceil(Math.abs(dark * 20 - n * n * 10) / (n * n)) - 1;
+    p += Math.max(0, k) * 10;
+    return p;
+  }
+
+  const QR = (M2M.qr = {});
+  QR.matrix = function (text, ecl, mask) {
+    const e = ECL[ecl || "M"] ? ECL[ecl || "M"].i : 1;
+    const bytes = utf8(String(text));
+    for (let v = 1; v <= MAX_V; v++) {
+      if (4 + (v <= 9 ? 8 : 16) + bytes.length * 8 <= dataCodewords(v, e) * 8) return build(bytes, v, e, mask);
+    }
+    throw new Error("Too long for a QR code here");
+  };
+  /** SVG markup: dark modules on white with a quiet zone (4 modules), crisp at any size */
+  QR.svg = function (text, opts) {
+    const o = opts || {};
+    const m = QR.matrix(text, o.ecl || "M");
+    const q = o.quiet == null ? 4 : o.quiet, n = m.length + 2 * q;
+    let d = "";
+    for (let y = 0; y < m.length; y++) for (let x = 0; x < m.length; x++) if (m[y][x]) d += "M" + (x + q) + " " + (y + q) + "h1v1h-1z";
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + n + " " + n + '" width="' + (o.size || 256) + '" height="' + (o.size || 256) +
+      '" shape-rendering="crispEdges" role="img" aria-label="' + String(o.label || "QR code").replace(/"/g, "&quot;") + '"><rect width="' + n + '" height="' + n + '" fill="#fff"/><path d="' + d + '" fill="#000"/></svg>';
+  };
+  QR._test = { rawModules, dataCodewords, alignPos, rsDivisor, rsRemainder, gfMul, codewords };
+})();
+
+/* ---- v3/host.js ---- */
+/* MARK TO MARKET v3 — host.js: host mode, the live in-class game. Sean's console and the projector, his phone's
+ * "Host controls", and the Desk's Live games tab. Only in --v3 builds; the players' phones are room.js.
+ *
+ *   Desk -> Host a live game (owner only): lectures, clues (or a full board), mode, timer, teams, credit (off).
+ *   The projector: a big room code and a QR code for profsean.wang/marktomarket-beta/?room=CODE (made in the page,
+ *   qr.js), the phones joined; each clue with a live count of answers; the distribution of answers (no names); in a
+ *   STOP AND THINK round both votes side by side; the reveal with the checked explanation and Sean's voice line; the
+ *   top 10 (handles only) between rounds; the close.
+ *   The console: buttons big enough to hit while teaching, and keys (space: the next step; C close, R reveal, N next,
+ *   P pause, S skip, T top 10, L lock joins, E end, F full screen). Every press carries the phase and clue it was made
+ *   on, so a double press or a second console (Sean's phone) never skips a step.
+ * The page never holds the current clue's key: the room's public node carries the clue without it (as item F serves
+ * clues) and the key arrives with the reveal. Everything is checked, timed and scored on the server (hostRoom, room).
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h, AV = M2M.avatar;
+  const D = () => M2M.data;
+  const A = () => M2M.acct;
+  const L = (M2M.live = {});
+  const call = (name, d) => A()._call(name, d);
+  const LETTERS = ["A", "B", "C", "D"];
+  const TEAMS = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  const tz = { timeZone: "America/Chicago" };
+  const fmtWhen = (ms) => (ms ? new Date(ms).toLocaleString("en-US", Object.assign({ month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }, tz)) : "—");
+  const catTag = (L0) => (D().CATS[L0] ? D().CATS[L0].tag : L0);
+  const catName = (L0) => (D().CATS[L0] ? D().CATS[L0].name : "");
+  const pc = (x) => (x == null ? "—" : Math.round(x * 100) + "%");
+  const ord = (p) => p + (p % 100 >= 11 && p % 100 <= 13 ? "th" : p % 10 === 1 ? "st" : p % 10 === 2 ? "nd" : p % 10 === 3 ? "rd" : "th");
+  const plural = (n, w) => n + " " + w + (n === 1 ? "" : "s");
+  /** append, skipping null and false (the DOM's own append would print "null") */
+  const put = (el, ...kids) => { el.append(...kids.flat().filter((k) => k != null && k !== false)); return el; };
+  const pnlText = (p) => (p > 0 ? "▲ +" : p < 0 ? "▼ −" : "") + "$" + U.int(p || 0);
+  L.ord = ord; L.pnlText = pnlText; L.LETTERS = LETTERS; L.TEAMS = TEAMS;
+
+  // ================================================================== the room's live data (shared with room.js)
+  let FBx = null, dbx = null, offset = 0;
+  L.db = async function () {
+    if (dbx) return dbx;
+    await A().ready();
+    const hs = await A().handles();
+    if (!hs) throw new Error("Could not reach the server. Check the connection and try again.");
+    FBx = window.M2M_FB; dbx = hs.db;
+    FBx.onValue(FBx.ref(dbx, ".info/serverTimeOffset"), (s) => { offset = Number(s.val()) || 0; });
+    return dbx;
+  };
+  /** the server's clock (the deadlines are server times) */
+  L.now = () => Date.now() + offset;
+  L.watch = async function (path, cb) {
+    await L.db();
+    return FBx.onValue(FBx.ref(dbx, path), (s) => cb(s.val()), (err) => cb(undefined, err));
+  };
+  L.joinLink = (code) => location.origin + location.pathname.replace(/index\.html$/, "") + "?room=" + code;
+  L.shortLink = () => (location.host + location.pathname.replace(/index\.html$/, "")).replace(/\/$/, "");
+  L.left = (pub) => {
+    if (!pub) return 0;
+    if (pub.paused) return Math.max(0, pub.paused.left || 0);
+    const dl = pub.phase === "think" ? pub.think && pub.think.dl : pub.clue && pub.clue.dl;
+    return dl ? Math.max(0, dl - L.now()) : 0;
+  };
+  const clock = (ms) => { const s = Math.ceil(ms / 1000); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
+  L.clock = clock;
+  const PHASE_WORD = { lobby: "Waiting to start", open: "Answers open", closed: "Answers closed", think: "STOP AND THINK", open2: "Revote open", closed2: "Revote closed",
+    reveal: "The reveal", top: "Top 10", board: "Pick a tile", ended: "The close" };
+  L.PHASE_WORD = PHASE_WORD;
+  /** the console's main button for a phase (the space bar), as lib/host.js primary() */
+  L.primary = (pub) => {
+    if (!pub) return null;
+    const sat = pub.cfg && pub.cfg.mode === "sat";
+    return ({ lobby: ["start", "Start the game"], open: ["close", "Close answers"], closed: sat ? ["think", "STOP AND THINK"] : ["reveal", "Reveal the answer"],
+      think: ["revote", "Revote now"], open2: ["close", "Close the revote"], closed2: ["reveal", "Reveal the answer"], reveal: ["next", "Next"], top: ["next", "Next clue"] })[pub.phase] || null;
+  };
+
+  /** one console press: the phase and clue this console saw ride along, so a stale or double press changes nothing on
+   *  the server; here only the very same press already on its way is dropped (a press made while another is finishing
+   *  goes through) */
+  const flying = new Set();
+  L.act = async function (code, pub, op, extra) {
+    const k = [code, op, pub ? pub.phase : "", pub ? pub.i : "", extra && extra.key ? extra.key : ""].join("|");
+    if (flying.has(k)) return null;
+    flying.add(k);
+    try {
+      return await call("hostRoom", Object.assign({ op, code, from: pub ? pub.phase : null, i: pub ? pub.i : null }, extra || {}));
+    } catch (e) { U.toast((e && e.message) || "Could not do that."); return null; }
+    finally { flying.delete(k); }
+  };
+
+  // ================================================================== setup: Desk -> Host a live game
+  const SET_KEY = "m2m.host.setup.v1";
+  L.setup = async function () {
+    if (!A() || !A().isOwner()) { U.toast("Hosting is for Prof. Wang."); return; }
+    show();
+    const root = wrap();
+    U.clear(root).append(h("p.eyebrow", null, "// host a live game"), h("h2.scr-h#hs-h", { text: "Host a live game" }), h("p.af-note", { text: "Loading…" }));
+    let info;
+    try { if (!(await A().ensureAdmin())) throw new Error("The server didn't grant Desk access."); info = await call("hostRoom", { op: "list" }); }
+    catch (e) { U.clear(root).append(h("h2.scr-h#hs-h", { text: "Host a live game" }), h("p.af-msg.bad", { text: (e && e.message) || "Could not reach the desk." }), backRow()); return; }
+    drawSetup(root, info);
+  };
+  function show() {
+    M2M.screens.hideTitle();
+    M2M.screens.show("host");
+    M2M.topbar.show(false);
+    M2M.panels.show(false);
+    M2M.music.stop(0.4);
+  }
+  const wrap = () => document.querySelector("#scr-host .hs-wrap");
+  function backRow() {
+    const back = h("button.btn.btn-quiet", { type: "button" }, "Back to the Desk");
+    back.addEventListener("click", () => { leave(); M2M.desk.open("live"); });
+    return h("div.row-actions", null, back);
+  }
+  function radios(name, label, opts, val, hint) {
+    const box = h("fieldset.hs-f", null, h("legend.af-label", { text: label }));
+    const row = h("div.hs-seg", { role: "radiogroup" });
+    for (const [v, t] of opts) {
+      const id = "hs-" + name + "-" + String(v).replace(/[^a-z0-9]/gi, "");
+      const inp = h("input", { type: "radio", name: "hs-" + name, id, value: String(v) });
+      if (String(v) === String(val)) inp.checked = true;
+      row.appendChild(h("label.hs-opt", { for: id }, inp, h("span", { text: t })));
+    }
+    box.appendChild(row);
+    if (hint) box.appendChild(h("p.af-hint", { text: hint }));
+    return box;
+  }
+  const radioVal = (root, name) => { const r = root.querySelector("input[name=hs-" + name + "]:checked"); return r ? r.value : null; };
+  function drawSetup(root, info) {
+    const saved = U.store.get(SET_KEY, null) || {};
+    const chips = info.chips || [];
+    const picked = new Set((saved.lectures || []).filter((x) => chips.includes(x)));
+    if (!picked.size) for (const c of chips.slice(-3)) picked.add(c);
+    const f = h("form.hs-setup", { novalidate: true });
+    const chipRow = h("div.dk-chips.hs-chips", { role: "group", "aria-label": "Lectures" });
+    const drawChips = () => {
+      U.clear(chipRow);
+      for (const c of chips) {
+        const b = h("button.dk-chip", { type: "button", "aria-pressed": picked.has(c) ? "true" : "false", dataset: { chip: c } }, c);
+        b.addEventListener("click", () => { if (picked.has(c)) picked.delete(c); else picked.add(c); drawChips(); });
+        chipRow.appendChild(b);
+      }
+    };
+    drawChips();
+    const cr = saved.credit || {};
+    const con = h("input#hs-credit", { type: "checkbox" });
+    const pts = (id, label, v) => { const el = h("input.af-in#" + id, { type: "number", min: "0", max: "5", step: "0.25", value: String(v) }); return { el, wrap: h("div.af.dk-f", null, h("label.af-label", { for: id, text: label }), el) }; };
+    const top = pts("hs-top", "Top third", cr.top == null ? 1 : cr.top), mid = pts("hs-mid", "Middle third", cr.mid == null ? 0.5 : cr.mid), low = pts("hs-low", "Bottom third", cr.low == null ? 0.25 : cr.low);
+    const msg = h("p.af-msg", { role: "status", "aria-live": "polite" });
+    const go = h("button.btn.btn-primary.hs-open", { type: "submit" }, "Open the room");
+    f.append(
+      h("div.af.dk-f.dk-lect", null, h("p.af-label", { text: "Lectures" }), chipRow),
+      h("div.hs-grid", null,
+        radios("mode", "Mode", [["all", "Everyone answers"], ["sat", "STOP AND THINK round"]], saved.mode || "all", "STOP AND THINK: vote, see the split, talk to your neighbor, revote, then the reveal. The second vote scores."),
+        radios("clues", "Clues", [["3", "3"], ["5", "5"], ["10", "10"], ["15", "15"], ["20", "20"], ["board", "Full board"]], saved.clues || "10", "A full board: you pick each tile on the projector."),
+        radios("sec", "Timer", [["auto", "By difficulty"], ["20", "20 s"], ["30", "30 s"], ["45", "45 s"], ["60", "60 s"], ["90", "90 s"]], saved.sec || "auto", "By difficulty: 45 s for recall, up to 90 s for multi-step problems."),
+        radios("think", "STOP AND THINK talk", [["30", "30 s"], ["60", "60 s"], ["90", "90 s"], ["120", "2 min"]], saved.think || "60"),
+        radios("desk", "Desk", [["I", "Intern"], ["A", "Analyst"], ["P", "Portfolio Manager"]], saved.desk || "A"),
+        radios("top", "Top 10", [["3", "Every 3 clues"], ["5", "Every 5"], ["10", "Every 10"], ["0", "Only at the end"]], saved.top == null ? "5" : saved.top),
+        radios("lev", "Leverage", [["on", "On (1×, 2×, 3×)"], ["off", "Off"]], saved.lev || "on"),
+        radios("teams", "Teams", [["off", "No teams"], ["on", "Teams A to H"]], saved.teams || "off", "Teams: each phone picks a table; a team scores the mean P&L of its members."),
+        radios("read", "Read questions aloud", [["on", "On the projector"], ["off", "Off"]], saved.read || "on", "Recorded questions only; the timer adds the reading.")),
+      h("div.af.dk-f.tn-credit.hs-creditbox", null, h("label.pf-opt", { for: "hs-credit" }, con,
+        h("span", null, h("b", { text: "Counts for credit" }), h("span.pf-sub", { text: "Off by default. On: verified Rice players' final standing counts as an in-person tournament result (points per third, the tournament column of the credit report). Guests never count. Use the keyless page when it counts." }))),
+        h("div.dk-cfg-grid", null, top.wrap, mid.wrap, low.wrap)),
+      h("div.row-actions", null, go, msg));
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const v = { lectures: Array.from(picked), mode: radioVal(f, "mode"), clues: radioVal(f, "clues"), sec: radioVal(f, "sec"), think: radioVal(f, "think"), desk: radioVal(f, "desk"),
+        top: radioVal(f, "top"), lev: radioVal(f, "lev"), teams: radioVal(f, "teams"), read: radioVal(f, "read"), credit: { on: con.checked, top: Number(top.el.value), mid: Number(mid.el.value), low: Number(low.el.value) } };
+      U.store.set(SET_KEY, Object.assign({}, v, { credit: { top: v.credit.top, mid: v.credit.mid, low: v.credit.low } })); // the switch itself always starts off
+      go.disabled = true; msg.classList.remove("bad"); msg.textContent = "Opening the room…";
+      try {
+        const r = await call("hostRoom", { op: "create", lectures: v.lectures, mode: v.mode, clues: v.clues === "board" ? "board" : Number(v.clues), sec: v.sec === "auto" ? "auto" : Number(v.sec),
+          think: Number(v.think), desk: v.desk, topEvery: Number(v.top), lev: v.lev !== "off", teams: v.teams === "on", read: v.read !== "off", credit: v.credit });
+        call("room", { op: "ping" }).catch(() => {}); // wake the phones' function before they arrive
+        L.project(r.code, r.gid);
+      } catch (err) { msg.textContent = (err && err.message) || "Could not open the room."; msg.classList.add("bad"); go.disabled = false; }
+    });
+    U.clear(root).append(
+      h("header.dk-head", null, h("div.dk-id", null, h("p.eyebrow", null, "// host a live game · the projector is this screen"), h("h2.scr-h#hs-h", { text: "Host a live game" })),
+        h("div.dk-acts", null, (() => { const b = h("button.btn.btn-quiet", { type: "button" }, "Back to the Desk"); b.addEventListener("click", () => M2M.desk.open("live")); return b; })())),
+      h("p.af-note.hs-lede", { text: "Students join on their phones with the room code or the QR code: signed-in players by handle and badge, anyone else as a guest. Every clue goes to every phone at once; the server times and scores each answer." }),
+      f);
+  }
+
+  // ================================================================== the projector (and Sean's console on it)
+  const P = { code: null, gid: null, pub: null, unsub: null, last: "", tick: 0, auto: "", said: {}, prevPhase: null, prevI: null, topOn: false, endArm: 0, voiceTok: "" };
+  function leave() {
+    if (P.unsub) { try { P.unsub(); } catch (e) { /* closed */ } }
+    P.unsub = null; P.code = null; P.pub = null; P.last = ""; P.auto = "";
+    clearInterval(P.tick);
+    document.documentElement.classList.remove("hs-live");
+    try { M2M.audio.stopVoice(); } catch (e) { /* no audio */ }
+  }
+  L.leave = leave;
+  L.project = async function (code, gid) {
+    leave();
+    show();
+    P.code = code; P.gid = gid || null; P.said = {}; P.prevPhase = null; P.prevI = null; P.topOn = false;
+    document.documentElement.classList.add("hs-live");
+    const root = wrap();
+    U.clear(root).append(h("p.eyebrow", null, "// live game"), h("h2.scr-h#hs-h", { text: "Room " + code }), h("p.af-note", { text: "Connecting…" }));
+    try {
+      if (!(await A().ensureAdmin())) throw new Error("The server didn't grant Desk access.");
+      P.unsub = await L.watch("rooms/" + code + "/pub", (v, err) => {
+        if (err) { U.clear(wrap()).append(h("h2.scr-h#hs-h", { text: "Room " + code }), h("p.af-msg.bad", { text: "The connection was refused. Reload the page." }), backRow()); return; }
+        if (P.code !== code) return;
+        P.pub = v; if (v && v.gid) P.gid = v.gid;
+        paint();
+      });
+    } catch (e) { U.clear(root).append(h("h2.scr-h#hs-h", { text: "Room " + code }), h("p.af-msg.bad", { text: (e && e.message) || "Could not open the room." }), backRow()); return; }
+    clearInterval(P.tick);
+    P.tick = setInterval(tick, 200);
+  };
+
+  function frameKey(p) {
+    const used = p.board ? p.board.rounds.map((r) => r.cols.map((c) => c.map((t) => (t.used ? 1 : 0)).join("")).join(".")).join("|") : "";
+    return [p.phase, p.i, p.clue ? p.clue.vote + ":" + p.clue.k : "", !!p.d1, !!p.d2, !!p.rev, p.paused ? 1 : 0, used, p.status, p.lock ? 1 : 0, P.topOn ? 1 : 0, p.cfg && p.cfg.credit ? 1 : 0].join("~");
+  }
+  function paint() {
+    const p = P.pub;
+    const root = wrap();
+    if (!root || document.documentElement.dataset.screen !== "host" || !P.code) return;
+    if (!p) { U.clear(root).append(h("h2.scr-h#hs-h", { text: "Room " + P.code }), h("p.af-msg.bad", { text: "No game with that code." }), backRow()); return; }
+    const key = frameKey(p);
+    if (key !== P.last) {
+      const phaseChanged = p.phase !== P.prevPhase || p.i !== P.prevI;
+      P.last = key;
+      draw(root, p);
+      if (phaseChanged) { cue(p, P.prevPhase); P.prevPhase = p.phase; P.prevI = p.i; }
+    }
+    live(p);
+  }
+
+  // ---- sound and Sean's voice on the projector (existing recordings only)
+  function cue(p, from) {
+    const S = M2M.audio;
+    try {
+      if (p.phase === "open" && p.clue) {
+        if (from === "lobby" || from === "board" && p.played === 0) S.bellOpen(); else S.keyswitch();
+        const it = p.clue.item, Lc = p.clue.L;
+        if (!P.said[Lc]) { P.said[Lc] = true; M2M.host.say("cat_" + Lc); }
+        if (p.cfg && p.cfg.read && S.qaHas(it.id) && (M2M.settings || {}).read !== "off") readAloud(it.id);
+      } else if (p.phase === "open2") S.keyswitch();
+      else if (p.phase === "closed" || p.phase === "closed2") { S.stopVoice(); if (S.stamp) S.stamp(); }
+      else if (p.phase === "think") { if (S.tick) S.tick(true); }
+      else if (p.phase === "reveal" && p.rev) {
+        const good = (p.rev.right || 0) >= 0.6;
+        if (good) S.correct(false, 0); else S.wrong();
+        setTimeout(() => M2M.host.say(good ? "correct" : "wrong"), 500);
+      } else if (p.phase === "top") { if (S.cash) S.cash(); }
+      else if (p.phase === "ended") { S.bellClose(); M2M.music.play("outro"); }
+    } catch (e) { /* sound is a nicety */ }
+  }
+  async function readAloud(id) {
+    const tok = (P.voiceTok = id + ":" + Date.now());
+    const urlP = M2M.audio.qaUrl(id);
+    const t0 = performance.now();
+    while (M2M.host.speaking() && performance.now() - t0 < 12000) { await U.wait(120); if (P.voiceTok !== tok) return; }
+    await U.wait(300);
+    const url = await Promise.race([urlP, U.wait(4000).then(() => null)]);
+    if (P.voiceTok !== tok || !url || !P.pub || P.pub.phase !== "open") return;
+    M2M.host.stop();
+    M2M.audio.playVoice(url, {});
+  }
+
+  // ---- the frame: header, stage, console
+  function draw(root, p) {
+    U.clear(root);
+    const cfg = p.cfg || {};
+    const total = p.total || cfg.n || 0;
+    const head = h("header.hs-head", null,
+      h("div.hs-id", null, h("p.eyebrow", null, h("span.slash", { text: "//" }), " live game · " + (cfg.mode === "sat" ? "STOP AND THINK round" : "everyone answers") + (cfg.teams ? " · teams" : "") + (cfg.credit ? " · counts for credit" : "")),
+        h("p.hs-roomline", null, h("span.hs-rl", { text: "Room" }), h("b.hs-rc", { text: P.code }), h("span.hs-rl", { text: L.shortLink() }))),
+      h("div.hs-stats", null,
+        h("span.hs-stat", null, h("b.hs-joined", { text: String((p.live && p.live.j) || 0) }), h("span.hs-phones", { text: (p.live && p.live.j) === 1 ? " phone" : " phones" })),
+        p.phase !== "lobby" && p.phase !== "ended" ? h("span.hs-stat", null, !cfg.board ? "Clue " + Math.min(total, (p.i || 0) + 1) + " of " + total
+          : ["open", "closed", "think", "open2", "closed2", "reveal"].includes(p.phase) ? "Clue " + Math.min(total, (p.i || 0) + 1) + " of " + total : (p.played || 0) + " of " + total + " played") : null,
+        p.lock ? h("span.hs-stat.hs-locked", { text: "joins locked" }) : null));
+    const stage = h("section.hs-stage", { dataset: { phase: p.phase }, "aria-live": "polite" });
+    const bar = consoleBar(p);
+    root.append(head, stage, bar);
+    if (P.topOn && p.phase !== "lobby" && p.phase !== "ended") { stage.appendChild(topBoard(p, "Top 10 so far")); return; }
+    if (p.phase === "lobby") stage.appendChild(lobby(p));
+    else if (p.phase === "board") stage.appendChild(boardView(p));
+    else if (p.phase === "top") stage.appendChild(topBoard(p, "Top 10"));
+    else if (p.phase === "ended") stage.appendChild(closeView(p));
+    else if (p.clue) stage.appendChild(clueStage(p));
+  }
+
+  function lobby(p) {
+    const link = L.joinLink(P.code);
+    const qr = h("div.hs-qr", { html: M2M.qr.svg(link, { size: 340, label: "QR code: " + link }) });
+    qr.dataset.link = link;
+    const cfg = p.cfg || {};
+    const sum = [(cfg.lectures || []).join(", "), D().DESKS[cfg.desk] ? D().DESKS[cfg.desk].name + " desk" : "", cfg.board ? "a full board (" + p.total + " clues)" : plural(p.total || 0, "clue"),
+      cfg.sec ? cfg.sec + " s a clue" : "timer by difficulty", cfg.lev ? "leverage on" : "leverage off"].filter(Boolean).join(" · ");
+    return h("div.hs-lobby", null,
+      h("div.hs-join", null,
+        h("p.hs-k", { text: "Join on your phone" }),
+        h("p.hs-url", { text: L.shortLink() }),
+        h("p.hs-k", { text: "Room code" }),
+        h("p.hs-code", { "aria-label": "Room code " + P.code.split("").join(" ") }, P.code.split("").map((c) => h("span", { text: c }))),
+        h("p.hs-count", null, h("b.hs-joined-big", { text: String((p.live && p.live.j) || 0) }), h("span.hs-joined-w", { text: " joined" }), h("span.hs-joined-g", { text: (p.live && p.live.g ? " · " + p.live.g + " as guests" : "") })),
+        h("p.hs-sum", { text: sum }),
+        h("p.hs-note", { text: "Signed in? You play under your handle. Anyone else joins as a guest. Nothing to type but the code." + (cfg.teams ? " Pick your table's team when you join." : "") })),
+      h("figure.hs-qrbox", null, qr, h("figcaption", { text: "Scan to join" })),
+      h("div.hs-wall", { "aria-label": "Who joined" }));
+  }
+  /** the lobby's wall: who joined, newest first (handles and badges, Guest n) */
+  const WALL_MAX = 48;
+  function wall(p) {
+    const el = wrap() && wrap().querySelector(".hs-wall");
+    if (!el) return;
+    const who = Object.entries(p.who || {}).sort((a, b) => (a[0] < b[0] ? 1 : -1));
+    const sig = who.length + ":" + (who[0] ? who[0][0] : "");
+    if (el.dataset.sig === sig) return;
+    el.dataset.sig = sig;
+    U.clear(el);
+    for (const [, x] of who.slice(0, WALL_MAX)) {
+      el.appendChild(h("span.hs-wc" + (x.a ? "" : ".g"), null, x.a ? AV.el(AV.clean(x.a), { size: 24, handle: x.l }) : null, h("span", { text: x.l }), x.t ? h("i.hs-wt", { text: x.t }) : null));
+    }
+    const more = ((p.live && p.live.j) || who.length) - Math.min(who.length, WALL_MAX);
+    if (more > 0) el.appendChild(h("span.hs-wc.more", { text: "and " + more + " more" }));
+  }
+
+  function boardView(p) {
+    const wrapEl = h("div.hs-boardwrap");
+    const rounds = (p.board && p.board.rounds) || [];
+    // the round being played: the first with an open tile
+    let ri = rounds.findIndex((R) => R.cols.some((c) => c.some((t) => !t.used && !t.none)));
+    if (ri < 0) ri = rounds.length - 1;
+    const R = rounds[ri];
+    if (!R) return wrapEl;
+    wrapEl.appendChild(h("p.hs-bh", null, h("b", { text: R.id === "L" ? "Levered Round" : "Opening Bell" }), rounds.length > 1 ? " · round " + (ri + 1) + " of " + rounds.length : "", " · pick a tile (click it, or arrows and Enter)"));
+    const grid = h("div.hs-board", { style: { "--cols": R.cols.length }, role: "grid", "aria-label": "The board" });
+    R.cols.forEach((col, ci) => {
+      const L0 = R.cats[ci];
+      const c = h("div.hs-bcol", { role: "row" }, h("div.hs-bplate", null, h("span.bp-tag", { text: catTag(L0) }), h("span.bp-name", { text: catName(L0) })));
+      for (const t of col) {
+        const b = h("button.hs-tile" + (t.used ? ".used" : "") + (t.none ? ".void" : ""), { type: "button", role: "gridcell", disabled: t.used || t.none, dataset: { k: t.k }, "aria-label": catName(L0) + ", $" + U.int(t.V) + (t.used ? ", played" : "") },
+          h("span.hs-tv", { html: '<span class="cur">$</span>' + U.int(t.V) }), t.ai && !t.used ? h("span.hs-tai", { text: "// APPLIED AI" }) : null);
+        b.addEventListener("click", () => { blur(); pick(t.k); });
+        c.appendChild(b);
+      }
+      grid.appendChild(c);
+    });
+    grid.addEventListener("keydown", (e) => {
+      const tiles = Array.from(grid.querySelectorAll(".hs-tile:not(:disabled)"));
+      const i = tiles.indexOf(document.activeElement);
+      if (["ArrowRight", "ArrowDown"].includes(e.key)) { e.preventDefault(); (tiles[(i + 1) % tiles.length] || tiles[0]).focus(); }
+      if (["ArrowLeft", "ArrowUp"].includes(e.key)) { e.preventDefault(); (tiles[(i - 1 + tiles.length) % tiles.length] || tiles[0]).focus(); }
+    });
+    wrapEl.appendChild(grid);
+    setTimeout(() => { const f = grid.querySelector(".hs-tile:not(:disabled)"); if (f) f.focus({ preventScroll: true }); }, 30);
+    return wrapEl;
+  }
+  async function pick(k) { await L.act(P.code, P.pub, "pick", { key: k }); }
+
+  /** the clue on the projector: open (live count), closed (the distribution), STOP AND THINK, both votes, the reveal */
+  function clueStage(p) {
+    const c = p.clue, it = c.item, ph = p.phase;
+    const box = h("div.hs-clue" + (it.type === "audit" || it.memo ? ".audit" : ""));
+    const vote2 = ph === "open2" || ph === "closed2" || (ph === "reveal" && p.d2);
+    box.appendChild(h("div.hs-chead", null,
+      h("span.hs-ctag", { text: catTag(c.L) }), h("span.hs-cname", { text: catName(c.L) }), h("span.hs-cv", { text: "$" + U.int(c.V) }),
+      c.ai ? h("span.hs-cai", { text: "// APPLIED AI · double value" }) : null,
+      ph === "open2" || ph === "closed2" ? h("span.hs-revote", { text: "Revote" }) : null,
+      h("span.hs-sp"),
+      ph === "open" || ph === "open2" || ph === "think" ? h("span.hs-timer", null, h("b.hs-left", { text: clock(L.left(p)) })) : null));
+    if (ph === "think") {
+      box.appendChild(h("div.hs-think", null, h("p.hs-sat", { text: "STOP AND THINK" }), h("p.hs-sat-sub", { text: "Talk to your neighbor. Convince them, or let them convince you. Then vote again." })));
+      box.appendChild(h("div.hs-bars.small", null, h("p.hs-bars-h", { text: "First vote" }), bars(p.d1, null, it)));
+      box.appendChild(h("div.hs-tbar", { "aria-hidden": "true" }, h("i.hs-tfill")));
+      return box;
+    }
+    if (ph === "open" || ph === "open2") {
+      box.appendChild(h("p.hs-stem", { text: it.stem }));
+      const body = h("div.hs-cbody");
+      if (it.exhibit && (it.exhibit.rows || []).length) body.appendChild(M2M.clue.renderExhibit(it.exhibit));
+      if (it.memo) { const m = M2M.clue.renderMemo(it.memo); m.querySelectorAll("li").forEach((li) => li.classList.add("in")); m.classList.add("stamped"); body.appendChild(m); }
+      if (body.children.length) box.appendChild(body);
+      box.appendChild(h("ol.hs-opts", null, it.options.map((o, i) => h("li", null, h("b.hs-ol", { text: LETTERS[i] }), h("span", { text: o.text })))));
+      box.appendChild(h("div.hs-foot", null, h("p.hs-live", null, h("b.hs-ans", { text: "0" }), h("span.hs-ans-w", { text: " of 0 answered" })),
+        p.paused ? h("p.hs-paused", { text: "Paused" }) : null));
+      box.appendChild(h("div.hs-tbar", { "aria-hidden": "true" }, h("i.hs-tfill")));
+      return box;
+    }
+    // closed, closed2, reveal: the distribution(s); at the reveal the checked explanation sits beside them
+    box.appendChild(h("p.hs-stem.small", { text: it.stem }));
+    const rev = ph === "reveal" ? p.rev : null;
+    const left = h("div.hs-left-col");
+    if (ph === "closed2" || (ph === "reveal" && p.d2)) {
+      left.appendChild(h("div.hs-sbs" + (rev ? ".compact" : ""), null,
+        h("div.hs-bars", null, h("p.hs-bars-h", { text: "First vote" }), bars(p.d1, rev, it)),
+        h("div.hs-bars", null, h("p.hs-bars-h", { text: "Second vote" + (p.carried ? " (" + p.carried + " kept their first vote)" : "") }), bars(p.d2, rev, it))));
+      if (p.d1 && p.d2) left.appendChild(shiftLine(p.d1, p.d2, rev));
+    } else left.appendChild(h("div.hs-bars", null, h("p.hs-bars-h", { text: ph === "closed" ? (p.d1 ? "Answers closed" : "Answers closed · counting…") : "The answers" }), bars(p.d1, rev, it)));
+    if (rev) {
+      const right = it.options[rev.answer] ? it.options[rev.answer].text : "";
+      box.appendChild(h("div.hs-revgrid", null, left, h("div.hs-reveal", null,
+        h("p.hs-rk", null, h("span.hs-rl", { text: "Answer" }), h("b.hs-rkl", { text: LETTERS[rev.answer] }), h("span.hs-right", { text: pc(rev.right) + " right" })),
+        h("p.hs-rtext", { text: right }),
+        h("p.hs-explain", { text: rev.explain || "" }),
+        rev.whys && rev.whys[rev.answer] ? h("p.hs-why", { text: rev.whys[rev.answer] }) : null,
+        rev.ref ? h("p.hs-ref", { text: "Slides: " + rev.ref }) : null)));
+    } else {
+      box.appendChild(left);
+      if (ph === "closed" && p.cfg && p.cfg.mode === "sat") box.appendChild(h("p.hs-next", { text: "No answer yet. Next: STOP AND THINK." }));
+    }
+    return box;
+  }
+  function bars(d, rev, it) {
+    const ol = h("ol.hs-dist");
+    const arr = d || [0, 0, 0, 0, 0];
+    const n = arr[0] + arr[1] + arr[2] + arr[3];
+    const max = Math.max(1, ...arr.slice(0, 4));
+    for (let i = 0; i < 4; i++) {
+      const good = rev && rev.answer === i;
+      ol.appendChild(h("li" + (good ? ".right" : rev ? ".wrong" : ""), null,
+        h("b.hs-dl", { text: LETTERS[i] }), h("span.hs-dt", { text: it.options[i] ? it.options[i].text : "" }),
+        h("span.hs-db", null, h("i", { style: { width: (d ? Math.round((arr[i] / max) * 100) : 0) + "%" } })),
+        h("span.hs-dn", { text: d ? arr[i] + " · " + (n ? Math.round((arr[i] / n) * 100) : 0) + "%" : "…" }), good ? h("span.hs-ok", { text: "✓" }) : null));
+    }
+    ol.appendChild(h("li.none", null, h("span.hs-dt", { text: "No answer" }), h("span.hs-dn", { text: d ? String(arr[4]) : "…" })));
+    return ol;
+  }
+  function shiftLine(d1, d2, rev) {
+    const n1 = d1[0] + d1[1] + d1[2] + d1[3], n2 = d2[0] + d2[1] + d2[2] + d2[3];
+    if (!rev) return h("p.hs-shift", { text: "The split moved after the talk. The reveal is next." });
+    const a = rev.answer;
+    const p1 = n1 ? d1[a] / n1 : 0, p2 = n2 ? d2[a] / n2 : 0;
+    return h("p.hs-shift", { text: "Right answer: " + pc(p1) + " on the first vote, " + pc(p2) + " after the talk (" + (p2 >= p1 ? "+" : "−") + Math.abs(Math.round((p2 - p1) * 100)) + " points)." });
+  }
+  function topBoard(p, title) {
+    const rows = p.top || [];
+    const t = h("div.hs-top", null, h("p.hs-th", { text: title }));
+    if (!rows.length) { t.appendChild(h("p.af-note", { text: "No scores yet." })); return t; }
+    const body = h("div.hs-topgrid");
+    body.appendChild(h("ol.hs-toplist", null, rows.map((r) => h("li" + (r.p > 0 ? ".up" : r.p < 0 ? ".dn" : ""), null,
+      h("b.hs-tr", { text: String(r.r) }), r.a ? AV.el(AV.clean(r.a), { size: 34, handle: r.lab }) : h("i.hs-gav", { "aria-hidden": "true", text: "G" }),
+      h("span.hs-tn", { text: r.lab }), r.t ? h("span.hs-tt", { text: "Team " + r.t }) : null, h("span.hs-tp", { text: pnlText(r.p) })))));
+    if (p.tm && p.tm.length) body.appendChild(h("div.hs-teams", null, h("p.hs-bars-h", { text: "Teams · mean P&L" }),
+      h("ol.hs-teamlist", null, p.tm.map((x) => h("li" + (x.p > 0 ? ".up" : x.p < 0 ? ".dn" : ""), null, h("b.hs-tr", { text: String(x.r) }), h("span.hs-tn", { text: "Team " + x.t }), h("span.hs-tm", { text: plural(x.n, "player") }), h("span.hs-tp", { text: pnlText(x.p) }))))));
+    t.appendChild(body);
+    return t;
+  }
+  function closeView(p) {
+    const box = h("div.hs-close", null, h("p.hs-sat", { text: "THE CLOSE" }), h("p.hs-sat-sub", { text: plural(p.played || 0, "clue") + " played · " + plural((p.live && p.live.j) || 0, "phone") + (p.cfg && p.cfg.credit ? " · counts for credit (verified Rice players)" : "") }));
+    box.appendChild(topBoard(p, "Final top 10"));
+    return box;
+  }
+
+  // ---- the console bar
+  function consoleBar(p) {
+    const bar = h("div.hs-console", { role: "toolbar", "aria-label": "Host controls" });
+    const pr = L.primary(p);
+    if (pr) {
+      const b = h("button.btn.btn-primary.hs-main", { type: "button", dataset: { op: pr[0] } }, pr[1], h("kbd", { text: "Space" }));
+      b.addEventListener("click", () => { blur(); act(pr[0]); });
+      bar.appendChild(b);
+    } else if (p.phase === "board") bar.appendChild(h("span.hs-hint", { text: "Click a tile to open it." }));
+    else if (p.phase === "ended") {
+      const b = h("button.btn.btn-primary.hs-main", { type: "button" }, "Back to the Desk");
+      b.addEventListener("click", () => { leave(); M2M.desk.open("live"); });
+      bar.appendChild(b);
+    }
+    const sm = (op, label, key, on, extra) => { const b = h("button.btn.btn-quiet.hs-sm", { type: "button", dataset: { op }, disabled: !on }, label, h("kbd", { text: key })); b.addEventListener("click", () => { blur(); (extra || (() => act(op)))(); }); return b; };
+    const live = ["open", "open2", "think"].includes(p.phase);
+    const inClue = ["open", "closed", "think", "open2", "closed2"].includes(p.phase);
+    if (p.phase !== "ended") {
+      bar.append(
+        p.paused ? sm("resume", "Resume", "P", true) : sm("pause", "Pause", "P", live),
+        sm("skip", "Skip", "S", inClue),
+        sm("top", P.topOn ? "Hide top 10" : "Top 10", "T", p.phase !== "lobby", () => { P.topOn = !P.topOn; P.last = ""; paint(); }),
+        sm("lock", p.lock ? "Open joins" : "Lock joins", "L", true, () => lockJoins(!p.lock)),
+        sm("end", P.endArm > Date.now() ? "Press again to end" : "End", "E", true, () => endGame()));
+    }
+    bar.appendChild(sm("full", "Full screen", "F", true, () => fullScreen()));
+    return bar;
+  }
+  const blur = () => { try { document.activeElement && document.activeElement.blur && document.activeElement.blur(); } catch (e) { /* nothing focused */ } };
+  async function act(op) {
+    if (!P.code || !P.pub) return;
+    if (op === "start" && P.pub.phase === "lobby") call("room", { op: "ping" }).catch(() => {});
+    P.topOn = false;
+    await L.act(P.code, P.pub, op);
+  }
+  async function lockJoins(on) { try { await call("hostRoom", { op: "lock", code: P.code, lock: on }); } catch (e) { U.toast((e && e.message) || "Could not do that."); } }
+  async function endGame() {
+    if (P.endArm > Date.now()) { P.endArm = 0; await L.act(P.code, P.pub, "end"); return; }
+    P.endArm = Date.now() + 4000;
+    P.last = ""; paint();
+    U.toast("Press End again to end the game.");
+    setTimeout(() => { if (P.endArm && P.endArm <= Date.now()) { P.endArm = 0; P.last = ""; paint(); } }, 4100);
+  }
+  function fullScreen() {
+    try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); } catch (e) { U.toast("Full screen isn't available here."); }
+  }
+
+  /** counters and the clock, without redrawing the stage */
+  function live(p) {
+    const root = wrap();
+    if (!root) return;
+    if (p.phase === "lobby") wall(p);
+    const j = (p.live && p.live.j) || 0;
+    root.querySelectorAll(".hs-joined, .hs-joined-big").forEach((el) => { el.textContent = String(j); });
+    const pw = root.querySelector(".hs-phones");
+    if (pw) pw.textContent = j === 1 ? " phone" : " phones";
+    const g = root.querySelector(".hs-joined-g");
+    if (g) g.textContent = p.live && p.live.g ? " · " + p.live.g + " as guests" : "";
+    const a = root.querySelector(".hs-ans");
+    if (a) {
+      const n = p.phase === "open2" ? (p.live && p.live.a2) || 0 : (p.live && p.live.a1) || 0;
+      a.textContent = String(n);
+      const w = root.querySelector(".hs-ans-w");
+      if (w) w.textContent = " of " + j + " answered" + (p.phase === "open2" ? " again" : "");
+    }
+  }
+  function tick() {
+    const p = P.pub;
+    if (!p || !P.code || document.documentElement.dataset.screen !== "host") return;
+    const root = wrap();
+    const left = L.left(p);
+    const el = root && root.querySelector(".hs-left");
+    if (el) el.textContent = clock(left);
+    const fill = root && root.querySelector(".hs-tfill");
+    if (fill) {
+      const sec = p.phase === "think" ? (p.think && p.think.sec) || 60 : (p.clue && p.clue.sec) || 60;
+      fill.style.width = Math.max(0, Math.min(100, (left / (sec * 1000)) * 100)) + "%";
+      fill.classList.toggle("low", left < 6000);
+    }
+    // the timer closes the answers (and the talk opens the revote) by itself; the server stamps the close
+    if (p.paused) return;
+    const k = p.phase + ":" + p.i;
+    if ((p.phase === "open" || p.phase === "open2") && p.clue && p.clue.dl && L.now() > p.clue.dl + 350 && P.auto !== k) { P.auto = k; L.act(P.code, p, "close"); }
+    if (p.phase === "think" && p.think && p.think.dl && L.now() > p.think.dl + 100 && P.auto !== k) { P.auto = k; L.act(P.code, p, "revote"); }
+  }
+
+  // ---- keys (only on the host screen; never while typing, and a focused button keeps its own Space and Enter)
+  document.addEventListener("keydown", (e) => {
+    if (document.documentElement.dataset.screen !== "host" || !P.code || !P.pub || e.defaultPrevented) return;
+    if (U.typing(e) || e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+    const t = e.target;
+    if ((e.key === " " || e.key === "Enter") && t && t.closest && t.closest("button, a, input, select, textarea")) return;
+    const p = P.pub, k = e.key.toLowerCase();
+    const pr = L.primary(p);
+    const run = (op) => { e.preventDefault(); act(op); };
+    if (e.key === " ") { if (pr) run(pr[0]); else e.preventDefault(); return; }
+    if (k === "c" && (p.phase === "open" || p.phase === "open2")) return run("close");
+    if (k === "r" && (p.phase === "closed" || p.phase === "closed2")) return run("reveal");
+    if (k === "n" && (p.phase === "reveal" || p.phase === "top" || p.phase === "lobby")) return run(p.phase === "lobby" ? "start" : "next");
+    if (k === "p") return run(p.paused ? "resume" : "pause");
+    if (k === "s") return run("skip");
+    if (k === "t") { e.preventDefault(); P.topOn = !P.topOn; P.last = ""; paint(); return; }
+    if (k === "l") { e.preventDefault(); lockJoins(!p.lock); return; }
+    if (k === "e") { e.preventDefault(); endGame(); return; }
+    if (k === "f") { e.preventDefault(); fullScreen(); }
+  });
+
+  // ================================================================== Sean's phone: Host controls for the same room
+  const C = { code: null, pub: null, unsub: null, tick: 0 };
+  L.phoneConsole = async function (code) {
+    if (C.unsub) { try { C.unsub(); } catch (e) { /* closed */ } }
+    M2M.screens.hideTitle();
+    M2M.screens.show("room");
+    M2M.topbar.show(false);
+    M2M.panels.show(false);
+    C.code = code;
+    const root = document.querySelector("#scr-room .rm-wrap");
+    U.clear(root).append(h("p.eyebrow", null, "// host controls · room " + code), h("h2.scr-h#rm-h", { text: "Host controls" }), h("p.af-note", { text: "Connecting…" }));
+    try {
+      if (!(await A().ensureAdmin())) throw new Error("The server didn't grant Desk access.");
+      C.unsub = await L.watch("rooms/" + code + "/pub", (v) => { C.pub = v; paintPhone(); });
+    } catch (e) { U.clear(root).append(h("h2.scr-h#rm-h", { text: "Host controls" }), h("p.af-msg.bad", { text: (e && e.message) || "Could not open the room." })); return; }
+    clearInterval(C.tick);
+    C.tick = setInterval(() => { const el = document.querySelector("#scr-room .hc-left"); if (el && C.pub) el.textContent = clock(L.left(C.pub)); }, 250);
+  };
+  let phoneKey = "";
+  function paintPhone() {
+    const root = document.querySelector("#scr-room .rm-wrap");
+    const p = C.pub;
+    if (!root) return;
+    if (!p) { U.clear(root).append(h("h2.scr-h#rm-h", { text: "Host controls" }), h("p.af-msg.bad", { text: "No game with that code." })); return; }
+    const key = [p.phase, p.i, !!p.d1, !!p.d2, !!p.rev, p.paused ? 1 : 0, p.lock ? 1 : 0].join("~");
+    const counts = (p.live && p.live.j || 0) + " phones" + (p.phase === "open" ? " · " + ((p.live && p.live.a1) || 0) + " answered" : p.phase === "open2" ? " · " + ((p.live && p.live.a2) || 0) + " revoted" : "");
+    if (key === phoneKey) { const c = root.querySelector(".hc-counts"); if (c) c.textContent = counts; return; }
+    phoneKey = key;
+    const pr = L.primary(p);
+    const btn = (op, label, cls, on) => { const b = h("button.btn.hc-btn" + (cls || ""), { type: "button", dataset: { op }, disabled: on === false }, label); b.addEventListener("click", () => L.act(C.code, C.pub, op)); return b; };
+    const live = ["open", "open2", "think"].includes(p.phase), inClue = ["open", "closed", "think", "open2", "closed2"].includes(p.phase);
+    put(U.clear(root),
+      h("p.eyebrow", null, "// host controls · room " + C.code),
+      h("h2.scr-h#rm-h", { text: PHASE_WORD[p.phase] || p.phase }),
+      h("p.hc-sub", null, p.clue && inClue ? catTag(p.clue.L) + " · $" + U.int(p.clue.V) + " · clue " + ((p.i || 0) + 1) + " of " + (p.total || "?") : (p.played || 0) + " of " + (p.total || "?") + " played",
+        live ? h("b.hc-left", { text: clock(L.left(p)) }) : null),
+      h("p.hc-counts", { text: counts }),
+      p.rev ? h("p.hc-rev", { text: "Answer " + LETTERS[p.rev.answer] + " · " + pc(p.rev.right) + " right" }) : null,
+      pr ? btn(pr[0], pr[1], ".btn-primary.hc-main") : p.phase === "board" ? h("p.af-note", { text: "Pick the tile on the projector." }) : null,
+      p.phase !== "ended" ? h("div.hc-row", null,
+        p.paused ? btn("resume", "Resume", ".btn-quiet") : btn("pause", "Pause", ".btn-quiet", live), btn("skip", "Skip", ".btn-quiet", inClue),
+        (() => { const b = h("button.btn.btn-quiet.hc-btn", { type: "button" }, "End"); b.addEventListener("click", () => { if (window.confirm("End the game for everyone?")) L.act(C.code, C.pub, "end"); }); return b; })()) : h("p.af-note", { text: "The game is over. The results are on the Desk." }));
+  }
+
+  // ================================================================== the Desk: Live games
+  const csvCell = (v) => { const s = v == null ? "" : String(v); return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const csvOf = (cols, rows) => [cols.join(",")].concat(rows.map((r) => r.map(csvCell).join(","))).join("\r\n") + "\r\n";
+  function download(name, text, what) {
+    const a = h("a", { href: URL.createObjectURL(new Blob([text], { type: "text/csv;charset=utf-8" })), download: name });
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    U.toast("CSV saved: " + what + ".");
+  }
+  const STATUS = { live: "live", ended: "ended", abandoned: "left open", lobby: "lobby" };
+  L.desk = function (p, d, ctx) {
+    const go = h("button.btn.btn-primary.hs-host", { type: "button" }, "Host a live game");
+    go.addEventListener("click", () => L.setup());
+    p.appendChild(h("section.tr-panel.dk-sec", { "aria-labelledby": "dk-lv-h" },
+      h("h3#dk-lv-h.tr-h", null, "Live games", h("span.tr-h-note", { text: "in class: the projector hosts, phones answer · newest first" })),
+      h("p.af-note", { text: "Each game keeps every clue's distribution (both votes in a STOP AND THINK round), who joined (handles; guests counted), the standings and a CSV." }),
+      h("div.row-actions", null, go)));
+    const list = d.list || [];
+    if (!list.length) { p.appendChild(h("p.af-note", { text: "No live games yet." })); return; }
+    const detail = h("div.hs-detail");
+    p.appendChild(h("div.dk-scroll", null, h("table.dk-t.hs-games", null,
+      h("thead", null, h("tr", null, ["When", "Room", "Mode", "Clues", "Joined", "Credit", "Status", ""].map((x) => h("th", { text: x })))),
+      h("tbody", null, list.map((g) => {
+        const open = h("button.btn.btn-quiet.hs-g-open", { type: "button" }, "Details");
+        open.addEventListener("click", () => gameDetail(detail, g.gid, ctx));
+        const proj = g.status === "live" ? h("button.btn.btn-quiet.hs-g-proj", { type: "button" }, "Project") : null;
+        if (proj) proj.addEventListener("click", () => L.project(g.code, g.gid));
+        return h("tr", { dataset: { gid: g.gid, status: g.status } }, h("td", { text: fmtWhen(g.t) }), h("td.dk-mono", { text: g.code }),
+          h("td", { text: (g.mode === "sat" ? "STOP AND THINK" : "everyone") + (g.board ? " · board" : "") + (g.teams ? " · teams" : "") }),
+          h("td.num", { text: (g.played || 0) + " / " + (g.total || 0) }), h("td", { text: g.status === "ended" ? (g.signed || 0) + " signed in · " + (g.guests || 0) + " guests" : "—" }),
+          h("td", { text: g.credit && g.credit.on ? "on" : "off" }), h("td", null, h("span.tn-st", { dataset: { s: g.status === "live" ? "running" : g.status === "ended" ? "finished" : "cancelled" }, text: STATUS[g.status] || g.status })),
+          h("td", null, open, proj));
+      })))));
+    p.appendChild(detail);
+  };
+  async function gameDetail(box, gid, ctx) {
+    U.clear(box).append(h("p.af-note", { text: "Loading the game…" }));
+    let g;
+    try { g = await call("hostRoom", { op: "game", gid }); } catch (e) { U.clear(box).append(h("p.af-msg.bad", { text: (e && e.message) || "Could not load it." })); return; }
+    U.clear(box);
+    const sat = g.cfg && g.cfg.mode === "sat";
+    const signed = g.players.filter((x) => !x.g), guests = g.players.filter((x) => x.g);
+    const cr = (g.cfg && g.cfg.credit) || { on: false };
+    const credit = h("label.pf-opt.hs-dk-credit", null, h("input", { type: "checkbox", checked: !!cr.on, "aria-label": "Counts for credit" }),
+      h("span", null, h("b", { text: "Counts for credit: " + (cr.on ? "on" : "off") }), h("span.pf-sub", { text: cr.on ? "Thirds " + cr.top + " / " + cr.mid + " / " + cr.low + " points, verified Rice players only, in the tournament column of the credit report." : "Off: the credit report doesn't change. Turn it on to count this game as an in-person tournament result." })));
+    credit.querySelector("input").addEventListener("change", async (e) => {
+      try { await call("hostRoom", { op: "credit", gid, credit: { on: e.target.checked, top: cr.top == null ? 1 : cr.top, mid: cr.mid == null ? 0.5 : cr.mid, low: cr.low == null ? 0.25 : cr.low } }); U.toast("Credit " + (e.target.checked ? "on" : "off") + " for this game."); gameDetail(box, gid, ctx); if (ctx && ctx.reloadCredit) ctx.reloadCredit(); }
+      catch (err) { U.toast((err && err.message) || "Could not change it."); e.target.checked = !e.target.checked; }
+    });
+    const day = new Intl.DateTimeFormat("en-CA", Object.assign({ year: "numeric", month: "2-digit", day: "2-digit" }, tz)).format(new Date(g.t || Date.now()));
+    const csvP = h("button.btn.btn-quiet.hs-csv-p", { type: "button" }, "Players CSV");
+    csvP.addEventListener("click", () => download("m2m-live-" + g.code + "-" + day + "-players.csv", L.playersCsv(g), g.players.length + " players"));
+    const csvC = h("button.btn.btn-quiet.hs-csv-c", { type: "button" }, "Clues CSV");
+    csvC.addEventListener("click", () => download("m2m-live-" + g.code + "-" + day + "-clues.csv", L.cluesCsv(g), g.clues.length + " clues"));
+    const csvA = h("button.btn.btn-quiet.hs-csv-a", { type: "button" }, "Answers CSV");
+    csvA.addEventListener("click", () => download("m2m-live-" + g.code + "-" + day + "-answers.csv", L.answersCsv(g), "every answer"));
+    box.append(h("section.tr-panel.dk-sec.hs-g", { dataset: { gid } },
+      h("h3.tr-h", null, "Room " + g.code + " · " + fmtWhen(g.t), h("span.tr-h-note", { text: (sat ? "STOP AND THINK" : "everyone answers") + " · " + g.played + " of " + g.total + " clues · " + (STATUS[g.status] || g.status) })),
+      h("p.hs-who", null, h("b", { text: plural(g.players.length, "phone") + " joined: " }), signed.length ? signed.map((x) => x.h || x.lab).join(", ") : "nobody signed in", guests.length ? " · and " + plural(guests.length, "guest") : ""),
+      credit, h("div.row-actions", null, csvP, csvC, csvA)));
+    // every clue's distribution
+    const clueRows = g.clues.map((c) => {
+      const cell = (d) => (d ? h("span.hs-mini", null, LETTERS.map((x, i) => h("span" + (c.answer === i ? ".k" : ""), { text: x + " " + d[i] })), h("span.dk-dim", { text: "— " + d[4] })) : "—");
+      return h("tr", { dataset: { i: String(c.i) } }, h("td.num", { text: String(c.i + 1) }), h("td", { text: catTag(c.L) + " · T" + c.T }), h("td.num", { text: "$" + U.int(c.V || 0) }),
+        h("td.hs-q", { text: c.stem || "", title: c.stem || "" }), h("td", { text: c.skipped ? "skipped" : c.answer == null ? "—" : LETTERS[c.answer] }),
+        h("td.num", { text: c.right == null ? "—" : pc(c.right) }), h("td", null, cell(c.d1)), sat ? h("td", null, cell(c.d2)) : null);
+    });
+    box.appendChild(h("section.tr-panel.dk-sec", null, h("h3.tr-h", null, "Clues", h("span.tr-h-note", { text: sat ? "first vote, then second vote (the shift is the teaching signal) · — = no answer" : "the distribution of answers · — = no answer" })),
+      h("div.dk-scroll", null, h("table.dk-t.hs-clues", null, h("thead", null, h("tr", null, ["#", "Lecture", "Value", "Question", "Key", "Right"].map((x) => h("th", { text: x })), h("th", { text: sat ? "First vote" : "Answers" }), sat ? h("th", { text: "Second vote" }) : null)),
+        h("tbody", null, clueRows)))));
+    // standings
+    box.appendChild(h("section.tr-panel.dk-sec", null, h("h3.tr-h", null, "Standings", h("span.tr-h-note", { text: "P&L from $10,000 · NetIDs for signed-in players" })),
+      h("div.dk-scroll", null, h("table.dk-t.hs-stand", null, h("thead", null, h("tr", null, ["#", "Player", "NetID", "Team", "Answered", "Right", "P&L", "Credit"].map((x) => h("th", { text: x })))),
+        h("tbody", null, g.players.map((x) => h("tr", null, h("td.num", { text: String(x.rank || "") }), h("td", null, h("b", { text: x.lab }), x.g ? h("span.dk-dim", { text: " · guest" }) : x.ver ? null : h("span.dk-dim", { text: " · unverified" })),
+          h("td.dk-mono", { text: x.netid || "" }), h("td", { text: x.team ? "Team " + x.team : "" }), h("td.num", { text: String(x.n || 0) }), h("td.num", { text: String(x.k || 0) }),
+          h("td.num" + (x.s > 10000 ? ".up" : x.s < 10000 ? ".dn" : ""), { text: pnlText((x.s || 10000) - 10000) }), h("td.num", { text: x.credit == null ? "—" : String(x.credit) }))))))));
+    if (g.teams && g.teams.length) box.appendChild(h("section.tr-panel.dk-sec", null, h("h3.tr-h", { text: "Teams" }),
+      h("ol.hs-teamlist.dk", null, g.teams.map((t) => h("li", null, h("b.hs-tr", { text: String(t.r) }), h("span.hs-tn", { text: "Team " + t.t }), h("span.hs-tm", { text: plural(t.n, "player") }), h("span.hs-tp", { text: pnlText(t.p) }))))));
+    box.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+  L.playersCsv = (g) => csvOf(["rank", "player", "handle", "netid", "email", "verified", "guest", "team", "answered", "right", "pnl", "third", "credit_points"],
+    g.players.map((x) => [x.rank, x.lab, x.h || "", x.netid || "", x.email || "", x.g ? "" : x.ver ? "yes" : "no", x.g ? "yes" : "no", x.team || "", x.n || 0, x.k || 0, (x.s || 10000) - 10000,
+      x.band ? { top: "top", mid: "middle", low: "bottom" }[x.band] : "", x.credit == null ? "" : x.credit]));
+  L.cluesCsv = (g) => csvOf(["clue", "lecture", "tier", "value", "question_id", "key", "answered", "right_pct", "A1", "B1", "C1", "D1", "none1", "A2", "B2", "C2", "D2", "none2", "kept_first_vote", "skipped"],
+    g.clues.map((c) => [c.i + 1, c.L, c.T, c.V, c.id, c.answer == null ? "" : LETTERS[c.answer], c.n == null ? "" : c.n, c.right == null ? "" : Math.round(c.right * 1000) / 10]
+      .concat(c.d1 ? c.d1 : ["", "", "", "", ""]).concat(c.d2 ? c.d2 : ["", "", "", "", ""]).concat([c.carried == null ? "" : c.carried, c.skipped ? "yes" : ""])));
+  L.answersCsv = (g) => {
+    const rows = [];
+    for (const x of g.players) for (const c of g.clues) {
+      const a = x.ans && x.ans[c.i];
+      if (!a) continue;
+      rows.push([x.lab, x.netid || "", c.i + 1, c.L, a.c1 == null ? "" : LETTERS[a.c1], a.c == null ? "" : LETTERS[a.c], a.b || "", c.answer == null ? "" : LETTERS[c.answer], a.k ? "yes" : "no", a.d]);
+    }
+    return csvOf(["player", "netid", "clue", "lecture", "first_vote", "final_vote", "leverage", "key", "right", "pnl_change"], rows);
+  };
+
+  // ================================================================== boot: ?room=CODE
+  L.boot = function () {
+    const m = /[?&]room=([A-Za-z]{4})(?![A-Za-z])/.exec(location.search || "");
+    if (!m || !M2M.room) return;
+    const code = m[1].toUpperCase();
+    // signing in from the join screen ends on the title: come back to the room instead
+    const title0 = M2M.app.title;
+    M2M.app.title = function () {
+      const c = M2M.room.pending();
+      if (c && A() && A().signedIn()) { M2M.room.clearPending(); M2M.room.open(c); return; }
+      return title0.apply(this, arguments);
+    };
+    M2M.room.open(code);
+  };
+  M2M.debugLive = { pub: () => P.pub, code: () => P.code, phone: () => C.pub };
+})();
+
+/* ---- v3/room.js ---- */
+/* MARK TO MARKET v3 — room.js: a phone in the live in-class game (profsean.wang/marktomarket-beta/?room=CODE).
+ *
+ * Join: a signed-in player sits down by handle and badge; anyone else joins as a guest ("Guest 7": no free-text names,
+ * nothing to moderate). Then, for each clue: the options as big buttons, the leverage choice (1×, 2×, 3×), a countdown;
+ * then right or wrong and the P&L. The answer can change until the vote closes (the last one stands). In a STOP AND
+ * THINK round the phone says when to talk and when to revote. A phone that reloads (Wi-Fi drops) rejoins the same seat:
+ * a signed-in player by account, a guest by the token this page keeps (and the anonymous sign-in, which persists).
+ * Sean's own phone (the owner, signed in) gets Host controls for the room instead (host.js).
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h, AV = M2M.avatar;
+  const D = () => M2M.data;
+  const A = () => M2M.acct;
+  const L = () => M2M.live;
+  const Rm = (M2M.room = {});
+  const call = (name, d) => A()._call(name, d);
+  const KEY = "m2m.room.v1";
+  const LEV = [["H", "1×", "Hunch"], ["L", "2×", "Likely"], ["C", "3×", "Certain"]];
+  const S = { code: null, pub: null, me: null, unsubP: null, unsubM: null, seat: null, pick: null, sendT: 0, sending: false, sent: null, err: "", last: "", tick: 0, team: null, joining: false };
+  const root = () => document.querySelector("#scr-room .rm-wrap");
+  const catTag = (L0) => (D().CATS[L0] ? D().CATS[L0].tag : L0);
+  let pending = null; // signing in from the join screen: come back to the room afterwards
+  Rm.pending = () => pending;
+  Rm.clearPending = () => { pending = null; };
+  /** append, skipping null and false (the DOM's own append would print "null") */
+  const put = (el, ...kids) => { el.append(...kids.flat().filter((k) => k != null && k !== false)); return el; };
+  const stored = () => { const s = U.store.get(KEY, null); return s && typeof s === "object" ? s : {}; };
+
+  function screen() {
+    M2M.screens.hideTitle();
+    M2M.screens.show("room");
+    M2M.topbar.show(false);
+    M2M.panels.show(false);
+    try { M2M.music.stop(0.2); } catch (e) { /* no audio yet */ }
+    document.documentElement.classList.add("rm-on");
+  }
+  function frame(title, ...kids) {
+    const r = root();
+    U.clear(r).append(h("p.eyebrow", null, h("span.slash", { text: "//" }), " live game" + (S.code ? " · room " + S.code : "")), h("h2.scr-h#rm-h", { text: title }), ...kids);
+  }
+  function stop() {
+    for (const k of ["unsubP", "unsubM"]) { if (S[k]) { try { S[k](); } catch (e) { /* closed */ } } S[k] = null; }
+    clearInterval(S.tick);
+  }
+
+  /** open the phone view on a room code (?room=CODE) */
+  Rm.open = async function (code) {
+    stop();
+    S.code = code; S.pub = null; S.me = null; S.pick = null; S.sent = null; S.err = ""; S.last = ""; S.seat = null;
+    screen();
+    frame("Joining room " + code, h("p.af-note", { text: "Connecting…" }));
+    if (!A() || !A().available()) { frame("Live game", h("p.af-msg.bad", { text: "This copy of the game can't join a live game. Open the link from the course page." })); return; }
+    try { await A().ready(); } catch (e) { /* shown below */ }
+    if (A().isOwner()) { // Sean: the projector on a wide screen, Host controls on a phone
+      if (window.innerWidth >= 900) L().project(code); else L().phoneConsole(code);
+      return;
+    }
+    try {
+      if (!A().signedIn()) await A().anon();
+      await L().db();
+      S.unsubP = await L().watch("rooms/" + code + "/pub", (v, err) => {
+        if (S.code !== code) return;
+        if (err) { S.err = "The connection was refused. Reload the page."; }
+        S.pub = v === undefined ? S.pub : v; paint();
+      });
+    } catch (e) { frame("Live game", h("p.af-msg.bad", { text: (e && e.message) || "Could not reach the game." }), codeBox()); return; }
+    // already seated (a reload): sit straight back down
+    const st = stored();
+    if (st.code === code && st.tok) join(true);
+    clearInterval(S.tick);
+    S.tick = setInterval(tick, 250);
+  };
+
+  function codeBox() {
+    const inp = h("input.code-input#rm-code", { type: "text", maxlength: "4", autocomplete: "off", autocapitalize: "characters", spellcheck: "false", placeholder: "KMTW", value: S.code || "", "aria-label": "Room code" });
+    const go = h("button.btn.btn-primary", { type: "button" }, "Join");
+    const goTo = () => { const v = inp.value.toUpperCase().replace(/[^A-Z]/g, ""); if (v.length === 4) { history.replaceState(null, "", location.pathname + "?room=" + v); Rm.open(v); } else U.toast("Type the 4-letter code on the screen."); };
+    go.addEventListener("click", goTo);
+    inp.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); goTo(); } });
+    return h("div.code-row.rm-codebox", null, inp, go);
+  }
+
+  async function join(silent) {
+    if (S.joining) return;
+    S.joining = true;
+    const st = stored();
+    try {
+      const r = await call("room", { op: "join", code: S.code, team: S.team || undefined, tok: st.code === S.code ? st.tok : undefined });
+      S.seat = r.seat;
+      U.store.set(KEY, { code: S.code, tok: r.tok, at: Date.now() });
+      if (!S.unsubM) {
+        const uid = A().uid() || (await A().handles()).auth.currentUser.uid;
+        S.unsubM = await L().watch("rooms/" + S.code + "/me/" + uid, (v) => { S.me = v || S.me; paint(); });
+      }
+      if (r.moved) U.toast("Welcome back: same seat, same score.");
+    } catch (e) {
+      if (!silent) U.toast((e && e.message) || "Could not join.");
+      S.err = (e && e.message) || "Could not join.";
+    }
+    S.joining = false;
+    S.last = "";
+    paint();
+  }
+
+  // ---- answers: a tap sends at once (debounced a moment); the last answer before the close stands
+  function choose(c, b) {
+    const p = S.pub;
+    if (!p || !p.clue || (p.phase !== "open" && p.phase !== "open2") || p.paused || L().left(p) <= 0) return;
+    const vote = p.phase === "open2" ? 2 : 1;
+    const prev = S.pick && S.pick.i === p.i && S.pick.v === vote ? S.pick : null;
+    S.pick = { i: p.i, v: vote, c: c == null ? (prev ? prev.c : null) : c, b: b || (prev ? prev.b : null) || "H" };
+    S.err = "";
+    paintAnswer();
+    if (S.pick.c == null) return;
+    clearTimeout(S.sendT);
+    S.sendT = setTimeout(send, 250);
+  }
+  async function send() {
+    const pk = S.pick;
+    if (!pk || pk.c == null) return;
+    if (S.sending) { clearTimeout(S.sendT); S.sendT = setTimeout(send, 150); return; }
+    S.sending = true;
+    paintAnswer();
+    try {
+      const r = await call("room", { op: "answer", code: S.code, i: pk.i, v: pk.v, c: pk.c, b: pk.b });
+      if (S.pick === pk || (S.pick && S.pick.i === pk.i && S.pick.v === pk.v && S.pick.c === pk.c && S.pick.b === pk.b)) S.sent = { i: r.i, v: r.v, c: r.c, b: r.b };
+      else S.sent = { i: r.i, v: r.v, c: r.c, b: r.b, stale: true };
+    } catch (e) { S.err = (e && e.message) || "Not sent. Tap again."; }
+    S.sending = false;
+    paintAnswer();
+    // a newer pick made while this one was in flight goes next
+    if (S.pick && S.sent && (S.pick.c !== S.sent.c || S.pick.b !== S.sent.b) && S.pick.i === S.sent.i && S.pick.v === S.sent.v) { clearTimeout(S.sendT); S.sendT = setTimeout(send, 50); }
+  }
+
+  // ---- drawing
+  function key(p) {
+    return [p ? p.phase : "none", p && p.i, p && p.clue ? p.clue.vote + p.clue.k : "", p && p.rev ? 1 : 0, p && p.paused ? 1 : 0, S.seat ? 1 : 0, S.me && S.me.r ? S.me.r.i : "", S.me && S.me.fin ? 1 : 0, S.err ? 1 : 0, p && p.status].join("~");
+  }
+  function paint() {
+    if (document.documentElement.dataset.screen !== "room" || !S.code) return;
+    const p = S.pub;
+    const k = key(p);
+    if (k === S.last) { paintAnswer(); paintTop(); return; }
+    S.last = k;
+    if (p === null) { frame("Room " + S.code, h("p.af-msg.bad", { text: "No game with that code. Check the code on the screen." }), codeBox()); return; }
+    if (!p) return;
+    if (!S.seat) { drawJoin(p); return; }
+    const r = root();
+    U.clear(r);
+    r.appendChild(topLine(p));
+    const ph = p.phase;
+    if (ph === "lobby") r.append(h("div.rm-card.rm-wait", null, h("p.rm-big", { text: "You're in." }), h("p.rm-sub", { text: "Watch the screen. The game starts soon." }), teamPicker(p)));
+    else if (ph === "open" || ph === "open2") r.appendChild(answerView(p));
+    else if (ph === "closed" || ph === "closed2") r.appendChild(h("div.rm-card", null, h("p.rm-big", { text: "Answers closed." }), h("p.rm-sub", { text: "Look up at the screen." }), mineLine(p)));
+    else if (ph === "think") r.appendChild(h("div.rm-card.rm-sat", null, h("p.rm-satk", { text: "STOP AND THINK" }), h("p.rm-big", { text: "Talk to your neighbor." }),
+      h("p.rm-sub", { text: "Why did you pick what you picked? A revote is coming." }), mineLine(p, 1), h("p.rm-clock", null, h("b.rm-left", { text: L().clock(L().left(p)) }))));
+    else if (ph === "reveal") r.appendChild(resultView(p));
+    else if (ph === "top" || ph === "board") r.appendChild(h("div.rm-card", null, h("p.rm-big", { text: ph === "top" ? "Top 10 on the screen." : "Next clue coming up." }), standLine(p)));
+    else if (ph === "ended") r.appendChild(finalView(p));
+    if (S.err && ph !== "open" && ph !== "open2") r.appendChild(h("p.af-msg.bad", { text: S.err }));
+  }
+  function topLine(p) {
+    const s = S.seat, me = S.me || {};
+    const pnl = (me.s || 10000) - 10000;
+    return h("div.rm-top", null,
+      s.a ? AV.el(AV.clean(s.a), { size: 34, handle: s.lab }) : h("i.hs-gav", { "aria-hidden": "true", text: "G" }),
+      h("span.rm-who", null, h("b", { text: s.lab }), s.team || me.team ? h("span.rm-team", { text: "Team " + (me.team || s.team) }) : null),
+      h("span.rm-pnl" + (pnl > 0 ? ".up" : pnl < 0 ? ".dn" : ""), { text: L().pnlText(pnl) }));
+  }
+  function paintTop() {
+    const el = document.querySelector("#scr-room .rm-pnl");
+    if (!el || !S.me) return;
+    const pnl = (S.me.s || 10000) - 10000;
+    el.textContent = L().pnlText(pnl);
+    el.classList.toggle("up", pnl > 0); el.classList.toggle("dn", pnl < 0);
+  }
+  function drawJoin(p) {
+    const r = root();
+    const cfg = p.cfg || {};
+    const me = A().signedIn();
+    const btn = h("button.btn.btn-primary.rm-join", { type: "button", disabled: S.joining }, me ? "Join as " + A().handle() : "Join as a guest");
+    btn.addEventListener("click", () => { btn.disabled = true; join(false); });
+    U.clear(r).append(h("p.eyebrow", null, h("span.slash", { text: "//" }), " live game · room " + S.code), h("h2.scr-h#rm-h", { text: "MARK TO MARKET" }),
+      h("div.rm-card", null,
+        me ? h("p.rm-as", null, AV.el(A().avatar(), { size: 44, handle: A().handle(), tier: A().tier() }), h("span", null, h("b", { text: A().handle() }), h("span.rm-sub", { text: A().verified() ? " · your Rice account" : " · verify your Rice email to count for credit" })))
+          : h("p.rm-sub", { text: "You'll play as \"Guest\" with a number. Signed in, you play under your handle." }),
+        p.status === "ended" ? h("p.af-msg.bad", { text: "This game has ended." }) : null,
+        cfg.teams ? teamPicker(p, true) : null,
+        p.status !== "ended" ? btn : null,
+        S.err ? h("p.af-msg.bad", { text: S.err }) : null,
+        !me ? (() => { const s = h("button.btn.btn-quiet.rm-signin", { type: "button" }, "Sign in with your Rice email"); s.addEventListener("click", () => { pending = S.code; A().open("signin"); }); return s; })() : null));
+  }
+  function teamPicker(p, before) {
+    if (!p.cfg || !p.cfg.teams) return null;
+    const cur = before ? S.team : (S.me && S.me.team) || (S.seat && S.seat.team);
+    const row = h("div.rm-teams", { role: "group", "aria-label": "Your team" }, L().TEAMS.map((t) => {
+      const b = h("button.rm-tm", { type: "button", "aria-pressed": cur === t ? "true" : "false", dataset: { team: t } }, t);
+      b.addEventListener("click", async () => {
+        if (before) { S.team = t; S.last = ""; paint(); return; }
+        if (p.phase !== "lobby") return;
+        try { await call("room", { op: "team", code: S.code, team: t }); if (S.seat) S.seat.team = t; S.last = ""; paint(); } catch (e) { U.toast((e && e.message) || "Could not change team."); }
+      });
+      return b;
+    }));
+    return h("div.rm-teambox", null, h("p.rm-label", { text: before ? "Pick your table's team" : p.phase === "lobby" ? "Your team (tap to change)" : "Your team" }), row);
+  }
+  function answerView(p) {
+    const c = p.clue, it = c.item, vote2 = p.phase === "open2";
+    const card = h("div.rm-card.rm-q", { dataset: { i: String(p.i), vote: vote2 ? "2" : "1" } });
+    card.appendChild(h("div.rm-qhead", null, h("span.rm-qtag", { text: catTag(c.L) + " · $" + U.int(c.V) }), vote2 ? h("span.rm-rv", { text: "Revote" }) : null, h("span.rm-sp"), h("b.rm-left", { text: L().clock(L().left(p)) })));
+    const det = h("details.rm-stem", null, h("summary", { text: "The question" }), h("p", { text: it.stem }));
+    card.appendChild(det);
+    const opts = h("div.rm-opts", { role: "group", "aria-label": "Your answer" }, it.options.map((o, i) => {
+      const b = h("button.rm-opt", { type: "button", dataset: { c: String(i) } }, h("b", { text: L().LETTERS[i] }), h("span", { text: o.text }));
+      b.addEventListener("click", () => choose(i, null));
+      return b;
+    }));
+    card.appendChild(opts);
+    if (p.cfg && p.cfg.lev) card.appendChild(h("div.rm-lev", { role: "group", "aria-label": "Leverage" }, LEV.map(([k, x, n]) => {
+      const b = h("button.rm-lv", { type: "button", dataset: { b: k } }, h("b", { text: x }), h("span", { text: n }));
+      b.addEventListener("click", () => choose(null, k));
+      return b;
+    })));
+    card.appendChild(h("p.rm-status", { role: "status" }));
+    if (p.paused) card.appendChild(h("p.rm-paused", { text: "Paused. Hold on." }));
+    // a revote starts from the first vote; a reload starts from what the server has
+    const me = S.me || {};
+    if (!S.pick || S.pick.i !== p.i || S.pick.v !== (vote2 ? 2 : 1)) {
+      const had = me.ans && me.ans.i === p.i ? me.ans : null;
+      if (had && had.v === (vote2 ? 2 : 1)) { S.pick = { i: p.i, v: had.v, c: had.c, b: had.b }; S.sent = { i: p.i, v: had.v, c: had.c, b: had.b }; }
+      else if (vote2 && had && had.v === 1) { S.pick = { i: p.i, v: 2, c: had.c, b: had.b, keep: true }; S.sent = null; }
+      else { S.pick = null; S.sent = null; }
+    }
+    setTimeout(paintAnswer, 0);
+    return card;
+  }
+  function paintAnswer() {
+    const card = document.querySelector("#scr-room .rm-q");
+    if (!card || !S.pub) return;
+    const pk = S.pick && S.pick.i === S.pub.i ? S.pick : null;
+    card.querySelectorAll(".rm-opt").forEach((b) => { const on = pk && pk.c === Number(b.dataset.c); b.classList.toggle("on", !!on); b.setAttribute("aria-pressed", on ? "true" : "false"); });
+    card.querySelectorAll(".rm-lv").forEach((b) => { const on = pk && pk.c != null && (pk.b || "H") === b.dataset.b; b.classList.toggle("on", !!on); b.setAttribute("aria-pressed", on ? "true" : "false"); });
+    const st = card.querySelector(".rm-status");
+    const left = L().left(S.pub);
+    const timeUp = left <= 0 && !S.pub.paused;
+    card.classList.toggle("timeup", timeUp);
+    card.querySelectorAll(".rm-opt, .rm-lv").forEach((b) => { b.disabled = timeUp || !!S.pub.paused; });
+    if (!st) return;
+    const lev = (k) => { const l = LEV.find((x) => x[0] === k); return l ? l[1] : "1×"; };
+    const sent = S.sent && pk && S.sent.i === pk.i && S.sent.v === pk.v && S.sent.c === pk.c && (S.sent.b || "H") === (pk.b || "H");
+    st.classList.remove("bad", "ok");
+    if (S.err) { st.textContent = S.err; st.classList.add("bad"); }
+    else if (timeUp) st.textContent = sent ? "Time's up. Your answer: " + L().LETTERS[pk.c] + (S.pub.cfg.lev ? " at " + lev(pk.b) : "") + "." : pk && pk.c != null ? "Time's up." : "Time's up: no answer.";
+    else if (!pk || pk.c == null) st.textContent = S.pub.phase === "open2" ? "Vote again: tap an answer." : "Tap an answer." + (S.pub.cfg && S.pub.cfg.lev ? " Then pick your leverage (1× if you don't)." : "");
+    else if (pk.keep && !sent) st.textContent = "Your first vote was " + L().LETTERS[pk.c] + ". Tap it to keep it, or change it.";
+    else if (S.sending || !sent) st.textContent = "Sending " + L().LETTERS[pk.c] + "…";
+    else { st.textContent = "Answer in: " + L().LETTERS[pk.c] + (S.pub.cfg.lev ? " at " + lev(pk.b) : "") + ". You can change it until time's up."; st.classList.add("ok"); }
+  }
+  function mineLine(p, vote) {
+    const me = S.me || {};
+    const a = me.ans && me.ans.i === p.i && (!vote || me.ans.v === vote || vote === 1) ? me.ans : null;
+    if (!a) return h("p.rm-mine", { text: "No answer from you." });
+    return h("p.rm-mine", null, "Your " + (a.v === 2 ? "second vote" : vote === 1 && p.phase === "think" ? "first vote" : "answer") + ": ", h("b", { text: L().LETTERS[a.c] }), p.cfg && p.cfg.lev ? " at " + ({ H: "1×", L: "2×", C: "3×" }[a.b] || "1×") : "");
+  }
+  function resultView(p) {
+    const me = S.me || {};
+    const r = me.r && me.r.i === p.i ? me.r : null;
+    const it = p.clue ? p.clue.item : null, rev = p.rev;
+    const card = h("div.rm-card.rm-res" + (r ? (r.none ? ".none" : r.ok ? ".right" : ".wrong") : ""));
+    if (!r) { card.append(h("p.rm-big", { text: "Scoring…" }), h("p.rm-sub", { text: "You didn't play this clue." })); return card; }
+    put(card, h("p.rm-verdict", { text: r.none ? "No answer" : r.ok ? "✓ Right" : "✗ Wrong" }),
+      h("p.rm-delta" + (r.d > 0 ? ".up" : r.d < 0 ? ".dn" : ""), { text: L().pnlText(r.d) }),
+      rev && it ? h("p.rm-sub", null, "The answer: ", h("b", { text: L().LETTERS[rev.answer] }), " " + (it.options[rev.answer] ? it.options[rev.answer].text : "")) : null,
+      !r.none && !r.ok ? h("p.rm-sub", { text: "You picked " + L().LETTERS[r.c] + (r.b ? " at " + ({ H: "1×", L: "2×", C: "3×" }[r.b]) : "") + ". The explanation is on the screen." }) : null,
+      r.carried ? h("p.rm-sub", { text: "No revote, so your first vote counted." }) : null,
+      h("p.rm-stand", null, "P&L ", h("b", { text: L().pnlText(r.p) }), " · " + L().ord(r.rank) + " of " + r.of));
+    return card;
+  }
+  function standLine(p) {
+    const r = S.me && S.me.r;
+    return r ? h("p.rm-stand", null, "P&L ", h("b", { text: L().pnlText(r.p) }), " · " + L().ord(r.rank) + " of " + r.of) : h("p.rm-sub", { text: "No score yet." });
+  }
+  function finalView(p) {
+    const f = S.me && S.me.fin;
+    const card = h("div.rm-card.rm-fin", null, h("p.rm-satk", { text: "THE CLOSE" }));
+    if (!f) { card.appendChild(h("p.rm-big", { text: "The game has ended." })); return card; }
+    card.append(h("p.rm-big", { text: L().ord(f.rank) + " of " + f.of }), h("p.rm-delta" + (f.p > 0 ? ".up" : f.p < 0 ? ".dn" : ""), { text: L().pnlText(f.p) }),
+      h("p.rm-sub", { text: f.k + " right of " + f.n + " answered" + (f.team ? " · Team " + f.team + (f.tr ? ", " + L().ord(f.tr) : "") : "") }),
+      h("p.rm-sub", { text: "Thanks for playing." }));
+    const home = h("button.btn.btn-quiet", { type: "button" }, "Play MARK TO MARKET");
+    home.addEventListener("click", () => { stop(); S.code = null; document.documentElement.classList.remove("rm-on"); history.replaceState(null, "", location.pathname); M2M.app.title(); });
+    card.appendChild(home);
+    return card;
+  }
+  function tick() {
+    if (document.documentElement.dataset.screen !== "room" || !S.pub) return;
+    const el = document.querySelector("#scr-room .rm-left");
+    if (el) el.textContent = L().clock(L().left(S.pub));
+    if (S.pub.phase === "open" || S.pub.phase === "open2") paintAnswer();
+  }
+
+  M2M.debugRoom = { state: () => ({ code: S.code, seat: S.seat, me: S.me, pub: S.pub, pick: S.pick, sent: S.sent, err: S.err }), tok: () => stored() };
+})();
+
 /* ---- main.js ---- */
 /* MARK TO MARKET — main.js
  * Boot, settings, the game flow (rounds, the camera dive, clues, // APPLIED AI, Closing Bell,
@@ -19010,6 +20540,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         // an invite link: ?floor=A463-7KQ2M opens the join screen with the code filled in
         const m = /[?&]floor=([0-9A-Za-z-]{9,13})/.exec(location.search || "");
         if (m && M2M.net && M2M.net.available()) M2M.net.showJoin(m[1].toUpperCase());
+        else if (M2M.live) M2M.live.boot();
       } catch (err) { fatal(err); }
     };
     try {
