@@ -1578,6 +1578,23 @@ html.reduced .ru-badge .av, html.reduced .avp-preview.spin .av { animation: none
 .cr-dots i { width: 9px; height: 9px; border-radius: 2px; transform: rotate(45deg); background: var(--line-2); }
 .cr-dots i.on { background: var(--up); }
 .cr-days.met .cr-v { color: var(--up); }
+.cr-week.met .cr-v { color: var(--up); }
+/* ---- this week's count on the Training screen (the credit's weekly rule, 9 Nov) ---- */
+.tr-week { display: grid; grid-template-columns: auto minmax(80px, 1fr) auto; grid-template-areas: "l bar v" "s s s"; align-items: center; gap: 6px 12px;
+  margin: -6px 0 16px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.tr-week[hidden] { display: none; }
+.tr-week .tw-l { grid-area: l; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); }
+.tr-week .tw-bar { grid-area: bar; display: block; height: 7px; border-radius: 4px; background: var(--well); border: 1px solid var(--line); overflow: hidden; }
+.tr-week .tw-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 4px; transition: width 0.35s ease; }
+.tr-week .tw-v { grid-area: v; font-family: var(--f-mono); font-size: 14px; font-weight: 500; color: var(--text-hi); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tr-week .tw-s { grid-area: s; font-size: 12.5px; color: var(--text-3); }
+.tr-week.met { border-color: var(--up); }
+.tr-week.met .tw-bar i { background: var(--up); }
+.tr-week.met .tw-s { color: var(--up); }
+@media (max-width: 560px) {
+  .tr-week { grid-template-columns: 1fr; grid-template-areas: "l" "v" "bar" "s"; }
+  .tr-week .tw-v { white-space: normal; }
+}
 .cr-t { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13.5px; }
 .cr-t th, .cr-t td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; color: var(--text-2); }
 .cr-t th:first-child { text-align: left; color: var(--text); font-family: var(--f-mono); font-weight: 500; }
@@ -17871,6 +17888,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       stat("Right", ses.n ? U.pct(ses.right / Math.max(1, ses.n - (ses.busy ? 1 : 0))) : "—"),
       stat("Streak", ses.streak + (ses.best > 1 ? " (best " + ses.best + ")" : "")),
       stat("P&L", U.signed(ses.pnl), ses.pnl > 0 ? "up" : ses.pnl < 0 ? "dn" : "")));
+    if (TR.remote && TR.remote.strip) { const ws = TR.remote.strip(); if (ws) body.appendChild(ws); }
     const ordered = ses.cats.slice().sort((a, b) => {
       const A = r.theta[a], B = r.theta[b];
       const va = A && A.n ? ready(A) : 2, vb = B && B.n ? ready(B) : 2;
@@ -18361,7 +18379,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if ((real ? real.uid : null) === lastUid) return;
     lastUid = real ? real.uid : null;
     user = real;
-    profile = null; record = null; credit = null;
+    profile = null; record = null; credit = null; weekInfo = null; weekAt = 0;
     if (real) {
       try {
         profile = (await FB.get(FB.ref(db, "players/" + real.uid + "/profile"))).val();
@@ -18442,11 +18460,44 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       };
     },
     after: async () => {
+      weekRefresh(true);
       if (!rankUpQ) return;
       const r = rankUpQ; rankUpQ = null;
       await A.rankUp(r);
-    }
+    },
+    // the weekly strip on the Training screen (training.js puts it under the session stats)
+    strip: () => { weekPaint(); if (!weekInfo) weekRefresh(true); return weekEl; }
   };
+
+  // =================================================================== this week's count, on the Training screen
+  let weekEl = null, weekInfo = null, weekAt = 0, weekBusy = false;
+  function weekPaint() {
+    weekEl = weekEl || h("div.tr-week", { role: "status", "aria-live": "polite" });
+    U.clear(weekEl);
+    const c = weekInfo;
+    if (!c || !c.verified || !c.credit) { weekEl.hidden = true; return; }
+    weekEl.hidden = false;
+    const tw = c.credit.thisWeek, cfg = c.cfg;
+    const f = Math.min(1, tw.n / tw.needN);
+    weekEl.classList.toggle("met", !!tw.met);
+    const left = [];
+    if (tw.n < tw.needN) left.push((tw.needN - tw.n) + " more " + (tw.needN - tw.n === 1 ? "answer" : "answers"));
+    if (tw.days < tw.needDays) left.push((tw.needDays - tw.days) + " more " + (tw.needDays - tw.days === 1 ? "day" : "days"));
+    const todo = left.length ? left.join(" and ") + " to count · " : "";
+    weekEl.append(
+      h("span.tw-l", { text: "This week" }),
+      h("span.tw-bar", { "aria-hidden": "true" }, h("i", { style: { width: Math.round(f * 100) + "%" } })),
+      h("b.tw-v", { text: Math.min(tw.n, tw.needN) + " of " + tw.needN + " answers · " + Math.min(tw.days, tw.needDays) + " of " + tw.needDays + " days" }),
+      h("span.tw-s", { text: tw.open === false ? "outside the credit window" : tw.met ? "✓ this week counts · " + c.credit.weeksMet + " of " + c.credit.weeksNeed + " weeks" : todo + c.credit.weeksMet + " of " + c.credit.weeksNeed + " weeks so far · points " + c.credit.points.toFixed(2) + " of " + cfg.cap }));
+  }
+  async function weekRefresh(force) {
+    if (!A.verified() || weekBusy) return;
+    if (!force && Date.now() - weekAt < 4000) return;
+    weekBusy = true;
+    try { weekInfo = await call("myCredit", {}); weekAt = Date.now(); credit = weekInfo; } catch (e) { /* keep the last count */ }
+    weekBusy = false;
+    weekPaint();
+  }
   function hookTraining() {
     if (!M2M.training) return;
     M2M.training.remote = A.verified() ? remote : null;
@@ -18925,24 +18976,27 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const x = c.credit;
     const meter = (k, label, v, sub) => h("div.cr-m", { dataset: { k } }, h("span.cr-l", { text: label }), h("b.cr-v", { text: Math.round(v * 100) + "%" }),
       h("span.cr-bar", { "aria-hidden": "true" }, h("i", { style: { width: Math.round(v * 100) + "%" } })), h("span.cr-s", { text: sub }));
-    const gateLeft = Math.max(0, cfg.days - x.days);
+    const tw = x.thisWeek || { n: 0, days: 0, needN: cfg.weekN, needDays: cfg.weekDays, met: false };
+    const gateNote = cfg.days && !x.gate ? " · counts once you practice on " + cfg.days + " days" : "";
     sec.append(
       h("div.cr-top", null,
-        h("div.cr-pts", null, h("span.cr-l", { text: "Points so far" }), h("b.cr-big", { text: x.points.toFixed(2) }), h("span.cr-s", { text: "of " + cfg.cap + (x.gate ? "" : " · counts once you practice on " + cfg.days + " days") })),
+        h("div.cr-pts", null, h("span.cr-l", { text: "Points so far" }), h("b.cr-big", { text: x.points.toFixed(2) }), h("span.cr-s", { text: "of " + cfg.cap + gateNote })),
         h("div.cr-grid", null,
           meter("c", "Coverage", x.coverage, "different questions, up to " + cfg.N + " a lecture"),
           meter("m", "Mastery", x.mastery, "rating above 50%, full at " + Math.round(cfg.bar * 100) + "%"),
-          meter("s", "Speed", x.speed, "quick, right first tries, up to " + cfg.N + " a lecture"),
-          h("div.cr-m.cr-days" + (x.gate ? ".met" : ""), { dataset: { k: "d" } }, h("span.cr-l", { text: "Days" }), h("b.cr-v", { text: x.days + " of " + cfg.days }),
-            h("span.cr-dots", { "aria-hidden": "true" }, Array.from({ length: Math.min(cfg.days, 14) }, (_, i) => h("i" + (i < x.days ? ".on" : "")))),
-            h("span.cr-s", { text: x.gate ? "gate met" : gateLeft + " more day" + (gateLeft === 1 ? "" : "s") + " to unlock points" })))),
+          h("div.cr-m.cr-days" + (x.weeksMet >= x.weeksNeed ? ".met" : ""), { dataset: { k: "w" } }, h("span.cr-l", { text: "Weekly" }), h("b.cr-v", { text: x.weeksMet + " of " + x.weeksNeed + " weeks" }),
+            h("span.cr-dots", { "aria-hidden": "true" }, Array.from({ length: Math.min(x.weeksNeed, 14) }, (_, i) => h("i" + (i < x.weeksMet ? ".on" : "")))),
+            h("span.cr-s", { text: "a week counts at " + cfg.weekN + " answers on " + cfg.weekDays + " days (Mon–Sun)" })),
+          h("div.cr-m.cr-week" + (tw.met ? ".met" : ""), { dataset: { k: "t" } }, h("span.cr-l", { text: "This week" }), h("b.cr-v", { text: Math.min(tw.n, tw.needN) + " of " + tw.needN }),
+            h("span.cr-bar", { "aria-hidden": "true" }, h("i", { style: { width: Math.round(Math.min(1, tw.n / tw.needN) * 100) + "%" } })),
+            h("span.cr-s", { text: tw.met ? "this week counts" : tw.days + " of " + tw.needDays + " days" + (tw.open === false ? " · outside the credit window" : "") })))),
       h("table.cr-t", null,
-        h("thead", null, h("tr", null, h("th", { text: "Lecture" }), h("th", { text: "Questions" }), h("th", { text: "Rating" }), h("th", { text: "Mastery" }), h("th", { text: "Speed" }))),
+        h("thead", null, h("tr", null, h("th", { text: "Lecture" }), h("th", { text: "Questions" }), h("th", { text: "Rating" }), h("th", { text: "Mastery" }))),
         h("tbody", null, cfg.lectures.map((L) => {
-          const y = x.lectures[L] || { distinct: 0, rating: 0.5, mastery: 0, speed: 0 };
-          return h("tr", null, h("th", { text: D().CATS[L] ? D().CATS[L].tag : L }), h("td", { text: Math.min(y.distinct, cfg.N) + " / " + cfg.N }), h("td", { text: U.pct(y.rating) }), h("td", { text: U.pct(y.mastery) }), h("td", { text: U.pct(y.speed) }));
+          const y = x.lectures[L] || { distinct: 0, rating: 0.5, mastery: 0 };
+          return h("tr", null, h("th", { text: D().CATS[L] ? D().CATS[L].tag : L }), h("td", { text: Math.min(y.distinct, cfg.N) + " / " + cfg.N }), h("td", { text: U.pct(y.rating) }), h("td", { text: U.pct(y.mastery) }));
         }))),
-      h("p.af-note.cr-note", { text: "Points = " + cfg.cap + " × (" + cfg.w[0] + " coverage + " + cfg.w[1] + " mastery + " + cfg.w[2] + " speed). Only answers the server checks count: Training while signed in." }));
+      h("p.af-note.cr-note", { text: "Points = " + cfg.cap + " × (" + cfg.w[0] + " coverage + " + cfg.w[1] + " mastery + " + cfg.w[2] + " weekly). Only answers the server checks count: Training while signed in. Repeats of a question and answers faster than anyone could read don't count." }));
     // a finished tournament that counts for credit adds its own points (a separate column, not inside the points above)
     if (c.tourney) sec.appendChild(h("p.cr-tn", null, h("b", { text: "Tournaments: " + c.tourney.points.toFixed(2) + " points" }), " from " + c.tourney.n + (c.tourney.n === 1 ? " finished tournament that counts" : " finished tournaments that count") + " for credit (kept separate from the points above)."));
     return sec;
@@ -18957,8 +19011,14 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     M2M.panels.show(false);
     renderProfile();
     try { record = (await call("getRecord", {})).record; renderProfile(); A.refresh(); } catch (e) { /* show what we have */ }
-    try { credit = await call("myCredit", {}); renderProfile(); } catch (e) { credit = { error: true }; renderProfile(); }
+    try { credit = await call("myCredit", {}); } catch (e) { credit = { error: true }; }
+    swapCredit();
   };
+  // when the credit numbers arrive, redraw only the credit card, so a badge being edited on the profile keeps its picks
+  function swapCredit() {
+    const old = document.querySelector("#scr-profile .pf-credit");
+    if (old) old.replaceWith(creditCard()); else renderProfile();
+  }
 
   function rankBlock(rk, big) {
     const ladder = (record && record.tiers) || [];
@@ -19274,7 +19334,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   const OWNER = "sw48@rice.edu";
   const TABS = [["class", "Class"], ["roster", "Roster"], ["credit", "Credit"], ["flags", "Flags"], ["coach", "Coach"], ["versus", "Versus"], ["tourneys", "Tournaments"], ["live", "Live games"]];
   const LETTERS = ["A", "B", "C", "D"];
-  const CSV_COLS = ["netid", "email", "handle", "verified", "coverage", "mastery", "speed", "days", "gate_met", "credit_points", "too_fast", "multiplier", "answers", "last_active", "hinted_answers"];
+  const CSV_COLS = ["netid", "email", "handle", "verified", "credit_points", "coverage", "mastery", "weekly", "weeks_met", "weeks_detail", "answers", "repeats", "too_fast", "days", "gate_met", "multiplier", "last_active", "hinted_answers"];
   let tab = "class", data = {}, sorts = { roster: { k: "handle", d: 1 }, credit: { k: "credit_points", d: -1 } }, query = "", flagView = "open";
   let coachQ = "", coachTag = "";
 
@@ -19473,7 +19533,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       { k: "cov", label: "Coverage", num: true, tip: "questions answered in the window, per lecture (credit lectures ringed)", sort: (r) => R.released.reduce((a, L) => a + Math.min(1, (r.cov[L] || 0) / R.N) * (R.lectures.includes(L) ? 100 : 1), 0), cell: (r) => dots(r, R.released, R.lectures, R.N) },
       { k: "c", label: "C", num: true, tip: "coverage", cell: (r) => pc(r.c) },
       { k: "m", label: "M", num: true, tip: "mastery", cell: (r) => pc(r.m) },
-      { k: "s", label: "S", num: true, tip: "speed", cell: (r) => pc(r.s) },
+      { k: "wk", label: "W", num: true, tip: "weekly: weeks met of weeks needed", cell: (r) => h("span", { title: (r.wkm || 0) + " week" + (r.wkm === 1 ? "" : "s") + " met", text: pc(r.wk) }) },
       { k: "points", label: "Points", num: true, cell: (r) => h("b.dk-pts" + (r.gate ? "" : ".off"), { title: r.gate ? "" : "day gate not met (" + r.gdays + " days)", text: n2(r.points) }) },
       { k: "tooFast", label: "Too fast", num: true, cell: (r) => (r.tooFast ? h("span.dk-fast", { text: String(r.tooFast) }) : "0") },
       { k: "mult", label: "Time", num: true, tip: "accommodation multiplier", cell: (r) => multSelect(r) },
@@ -19503,7 +19563,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         r.mult = m;
         U.toast(r.handle + ": " + m + "× time");
         delete data.credit;
-        // speed (and points) move with it: reload this tab's numbers
+        // the too-fast check doesn't divide by the multiplier, but reload so every number on the Desk is current
         data.roster = await call("deskRoster", {});
         if (tab === "roster") show("roster");
       } catch (e) { sel.value = String(was); U.toast((e && e.message) || "Could not change it."); }
@@ -19544,7 +19604,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const S = C.summary;
     p.append(h("div.dk-tiles.dk-tiles-sm", { role: "group", "aria-label": "Credit summary" },
       h("div.dk-tile", null, h("span.dk-tl", { text: "Verified players" }), h("b.dk-tv", { text: String(S.players) })),
-      h("div.dk-tile", null, h("span.dk-tl", { text: "Day gate met" }), h("b.dk-tv", { text: String(S.gateMet) }), h("span.dk-ts", { text: cfg.days + "+ days" })),
+      h("div.dk-tile", null, h("span.dk-tl", { text: "All weeks met" }), h("b.dk-tv", { text: String(S.weeksFull) }), h("span.dk-ts", { text: cfg.weeks + " weeks of " + cfg.weekN + " answers on " + cfg.weekDays + " days" })),
       h("div.dk-tile", null, h("span.dk-tl", { text: "Mean points" }), h("b.dk-tv", { text: n2(S.mean) }), h("span.dk-ts", { text: "of " + n2(S.cap) }))));
     const exp = h("button.btn.dk-csv", { type: "button" }, "Export CSV");
     exp.addEventListener("click", () => exportCsv(C));
@@ -19553,13 +19613,13 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       { k: "netid", label: "NetID", cell: (r) => h("span.dk-mono", { text: r.netid }) },
       { k: "coverage", label: "Coverage", num: true, cell: (r) => meter(r.coverage) },
       { k: "mastery", label: "Mastery", num: true, cell: (r) => meter(r.mastery) },
-      { k: "speed", label: "Speed", num: true, cell: (r) => meter(r.speed) },
-      { k: "days", label: "Days", num: true, cell: (r) => h("span" + (r.gate_met ? ".dk-ok" : ".dk-no"), { text: r.days + " / " + cfg.days }) },
+      { k: "weekly", label: "Weekly", num: true, cell: (r) => h("span.dk-meter", { title: r.weeks_detail || "no counted answers" }, h("span.dk-mb", { "aria-hidden": "true" }, h("i", { style: { width: Math.round((r.weekly || 0) * 100) + "%" } })), h("span", { text: r.weeks_met + " / " + cfg.weeks })) },
       { k: "credit_points", label: "Points", num: true, cell: (r) => h("b.dk-pts" + (r.gate_met ? "" : ".off"), { title: r.gate_met ? "" : "before the gate: " + n2(r.before_gate), text: n2(r.credit_points) }) },
       { k: "too_fast", label: "Too fast", num: true, cell: (r) => (r.too_fast ? h("span.dk-fast", { text: String(r.too_fast) }) : "0") },
       { k: "multiplier", label: "Time", num: true, cell: (r) => r.multiplier + "×" },
-      { k: "answers", label: "Answers", num: true, tip: "answers counted: credit lectures, inside the window" },
-      { k: "hinted_answers", label: "Hinted", num: true, tip: "of those, answers with a paid hint: half mastery when right, no speed credit", cell: (r) => String(r.hinted_answers || 0) },
+      { k: "answers", label: "Answers", num: true, tip: "answers counted: credit lectures, inside the window, not repeats, not too fast" },
+      { k: "repeats", label: "Repeats", num: true, tip: "repeats of a fixed question in the window: not counted" },
+      { k: "hinted_answers", label: "Hinted", num: true, tip: "of the counted answers, those with a paid hint: half mastery when right", cell: (r) => String(r.hinted_answers || 0) },
       { k: "last_active", label: "Last active", cell: (r) => r.last_active || "—" }
     ];
     // finished tournaments that count for credit: a separate column (never inside Points)
@@ -19585,13 +19645,16 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     };
     const start = inp("dk-start", "Window opens", { type: "date", value: cfg.start || "" }, "Houston date. Empty: from the first answer.");
     const end = inp("dk-end", "Window closes", { type: "date", value: cfg.end || "" }, "Last day that counts. Empty: no end.");
-    const N = inp("dk-n", "N, questions per lecture", { type: "number", min: "1", max: "200", step: "1", value: String(cfg.N) }, "Coverage and speed both count up to N.");
+    const N = inp("dk-n", "N, questions per lecture", { type: "number", min: "1", max: "200", step: "1", value: String(cfg.N) }, "Coverage counts up to N different questions a lecture.");
     const bar = inp("dk-bar", "Mastery bar", { type: "number", min: "51", max: "99", step: "1", value: String(Math.round(cfg.bar * 100)) }, "Percent: 50% scores 0, the bar scores full.");
     const w0 = inp("dk-w0", "Coverage weight", { type: "number", min: "0", max: "1", step: "0.01", value: String(cfg.w[0]) });
     const w1 = inp("dk-w1", "Mastery weight", { type: "number", min: "0", max: "1", step: "0.01", value: String(cfg.w[1]) });
-    const w2 = inp("dk-w2", "Speed weight", { type: "number", min: "0", max: "1", step: "0.01", value: String(cfg.w[2]) });
+    const w2 = inp("dk-w2", "Weekly weight", { type: "number", min: "0", max: "1", step: "0.01", value: String(cfg.w[2]) });
     const cap = inp("dk-cap", "Cap, points", { type: "number", min: "0", max: "100", step: "0.25", value: String(cfg.cap) });
-    const days = inp("dk-days", "Day gate", { type: "number", min: "0", max: "120", step: "1", value: String(cfg.days) }, "Days with a credit answer; fewer means 0 points.");
+    const days = inp("dk-days", "Day gate (optional)", { type: "number", min: "0", max: "120", step: "1", value: String(cfg.days || 0) }, "0 = off. Days with a credit answer; fewer means 0 points.");
+    const weekN = inp("dk-weekn", "Answers per week", { type: "number", min: "1", max: "500", step: "1", value: String(cfg.weekN) }, "Counted answers a week needs (Monday–Sunday, Houston).");
+    const weekDays = inp("dk-weekd", "Days per week", { type: "number", min: "1", max: "7", step: "1", value: String(cfg.weekDays) }, "Different days those answers must span.");
+    const weeks = inp("dk-weeks", "Weeks needed", { type: "number", min: "1", max: "30", step: "1", value: String(cfg.weeks) }, "Met weeks for full weekly credit (best of the window).");
     const sum = h("span.dk-wsum", { "aria-live": "polite" });
     const upd = () => { const s = [w0, w1, w2].reduce((a, x) => a + (Number(x.el.value) || 0), 0); sum.textContent = "sum " + s.toFixed(2); sum.classList.toggle("bad", Math.abs(s - 1) > 0.0015); };
     [w0, w1, w2].forEach((x) => x.el.addEventListener("input", upd));
@@ -19613,8 +19676,9 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const msg = h("p.af-msg", { role: "status", "aria-live": "polite" });
     const save = h("button.btn.btn-primary", { type: "submit" }, "Save settings");
     f.append(
-      h("h3#dk-cfg-h.tr-h", null, "Settings", h("span.tr-h-note", { text: "points = cap × (coverage weight · C + mastery weight · M + speed weight · S), once the day gate is met" })),
-      h("div.dk-cfg-grid", null, start.wrap, end.wrap, N.wrap, bar.wrap, days.wrap, cap.wrap),
+      h("h3#dk-cfg-h.tr-h", null, "Settings", h("span.tr-h-note", { text: "points = cap × (coverage weight · C + mastery weight · M + weekly weight · W)" })),
+      h("div.dk-cfg-grid", null, start.wrap, end.wrap, N.wrap, bar.wrap, cap.wrap, days.wrap),
+      h("div.dk-cfg-grid", null, weekN.wrap, weekDays.wrap, weeks.wrap),
       h("div.af.dk-f.dk-lect", null, h("p.af-label", { text: "Credit lectures" }), chips,
         h("p.af-hint", { text: cfg.lecturesDefault ? "Now the default: lectures released later join on their own." : "A custom list: lectures released later stay out until you add them." })),
       h("div.dk-cfg-grid.dk-w", null, w0.wrap, w1.wrap, w2.wrap, h("div.dk-f.dk-sumbox", null, sum)),
@@ -19625,7 +19689,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       if (!lect.length) { msg.textContent = "Pick at least one credit lecture."; msg.classList.add("bad"); return; }
       const isDefault = lect.join() === (cfg.defaultLectures || []).join();
       const body = { start: start.el.value || null, end: end.el.value || null, lectures: isDefault ? null : lect, N: Number(N.el.value), bar: Number(bar.el.value) / 100,
-        w: [Number(w0.el.value), Number(w1.el.value), Number(w2.el.value)], cap: Number(cap.el.value), days: Number(days.el.value) };
+        w: [Number(w0.el.value), Number(w1.el.value), Number(w2.el.value)], cap: Number(cap.el.value), days: Number(days.el.value) || 0,
+        weekN: Number(weekN.el.value), weekDays: Number(weekDays.el.value), weeks: Number(weeks.el.value) };
       save.disabled = true; msg.classList.remove("bad"); msg.textContent = "Saving…";
       try {
         await call("setCreditConfig", body);
@@ -19724,7 +19789,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       h("thead", null, h("tr", null, h("th", { scope: "col", text: "Player" }), h("th.num", { scope: "col", text: "Answers" }), h("th.num", { scope: "col", text: "Time" }), h("th", { scope: "col", text: "Questions (newest first)" }))),
       h("tbody", null, fast.map(fastRow))));
     p.append(h("section.tr-panel.dk-sec.dk-fastsec", { "aria-labelledby": "dk-fast-h" },
-      h("h3#dk-fast-h.tr-h", null, "Too fast", h("span.tr-h-note", { text: "correct, first-time credit answers under " + Math.round(F.floor * 100) + "% of the question's reference time; they earn no speed credit" })),
+      h("h3#dk-fast-h.tr-h", null, "Too fast", h("span.tr-h-note", { text: "first-time credit answers under " + Math.round(F.floor * 100) + "% of the question's reference time; they don't count for coverage or the weekly total, and a right one adds nothing to mastery" })),
       fast.length ? fastTable : h("p.af-note", { text: "No answer under the floor." })));
   }
 
