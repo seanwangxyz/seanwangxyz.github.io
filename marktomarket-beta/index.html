@@ -2098,6 +2098,14 @@ li.dn .hs-tp { color: var(--down); }
 .hn-keep { margin: 0; padding: 8px 28px 0; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.02em; color: var(--warn); }
 @media (max-width: 699px) { .hn-keep { padding: 6px 16px 0; } }
 
+/* Training: signed in but this browser has not seen the email verification (11 Nov) */
+.tr-unv { margin: 10px 0 12px; padding: 10px 14px; border: 1px solid var(--warn); border-left-width: 4px; border-radius: 8px; background: var(--warn-bg); }
+.tr-unv p { margin: 0 0 4px; color: var(--text); font-size: 14px; line-height: 1.45; }
+.tr-unv .tu-h b { color: var(--warn); }
+.tr-unv .tu-s { color: var(--text-2); font-size: 13px; }
+.tr-unv .row-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+.tr-unv .tu-m { font-size: 13px; color: var(--text-2); }
+
 </style>
 </head>
 <body>
@@ -11838,11 +11846,38 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
           if (!U.store.get("m2m.nick", "")) U.store.set("m2m.nick", profile.handle.slice(0, 14));
         }
       } catch (e) { console.warn("[m2m] could not load the account", e); }
+      if (profile && profile.handle && !real.emailVerified) await syncVerified(true);
     }
     hookTraining();
     A.refresh();
     if (M2M.misses) M2M.misses.userChanged();
   }
+
+  // =================================================================== verification picked up without a reload (11 Nov)
+  // A student who opens the verification link in another tab or on a phone stayed "unverified" in this tab until a
+  // reload, so Training stayed in the browser and nothing counted, while Profile (asking the server) showed zeros.
+  // Now the tab re-checks: at sign-in, when it comes back into view, every 20 s while signed in and unverified,
+  // from Training's "Check again", and whenever the server says the address is verified.
+  let vfBusy = false, vfAt = 0;
+  async function syncVerified(force) {
+    const u = auth && auth.currentUser;
+    if (!u || u.isAnonymous || !user || user.uid !== u.uid || !profile || !profile.handle || A.verified() || vfBusy) return A.verified();
+    if (Date.now() - vfAt < (force ? 2000 : 15000)) return false;
+    vfBusy = true; vfAt = Date.now();
+    try {
+      await FB.reload(u);
+      if (u.emailVerified) await u.getIdToken(true); // a fresh token carries email_verified to the server
+      user = auth.currentUser || u;
+    } catch (e) { /* offline or rate-limited: the next check tries again */ }
+    vfBusy = false;
+    if (!A.verified()) return false;
+    hookTraining(); A.refresh(); weekRefresh(true);
+    return true;
+  }
+  A.syncVerified = syncVerified;
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) syncVerified(true); });
+  window.addEventListener("focus", () => { syncVerified(true); });
+  setInterval(() => { if (!document.hidden) syncVerified(false); }, 20000);
 
   async function call(name, data) {
     if (!fns) throw new Error("Accounts are not available in this copy of the game.");
@@ -11952,7 +11987,32 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (lede) {
       lede.textContent = "Each question is chosen for you: your weakest lecture first, pitched so you get about six in ten right. Leverage still counts, so every answer also tests whether your confidence is honest. " +
         (A.verified() ? "Signed in as " + A.handle() + ": every answer is checked and saved to your account." : A.signedIn() ? "Verify your Rice email to save Training to your account; until then it stays in this browser." : "Your record stays in this browser.");
+      unverifiedBanner(lede);
     }
+  }
+  function unverifiedBanner(lede) {
+    let el = document.querySelector("#scr-train .tr-unv");
+    if (!(A.signedIn() && !A.verified())) { if (el) el.remove(); return; }
+    if (el) return;
+    const msg = h("span.tu-m", { role: "status", "aria-live": "polite" });
+    const again = h("button.btn", { type: "button" }, "I've verified: check again");
+    const resend = h("button.btn.btn-quiet", { type: "button" }, "Resend the email");
+    el = h("div.tr-unv", null,
+      h("p.tu-h", null, h("b", { text: "Not counting for credit yet." }), " This browser hasn't seen your email verification, so Training is saved only here."),
+      h("p.tu-s", null, "Open the link in the email from Mark to Market (check junk), then come back. If you already did, tap check again."),
+      h("div.row-actions", null, again, resend, msg));
+    again.addEventListener("click", async () => {
+      again.disabled = true; msg.textContent = "Checking…";
+      const ok = await syncVerified(true);
+      if (!ok) { msg.textContent = "Not verified yet. Open the link in the email first."; again.disabled = false; }
+    });
+    resend.addEventListener("click", async () => {
+      resend.disabled = true;
+      try { await FB.sendEmailVerification(auth.currentUser); msg.textContent = "Sent. Check your Rice inbox."; }
+      catch (err) { msg.textContent = /too-many-requests/.test(String(err && err.code)) ? "Already sent a moment ago. Give it a few minutes." : authMsg(err); }
+      setTimeout(() => { resend.disabled = false; }, 4000);
+    });
+    lede.after(el);
   }
 
   // =================================================================== settings follow the account
@@ -12459,6 +12519,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     renderProfile();
     try { record = (await call("getRecord", {})).record; renderProfile(); A.refresh(); } catch (e) { /* show what we have */ }
     try { credit = await call("myCredit", {}); } catch (e) { credit = { error: true }; }
+    if (credit && credit.verified && !A.verified()) await syncVerified(true);
     swapCredit();
   };
   // when the credit numbers arrive, redraw only the credit card, so a badge being edited on the profile keeps its picks
