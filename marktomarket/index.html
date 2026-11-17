@@ -2105,6 +2105,11 @@ li.dn .hs-tp { color: var(--down); }
 .tr-unv .row-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
 .tr-unv .tu-m { font-size: 13px; color: var(--text-2); }
 
+/* where credit counts (17 Nov) */
+.credit-note { margin: 12px auto 0; max-width: 640px; padding: 7px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); font-size: 13px; line-height: 1.45; color: var(--text-2); text-align: center; }
+.credit-note b { color: var(--text); }
+.credit-note.cn-close { margin-top: 16px; padding: 8px 12px; border: 1px solid var(--warn); border-radius: 8px; background: var(--warn-bg); }
+
 </style>
 </head>
 <body>
@@ -11874,6 +11879,25 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     return true;
   }
   A.syncVerified = syncVerified;
+
+  // =================================================================== where credit counts (17 Nov)
+  // "Play solo" is the title screen's first button and earns no credit, so say so beside it and at the end of every game.
+  function creditNotes() {
+    const acts = document.querySelector("#scr-title .title-actions");
+    if (acts && !document.querySelector("#scr-title .credit-note")) {
+      acts.after(h("p.credit-note", null, "Extra credit counts only in ", h("b", { text: "Training" }), ", while you're signed in. Play solo, couch, online and challenge-code games are practice and don't count."));
+    }
+    const wrap = document.querySelector("#scr-close .close-wrap");
+    if (wrap) {
+      const add = () => {
+        if (!wrap.firstChild || wrap.querySelector(".credit-note")) return;
+        wrap.appendChild(h("p.credit-note.cn-close", null, "This game doesn't count toward extra credit. Only ", h("b", { text: "Training" }), " does, while you're signed in."));
+      };
+      new MutationObserver(add).observe(wrap, { childList: true });
+      add();
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", creditNotes); else creditNotes();
   document.addEventListener("visibilitychange", () => { if (!document.hidden) syncVerified(true); });
   window.addEventListener("focus", () => { syncVerified(true); });
   setInterval(() => { if (!document.hidden) syncVerified(false); }, 20000);
@@ -11968,7 +11992,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     weekEl.append(
       h("span.tw-l", { text: "This week" }),
       h("span.tw-bar", { "aria-hidden": "true" }, h("i", { style: { width: Math.round(f * 100) + "%" } })),
-      h("b.tw-v", { text: Math.min(tw.n, tw.needN) + " of " + tw.needN + " answers · " + Math.min(tw.days, tw.needDays) + " of " + tw.needDays + " days" }),
+      h("b.tw-v", { text: Math.min(tw.n, tw.needN) + " of " + tw.needN + " answers this week · " + Math.min(tw.days, tw.needDays) + " of " + tw.needDays + " days" }),
       h("span.tw-s", { text: tw.open === false ? "outside the credit window" : tw.met ? "✓ this week counts · " + c.credit.weeksMet + " of " + c.credit.weeksNeed + " weeks" : todo + c.credit.weeksMet + " of " + c.credit.weeksNeed + " weeks so far · points " + c.credit.points.toFixed(2) + " of " + cfg.cap }));
   }
   async function weekRefresh(force) {
@@ -12492,7 +12516,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
           meter("m", "Mastery", x.mastery, "rating above 50%, full at " + Math.round(cfg.bar * 100) + "%"),
           h("div.cr-m.cr-days" + (x.weeksMet >= x.weeksNeed ? ".met" : ""), { dataset: { k: "w" } }, h("span.cr-l", { text: "Weekly" }), h("b.cr-v", { text: x.weeksMet + " of " + x.weeksNeed + " weeks" }),
             h("span.cr-dots", { "aria-hidden": "true" }, Array.from({ length: Math.min(x.weeksNeed, 14) }, (_, i) => h("i" + (i < x.weeksMet ? ".on" : "")))),
-            h("span.cr-s", { text: "a week counts at " + cfg.weekN + " answers on " + cfg.weekDays + " days (Mon–Sun)" })),
+            h("span.cr-s", { text: "a week counts at " + cfg.weekN + " answers in total, spread over at least " + cfg.weekDays + " different days (Mon–Sun)" })),
           h("div.cr-m.cr-week" + (tw.met ? ".met" : ""), { dataset: { k: "t" } }, h("span.cr-l", { text: "This week" }), h("b.cr-v", { text: Math.min(tw.n, tw.needN) + " of " + tw.needN }),
             h("span.cr-bar", { "aria-hidden": "true" }, h("i", { style: { width: Math.round(Math.min(1, tw.n / tw.needN) * 100) + "%" } })),
             h("span.cr-s", { text: tw.met ? "this week counts" : tw.days + " of " + tw.needDays + " days" + (tw.open === false ? " · outside the credit window" : "") })))),
