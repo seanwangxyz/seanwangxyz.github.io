@@ -3029,6 +3029,43 @@ button.opt.chosen, button.lev[aria-pressed="true"] { box-shadow: inset 0 1px 0 v
 .btn:not(.btn-primary):active:not(:disabled) { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--edge-hi), 0 0 0 var(--edge); }
 html.reduced button.opt:active, html.reduced button.lev:active, html.reduced .btn:active, html.reduced .btn-ink:active { transform: none; }
 
+/* ================================================================ R2 (18 Nov 2026): floor chat (chat.js) */
+.chat { position: fixed; z-index: 27; right: calc(var(--side-r) + 18px); bottom: calc(var(--tk-h) + var(--dock-h) + 16px); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; pointer-events: none; }
+.chat > * { pointer-events: auto; }
+.chat-fab { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px 0 12px; border-radius: 20px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text);
+  font: 600 13.5px var(--f-ui); cursor: pointer; box-shadow: 0 3px 0 var(--edge), 0 10px 24px rgba(0, 0, 0, 0.35); transition: transform 0.07s, box-shadow 0.07s, opacity 0.2s; }
+.chat-fab:active { transform: translateY(3px); box-shadow: 0 0 0 var(--edge), 0 6px 16px rgba(0, 0, 0, 0.3); }
+.chat-fab .ch-ico svg { width: 18px; height: 18px; display: block; }
+.chat-fab.locked { opacity: 0.6; cursor: default; }
+.ch-badge { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: var(--brand); color: #fff; font: 700 11.5px/20px var(--f-mono); text-align: center; }
+.chat-preview { max-width: min(320px, calc(100vw - 36px)); text-align: left; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text);
+  font: 14px/1.35 var(--f-ui); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35); cursor: pointer; }
+.chat-panel { width: min(340px, calc(100vw - 36px)); max-height: min(440px, calc(100vh - var(--top-h) - var(--tk-h) - 90px)); display: flex; flex-direction: column;
+  border-radius: 12px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); overflow: hidden; }
+.ch-head { display: flex; align-items: center; gap: 8px; padding: 10px 10px 8px 14px; border-bottom: 1px solid var(--line); }
+.ch-title { font: 600 12.5px var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); margin-right: auto; }
+.ch-mute, .ch-x { height: 30px; padding: 0 10px; border-radius: 7px; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font: 600 12.5px var(--f-ui); cursor: pointer; }
+.ch-x { font-size: 18px; line-height: 1; padding: 0 9px; }
+.ch-mute[aria-pressed="true"] { color: var(--warn); border-color: var(--warn); }
+.ch-list { list-style: none; margin: 0; padding: 10px 14px; overflow-y: auto; flex: 1; min-height: 120px; display: flex; flex-direction: column; gap: 7px; font-size: 14.5px; line-height: 1.4; overscroll-behavior: contain; }
+.ch-m { word-wrap: break-word; overflow-wrap: anywhere; }
+.ch-m .ch-who { margin-right: 6px; font-weight: 700; }
+.ch-m.me .ch-t { color: var(--text-2); }
+.ch-empty { color: var(--text-3); font-size: 13.5px; }
+.ch-quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px 0; border-top: 1px solid var(--line); }
+.ch-q { padding: 5px 10px; border-radius: 14px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text); font: 13px var(--f-ui); cursor: pointer; box-shadow: 0 2px 0 var(--edge); }
+.ch-q:active:not(:disabled) { transform: translateY(2px); box-shadow: none; }
+.ch-row { display: flex; gap: 8px; padding: 10px 12px 6px; }
+.ch-in { flex: 1; min-width: 0; height: 38px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--well); color: var(--text-hi); font: 15px var(--f-ui); }
+.ch-in:focus { outline: none; border-color: var(--accent); }
+.ch-send { height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; font: 700 14px var(--f-ui); cursor: pointer; }
+.ch-send:disabled, .ch-q:disabled, .ch-in:disabled { opacity: 0.5; cursor: default; }
+.ch-note { margin: 0; padding: 0 12px 10px; font-size: 12px; color: var(--text-3); }
+@media (pointer: coarse) { .ch-in, .ch-send { height: 44px; } .ch-q { padding: 8px 12px; } }
+@media (max-width: 560px) { .chat-fab .ch-l { display: none; } .chat-fab { padding: 0 12px; } .chat-fab.locked .ch-l { display: none; } }
+html.scratch-side .chat, html.scratch-flip .chat { display: none; }
+html[data-m2m-theme="light"] .chat-fab, html[data-m2m-theme="light"] .chat-panel, html[data-m2m-theme="light"] .chat-preview { box-shadow: 0 3px 0 var(--edge), 0 10px 24px rgba(24, 20, 14, 0.12); }
+
 </style>
 <script>(function(){var t="dark";try{var p=localStorage.getItem("m2m-theme");if(p==="light")t="light";else if(p==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)t="light";}catch(e){}document.documentElement.setAttribute("data-m2m-theme",t);})();</script>
 </head>
@@ -11525,6 +11562,14 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
           FB.onDisconnect(g).set(true).then(() => FB.set(g, false)).catch(() => {});
         });
       },
+      // R2 (18 Nov): floor chat lives apart from the floor (fchat/<code>), readable by the seated players only
+      chatOk: () => typeof FB.update === "function",
+      chatWatch(code, cb) { return FB.onValue(FB.ref(db, "fchat/" + code + "/m"), (s) => cb(s.val() || {}), (err) => cb(null, err)); },
+      chatSend(code, id, msg) {
+        const now = { ".sv": "timestamp" };
+        return FB.update(FB.ref(db, "fchat/" + code), { ["m/" + id]: Object.assign({}, msg, { t: now }), ["last/" + uid]: now });
+      },
+      chatClear(code) { return FB.set(FB.ref(db, "fchat/" + code), null); },
       goOffline() { FB.goOffline(db); },
       goOnline() { FB.goOnline(db); }
     };
@@ -11653,7 +11698,16 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       lobbyApply(snap);
     });
     if (b.presence) fl.unpres = b.presence(code);
+    if (M2M.chat && b.chatOk && b.chatOk()) M2M.chat.attach(code);
   }
+  /** R2: the chat's link to this floor (chat.js) */
+  N.chatApi = () => (be && fl && be.chatOk && be.chatOk() ? {
+    uid: fl.uid, code: fl.code, host: fl.host,
+    watch: (cb) => be.chatWatch(fl.code, cb),
+    send: (id, msg) => be.chatSend(fl.code, id, msg),
+    clear: () => be.chatClear(fl.code),
+    seats: () => seatList(fl.snap)
+  } : null);
 
   /** host: open a new floor with the desk and lectures chosen on the title screen */
   N.create = async function (name) {
@@ -11703,6 +11757,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   };
 
   N.leave = function () {
+    if (M2M.chat) M2M.chat.detach();
     clearTimeout(driveT); clearInterval(enforceT);
     waiters = [];
     if (fl) {
@@ -12028,7 +12083,12 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     }
   }
 
-  N.finished = function () { if (fl && fl.host && be) be.set(fl.code, "status", "done").catch(() => {}); };
+  N.finished = function () {
+    if (fl && fl.host && be) {
+      be.set(fl.code, "status", "done").catch(() => {});
+      if (be.chatClear) be.chatClear(fl.code).catch(() => {}); // R2: the chat is deleted when the game ends
+    }
+  };
 })();
 
 /* ---- training.js ---- */
@@ -17994,6 +18054,190 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if ((e.key === "w" || e.key === "W") && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); e.stopPropagation(); S.toggle(); }
     else if (e.key === "Escape" && open) { e.preventDefault(); e.stopPropagation(); S.close(); }
   }, true);
+})();
+
+/* ---- chat.js ---- */
+/* MARK TO MARKET — chat.js (R2, 18 Nov 2026)
+ * Text chat for the players on one online floor (friend games and Versus).
+ *   - A "Chat" button in the bottom-right corner while you are on a floor (lobby, board, explanation), with an unread
+ *     count and a short preview of new messages. The panel opens from it.
+ *   - Closed while a question is being answered, so nobody passes answers: the button says so, and messages that
+ *     arrive then wait. It opens again as soon as the explanation shows.
+ *   - Five one-tap phrases plus free text, 200 characters at most, one message every 2 seconds (the database rules
+ *     enforce both). Each player can mute it on their device.
+ *   - Stored at fchat/<code>, readable by the seated players only, deleted by the host when the game ends.
+ * API: M2M.chat.attach(code) (online.js, once the floor is open), M2M.chat.detach() (leaving), M2M.chat.state().
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h;
+  const C = (M2M.chat = {});
+  const MUTE_KEY = "m2m-chat-mute", MAX = 200, GAP_MS = 2000;
+  const PHRASES = ["Nice one", "Explain that one?", "Good game", "Rematch?", "Ready when you are"];
+
+  let api = null, unsub = null, msgs = [], seen = new Set(), unread = 0, open = false, locked = false, lastSent = 0, firstLoad = true;
+  let root, fab, badge, preview, panel, list, input, sendBtn, note, muteBtn, previewT = 0, obs = null;
+  const muted = () => { try { return localStorage.getItem(MUTE_KEY) === "1"; } catch (e) { return false; } };
+
+  // ------------------------------------------------------------------ the button and the panel (built once)
+  function build() {
+    if (root) return;
+    badge = h("span.ch-badge", { "aria-hidden": "true" });
+    fab = h("button.chat-fab", { type: "button", "aria-expanded": "false" }, h("span.ch-ico", { html: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4.5h12a1.5 1.5 0 0 1 1.5 1.5v6.5A1.5 1.5 0 0 1 16 14H9l-4 3v-3H4a1.5 1.5 0 0 1-1.5-1.5V6A1.5 1.5 0 0 1 4 4.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>' }), h("span.ch-l", { text: "Chat" }), badge);
+    fab.addEventListener("click", () => (open ? C.close() : C.open()));
+    preview = h("button.chat-preview", { type: "button", hidden: true });
+    preview.addEventListener("click", () => C.open());
+    list = h("ol.ch-list", { "aria-live": "polite", "aria-label": "Messages" });
+    input = h("input.ch-in", { type: "text", maxlength: String(MAX), placeholder: "Message the floor", "aria-label": "Message the floor", autocomplete: "off" });
+    sendBtn = h("button.ch-send", { type: "button", text: "Send" });
+    sendBtn.addEventListener("click", () => send(input.value));
+    input.addEventListener("keydown", (e) => { e.stopPropagation(); if (e.key === "Enter") { e.preventDefault(); send(input.value); } if (e.key === "Escape") { e.preventDefault(); C.close(); } });
+    input.addEventListener("keyup", (e) => e.stopPropagation());
+    const quick = h("div.ch-quick", { role: "group", "aria-label": "Quick messages" }, PHRASES.map((t) => {
+      const b = h("button.ch-q", { type: "button", text: t });
+      b.addEventListener("click", () => send(t));
+      return b;
+    }));
+    muteBtn = h("button.ch-mute", { type: "button" });
+    muteBtn.addEventListener("click", () => { try { localStorage.setItem(MUTE_KEY, muted() ? "0" : "1"); } catch (e) { /* fine */ } paint(); });
+    const x = h("button.ch-x", { type: "button", "aria-label": "Close the chat", text: "×" });
+    x.addEventListener("click", () => C.close());
+    note = h("p.ch-note");
+    panel = h("section.chat-panel", { "aria-label": "Floor chat", hidden: true },
+      h("header.ch-head", null, h("span.ch-title", { text: "Floor chat" }), muteBtn, x),
+      list, quick, h("div.ch-row", null, input, sendBtn), note);
+    root = h("div.chat", { hidden: true }, preview, panel, fab);
+    document.body.appendChild(root);
+    // a question locks the chat until its explanation shows (checked a few times a second while on a floor)
+    obs = setInterval(() => { if (api) setLocked(questionLive()); }, 250);
+  }
+
+  // ------------------------------------------------------------------ names and colors
+  function who(slot) {
+    const seats = api ? api.seats() : [];
+    const s = seats[slot];
+    const name = s ? s.name : "Player";
+    const roster = seats.filter(Boolean);
+    const idx = roster.findIndex((r) => r.slot === slot);
+    const st = M2M.state;
+    const color = st && st.online && st.players && st.players[idx] ? st.players[idx].color : ["#A78BFA", "#2DD4BF", "#F5B83D"][slot] || "#A78BFA";
+    return { name, color, me: s && api && s.uid === api.uid };
+  }
+  /** a question is up and its explanation is not showing yet */
+  function questionLive() {
+    const Q = M2M.clue;
+    if (!Q || !Q.isOpen || !Q.isOpen()) return false;
+    const ph = Q.phase();
+    return ph !== "done" && ph !== "closing";
+  }
+  function mySlot() { const s = api ? api.seats().find((x) => x && x.uid === api.uid) : null; return s ? s.slot : -1; }
+
+  // ------------------------------------------------------------------ receiving
+  function onMsgs(val, err) {
+    if (err) { note.textContent = "Chat isn't available on this floor right now."; return; }
+    const arr = Object.keys(val || {}).map((k) => Object.assign({ id: k }, val[k])).filter((m) => m && typeof m.x === "string");
+    arr.sort((a, b) => (a.t || 0) - (b.t || 0) || (a.id < b.id ? -1 : 1));
+    const fresh = arr.filter((m) => !seen.has(m.id));
+    msgs = arr.slice(-120);
+    fresh.forEach((m) => seen.add(m.id));
+    const theirs = fresh.filter((m) => !(api && m.u === api.uid));
+    if (!firstLoad && theirs.length) {
+      if (!open || locked) unread += theirs.length;
+      if (!muted()) {
+        if (!locked && !open) showPreview(theirs[theirs.length - 1]);
+        try { if (M2M.audio && M2M.audio.select) M2M.audio.select(); } catch (e) { /* no sound */ }
+      }
+    }
+    firstLoad = false;
+    renderList();
+    paint();
+  }
+  function renderList() {
+    if (!list) return;
+    U.clear(list);
+    if (!msgs.length) { list.appendChild(h("li.ch-empty", { text: "No messages yet. Say hello, or tap a quick message." })); return; }
+    for (const m of msgs) {
+      const w = who(m.s);
+      list.appendChild(h("li.ch-m" + (w.me ? ".me" : ""), null, h("b.ch-who", { text: w.me ? "You" : w.name, style: { color: w.color } }), h("span.ch-t", { text: m.x })));
+    }
+    list.scrollTop = list.scrollHeight;
+  }
+  function showPreview(m) {
+    const w = who(m.s);
+    U.clear(preview).append(h("b", { text: w.name + ": ", style: { color: w.color } }), h("span", { text: m.x.length > 80 ? m.x.slice(0, 78) + "…" : m.x }));
+    preview.hidden = false;
+    clearTimeout(previewT);
+    previewT = setTimeout(() => { preview.hidden = true; }, 4500);
+  }
+
+  // ------------------------------------------------------------------ sending
+  function newId() { let s = Date.now().toString(36); while (s.length < 14) s += Math.floor(Math.random() * 36).toString(36); return s.slice(0, 16); }
+  async function send(text) {
+    text = String(text || "").replace(/\s+/g, " ").trim().slice(0, MAX);
+    if (!text || !api || locked) return;
+    const wait = lastSent + GAP_MS - Date.now();
+    if (wait > 0) { note.textContent = "One message every 2 seconds."; setTimeout(() => { if (note.textContent === "One message every 2 seconds.") paint(); }, wait); return; }
+    const s = mySlot();
+    if (s < 0) return;
+    lastSent = Date.now();
+    input.value = "";
+    try { await api.send(newId(), { u: api.uid, s, x: text }); paint(); }
+    catch (e) { note.textContent = "That message didn't send. Try again in a moment."; input.value = text; }
+  }
+
+  // ------------------------------------------------------------------ state and painting
+  function setLocked(on) {
+    if (on === locked) return;
+    locked = on;
+    if (on && open) { panel.hidden = true; }
+    if (!on && open) { panel.hidden = false; unread = 0; renderList(); }
+    if (on) preview.hidden = true;
+    paint();
+  }
+  function paint() {
+    if (!root) return;
+    badge.textContent = unread ? String(Math.min(unread, 99)) : "";
+    badge.hidden = !unread;
+    fab.classList.toggle("locked", locked);
+    fab.setAttribute("aria-expanded", open && !locked ? "true" : "false");
+    fab.title = locked ? "Chat opens again when this question ends" : "Floor chat";
+    fab.querySelector(".ch-l").textContent = locked ? "Chat after this question" : "Chat";
+    muteBtn.textContent = muted() ? "Unmute" : "Mute";
+    muteBtn.setAttribute("aria-pressed", muted() ? "true" : "false");
+    const dis = locked || !api;
+    input.disabled = sendBtn.disabled = dis;
+    root.querySelectorAll(".ch-q").forEach((b) => { b.disabled = dis; });
+    note.textContent = muted() ? "Muted: no previews or sounds on this device." : "Up to 200 characters. Deleted when the game ends.";
+  }
+  C.open = function () {
+    if (!api) return;
+    if (locked) { fab.animate && !U.reduced() && fab.animate([{ transform: "translateX(0)" }, { transform: "translateX(-4px)" }, { transform: "translateX(4px)" }, { transform: "translateX(0)" }], { duration: 220 }); return; }
+    open = true; unread = 0;
+    panel.hidden = false; preview.hidden = true;
+    renderList(); paint();
+    if (window.matchMedia && matchMedia("(pointer: fine)").matches) setTimeout(() => input.focus({ preventScroll: true }), 30);
+  };
+  C.close = function () { open = false; if (panel) panel.hidden = true; paint(); try { fab.focus({ preventScroll: true }); } catch (e) { /* fine */ } };
+  C.attach = function (code) {
+    const a = M2M.net && M2M.net.chatApi ? M2M.net.chatApi() : null;
+    if (!a || (api && api.code === code)) return;
+    C.detach();
+    build();
+    api = a; msgs = []; seen = new Set(); unread = 0; firstLoad = true; open = false; lastSent = 0;
+    root.hidden = false; panel.hidden = true; preview.hidden = true;
+    setLocked(questionLive());
+    // the seated players' read can be refused for a moment while this device's seat is being written: retry a few times
+    let tries = 0;
+    const sub = () => { unsub = api.watch((v, err) => { if (err && tries++ < 4) { setTimeout(() => { if (api && api.code === code) sub(); }, 1500); return; } onMsgs(v, err); }); };
+    sub();
+    renderList(); paint();
+  };
+  C.detach = function () {
+    try { if (unsub) unsub(); } catch (e) { /* closed */ }
+    unsub = null; api = null; open = false; unread = 0; msgs = [];
+    if (root) { root.hidden = true; panel.hidden = true; preview.hidden = true; }
+  };
+  C.state = () => ({ attached: !!api, open, locked, unread, n: msgs.length, muted: muted(), last: msgs.length ? msgs[msgs.length - 1].x : null });
 })();
 
 </script>
