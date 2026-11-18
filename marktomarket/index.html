@@ -4,7 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
-<meta name="description" content="MARK TO MARKET: a trading-terminal game of financial statement analysis, lectures 1 to 12. By Sean Wang.">
+<meta name="description" content="MARK TO MARKET: a trading-terminal game of financial statement analysis. By Sean Wang.">
+<meta name="theme-color" content="#0A0D14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Mark to Market">
+<link rel="manifest" href="app/manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="app/favicon-32.png">
+<link rel="apple-touch-icon" href="app/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="167x167" href="app/apple-touch-icon-167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="app/apple-touch-icon-152.png">
+<link rel="apple-touch-startup-image" media="(device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="app/launch-1640x2360.png">
+<link rel="apple-touch-startup-image" media="(device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="app/launch-2360x1640.png">
+<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="app/launch-1668x2388.png">
+<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="app/launch-2388x1668.png">
+<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="app/launch-2048x2732.png">
+<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="app/launch-2732x2048.png">
+<link rel="apple-touch-startup-image" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="app/launch-1620x2160.png">
+<link rel="apple-touch-startup-image" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="app/launch-2160x1620.png">
+<link rel="apple-touch-startup-image" media="(device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="app/launch-1488x2266.png">
+<link rel="apple-touch-startup-image" media="(device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="app/launch-2266x1488.png">
 <title>MARK TO MARKET</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Karla:wght@400..700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&amp;display=swap">
 <style>
@@ -2933,6 +2953,82 @@ html.clue-open .stage-shade::after { opacity: 0.35; }
 @media (max-width: 760px) { .th-quick { display: none; } }
 @media (max-width: 640px) { .title-eyebrow { flex-direction: column; gap: 8px; } }
 
+/* ================================================================ R1 (18 Nov 2026): the scratch board (scratch.js) */
+:root { --sc-ink: #E8ECF4; --sc-red: #FF7A7A; --sc-board: #0E1320; --sc-rule: rgba(167, 176, 194, 0.07); --sc-w: min(520px, 40vw); }
+html[data-m2m-theme="light"] { --sc-ink: #18140E; --sc-red: #C43A32; --sc-board: #FFFFFF; --sc-rule: rgba(24, 20, 14, 0.06); }
+.sc-btn { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; padding: 4px 10px 4px 8px; border-radius: 6px; border: 1px solid var(--line-2);
+  background: transparent; color: var(--text-2); font: 600 11.5px/1.2 var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; flex: none;
+  box-shadow: 0 2px 0 var(--line-2); transition: transform 0.08s, box-shadow 0.08s, color 0.15s, border-color 0.15s; }
+.sc-btn:hover { color: var(--text-hi); border-color: var(--line-3); }
+.sc-btn:active { transform: translateY(2px); box-shadow: 0 0 0 var(--line-2); }
+.sc-btn[aria-expanded="true"] { color: var(--accent-2); border-color: var(--accent); box-shadow: 0 2px 0 var(--accent); }
+.sc-btn .sc-ico svg, .sc-title .sc-ico svg { width: 15px; height: 15px; display: block; }
+.card-head .sc-btn + .pips { margin-left: 0; }
+.rm-qhead .sc-btn { margin: 0 10px 0 0; padding: 6px 10px; font-size: 12px; }
+@media (max-width: 520px) { .card-head .sc-btn .sc-l { display: none; } .card-head .sc-btn { padding: 5px 7px; } }
+
+.scratch { position: fixed; z-index: 25; display: flex; flex-direction: column; background: var(--panel); color: var(--text); border: 1px solid var(--line-2);
+  border-radius: 12px; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); opacity: 0; transform: translateX(14px); transition: opacity 0.18s, transform 0.22s var(--ease); }
+.scratch.on { opacity: 1; transform: none; }
+.scratch.sc-side { top: calc(var(--top-h) + 22px); bottom: calc(var(--tk-h) + 22px); right: 24px; width: var(--sc-w); }
+.scratch.sc-flip { inset: var(--top-h) 0 0 0; border-radius: 0; border-width: 1px 0 0; z-index: 32; transform: translateY(10px);
+  padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+.scratch.sc-flip.on { transform: none; }
+.scratch.sc-full { inset: 0; border-width: 0; padding-top: env(safe-area-inset-top, 0px); }
+.sc-head { display: flex; align-items: center; gap: 10px; padding: 10px 12px 8px 16px; border-bottom: 1px solid var(--line); }
+.sc-title { display: inline-flex; align-items: center; gap: 7px; font: 600 12.5px var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); }
+.sc-tools { display: flex; gap: 6px; margin-left: auto; }
+.sc-tool { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text-2);
+  cursor: pointer; box-shadow: 0 3px 0 var(--line-2); transition: transform 0.08s, box-shadow 0.08s; }
+.sc-tool:active { transform: translateY(3px); box-shadow: 0 0 0 var(--line-2); }
+.sc-tool.on { border-color: var(--accent); color: var(--text-hi); box-shadow: 0 3px 0 var(--accent); }
+.sc-tool svg { width: 18px; height: 18px; }
+.sc-dot { width: 14px; height: 14px; border-radius: 50%; display: block; }
+.sc-dot.ink { background: var(--sc-ink); } .sc-dot.red { background: var(--sc-red); }
+.sc-close { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--line-2); background: transparent;
+  color: var(--text-2); font: 600 13px var(--f-ui); cursor: pointer; }
+.sc-close:hover { color: var(--text-hi); }
+.sc-close-x { font-size: 20px; line-height: 1; }
+.sc-strip { display: none; }
+.sc-flip .sc-strip { display: flex; align-items: flex-start; gap: 14px; width: 100%; text-align: left; padding: 10px 16px; border: 0; border-bottom: 1px solid var(--line);
+  background: var(--panel-2); color: var(--text); cursor: pointer; font: inherit; }
+.sc-stem { margin: 0; flex: 1; min-width: 0; font-size: 15px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sc-stem-open .sc-stem { -webkit-line-clamp: unset; display: block; max-height: 38vh; overflow-y: auto; }
+.sc-clock { font: 700 15px var(--f-mono); color: var(--text-hi); flex: none; }
+.sc-clock.late { color: var(--warn); }
+.sc-wrap { position: relative; flex: 1; min-height: 0; margin: 12px; border-radius: 8px; border: 1px solid var(--line); overflow: hidden;
+  background-color: var(--sc-board); background-image: linear-gradient(var(--sc-rule) 1px, transparent 1px), linear-gradient(90deg, var(--sc-rule) 1px, transparent 1px); background-size: 28px 28px; }
+.sc-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.sc-hint { position: absolute; left: 12px; bottom: 8px; margin: 0; font-size: 12px; color: var(--text-3); pointer-events: none; }
+@media (pointer: coarse) { .sc-tool, .sc-close { height: 44px; } .sc-tool { width: 44px; } }
+@media (max-width: 560px) { .sc-head { flex-wrap: wrap; } .sc-title { display: none; } .sc-tools { margin-left: 0; } .sc-close-l { display: none; } .sc-close { margin-left: auto; } }
+
+/* wide screens: the card makes room for the board on its right; the host steps aside */
+html.scratch-side { --card-w: min(820px, calc(100vw - var(--sc-w) - 96px)); }
+html.scratch-side .clue-scroll { padding-right: calc(var(--sc-w) + 48px); }
+html.scratch-side .host { visibility: hidden; }
+html.scratch-flip body { overflow: hidden; }
+html[data-m2m-theme="light"] .scratch { box-shadow: 0 18px 50px rgba(24, 20, 14, 0.16); }
+
+/* ================================================================ R1 (18 Nov 2026): tactile press, after Tata's Equations
+   Keys with a bottom edge that sink when pressed: in this game's own palette, short travel, no bounce. */
+:root { --edge: #0B0F1A; --edge-hi: rgba(255, 255, 255, 0.06); }
+html[data-m2m-theme="light"] { --edge: #D6CEC2; --edge-hi: rgba(255, 255, 255, 0.9); }
+/* the board's tiles: the face sinks into its own sides on a press */
+.cell:not(.used) .slab:active .f { transform: translateZ(calc(var(--th) * 0.3)); transition: transform 0.06s; }
+.slab .f { transition: transform 0.18s var(--ease); }
+/* the answers and the leverage keys */
+button.opt, button.lev { box-shadow: inset 0 1px 0 var(--edge-hi), 0 3px 0 var(--edge); transition: background 0.15s, border-color 0.15s, opacity 0.2s, transform 0.07s, box-shadow 0.07s; }
+button.opt:active:not(:disabled), button.lev:active:not(:disabled) { transform: translateY(3px); box-shadow: inset 0 1px 0 var(--edge-hi), 0 0 0 var(--edge); }
+button.opt.chosen, button.lev[aria-pressed="true"] { box-shadow: inset 0 1px 0 var(--edge-hi), 0 3px 0 color-mix(in srgb, var(--accent) 70%, var(--edge)); }
+.opt.revealed, .opt:disabled { box-shadow: none; transform: none; }
+/* the main buttons: a darker edge in their own color */
+.btn-primary:not(:disabled), .btn-ink:not(:disabled) { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 3px 0 color-mix(in srgb, var(--accent) 60%, #000), 0 10px 24px -14px var(--accent); transition: transform 0.07s, box-shadow 0.07s, background 0.15s; }
+.btn-primary:active:not(:disabled), .btn-ink:active:not(:disabled) { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 0 0 color-mix(in srgb, var(--accent) 60%, #000); }
+.btn:not(.btn-primary):not(:disabled) { box-shadow: inset 0 1px 0 var(--edge-hi), 0 2px 0 var(--edge); }
+.btn:not(.btn-primary):active:not(:disabled) { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--edge-hi), 0 0 0 var(--edge); }
+html.reduced button.opt:active, html.reduced button.lev:active, html.reduced .btn:active, html.reduced .btn-ink:active { transform: none; }
+
 </style>
 <script>(function(){var t="dark";try{var p=localStorage.getItem("m2m-theme");if(p==="light")t="light";else if(p==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)t="light";}catch(e){}document.documentElement.setAttribute("data-m2m-theme",t);})();</script>
 </head>
@@ -3993,6 +4089,16 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     o.connect(g); g.connect(sfx);
     o.start(t); o.stop(t + 0.12);
     noiseHit(t, 0.02, "lowpass", 1800, 0.7, 0.06, 1);
+  };
+
+  /** R1 (18 Nov): the scratch board: a sheet of paper slid out (open) or put away (close) */
+  A.scratch = function (open) {
+    if (!ready()) return;
+    const t = now() + 0.003;
+    const n = noiseHit(t, 0.16, "bandpass", open ? 2400 : 1600, 0.9, 0.05, open ? 1.3 : 0.9);
+    n.f.frequency.setValueAtTime(open ? 1400 : 2600, t);
+    n.f.frequency.exponentialRampToValueAtTime(open ? 3600 : 1100, t + 0.15);
+    noiseHit(t + 0.13, 0.03, "lowpass", 900, 0.7, 0.05, 0.8);
   };
 
   /** a mechanical key switch for picking a tile: the click on the way down, a softer one on the way up */
@@ -8782,7 +8888,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   const h = U.h;
   const LETTERS = "ABCD";
   const LEVS = ["H", "L", "C"];
-  let layer, scroller, cs = null;
+  let layer, scroller, cs = null, scSeq = 0;
 
   Q.init = function () {
     layer = document.getElementById("clue-layer");
@@ -8953,9 +9059,20 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const valEl = h("span.ch-val", { text: headValue() });
     const pips = h("span.pips", { role: "img", "aria-label": "Difficulty " + it.tier + " of 5" });
     for (let i = 1; i <= 5; i++) pips.appendChild(h("i" + (i <= it.tier ? ".on" : "")));
+    // R1 (18 Nov): the scratch board's button sits in the card head, before the difficulty pips
+    let scBtn = null;
+    if (M2M.scratch) {
+      const me = cs;
+      scSeq++;
+      scBtn = M2M.scratch.button("clue:" + scSeq + ":" + (cs.cell.key || it.id), {
+        stem: it.stem,
+        left: () => (me === cs && cs.clock ? (cs.clock.end - performance.now()) / 1000 : null),
+        done: () => me !== cs || ["reveal", "done", "closing"].includes(cs.phase)
+      });
+    }
     card.appendChild(h("header.card-head", null,
       h("span.ch-l", null, h("span.slash", { text: "//" }), " " + label.join(" · ") + " · ", valEl),
-      pips));
+      scBtn, pips));
     const body = h("div.card-body");
     body.appendChild(h("p.stem#card-stem", { text: it.stem }));
     if (it.exhibit && (it.exhibit.rows || []).length) body.appendChild(Q.renderExhibit(it.exhibit));
@@ -9045,6 +9162,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   }
 
   async function leave() {
+    if (M2M.scratch) M2M.scratch.end(); // the board is wiped when the question closes
     const card = cs.els.card;
     card.classList.remove("rise", "pop");
     card.classList.add("leaving");
@@ -9845,6 +9963,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
 
   /** close whatever is open without settling it (quit to the title) */
   Q.abort = function () {
+    if (M2M.scratch) M2M.scratch.end();
     stopReading(true);
     if (M2M.audio) M2M.audio.heartbeat(false);
     if (Q._aiAbort) { const f = Q._aiAbort; Q._aiAbort = null; f(); }
@@ -15963,7 +16082,11 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   function answerView(p) {
     const c = p.clue, it = c.item, vote2 = p.phase === "open2";
     const card = h("div.rm-card.rm-q", { dataset: { i: String(p.i), vote: vote2 ? "2" : "1" } });
-    card.appendChild(h("div.rm-qhead", null, h("span.rm-qtag", { text: catTag(c.L) + " · $" + U.int(c.V) }), vote2 ? h("span.rm-rv", { text: "Revote" }) : null, h("span.rm-sp"), h("b.rm-left", { text: L().clock(L().left(p)) })));
+    // R1 (18 Nov): a scratch board on the phone, always full screen; one board per question, kept through the revote
+    const scBtn = M2M.scratch ? M2M.scratch.button("room:" + (S.code || "") + ":" + p.i, { stem: it.stem, flipOnly: true,
+      left: () => (S.pub && S.pub.i === p.i ? L().left(S.pub) / 1000 : null), // the room counts in milliseconds
+      done: () => !S.pub || S.pub.i !== p.i || (S.pub.phase !== "open" && S.pub.phase !== "open2") }) : null;
+    card.appendChild(h("div.rm-qhead", null, h("span.rm-qtag", { text: catTag(c.L) + " · $" + U.int(c.V) }), vote2 ? h("span.rm-rv", { text: "Revote" }) : null, h("span.rm-sp"), scBtn, h("b.rm-left", { text: L().clock(L().left(p)) })));
     const det = h("details.rm-stem", null, h("summary", { text: "The question" }), h("p", { text: it.stem }));
     card.appendChild(det);
     // no Peek and no hints in live class games (24 Oct, Sean)
@@ -17616,6 +17739,261 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
 
   apply(false);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount); else mount();
+})();
+
+/* ---- scratch.js ---- */
+/* MARK TO MARKET — scratch.js (R1, 18 Nov 2026)
+ * A private scratch whiteboard for every question: the paper next to the calculator.
+ *   - A "Scratch" button on the question card (key W). On a wide screen the board opens beside the card; on a narrow one
+ *     it flips to a full-screen board with the question pinned in a strip on top (tap the strip to read it all).
+ *   - Pen, eraser, undo, clear, two ink colors. Apple Pencil pressure sets the line width. Once a pen has been seen during
+ *     this visit, fingers never draw (a resting palm leaves no marks); with no pen, a finger or a mouse draws.
+ *   - One board per question: it stays while that question and its explanation are open and is wiped on the next one.
+ *     Nothing is stored or sent anywhere.
+ * API: M2M.scratch.button(key, {stem, left, flipOnly}) -> a button for a card; M2M.scratch.sync(key) wipes the board if
+ *      it belongs to another question; M2M.scratch.end() closes and wipes; M2M.scratch.isOpen(); M2M.scratch.toggle().
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h;
+  const S = (M2M.scratch = {});
+  const PEN_KEY = "m2m-scratch-pen";
+  const SIDE_MIN_W = 1180, SIDE_MIN_H = 600;
+  const ICON = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 17l1-4L13.5 3.5a1.8 1.8 0 0 1 2.5 0l.5.5a1.8 1.8 0 0 1 0 2.5L7 16z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M11.5 5.5l3 3" stroke="currentColor" stroke-width="1.6"/></svg>';
+
+  let key = null, opts = {}, strokes = [], cur = null, tool = "pen", ink = "ink", open = false, mode = "side";
+  let penSeen = false;
+  try { penSeen = sessionStorage.getItem(PEN_KEY) === "1"; } catch (e) { /* private window */ } // for this visit only
+  let root, canvas, ctx, strip, stripText, stripClock, ro, tickT = 0, dpr = 1;
+
+  // ------------------------------------------------------------------ the panel (built once)
+  function build() {
+    if (root) return;
+    canvas = h("canvas.sc-canvas", { "aria-label": "Scratch board: draw with a pen, a finger or the mouse" });
+    const toolBtn = (t, label, svg) => {
+      const b = h("button.sc-tool", { type: "button", dataset: { t }, "aria-label": label, title: label, html: svg });
+      b.addEventListener("click", () => { if (t === "undo") undo(); else if (t === "clear") clearAll(); else if (t === "ink" || t === "red") { tool = "pen"; ink = t; paintTools(); } else { tool = t; paintTools(); } });
+      return b;
+    };
+    const tools = h("div.sc-tools", { role: "toolbar", "aria-label": "Scratch tools" },
+      toolBtn("ink", "Pen", '<i class="sc-dot ink"></i>'),
+      toolBtn("red", "Red pen", '<i class="sc-dot red"></i>'),
+      toolBtn("erase", "Eraser", '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 16h9M4.5 12.5l6-6a1.5 1.5 0 0 1 2.1 0l2.9 2.9a1.5 1.5 0 0 1 0 2.1L11 16H7.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'),
+      toolBtn("undo", "Undo", '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5L3.5 8.5 7 12M4 8.5h7.5a4.5 4.5 0 0 1 0 9H9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'),
+      toolBtn("clear", "Clear the board", '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 6h10M8 6V4.5h4V6M6.5 6l.7 10h5.6l.7-10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'));
+    const close = h("button.sc-close", { type: "button" }, h("span.sc-close-l", { text: "Back to the question" }), h("span.sc-close-x", { text: "×", "aria-hidden": "true" }));
+    close.setAttribute("aria-label", "Close the scratch board");
+    close.addEventListener("click", () => S.close());
+    stripText = h("p.sc-stem");
+    stripClock = h("b.sc-clock");
+    strip = h("button.sc-strip", { type: "button", "aria-label": "The question (tap to read it all)" }, stripText, stripClock);
+    strip.addEventListener("click", () => root.classList.toggle("sc-stem-open"));
+    const head = h("div.sc-head", null, h("span.sc-title", null, h("span.sc-ico", { html: ICON }), h("span", { text: "Scratch" })), tools, close);
+    const wrap = h("div.sc-wrap", null, canvas, h("p.sc-hint", { text: "Your board is private and is wiped on the next question." }));
+    root = h("aside.scratch", { "aria-label": "Scratch board", hidden: true }, head, strip, wrap);
+    document.body.appendChild(root);
+    ctx = canvas.getContext("2d");
+    canvas.addEventListener("pointerdown", down);
+    canvas.addEventListener("pointermove", move);
+    canvas.addEventListener("pointerup", up);
+    canvas.addEventListener("pointercancel", up);
+    canvas.addEventListener("pointerleave", (e) => { if (cur && e.pointerType === "mouse") up(e); });
+    // iOS: no scroll, zoom or callout while drawing
+    ["touchstart", "touchmove"].forEach((t) => canvas.addEventListener(t, (e) => { if (e.touches.length === 1) e.preventDefault(); }, { passive: false }));
+    ro = new ResizeObserver(size);
+    ro.observe(canvas);
+    document.addEventListener("m2m-theme", redraw);
+    paintTools();
+  }
+  function paintTools() {
+    root.querySelectorAll(".sc-tool").forEach((b) => {
+      const t = b.dataset.t;
+      const on = (t === "erase" && tool === "erase") || (tool === "pen" && t === ink);
+      b.classList.toggle("on", on);
+      if (t === "erase" || t === "ink" || t === "red") b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+  function size() {
+    const r = canvas.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    dpr = Math.min(window.devicePixelRatio || 1, 3);
+    canvas.width = Math.round(r.width * dpr);
+    canvas.height = Math.round(r.height * dpr);
+    redraw();
+  }
+
+  // ------------------------------------------------------------------ drawing
+  function colors() {
+    const cs = getComputedStyle(document.documentElement);
+    const v = (n, d) => (cs.getPropertyValue(n) || "").trim() || d;
+    return { ink: v("--sc-ink", "#E8ECF4"), red: v("--sc-red", "#FF6B6B") };
+  }
+  function pt(e) {
+    const r = canvas.getBoundingClientRect();
+    const pen = e.pointerType === "pen";
+    const p = pen && e.pressure > 0 ? e.pressure : 0.5;
+    return [e.clientX - r.left, e.clientY - r.top, p];
+  }
+  function width(s, p) {
+    if (s.t === "erase") return 22;
+    return s.pen ? 0.9 + p * 3.6 : 2.6;
+  }
+  function down(e) {
+    if (e.pointerType === "pen" && !penSeen) { penSeen = true; try { sessionStorage.setItem(PEN_KEY, "1"); } catch (x) { /* fine */ } }
+    if (e.pointerType === "touch" && penSeen) return; // palm rejection: with a pen around, fingers never draw
+    if (cur) return; // one stroke at a time
+    if (e.button && e.button !== 0) return;
+    e.preventDefault();
+    try { canvas.setPointerCapture(e.pointerId); } catch (x) { /* fine */ }
+    cur = { id: e.pointerId, t: tool === "erase" ? "erase" : "pen", c: ink, pen: e.pointerType === "pen", p: [pt(e)] };
+    strokes.push(cur);
+    dot(cur);
+  }
+  function move(e) {
+    if (!cur || e.pointerId !== cur.id) return;
+    e.preventDefault();
+    const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    for (const ev of (evs.length ? evs : [e])) {
+      const q = pt(ev), last = cur.p[cur.p.length - 1];
+      if (Math.abs(q[0] - last[0]) + Math.abs(q[1] - last[1]) < 0.8) continue;
+      cur.p.push(q);
+      seg(cur, cur.p.length - 1);
+    }
+  }
+  function up(e) {
+    if (!cur || (e && e.pointerId !== cur.id)) return;
+    cur = null;
+  }
+  function style(s, col) {
+    ctx.globalCompositeOperation = s.t === "erase" ? "destination-out" : "source-over";
+    ctx.strokeStyle = ctx.fillStyle = s.t === "erase" ? "#000" : col[s.c] || col.ink;
+    ctx.lineCap = ctx.lineJoin = "round";
+  }
+  function dot(s, col) {
+    col = col || colors();
+    style(s, col);
+    const [x, y, p] = s.p[0];
+    ctx.beginPath();
+    ctx.arc(x, y, width(s, p) / 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  /** the segment ending at point i: a quadratic curve through the midpoints, so lines come out smooth */
+  function seg(s, i, col) {
+    col = col || colors();
+    style(s, col);
+    const a = s.p[i - 2] || s.p[i - 1], b = s.p[i - 1], c = s.p[i];
+    const m1 = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], m2 = [(b[0] + c[0]) / 2, (b[1] + c[1]) / 2];
+    ctx.lineWidth = width(s, (b[2] + c[2]) / 2);
+    ctx.beginPath();
+    ctx.moveTo(i < 2 ? b[0] : m1[0], i < 2 ? b[1] : m1[1]);
+    ctx.quadraticCurveTo(b[0], b[1], m2[0], m2[1]);
+    ctx.stroke();
+  }
+  function redraw() {
+    if (!ctx) return;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const col = colors();
+    let from = 0;
+    for (let i = strokes.length - 1; i >= 0; i--) if (strokes[i].clear) { from = i + 1; break; }
+    for (let i = from; i < strokes.length; i++) {
+      const s = strokes[i];
+      dot(s, col);
+      for (let k = 1; k < s.p.length; k++) seg(s, k, col);
+    }
+    ctx.globalCompositeOperation = "source-over";
+  }
+  function undo() { if (cur) return; if (strokes.length) { strokes.pop(); redraw(); } }
+  function clearAll() { if (cur) return; if (strokes.length && !strokes[strokes.length - 1].clear) { strokes.push({ clear: true, p: [] }); redraw(); } }
+  S.strokeCount = () => { let n = 0; for (const s of strokes) { if (s.clear) n = 0; else n++; } return n; };
+
+  // ------------------------------------------------------------------ open, close, layout
+  function wantSide() { return !opts.flipOnly && window.innerWidth >= SIDE_MIN_W && window.innerHeight >= SIDE_MIN_H; }
+  function layout() {
+    if (!open) return;
+    mode = wantSide() ? "side" : "flip";
+    root.classList.toggle("sc-side", mode === "side");
+    root.classList.toggle("sc-flip", mode === "flip");
+    root.classList.toggle("sc-full", !!opts.flipOnly); // host-mode phones have no top bar: cover the whole screen
+    document.documentElement.classList.toggle("scratch-side", mode === "side");
+    document.documentElement.classList.toggle("scratch-flip", mode === "flip");
+    root.querySelector(".sc-close-l").textContent = mode === "flip" ? "Back to the question" : "Close";
+  }
+  function tick() {
+    clearTimeout(tickT);
+    if (!open) return;
+    let left = null;
+    try { left = opts.left ? opts.left() : null; } catch (e) { left = null; }
+    if (left == null || !isFinite(left)) { stripClock.hidden = true; }
+    else {
+      const s = Math.max(0, Math.ceil(left));
+      stripClock.hidden = false;
+      stripClock.textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+      stripClock.classList.toggle("late", s <= 10);
+    }
+    // the answer phase ended while the full-screen board was up (time ran out): show the card again
+    if (mode === "flip" && opts.done && opts.done()) { S.close(); return; }
+    tickT = setTimeout(tick, 250);
+  }
+  S.open = function () {
+    if (!key) return;
+    build();
+    open = true;
+    root.hidden = false;
+    stripText.textContent = opts.stem || "";
+    root.classList.remove("sc-stem-open");
+    layout();
+    requestAnimationFrame(() => { size(); root.classList.add("on"); });
+    document.querySelectorAll(".sc-btn").forEach((b) => b.setAttribute("aria-expanded", "true"));
+    try { if (M2M.audio && M2M.audio.scratch) M2M.audio.scratch(true); } catch (e) { /* no sound */ }
+    tick();
+  };
+  S.close = function () {
+    if (!open) return;
+    open = false;
+    cur = null;
+    clearTimeout(tickT);
+    root.classList.remove("on");
+    root.hidden = true;
+    document.documentElement.classList.remove("scratch-side", "scratch-flip");
+    try { if (M2M.audio && M2M.audio.scratch) M2M.audio.scratch(false); } catch (e) { /* no sound */ }
+    document.querySelectorAll(".sc-btn").forEach((b) => b.setAttribute("aria-expanded", "false"));
+    const back = document.querySelector(".sc-btn");
+    if (back && mode === "flip") try { back.focus({ preventScroll: true }); } catch (e) { /* fine */ }
+  };
+  S.toggle = function () { if (open) S.close(); else S.open(); };
+  S.isOpen = () => open;
+  S.mode = () => (open ? mode : null);
+  /** a new question: wipe the board if it belongs to another one */
+  S.sync = function (k) {
+    if (k === key) return;
+    S.close();
+    key = k || null;
+    strokes = [];
+    cur = null;
+    if (ctx) redraw();
+  };
+  S.end = function () { S.sync(null); };
+  S.button = function (k, o) {
+    S.sync(k);
+    opts = o || {};
+    const b = h("button.sc-btn", { type: "button", title: "Scratch board (W)", "aria-expanded": open ? "true" : "false", html: '<span class="sc-ico">' + ICON + '</span><span class="sc-l">Scratch</span>' });
+    b.setAttribute("aria-label", "Open the scratch board");
+    b.addEventListener("click", (e) => { e.stopPropagation(); S.toggle(); });
+    if (open) { stripText.textContent = opts.stem || ""; }
+    return b;
+  };
+
+  window.addEventListener("resize", () => { if (open) { layout(); } });
+  // W opens and closes the board while a question is up (never while typing); Escape closes it
+  document.addEventListener("keydown", (e) => {
+    if (!key) return;
+    const t = e.target;
+    if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+    if ((e.key === "w" || e.key === "W") && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); e.stopPropagation(); S.toggle(); }
+    else if (e.key === "Escape" && open) { e.preventDefault(); e.stopPropagation(); S.close(); }
+  }, true);
 })();
 
 </script>
