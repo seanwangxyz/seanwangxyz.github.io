@@ -2130,6 +2130,78 @@ li.dn .hs-tp { color: var(--down); }
 .credit-note b { color: var(--text); }
 .credit-note.cn-close { margin-top: 16px; padding: 8px 12px; border: 1px solid var(--warn); border-radius: 8px; background: var(--warn-bg); }
 
+/* ================================================================ study lobby (19 Nov 2026): lobby.js */
+.scr-lobby { min-height: 100vh; display: flex; justify-content: center; padding: max(40px, 6vh) 24px calc(var(--tk-h) + 40px); }
+.lob-wrap { width: 100%; max-width: 1040px; padding: 22px 26px 22px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--panel); align-self: flex-start; box-shadow: var(--e3, 0 30px 80px -40px rgba(0, 0, 0, 0.9)); }
+.lob-top { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+.lob-top .eyebrow { margin: 0; }
+.lob-sub { margin: 0 0 16px; color: var(--muted); font: 14px/1.45 var(--f-ui); max-width: 70ch; }
+.lob-grid { display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.lob-card { border: 1px solid var(--line-2); border-radius: 10px; background: var(--panel-2); padding: 12px 14px; box-shadow: var(--e1, none); min-width: 0; }
+.lob-h3 { margin: 0 0 10px; font: 600 12px var(--f-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.lob-n { color: var(--accent-2); }
+.lob-who { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 60vh; overflow: auto; }
+.lob-p { display: flex; align-items: center; gap: 9px; }
+.lob-ph { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.lob-ph b { font: 600 14px var(--f-ui); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lob-ph small { font: 12px var(--f-ui); color: var(--muted); }
+.lob-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--muted); }
+.lob-dot.lobby { background: var(--up); box-shadow: 0 0 6px var(--up); }
+.lob-dot.solo, .lob-dot.training { background: var(--accent-2); }
+.lob-dot.game { background: var(--gold, #F5B83D); }
+.lob-invb { padding: 5px 11px !important; font-size: 13px !important; }
+.lob-feed { list-style: none; margin: 0 0 10px; padding: 0 4px 0 0; height: clamp(160px, calc(100vh - 500px), 520px); height: clamp(160px, calc(100svh - 500px), 520px); overflow: auto; display: flex; flex-direction: column; gap: 9px; }
+.lob-m { padding: 7px 10px; border-radius: 9px; background: var(--well); border: 1px solid var(--line); }
+.lob-m.me { border-color: color-mix(in srgb, var(--accent-2) 40%, var(--line)); }
+.lob-mh { display: flex; align-items: baseline; gap: 8px; }
+.lob-who-h { font: 600 13px var(--f-ui); }
+.lob-m.me .lob-who-h { color: var(--accent-2); }
+.lob-t { font: 11.5px var(--f-mono); color: var(--muted); }
+.lob-acts { margin-left: auto; display: inline-flex; gap: 6px; opacity: 0; transition: opacity 0.15s; }
+.lob-m:hover .lob-acts, .lob-m:focus-within .lob-acts { opacity: 1; }
+@media (hover: none) { .lob-acts { opacity: 0.8; } }
+.lob-a { border: 0; background: none; padding: 0; cursor: pointer; font: 12px var(--f-ui); color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.lob-a:hover { color: var(--text); }
+.lob-a:disabled { text-decoration: none; cursor: default; }
+.lob-x { margin: 3px 0 0; font: 14px/1.4 var(--f-ui); color: var(--text); overflow-wrap: anywhere; }
+.lob-empty { color: var(--muted); font: 13.5px/1.45 var(--f-ui); }
+.lob-quick { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.lob-q { border: 1px solid var(--line-2); background: var(--panel); color: var(--text); border-radius: 999px; padding: 4px 11px; font: 13px var(--f-ui); cursor: pointer;
+  box-shadow: inset 0 1px 0 var(--key-hi, transparent), 0 2px 0 var(--key-edge, #000); transition: transform 0.07s, box-shadow 0.07s; }
+.lob-q:active:not(:disabled) { transform: translateY(1px); box-shadow: 0 1px 0 var(--key-edge, #000); }
+.lob-q:disabled { opacity: 0.5; cursor: default; }
+.lob-row { display: flex; gap: 8px; }
+.lob-in { flex: 1; min-width: 0; height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--well); color: var(--text); font: 14px var(--f-ui); box-shadow: var(--well-in, none); }
+.lob-in:focus { outline: 2px solid var(--accent-2); outline-offset: 1px; }
+.lob-in:disabled { opacity: 0.6; }
+.lob-note { margin: 8px 0 0; font: 12.5px var(--f-ui); color: var(--muted); }
+/* the title's button carries the number studying now */
+.ac-lobby { display: inline-flex; align-items: center; gap: 7px; }
+.lob-badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--up); color: #04120B; font: 700 11px/18px var(--f-mono); text-align: center; }
+/* invitation cards, wherever the player is */
+.lob-invs { position: fixed; z-index: 60; top: calc(14px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100vw - 24px)); pointer-events: none; }
+.lob-inv { pointer-events: auto; padding: 12px 14px; border-radius: 12px; background: var(--panel); border: 1px solid color-mix(in srgb, var(--up) 50%, var(--line-2)); box-shadow: var(--e3, 0 20px 50px rgba(0, 0, 0, 0.5)); animation: lobIn 0.3s var(--ease) both; }
+.lob-inv-t { margin: 0 0 10px; font: 14.5px var(--f-ui); color: var(--text); }
+.lob-inv-b { display: flex; gap: 8px; }
+@keyframes lobIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+html.reduced .lob-inv { animation: none; }
+/* the Desk's Lobby tab */
+.dk-lob { width: 100%; border-collapse: collapse; }
+.dk-lob th, .dk-lob td { padding: 7px 12px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+.dk-lob th { font: 600 12px var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.dk-lob td:last-child { white-space: nowrap; text-align: right; }
+.dk-lob td .btn { padding: 6px 14px; margin-left: 6px; }
+.dk-lob tr.rep td { background: color-mix(in srgb, var(--down) 12%, transparent); }
+.dk-lob-x { max-width: 46ch; overflow-wrap: anywhere; }
+.dk-lobmute { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 760px) {
+  .scr-lobby { padding: calc(16px + env(safe-area-inset-top, 0px)) 10px calc(var(--tk-h) + 30px); }
+  .lob-wrap { padding: 16px 14px; }
+  .lob-grid { grid-template-columns: 1fr; }
+  .lob-who { max-height: 30vh; }
+  .lob-feed { height: clamp(140px, calc(100vh - 600px), 46vh); height: clamp(140px, calc(100svh - 600px), 46vh); }
+}
+
 /* ---- light theme, automatic layer (theme_light.py; regenerated every build) ---- */
 html[data-m2m-theme="light"] .stage-shade {
   background: linear-gradient(180deg, rgba(248, 247, 245, 0.35) 0%, rgba(248, 247, 245, 0) 22%, rgba(248, 247, 245, 0) 70%, rgba(248, 247, 245, 0.55) 100%);
@@ -2701,6 +2773,21 @@ html[data-m2m-theme="light"] .rm-opt {
 html[data-m2m-theme="light"] .preset-miss .ms-n, html[data-m2m-theme="light"] .tr-actions .ms-n {
   background: var(--panel-2, rgba(255, 255, 255, 0.06));
 }
+html[data-m2m-theme="light"] .lob-wrap {
+  box-shadow: var(--e3, 0 30px 80px -40px rgba(24, 20, 14, 0.315));
+}
+html[data-m2m-theme="light"] .lob-dot.game {
+  background: var(--gold, #A8650F);
+}
+html[data-m2m-theme="light"] .lob-q {
+  box-shadow: inset 0 1px 0 var(--key-hi, transparent), 0 2px 0 var(--key-edge, rgba(24, 20, 14, 0.35));
+}
+html[data-m2m-theme="light"] .lob-q:active:not(:disabled) {
+  box-shadow: 0 1px 0 var(--key-edge, rgba(24, 20, 14, 0.35));
+}
+html[data-m2m-theme="light"] .lob-inv {
+  box-shadow: var(--e3, 0 20px 50px rgba(24, 20, 14, 0.175));
+}
 
 /* =====================================================================================================
    MARK TO MARKET: light theme and polish (18 Nov 2026)
@@ -3269,10 +3356,16 @@ html[data-m2m-theme="light"] .quote.vc-talk { box-shadow: inset 0 2px 5px rgba(2
 .vc-bub video, .vc-big video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .vc-bub.mirror video, .vc-big.mirror video { transform: scaleX(-1); }
 .vc-bub.vc-talk { box-shadow: 0 0 0 2px var(--pc), 0 0 12px var(--pc); }
-.vc-big { position: fixed; z-index: 46; top: calc(70px + env(safe-area-inset-top, 0px)); right: calc(16px + env(safe-area-inset-right, 0px)); width: 240px; height: 180px; padding: 0; border-radius: 12px; overflow: hidden;
-  background: #000; border: 2px solid color-mix(in srgb, var(--pc) 70%, transparent); box-shadow: var(--e3); cursor: zoom-out; }
+.vc-big { position: fixed; z-index: 46; top: 70px; right: 16px; width: 240px; height: 180px; border-radius: 12px; overflow: hidden; touch-action: none; cursor: grab;
+  background: #000; border: 2px solid color-mix(in srgb, var(--pc) 70%, transparent); box-shadow: var(--e3); user-select: none; -webkit-user-select: none; }
+.vc-big.moving { cursor: grabbing; }
 .vc-big.vc-talk { box-shadow: var(--e3), 0 0 0 2px var(--pc); }
-.vc-big-n { position: absolute; left: 8px; bottom: 6px; font: 600 12px var(--f-ui); color: #fff; text-shadow: 0 1px 3px #000; }
+.vc-big-n { position: absolute; left: 8px; bottom: 6px; font: 600 12px var(--f-ui); color: #fff; text-shadow: 0 1px 3px #000; pointer-events: none; }
+.vc-big-x { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; border: 0; cursor: pointer; font: 600 17px/26px var(--f-ui); text-align: center; padding: 0;
+  background: rgba(0, 0, 0, 0.55); color: #fff; opacity: 0.85; }
+.vc-big-x:hover, .vc-big-x:focus-visible { opacity: 1; background: rgba(0, 0, 0, 0.8); }
+.vc-big-grip { position: absolute; right: 0; bottom: 0; width: 22px; height: 22px; cursor: nwse-resize; touch-action: none;
+  background: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0.55) 58%, transparent 58%, transparent 70%, rgba(255, 255, 255, 0.55) 70%, rgba(255, 255, 255, 0.55) 78%, transparent 78%); }
 .vc-audio { display: none; }
 /* out of the way while the scratch board is open, and small on a phone */
 html.scratch-side .vc, html.scratch-flip .vc { display: none; }
@@ -3280,7 +3373,6 @@ html.scratch-side .vc, html.scratch-flip .vc { display: none; }
   .vc { left: calc(8px + env(safe-area-inset-left, 0px)); max-width: calc(100vw - 110px); }
   .vc-dock:not(.in) .vc-k span { display: none; }
   .vc-dock:not(.in) .vc-k { padding: 0 9px; }
-  .vc-big { width: 180px; height: 135px; top: calc(60px + env(safe-area-inset-top, 0px)); right: 8px; }
 }
 html.reduced .vc-k:active { transform: none; }
 html.reduced .vc-dot[data-q="off"] { animation: none; }
@@ -12224,6 +12316,22 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (f && !f.value) f.focus();
   };
 
+  /** Study lobby (lobby.js): open a friend floor as host, or join one from an invitation, and land on its lobby */
+  N.hostFor = async function (name) {
+    buildScreen(); N.leave();
+    const code = await N.create(name);
+    M2M.screens.show("online"); M2M.topbar.show(false); M2M.panels.show(false);
+    showLobby();
+    return code;
+  };
+  N.joinFor = async function (code, name) {
+    buildScreen(); N.leave();
+    await N.join(code, name);
+    M2M.screens.show("online"); M2M.topbar.show(false); M2M.panels.show(false);
+    showLobby();
+    return code;
+  };
+
   function showLobby() {
     viewJoin.hidden = true; viewLobby.hidden = false;
     renderLobby();
@@ -13323,6 +13431,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   /** Versus (versus.js): read a node the rules let this player read (their own rating, the Versus board, open tournaments) */
   A.read = async (p) => { if (!db) throw new Error("Accounts are not available in this copy of the game."); return (await FB.get(FB.ref(db, p))).val(); };
   A.uid = () => (user ? user.uid : null);
+  /** Study lobby (lobby.js): the database it reads and writes, with this page's Firebase helpers (null when accounts are off) */
+  A._fb = () => (db ? { FB, db } : null);
   /** My misses: any sign-in, an account or the anonymous one guests get for keyless boards (null when none yet) */
   A.anyUid = () => (auth && auth.currentUser ? auth.currentUser.uid : null);
 
@@ -13495,6 +13605,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         rk && rk.next ? h("span.ac-prog", { "aria-hidden": "true" }, h("i", { style: { width: Math.round(rk.progress * 100) + "%" } })) : null);
       bar.append(chip);
       if (!A.verified()) bar.append(h("button.btn.ac-verify", { type: "button", dataset: { acct: "verify" } }, "Verify your Rice email"));
+      if (M2M.lobby) bar.append(h("button.btn.ac-lobby", { type: "button", dataset: { acct: "lobby" } }, M2M.lobby.badge(), "Study lobby"));
       bar.append(h("button.btn.btn-quiet.ac-lb", { type: "button", dataset: { acct: "leaderboard" } }, "Leaderboard"));
       // Versus: a Tournaments button while one is open (tpub, read at most once a minute)
       if (A.verified() && M2M.versus) {
@@ -14224,6 +14335,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       if (a === "profile") A.openProfile();
       else if (a === "desk") { if (M2M.desk) M2M.desk.open(); }
       else if (a === "leaderboard") A.openBoard();
+      else if (a === "lobby") { if (M2M.lobby) M2M.lobby.open(); }
       else if (a === "tourney") { if (M2M.versus) M2M.versus.openTourneys(); }
       else if (a === "verify") A.openVerify();
       else A.open(a);
@@ -14271,7 +14383,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   const A = () => M2M.acct;
   const K = (M2M.desk = {});
   const OWNER = "sw48@rice.edu";
-  const TABS = [["class", "Class"], ["roster", "Roster"], ["credit", "Credit"], ["flags", "Flags"], ["coach", "Coach"], ["versus", "Versus"], ["tourneys", "Tournaments"], ["live", "Live games"]];
+  const TABS = [["class", "Class"], ["roster", "Roster"], ["credit", "Credit"], ["flags", "Flags"], ["coach", "Coach"], ["versus", "Versus"], ["tourneys", "Tournaments"], ["live", "Live games"], ["lobby", "Lobby"]];
   const LETTERS = ["A", "B", "C", "D"];
   const CSV_COLS = ["netid", "email", "handle", "verified", "credit_points", "coverage", "mastery", "weekly", "weeks_met", "weeks_detail", "answers", "repeats", "too_fast", "days", "gate_met", "multiplier", "last_active", "hinted_answers"];
   let tab = "class", data = {}, sorts = { roster: { k: "handle", d: 1 }, credit: { k: "credit_points", d: -1 } }, query = "", flagView = "open";
@@ -14350,6 +14462,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const seq = ++showSeq;
     tab = k;
     const key = k === "class" ? "cls" : k;
+    // the study lobby's tab reads the database directly (lobby.js), with no server call
+    if (k === "lobby") { frame(null); const p0 = panel(); U.clear(p0); if (M2M.lobby) M2M.lobby.desk(p0); return; }
     frame(data[key] ? null : "Loading…");
     if (!data[key]) {
       try {
@@ -15371,6 +15485,303 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   }
 
   M2M.debugVersus = { pub: () => pub, list: () => tnList, check: () => checkRes };
+})();
+
+/* ---- v3/lobby.js ---- */
+/* MARK TO MARKET v3 — lobby.js: the study lobby (19 Nov 2026)
+ * A place for signed-in players to find each other and study together:
+ *   - Who's studying now: every signed-in player with the game open, and what they're doing. "Invite" opens a friend
+ *     floor and sends that player an invitation card (Join / Not now) wherever they are in the game.
+ *   - The lobby chat, a bulletin board: the last 100 messages; 200 characters; one message every 2 seconds; quick
+ *     phrases; delete your own; report anyone's. Messages older than 7 days are deleted (any page that opens the
+ *     lobby cleans up; the rules allow deleting only those).
+ *   - Read and post: players with a handle. Posting also needs a verified Rice email. Guests are asked to sign in.
+ *   - The Desk's Lobby tab: delete any message, mute or unmute a player (a muted player can read, not post), reports.
+ * Data (rules in online/database.rules.json): lobby/m/<id> {u,h,x,t}, lobby/last/<uid>, lobby/here/<uid> {h,s,t},
+ * lobby/inv/<to>/<from> {h,c,t}, lobby/rep/<msg>/<uid>, lobby/mute/<uid>.
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h;
+  const A = () => M2M.acct;
+  const L = (M2M.lobby = {});
+  const MAX = 200, GAP_MS = 2000, KEEP_MS = 7 * 86400000, SHOW = 100, STALE_MS = 12 * 60000, BEAT_MS = 5 * 60000, INV_MS = 10 * 60000;
+  const PHRASES = ["Anyone up for a game?", "Studying L18 now", "Quiz 4 review?", "Explain residual income?", "Good luck tomorrow"];
+  const DOING = { lobby: "In the lobby", solo: "Playing solo", game: "In an online game", training: "Training", around: "Around" };
+  const TS = { ".sv": "timestamp" };
+
+  let fbx = null, myUid = null, here = {}, msgs = [], muted = false, lastSent = 0;
+  let offHere = null, offInv = null, offMsgs = null, offMute = null, offConn = null, beatT = 0, pres = null, status = "";
+  let scr = null, els = {}, invBox = null, shownInv = {};
+  const fb = () => (A() && A()._fb ? A()._fb() : null);
+  const ref = (p) => fbx.FB.ref(fbx.db, p);
+  const myHandle = () => (A() ? A().handle() : "");
+  const tz = { timeZone: "America/Chicago" };
+  const when = (ms) => {
+    if (!ms) return "";
+    const d = new Date(ms), today = new Date();
+    const same = d.toDateString() === today.toDateString();
+    return d.toLocaleString("en-US", Object.assign(same ? { hour: "numeric", minute: "2-digit" } : { weekday: "short", hour: "numeric", minute: "2-digit" }, tz));
+  };
+  function newId() { let s = Date.now().toString(36); while (s.length < 14) s += Math.floor(Math.random() * 36).toString(36); return s.slice(0, 16); }
+
+  // ---------------------------------------------------------------- presence and invitations (any screen, signed in)
+  function doing() {
+    const s = document.documentElement.dataset.screen;
+    if (s === "lobby") return "lobby";
+    if (s === "training") return "training";
+    if (s === "board" || s === "intro" || s === "close" || s === "online") return M2M.net && M2M.net.isOnline && (M2M.net.isOnline() || s === "online") ? "game" : "solo";
+    return "around";
+  }
+  function writeHere(force) {
+    if (!fbx || !myUid) return;
+    const s = doing();
+    if (!force && s === status) return;
+    status = s;
+    fbx.FB.set(ref("lobby/here/" + myUid), { h: myHandle(), s, t: TS }).catch(() => {});
+  }
+  function start() {
+    fbx = fb(); myUid = A().uid();
+    if (!fbx || !myUid) return;
+    pres = fbx.FB.onDisconnect(ref("lobby/here/" + myUid));
+    pres.remove().catch(() => {});
+    offConn = fbx.FB.onValue(ref(".info/connected"), (s) => { if (s.val() === true) { status = ""; fbx.FB.onDisconnect(ref("lobby/here/" + myUid)).remove().catch(() => {}); writeHere(true); } });
+    offHere = fbx.FB.onValue(ref("lobby/here"), (s) => { here = s.val() || {}; paintHere(); paintBadge(); }, () => {});
+    offInv = fbx.FB.onValue(ref("lobby/inv/" + myUid), (s) => showInvites(s.val() || {}), () => {});
+    offMute = fbx.FB.onValue(ref("lobby/mute/" + myUid), (s) => { muted = s.val() === true; paintInput(); }, () => {});
+    clearInterval(beatT); beatT = setInterval(() => writeHere(true), BEAT_MS);
+    writeHere(true);
+  }
+  function stop() {
+    [offHere, offInv, offMute, offConn, offMsgs].forEach((f) => { try { if (f) f(); } catch (e) { /* closed */ } });
+    offHere = offInv = offMute = offConn = offMsgs = null;
+    clearInterval(beatT);
+    if (fbx && myUid) fbx.FB.set(ref("lobby/here/" + myUid), null).catch(() => {});
+    if (pres) { pres.cancel().catch(() => {}); pres = null; }
+    fbx = null; myUid = null; here = {}; status = ""; muted = false;
+    if (invBox) U.clear(invBox);
+    shownInv = {};
+    paintBadge();
+  }
+  // follow the sign-in (accounts can sign in or out at any time) and what this player is doing
+  setInterval(() => {
+    const a = A();
+    const on = !!(a && a.signedIn && a.signedIn() && a._fb && a._fb());
+    if (on && (!myUid || myUid !== a.uid())) { if (myUid) stop(); start(); }
+    else if (!on && myUid) stop();
+  }, 2500);
+  new MutationObserver(() => writeHere(false)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-screen"] });
+
+  function others() {
+    const now = Date.now();
+    return Object.keys(here).filter((u) => u !== myUid && here[u] && here[u].h && now - (here[u].t || 0) < STALE_MS).map((u) => Object.assign({ uid: u }, here[u]))
+      .sort((a, b) => (a.s === "lobby" ? -1 : 0) - (b.s === "lobby" ? -1 : 0) || a.h.localeCompare(b.h));
+  }
+  /** the small count on the title's "Study lobby" button */
+  L.badge = function () { const b = h("span.lob-badge", { "aria-hidden": "true" }); setTimeout(paintBadge, 0); return b; };
+  function paintBadge() {
+    const n = myUid ? others().length : 0;
+    document.querySelectorAll(".lob-badge").forEach((b) => { b.textContent = n ? String(n) : ""; b.hidden = !n; b.title = n + " studying now"; });
+  }
+
+  function showInvites(v) {
+    if (!invBox) { invBox = h("div.lob-invs", { "aria-live": "polite" }); document.body.appendChild(invBox); }
+    const now = Date.now();
+    Object.keys(v).forEach((from) => {
+      const inv = v[from];
+      if (!inv || !inv.c || shownInv[from + inv.c]) return;
+      if (now - (inv.t || 0) > INV_MS) { fbx.FB.set(ref("lobby/inv/" + myUid + "/" + from), null).catch(() => {}); return; }
+      shownInv[from + inv.c] = true;
+      const card = h("div.lob-inv", { role: "dialog", "aria-label": "Invitation from " + inv.h });
+      const close = () => { card.remove(); if (fbx) fbx.FB.set(ref("lobby/inv/" + myUid + "/" + from), null).catch(() => {}); };
+      const join = h("button.btn.btn-primary", { type: "button", text: "Join" });
+      const no = h("button.btn", { type: "button", text: "Not now" });
+      join.addEventListener("click", async () => {
+        join.disabled = true;
+        try { close(); await M2M.net.joinFor(inv.c, myHandle()); }
+        catch (e) { U.toast((e && e.message) || "Could not join that floor."); }
+      });
+      no.addEventListener("click", close);
+      card.append(h("p.lob-inv-t", null, h("b", { text: inv.h }), " invites you to a game."), h("div.lob-inv-b", null, join, no));
+      invBox.appendChild(card);
+      try { if (M2M.audio && M2M.audio.pop) M2M.audio.pop(); } catch (e) { /* sound is optional */ }
+      setTimeout(() => { if (card.isConnected) card.remove(); }, INV_MS);
+    });
+  }
+  async function invite(p, btn) {
+    if (btn) btn.disabled = true;
+    try {
+      const code = await M2M.net.hostFor(myHandle());
+      await fbx.FB.set(ref("lobby/inv/" + p.uid + "/" + myUid), { h: myHandle(), c: code, t: TS });
+      U.toast("Invitation sent to " + p.h + ". You're in your floor's lobby; start when they arrive.");
+    } catch (e) { U.toast((e && e.message) || "Could not send the invitation."); if (btn) btn.disabled = false; }
+  }
+
+  // ---------------------------------------------------------------- the lobby screen
+  function buildScreen() {
+    if (scr) return;
+    scr = h("section.screen.scr-lobby#scr-lobby", { dataset: { screen: "lobby" }, hidden: true, "aria-labelledby": "lob-h" });
+    const back = h("button.btn.btn-quiet.lob-back", { type: "button", text: "← Back" });
+    back.addEventListener("click", () => M2M.app.title());
+    els.who = h("ul.lob-who", { "aria-label": "Studying now" });
+    els.feed = h("ol.lob-feed", { "aria-live": "polite", "aria-label": "Lobby chat" });
+    els.input = h("input.lob-in", { type: "text", maxlength: String(MAX), placeholder: "Message the lobby", "aria-label": "Message the lobby", autocomplete: "off" });
+    els.send = h("button.btn.btn-primary.lob-send", { type: "button", text: "Send" });
+    els.note = h("p.lob-note");
+    els.quick = h("div.lob-quick", { role: "group", "aria-label": "Quick messages" }, PHRASES.map((t) => { const b = h("button.lob-q", { type: "button", text: t }); b.addEventListener("click", () => send(t)); return b; }));
+    els.send.addEventListener("click", () => send(els.input.value));
+    els.input.addEventListener("keydown", (e) => { e.stopPropagation(); if (e.key === "Enter") { e.preventDefault(); send(els.input.value); } });
+    els.input.addEventListener("keyup", (e) => e.stopPropagation());
+    els.feed.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-lob]"); if (!b) return;
+      const id = b.closest("li").dataset.id;
+      if (b.dataset.lob === "del") remove(id);
+      else if (b.dataset.lob === "rep") report(id, b);
+    });
+    els.who.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-inv]"); if (!b) return;
+      const p = others().find((x) => x.uid === b.dataset.inv); if (p) invite(p, b);
+    });
+    els.whoN = h("span.lob-n");
+    scr.append(h("div.lob-wrap", null,
+      h("div.lob-top", null, back, h("p.eyebrow", null, h("span.slash", { text: "//" }), " study lobby")),
+      h("h2.scr-h#lob-h", { text: "The study lobby" }),
+      h("p.lob-sub", { text: "Find someone to study with, or ask the class. Messages are deleted after 7 days. Prof. Wang can delete posts and mute players." }),
+      h("div.lob-grid", null,
+        h("section.lob-card.lob-side", { "aria-label": "Studying now" }, h("h3.lob-h3", null, "Studying now ", els.whoN), els.who),
+        h("section.lob-card.lob-main", { "aria-label": "Lobby chat" }, h("h3.lob-h3", { text: "Lobby chat" }), els.feed, els.quick, h("div.lob-row", null, els.input, els.send), els.note))));
+    document.getElementById("screens").appendChild(scr);
+  }
+  L.open = function () {
+    const a = A();
+    if (!a || !a.signedIn()) { if (a) a.open("signin"); return; }
+    if (!myUid) start();
+    if (!fbx) { U.toast("The lobby isn't available right now."); return; }
+    buildScreen();
+    M2M.screens.hideTitle();
+    M2M.screens.show("lobby");
+    M2M.topbar.show(false);
+    M2M.panels.show(false);
+    try { M2M.music.stop(0.4); } catch (e) { /* no audio yet */ }
+    if (!offMsgs) offMsgs = fbx.FB.onValue(ref("lobby/m"), (s) => onMsgs(s.val() || {}), () => { els.note.textContent = "The lobby chat isn't available right now."; });
+    paintHere(); paintInput();
+    if (matchMedia("(pointer: fine)").matches) setTimeout(() => { if (!els.input.disabled) els.input.focus({ preventScroll: true }); }, 60);
+  };
+  // leaving the lobby screen stops reading the chat (presence and invitations carry on)
+  new MutationObserver(() => {
+    if (document.documentElement.dataset.screen !== "lobby" && offMsgs) { try { offMsgs(); } catch (e) { /* closed */ } offMsgs = null; }
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-screen"] });
+
+  let firstLoad = true, cleaned = false;
+  function onMsgs(v) {
+    const now = Date.now();
+    const all = Object.keys(v).map((k) => Object.assign({ id: k }, v[k])).filter((m) => m && typeof m.x === "string");
+    // clean up anything past 7 days (with a margin for this device's clock)
+    if (!cleaned) { cleaned = true; all.filter((m) => now - (m.t || 0) > KEEP_MS + 3600000).forEach((m) => fbx.FB.set(ref("lobby/m/" + m.id), null).catch(() => {})); }
+    const keep = all.filter((m) => now - (m.t || 0) <= KEEP_MS).sort((a, b) => (a.t || 0) - (b.t || 0) || (a.id < b.id ? -1 : 1)).slice(-SHOW);
+    const fresh = !firstLoad && keep.length && msgs.length && keep[keep.length - 1].id !== msgs[msgs.length - 1].id && keep[keep.length - 1].u !== myUid;
+    msgs = keep; firstLoad = false;
+    paintFeed();
+    if (fresh) { try { if (M2M.audio && M2M.audio.pop) M2M.audio.pop(); } catch (e) { /* sound is optional */ } }
+  }
+  function paintFeed() {
+    if (!els.feed) return;
+    const atEnd = els.feed.scrollHeight - els.feed.scrollTop - els.feed.clientHeight < 60;
+    U.clear(els.feed);
+    if (!msgs.length) { els.feed.appendChild(h("li.lob-empty", { text: "Nobody has posted this week. Say hello, or ask who's up for a game." })); return; }
+    const admin = !!(M2M.desk && M2M.desk.isOwner && M2M.desk.isOwner());
+    for (const m of msgs) {
+      const mine = m.u === myUid;
+      const acts = h("span.lob-acts");
+      if (mine || admin) acts.appendChild(h("button.lob-a", { type: "button", dataset: { lob: "del" }, text: "Delete", title: "Delete this message" }));
+      if (!mine) acts.appendChild(h("button.lob-a", { type: "button", dataset: { lob: "rep" }, text: "Report", title: "Report this message to Prof. Wang" }));
+      els.feed.appendChild(h("li.lob-m" + (mine ? ".me" : ""), { dataset: { id: m.id } },
+        h("div.lob-mh", null, h("b.lob-who-h", { text: mine ? "You" : m.h }), h("time.lob-t", { text: when(m.t) }), acts),
+        h("p.lob-x", { text: m.x })));
+    }
+    if (atEnd || firstLoad) els.feed.scrollTop = els.feed.scrollHeight;
+  }
+  function paintHere() {
+    if (!els.who) return;
+    const list = others();
+    els.whoN.textContent = list.length ? "(" + list.length + ")" : "";
+    U.clear(els.who);
+    if (!list.length) { els.who.appendChild(h("li.lob-empty", { text: "Nobody else is signed in right now. Post below and people will see it when they come by." })); return; }
+    for (const p of list) {
+      const inv = h("button.btn.lob-invb", { type: "button", dataset: { inv: p.uid }, text: "Invite", title: "Open a friend game and invite " + p.h });
+      if (p.s === "game") { inv.disabled = true; inv.title = p.h + " is in a game"; }
+      els.who.appendChild(h("li.lob-p", null, h("span.lob-dot." + (p.s || "around"), { "aria-hidden": "true" }), h("span.lob-ph", null, h("b", { text: p.h }), h("small", { text: DOING[p.s] || DOING.around })), inv));
+    }
+  }
+  function paintInput() {
+    if (!els.input) return;
+    const a = A();
+    const can = !!(a && a.verified && a.verified()) && !muted;
+    els.input.disabled = els.send.disabled = !can;
+    els.quick.querySelectorAll("button").forEach((b) => { b.disabled = !can; });
+    els.note.textContent = muted ? "You're muted in the lobby. You can still read and play." : !(a && a.verified && a.verified()) ? "Verify your Rice email to post. You can read in the meantime." : "Up to 200 characters. Be decent: this is your class.";
+  }
+  async function send(text) {
+    text = String(text || "").replace(/\s+/g, " ").trim().slice(0, MAX);
+    if (!text || !fbx || els.input.disabled) return;
+    const wait = lastSent + GAP_MS - Date.now();
+    if (wait > 0) { els.note.textContent = "One message every 2 seconds."; setTimeout(paintInput, wait); return; }
+    lastSent = Date.now();
+    els.input.value = "";
+    try {
+      await fbx.FB.update(ref("lobby"), { ["m/" + newId()]: { u: myUid, h: myHandle(), x: text, t: TS }, ["last/" + myUid]: TS });
+      paintInput();
+    } catch (e) { els.note.textContent = muted ? "You're muted in the lobby." : "That message didn't send. Try again in a moment."; els.input.value = text; }
+  }
+  function remove(id) { if (fbx) fbx.FB.set(ref("lobby/m/" + id), null).catch(() => U.toast("Could not delete that message.")); }
+  function report(id, btn) {
+    if (!fbx) return;
+    fbx.FB.set(ref("lobby/rep/" + id + "/" + myUid), true).then(() => { btn.textContent = "Reported"; btn.disabled = true; U.toast("Reported to Prof. Wang. Thank you."); }, () => U.toast("Could not report that message."));
+  }
+
+  // ---------------------------------------------------------------- the Desk's Lobby tab (Sean)
+  L.desk = async function (panel) {
+    const f = fb();
+    if (!f) { panel.append(h("p", { text: "The database isn't available." })); return; }
+    fbx = fbx || f;
+    const get = async (p) => (await f.FB.get(f.FB.ref(f.db, p))).val() || {};
+    panel.append(h("p.dk-note", { text: "Loading the lobby…" }));
+    let m, rep, mute, hr;
+    try { [m, rep, mute, hr] = await Promise.all([get("lobby/m"), get("lobby/rep"), get("lobby/mute"), get("lobby/here")]); }
+    catch (e) { U.clear(panel).append(h("p", { text: "Could not read the lobby: " + ((e && e.message) || e) })); return; }
+    const now = Date.now();
+    const list = Object.keys(m).map((k) => Object.assign({ id: k }, m[k])).filter((x) => now - (x.t || 0) <= KEEP_MS).sort((a, b) => (b.t || 0) - (a.t || 0));
+    const nRep = (id) => Object.keys(rep[id] || {}).length;
+    const handles = {}; list.forEach((x) => { handles[x.u] = x.h; }); Object.keys(hr).forEach((u) => { if (hr[u] && hr[u].h) handles[u] = hr[u].h; });
+    const reload = () => { U.clear(panel); L.desk(panel); };
+    const del = (id) => f.FB.set(f.FB.ref(f.db, "lobby/m/" + id), null).then(reload, (e) => U.toast("Could not delete: " + e.message));
+    const setMute = (u, on) => f.FB.set(f.FB.ref(f.db, "lobby/mute/" + u), on ? true : null).then(reload, (e) => U.toast("Could not change that: " + e.message));
+    U.clear(panel);
+    const reported = list.filter((x) => nRep(x.id)).length;
+    panel.append(h("p.dk-note", { text: list.length + " message" + (list.length === 1 ? "" : "s") + " in the last 7 days · " + reported + " reported · " + Object.keys(mute).length + " muted · " +
+      Object.keys(hr).filter((u) => hr[u] && now - (hr[u].t || 0) < STALE_MS).length + " studying now" }));
+    const mutedIds = Object.keys(mute);
+    if (mutedIds.length) {
+      panel.append(h("h3.dk-h3", { text: "Muted" }), h("ul.dk-lobmute", null, mutedIds.map((u) => {
+        const b = h("button.btn", { type: "button", text: "Unmute" }); b.addEventListener("click", () => setMute(u, false));
+        return h("li", null, h("b", { text: handles[u] || u.slice(0, 8) }), " ", b);
+      })));
+    }
+    const tbl = h("table.dk-table.dk-lob", null, h("thead", null, h("tr", null, ["When", "Handle", "Message", "Reports", ""].map((t) => h("th", { text: t })))));
+    const tb = h("tbody");
+    for (const x of list) {
+      const d = h("button.btn", { type: "button", text: "Delete" }); d.addEventListener("click", () => del(x.id));
+      const isMuted = mute[x.u] === true;
+      const mu = h("button.btn", { type: "button", text: isMuted ? "Unmute" : "Mute" }); mu.addEventListener("click", () => setMute(x.u, !isMuted));
+      tb.appendChild(h("tr" + (nRep(x.id) ? ".rep" : ""), null, h("td", { text: when(x.t) }), h("td", { text: x.h }), h("td.dk-lob-x", { text: x.x }), h("td", { text: nRep(x.id) ? String(nRep(x.id)) : "" }), h("td", null, d, " ", mu)));
+    }
+    if (!list.length) tb.appendChild(h("tr", null, h("td", { colspan: "5", text: "No messages in the last 7 days." })));
+    tbl.appendChild(tb);
+    panel.append(h("div.dk-scroll", null, tbl));
+  };
+
+  L.state = () => ({ on: !!myUid, here: others().map((p) => p.h + ":" + p.s), msgs: msgs.length, last: msgs.length ? msgs[msgs.length - 1].x : null, muted, status,
+    canPost: !!(els.input && !els.input.disabled), invites: invBox ? invBox.querySelectorAll(".lob-inv").length : 0 });
 })();
 
 /* ---- v3/qr.js ---- */
@@ -19383,19 +19794,59 @@ if (typeof module !== "undefined" && module.exports) module.exports = VoiceCore;
     });
     if (big && !want[big.dataset.seat]) closeBig();
   }
+  // the larger video: a small window to drag anywhere (by the picture) and resize (by the corner grip, keeping 4:3);
+  // where it sits and how big it is are remembered on this device. The × closes it (so does Escape when it has focus).
+  const BIG_KEY = "m2m-vc-big";
+  function bigPlace(el) {
+    let pos = null; try { pos = JSON.parse(localStorage.getItem(BIG_KEY)); } catch (e) { /* none */ }
+    const w = pos && pos.w ? pos.w : (innerWidth < 600 ? 180 : 240);
+    sizeBig(el, w);
+    if (pos && typeof pos.x === "number") moveBig(el, pos.x * innerWidth, pos.y * innerHeight);
+    else moveBig(el, innerWidth - el.offsetWidth - 16, innerWidth < 600 ? 60 : 70);
+  }
+  function sizeBig(el, w) { w = Math.max(160, Math.min(w, Math.min(640, innerWidth - 16))); el.style.width = Math.round(w) + "px"; el.style.height = Math.round(w * 0.75) + "px"; }
+  function moveBig(el, x, y) {
+    const w = el.offsetWidth || 240, hh = el.offsetHeight || 180;
+    x = Math.max(4, Math.min(innerWidth - w - 4, x)); y = Math.max(4, Math.min(innerHeight - hh - 4, y));
+    el.style.left = Math.round(x) + "px"; el.style.top = Math.round(y) + "px"; el.style.right = "auto";
+  }
+  function bigSave(el) { try { localStorage.setItem(BIG_KEY, JSON.stringify({ x: el.offsetLeft / innerWidth, y: el.offsetTop / innerHeight, w: el.offsetWidth })); } catch (e) { /* storage off */ } }
   function openBig(seat) {
     if (big && big.dataset.seat === String(seat)) { closeBig(); return; }
     closeBig();
     const src = document.querySelector('.vc-bub[data-seat="' + seat + '"] video');
     if (!src || !src.srcObject) return;
-    big = h("button.vc-big" + (String(seat) === String(R && R.slot) ? ".mirror" : ""), { type: "button", dataset: { seat: String(seat), vcSeat: String(seat) }, "aria-label": "Close the larger video" },
-      h("span.vc-big-n", { text: String(seat) === String(R && R.slot) ? "You" : name(seat) }));
+    const mine = String(seat) === String(R && R.slot);
+    const x = h("button.vc-big-x", { type: "button", "aria-label": "Close the video", title: "Close" }, "×");
+    const grip = h("span.vc-big-grip", { "aria-hidden": "true", title: "Drag to resize" });
+    big = h("div.vc-big" + (mine ? ".mirror" : ""), { role: "dialog", "aria-label": "Video of " + (mine ? "you" : name(seat)) + " (drag to move, corner to resize)", tabindex: "-1", dataset: { seat: String(seat), vcSeat: String(seat) } },
+      h("span.vc-big-n", { text: mine ? "You" : name(seat) }), x, grip);
     big.style.setProperty("--pc", color(seat));
     const v = document.createElement("video"); v.autoplay = true; v.muted = true; v.setAttribute("playsinline", ""); v.srcObject = src.srcObject;
     big.prepend(v); v.play().catch(() => {});
-    big.addEventListener("click", closeBig);
     document.body.appendChild(big);
+    bigPlace(big);
+    x.addEventListener("click", (e) => { e.stopPropagation(); closeBig(); });
+    big.addEventListener("keydown", (e) => { if (e.key === "Escape") { e.preventDefault(); closeBig(); } });
+    let d = null;
+    big.addEventListener("pointerdown", (e) => {
+      if (e.target === x) return;
+      const el = big, resize = e.target === grip;
+      d = { id: e.pointerId, resize, x0: e.clientX, y0: e.clientY, l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth };
+      try { el.setPointerCapture(e.pointerId); } catch (er) { /* fine */ }
+      el.classList.add(resize ? "sizing" : "moving");
+      e.preventDefault();
+    });
+    big.addEventListener("pointermove", (e) => {
+      if (!d || e.pointerId !== d.id || !big) return;
+      const dx = e.clientX - d.x0, dy = e.clientY - d.y0;
+      if (d.resize) { sizeBig(big, d.w + Math.max(dx, dy / 0.75)); moveBig(big, d.l, d.t); }
+      else moveBig(big, d.l + dx, d.t + dy);
+    });
+    const end = (e) => { if (!d || e.pointerId !== d.id || !big) return; d = null; big.classList.remove("moving", "sizing"); bigSave(big); };
+    big.addEventListener("pointerup", end); big.addEventListener("pointercancel", end);
   }
+  window.addEventListener("resize", () => { if (big) { sizeBig(big, big.offsetWidth); moveBig(big, big.offsetLeft, big.offsetTop); } });
   function closeBig() { if (big) { big.remove(); big = null; } }
 
   // ---------------------------------------------------------------- reading the state (tests and the panel)
