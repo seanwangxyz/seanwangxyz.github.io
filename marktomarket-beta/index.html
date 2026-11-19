@@ -2898,7 +2898,7 @@ html[data-m2m-theme="light"] .stage-shade::after {
 html.clue-open .stage-shade::after { opacity: 0.35; }
 
 /* 5 · higher stakes stand taller; a quieter dollar sign; an accent edge on hover */
-/* (DEPTH, 18 Nov: centred on --tile-th, medium = 14 px: $200 8 px … $1,000 20 px) */
+/* (DEPTH, 18 Nov: centred on --tile-th, 18 px after the beta: $200 10 px … $1,000 26 px) */
 .cell[data-row="0"] .slab { --th: calc(var(--tile-th) * 0.57); }
 .cell[data-row="1"] .slab { --th: calc(var(--tile-th) * 0.79); }
 .cell[data-row="2"] .slab { --th: var(--tile-th); }
@@ -3014,10 +3014,10 @@ html[data-m2m-theme="light"] .scratch { box-shadow: 0 18px 50px rgba(24, 20, 14,
 
 /* ================================================================ DEPTH (18 Nov 2026): one material, trading-desk hardware
    Matte keycaps, engraved plates, recessed windows, paper tickets. Short travel, no bounce. Replaces the R1 tactile press.
-   How raised: --key-d (flat keys) and --tile-th (board tiles). Sean chose "medium": 4 px and 14 px.
+   How raised: --key-d (flat keys) and --tile-th (board tiles). Sean chose "medium" (4 and 14 px), then "deeper" on the beta: 5 and 18 px.
    Reduced motion keeps the depth (it is static) and drops the travel. */
 :root {
-  --key-d: 4px; --tile-th: 14px;
+  --key-d: 5px; --tile-th: 18px; /* Sean, 18 Nov beta: "deeper" (was 4 and 14) */
   --key-edge: #0A0F1C; --key-rim: rgba(130, 146, 196, 0.2); --key-hi: rgba(255, 255, 255, 0.09); --key-drop: rgba(0, 0, 0, 0.55);
   --well-in: inset 0 2px 5px rgba(0, 0, 0, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
   --e1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 14px -6px rgba(0, 0, 0, 0.45);
@@ -3039,6 +3039,8 @@ html[data-m2m-theme="light"] {
   background: linear-gradient(180deg, #1C2540, #0A0E18); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08); }
 html[data-m2m-theme="light"] .board { box-shadow: inset 0 0 0 1px var(--line-2), inset 0 2px 0 rgba(255, 255, 255, 0.9), inset 0 10px 24px rgba(24, 20, 14, 0.07), 0 36px 70px -36px rgba(24, 20, 14, 0.3); }
 html[data-m2m-theme="light"] .board::after { background: linear-gradient(180deg, #E4DCD0, #CFC5B7); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+/* the board leans further toward the pointer (Sean, 18 Nov beta: about 1.7x the old lean) */
+.board { transform: rotateX(calc(var(--tilt) - var(--py) * 4deg)) rotateY(calc(var(--px) * 5.5deg)); }
 .slab .f { background: linear-gradient(180deg, #232D4C 0%, #19223A 46%, #131B2F 100%);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.17), inset 0 0 0 1px rgba(130, 146, 196, 0.24), inset 0 -3px 0 rgba(0, 0, 0, 0.3), inset 0 -14px 22px rgba(0, 0, 0, 0.22); }
 .slab .sb { left: 3px; right: 3px; background: linear-gradient(180deg, #273152 0%, #161E33 55%, #0D1322 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07); }
@@ -4405,7 +4407,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     o.type = "sine"; o.frequency.setValueAtTime(2350, t); o.frequency.exponentialRampToValueAtTime(1750, t + 0.03);
     bp.type = "bandpass"; bp.frequency.value = 2100; bp.Q.value = 4;
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.035, t + 0.003);
+    g.gain.exponentialRampToValueAtTime(0.024, t + 0.003); // Sean, 18 Nov beta: quieter (was 0.035)
     g.gain.exponentialRampToValueAtTime(0.0001, t + 0.035);
     o.connect(bp); bp.connect(g); g.connect(sfx); o.start(t); o.stop(t + 0.05);
   };
@@ -4823,16 +4825,19 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       ambBus.gain.setValueAtTime(ambBus.gain.value, t);
       ambBus.gain.linearRampToValueAtTime(1, t + 1.2);
       if (buffers.ticker_loop) {
-        const s = A.playBuffer("ticker_loop", { loop: true, dest: ambBus, gain: 0.07 });
+        // Sean, 18 Nov beta: the ticker under the board was too loud; half the old 0.07
+        const s = A.playBuffer("ticker_loop", { loop: true, dest: ambBus, gain: 0.035 });
         ambSrc = s ? { src: s.src, synth: false } : null;
       }
       if (!ambSrc) {
         if (!ambBuf) ambBuf = synthTickerBuffer(A.ctx);
         const src = A.ctx.createBufferSource();
         src.buffer = ambBuf; src.loop = true;
-        const g = A.ctx.createGain(); g.gain.value = 0.07;
+        const g = A.ctx.createGain(); g.gain.value = 0.035;
         const hp = A.ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 400;
-        src.connect(hp); hp.connect(g); g.connect(ambBus);
+        // and duller: the clicks lose their top end so they sit further back
+        const lp = A.ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2400; lp.Q.value = 0.5;
+        src.connect(hp); hp.connect(lp); lp.connect(g); g.connect(ambBus);
         src.start(t);
         ambSrc = { src, synth: true };
       }
@@ -9123,7 +9128,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   }
   function restPose() {
     const tilt = parseFloat(getComputedStyle(grid).getPropertyValue("--tilt")) || TILT;
-    return { dx: 0, dy: 0, z: 0, rx: tilt - par.y * 2.4, ry: par.x * 3.2 };
+    return { dx: 0, dy: 0, z: 0, rx: tilt - par.y * 4, ry: par.x * 5.5 };
   }
   function divePose(cell) {
     const el = tiles[cell.key].el;
