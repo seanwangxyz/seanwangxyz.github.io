@@ -3090,6 +3090,36 @@ html[data-m2m-theme="light"] { --sc-ink: #18140E; --sc-red: #C43A32; --sc-board:
 .sc-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 .sc-hint { position: absolute; left: 12px; bottom: 8px; margin: 0; font-size: 12px; color: var(--text-3); pointer-events: none; }
 @media (pointer: coarse) { .sc-tool, .sc-close { height: 44px; } .sc-tool { width: 44px; } }
+/* R4 (19 Nov): Share my board (friend floors) and the others' boards in the explanation */
+.sc-extra { display: contents; }
+.sc-share { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel-2);
+  color: var(--text-2); font: 600 13px var(--f-ui); cursor: pointer; box-shadow: 0 3px 0 var(--line-2); transition: transform 0.08s, box-shadow 0.08s; white-space: nowrap; }
+.sc-share svg { width: 16px; height: 16px; flex: none; }
+.sc-share:active { transform: translateY(3px); box-shadow: 0 0 0 var(--line-2); }
+.sc-share.on { border-color: var(--accent); color: var(--text-hi); box-shadow: 0 3px 0 var(--accent); }
+@media (pointer: coarse) { .sc-share { height: 44px; } }
+@media (max-width: 560px) { .sc-share { order: 3; } .sc-share-l { max-width: 46vw; overflow: hidden; text-overflow: ellipsis; } }
+.wb-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px; }
+.wb-tabs::before { content: "Shared boards"; flex-basis: 100%; font: 600 11.5px var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+.wb-tab { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel-2);
+  color: var(--text); font: 600 13.5px var(--f-ui); cursor: pointer; box-shadow: 0 3px 0 var(--line-2); transition: transform 0.08s, box-shadow 0.08s; }
+.wb-tab:hover { border-color: var(--pc, var(--accent)); color: var(--text-hi); }
+.wb-tab:active { transform: translateY(3px); box-shadow: 0 0 0 var(--line-2); }
+.wb-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--pc, var(--accent)); flex: none; }
+.wb-back { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, 0.45); }
+.wb-view { position: fixed; z-index: 61; left: 50%; top: 50%; width: min(920px, calc(100vw - 32px)); height: min(680px, calc(100vh - 48px)); height: min(680px, calc(100dvh - 48px));
+  transform: translate(-50%, -48%); opacity: 0; transition: transform 0.18s, opacity 0.18s; display: flex; flex-direction: column;
+  background: var(--panel); border: 1px solid var(--line-2); border-top: 3px solid var(--pc, var(--accent)); border-radius: 12px; box-shadow: var(--e3, 0 20px 60px rgba(0,0,0,.45)); }
+.wb-view.on { transform: translate(-50%, -50%); opacity: 1; }
+.wb-vhead { display: flex; align-items: center; gap: 9px; padding: 10px 10px 8px 16px; border-bottom: 1px solid var(--line); }
+.wb-vname { font: 600 15px var(--f-ui); color: var(--text-hi); }
+.wb-vnote { font: 600 11.5px var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+.wb-x { margin-left: auto; width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font-size: 22px; line-height: 1; cursor: pointer; }
+.wb-x:hover { color: var(--text-hi); }
+.wb-vwrap { position: relative; flex: 1; min-height: 0; margin: 12px; border-radius: 8px; border: 1px solid var(--line); overflow: hidden;
+  background-color: var(--sc-board); background-image: linear-gradient(var(--sc-rule) 1px, transparent 1px), linear-gradient(90deg, var(--sc-rule) 1px, transparent 1px); background-size: 28px 28px; }
+.wb-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+@media (prefers-reduced-motion: reduce) { .wb-view { transition: none; } }
 @media (max-width: 560px) { .sc-head { flex-wrap: wrap; } .sc-title { display: none; } .sc-tools { margin-left: 0; } .sc-close-l { display: none; } .sc-close { margin-left: auto; } }
 
 /* wide screens: the card makes room for the board on its right; the host steps aside */
@@ -9537,7 +9567,9 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       scBtn = M2M.scratch.button("clue:" + scSeq + ":" + (cs.cell.key || it.id), {
         stem: it.stem,
         left: () => (me === cs && cs.clock ? (cs.clock.end - performance.now()) / 1000 : null),
-        done: () => me !== cs || ["reveal", "done", "closing"].includes(cs.phase)
+        done: () => me !== cs || ["reveal", "done", "closing"].includes(cs.phase),
+        // R4 (19 Nov): on a friend floor the board can be shared; it goes out once this player's answer is in
+        share: cs.online && cs.cell.key ? { key: cs.cell.key, locked: () => me === cs && (cs.sent || ["reveal", "done", "closing"].includes(cs.phase)) } : null
       });
     }
     card.appendChild(h("header.card-head", null,
@@ -9633,6 +9665,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
 
   async function leave() {
     if (M2M.scratch) M2M.scratch.end(); // the board is wiped when the question closes
+    if (M2M.wbshare) M2M.wbshare.end();
     const card = cs.els.card;
     card.classList.remove("rise", "pop");
     card.classList.add("leaving");
@@ -10400,6 +10433,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     }
     why.appendChild(h("p.wlist-h", { text: "Every option, and why" }));
     why.appendChild(Q.renderWhyList(it, mine, who, mine < 0));
+    if (cs.online && cs.cell.key && M2M.wbshare) { const tabs = M2M.wbshare.tabs(cs.cell.key); if (tabs) why.appendChild(tabs); } // R4: the others' shared boards
     if (cs.opts.flag) { try { cs.opts.flag(why); } catch (e) { console.warn("[m2m] flag box", e); } }
     const label = cs.kind === "cb" ? "See the close" : "Continue";
     const btn = h("button.btn-ink.cont", { type: "button" }, label, h("kbd", { text: "Enter" }));
@@ -10408,7 +10442,13 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     why.hidden = false;
     requestAnimationFrame(() => why.classList.add("on"));
     cs.phase = "done";
-    if (cs.online) { clearTimeout(cs.autoT); cs.autoT = setTimeout(() => { if (cs && cs.phase === "done") cont(); }, M2M.net.CONT_SEC * 1000); }
+    if (cs.online) {
+      clearTimeout(cs.autoT);
+      // R4: while a shared board is open, the explanation waits (5 s at a time, 40 s at most) before the board returns
+      let extra = 0;
+      const auto = () => { if (!cs || cs.phase !== "done") return; if (M2M.wbshare && M2M.wbshare.viewOpen() && extra < 40) { extra += 5; cs.autoT = setTimeout(auto, 5000); return; } cont(); };
+      cs.autoT = setTimeout(auto, M2M.net.CONT_SEC * 1000);
+    }
     try { btn.focus({ preventScroll: true }); } catch (e) { btn.focus(); }
     setTimeout(() => {
       if (!cs) return;
@@ -10434,6 +10474,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   /** close whatever is open without settling it (quit to the title) */
   Q.abort = function () {
     if (M2M.scratch) M2M.scratch.end();
+    if (M2M.wbshare) M2M.wbshare.end();
     stopReading(true);
     if (M2M.audio) M2M.audio.heartbeat(false);
     if (Q._aiAbort) { const f = Q._aiAbort; Q._aiAbort = null; f(); }
@@ -12028,6 +12069,10 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       rtcWatch(code, cb, onErr) { return FB.onValue(FB.ref(db, "rtc/" + code), (s) => cb(s.val() || {}), (err) => { if (onErr) onErr(err); }); },
       rtcWrite(rel, v) { return FB.set(FB.ref(db, "rtc/" + rel), v); },
       rtcOnDisconnect(rel) { const od = FB.onDisconnect(FB.ref(db, "rtc/" + rel)); od.remove().catch(() => {}); return () => { od.cancel().catch(() => {}); }; },
+      // R4 (19 Nov): shared scratch boards at fwb/<code>/<seat>/<tile>; a board is readable once the reader's own answer is in
+      wbWatch(code, slot, key, cb, onErr) { return FB.onValue(FB.ref(db, "fwb/" + code + "/" + slot + "/" + key), (s) => cb(s.val()), (err) => { if (onErr) onErr(err); }); },
+      wbWrite(code, slot, key, v) { return FB.set(FB.ref(db, "fwb/" + code + "/" + slot + "/" + key), v); },
+      wbClear(code) { return FB.set(FB.ref(db, "fwb/" + code), null); },
       connection(cb) { return FB.onValue(FB.ref(db, ".info/connected"), (s) => cb(s.val() === true)); },
       goOffline() { FB.goOffline(db); },
       goOnline() { FB.goOnline(db); }
@@ -12170,6 +12215,20 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     onDisconnect: (rel) => be.rtcOnDisconnect(rel),
     connection: (cb) => be.connection(cb)
   } : null);
+  /** R4: shared scratch boards on this floor (wbshare.js). Friend floors only, as voice. slotOf(i): the seat of player i. */
+  N.wbApi = () => {
+    if (!(be && fl && be.wbWrite)) return null;
+    const roster = rosterOf(fl.snap);
+    const mine = roster.find((r) => r.uid === fl.uid);
+    if (!mine) return null;
+    return {
+      code: fl.code, mySlot: mine.slot,
+      slotOf: (i) => (M2M.state && M2M.state.online && M2M.state.online.uids ? (seatList(fl.snap).find((r) => r && r.uid === M2M.state.online.uids[i]) || {}).slot : (roster[i] || {}).slot),
+      rated: () => !!(fl && fl.snap && (fl.snap.tm || (fl.snap.r && Object.values(fl.snap.r).some((v) => v === true)))),
+      write: (key, v) => be.wbWrite(fl.code, mine.slot, key, v),
+      watch: (slot, key, cb, onErr) => be.wbWatch(fl.code, slot, key, cb, onErr)
+    };
+  };
   /** R2: the chat's link to this floor (chat.js) */
   N.chatApi = () => (be && fl && be.chatOk && be.chatOk() ? {
     uid: fl.uid, code: fl.code, host: fl.host,
@@ -12575,6 +12634,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       be.set(fl.code, "status", "done").catch(() => {});
       if (be.chatClear) be.chatClear(fl.code).catch(() => {}); // R2: the chat is deleted when the game ends
       if (be.rtcWrite) be.rtcWrite(fl.code, null).catch(() => {}); // R3: so are any call notes left behind
+      if (be.wbClear) be.wbClear(fl.code).catch(() => {}); // R4: and every shared scratch board
     }
   };
 })();
@@ -18602,7 +18662,9 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
  *     this visit, fingers never draw (a resting palm leaves no marks); with no pen, a finger or a mouse draws.
  *   - One board per question: it stays while that question and its explanation are open and is wiped on the next one.
  *     Nothing is stored or sent anywhere.
- * API: M2M.scratch.button(key, {stem, left, flipOnly}) -> a button for a card; M2M.scratch.sync(key) wipes the board if
+ * R4 (19 Nov): on a friend floor the board can be shared with the other players (wbshare.js): opts.share turns on a
+ *   Share switch in the head; S.snapshot() hands the strokes over, S.onChange / S.onButton / S.onEnd are its hooks.
+ * API: M2M.scratch.button(key, {stem, left, flipOnly, share}) -> a button for a card; M2M.scratch.sync(key) wipes the board if
  *      it belongs to another question; M2M.scratch.end() closes and wipes; M2M.scratch.isOpen(); M2M.scratch.toggle().
  */
 (function () {
@@ -18616,7 +18678,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   let key = null, opts = {}, strokes = [], cur = null, tool = "pen", ink = "ink", open = false, mode = "side";
   let penSeen = false;
   try { penSeen = sessionStorage.getItem(PEN_KEY) === "1"; } catch (e) { /* private window */ } // for this visit only
-  let root, canvas, ctx, strip, stripText, stripClock, ro, tickT = 0, dpr = 1;
+  let root, canvas, ctx, strip, stripText, stripClock, ro, tickT = 0, dpr = 1, extra, hint;
+  const changed = () => { try { if (S.onChange) S.onChange(); } catch (e) { /* sharing is optional */ } };
 
   // ------------------------------------------------------------------ the panel (built once)
   function build() {
@@ -18640,8 +18703,10 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     stripClock = h("b.sc-clock");
     strip = h("button.sc-strip", { type: "button", "aria-label": "The question (tap to read it all)" }, stripText, stripClock);
     strip.addEventListener("click", () => root.classList.toggle("sc-stem-open"));
-    const head = h("div.sc-head", null, h("span.sc-title", null, h("span.sc-ico", { html: ICON }), h("span", { text: "Scratch" })), tools, close);
-    const wrap = h("div.sc-wrap", null, canvas, h("p.sc-hint", { text: "Your board is private and is wiped on the next question." }));
+    extra = h("span.sc-extra");
+    const head = h("div.sc-head", null, h("span.sc-title", null, h("span.sc-ico", { html: ICON }), h("span", { text: "Scratch" })), extra, tools, close);
+    hint = h("p.sc-hint", { text: S.PRIVATE });
+    const wrap = h("div.sc-wrap", null, canvas, hint);
     root = h("aside.scratch", { "aria-label": "Scratch board", hidden: true }, head, strip, wrap);
     document.body.appendChild(root);
     ctx = canvas.getContext("2d");
@@ -18711,10 +18776,12 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       cur.p.push(q);
       seg(cur, cur.p.length - 1);
     }
+    changed();
   }
   function up(e) {
     if (!cur || (e && e.pointerId !== cur.id)) return;
     cur = null;
+    changed();
   }
   function style(s, col) {
     ctx.globalCompositeOperation = s.t === "erase" ? "destination-out" : "source-over";
@@ -18756,8 +18823,19 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     }
     ctx.globalCompositeOperation = "source-over";
   }
-  function undo() { if (cur) return; if (strokes.length) { strokes.pop(); redraw(); } }
-  function clearAll() { if (cur) return; if (strokes.length && !strokes[strokes.length - 1].clear) { strokes.push({ clear: true, p: [] }); redraw(); } }
+  function undo() { if (cur) return; if (strokes.length) { strokes.pop(); redraw(); changed(); } }
+  function clearAll() { if (cur) return; if (strokes.length && !strokes[strokes.length - 1].clear) { strokes.push({ clear: true, p: [] }); redraw(); changed(); } }
+  S.PRIVATE = "Your board is private and is wiped on the next question.";
+  /** R4: the strokes since the last clear, with the board's size in CSS pixels (for sharing) */
+  S.snapshot = function () {
+    let from = 0;
+    for (let i = strokes.length - 1; i >= 0; i--) if (strokes[i].clear) { from = i + 1; break; }
+    const r = canvas ? canvas.getBoundingClientRect() : { width: 0, height: 0 };
+    return { w: r.width, h: r.height, strokes: strokes.slice(from).map((st) => ({ t: st.t, c: st.c, pen: st.pen, p: st.p.slice() })) };
+  };
+  /** R4: a slot in the head beside the tools (the Share switch), and the hint line under the board */
+  S.extra = function () { build(); return extra; };
+  S.hint = function (text) { build(); hint.textContent = text || S.PRIVATE; };
   S.strokeCount = () => { let n = 0; for (const s of strokes) { if (s.clear) n = 0; else n++; } return n; };
 
   // ------------------------------------------------------------------ open, close, layout
@@ -18825,6 +18903,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     strokes = [];
     cur = null;
     if (ctx) redraw();
+    try { if (S.onEnd) S.onEnd(); } catch (e) { /* sharing is optional */ }
   };
   S.end = function () { S.sync(null); };
   S.button = function (k, o) {
@@ -18834,6 +18913,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     b.setAttribute("aria-label", "Open the scratch board");
     b.addEventListener("click", (e) => { e.stopPropagation(); S.toggle(); });
     if (open) { stripText.textContent = opts.stem || ""; }
+    try { if (S.onButton) S.onButton(key, opts); } catch (e) { /* sharing is optional */ }
     return b;
   };
 
@@ -18846,6 +18926,238 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if ((e.key === "w" || e.key === "W") && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); e.stopPropagation(); S.toggle(); }
     else if (e.key === "Escape" && open) { e.preventDefault(); e.stopPropagation(); S.close(); }
   }, true);
+})();
+
+/* ---- wbshare.js ---- */
+/* MARK TO MARKET — wbshare.js (R4, 19 Nov 2026)
+ * Share my scratch board on a friend floor.
+ *   - On an online friend floor (not rated, not a tournament) the scratch board's head carries a Share switch. It is off
+ *     on every new question. Turned on before this player locks an answer, it reads "Shares when you lock in" and sends
+ *     nothing; once the answer is locked (or the clock ran out) the board goes to fwb/<code>/<seat>/<tile>, and later
+ *     strokes follow a few times a second. Turned off, the shared copy is deleted.
+ *   - During the explanation every other player's shared board shows as a "Raj's board" key; tapping it opens a view-only
+ *     copy that keeps updating. The database only lets a player read a board for a tile once their own answer is in.
+ *   - What is sent: the strokes as short text (points as 0–1000 numbers relative to the board's width), never a picture.
+ *     The host's close deletes every shared board with the floor.
+ * API: M2M.wbshare.tabs(tileKey) -> the keys element for the explanation; M2M.wbshare.end(); M2M.wbshare.encode/decode.
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h;
+  const W = (M2M.wbshare = {});
+  const MAX = 60000;      // characters; the rules refuse more
+  const EVERY = 350;      // ms between sends while drawing
+  const SC = () => M2M.scratch;
+
+  // ------------------------------------------------------------------ the text form of a board
+  /** "W,H~" then strokes split by "|": tool (k ink, r red, e erase), pen flag (p or m), then "x.y.z" points (z = pressure 0–9) */
+  W.encode = function (snap) {
+    const w = snap.w || 1, sc = 1000 / w;
+    const head = Math.round(w) + "," + Math.round((snap.h / w) * 1000) + "~";
+    const parts = snap.strokes.filter((s) => s.p && s.p.length).map((s) =>
+      (s.t === "erase" ? "e" : s.c === "red" ? "r" : "k") + (s.pen ? "p" : "m") +
+      s.p.map((q) => Math.round(q[0] * sc) + "." + Math.round(q[1] * sc) + "." + Math.max(0, Math.min(9, Math.round((q[2] == null ? 0.5 : q[2]) * 9)))).join(" "));
+    // too long: keep the newest strokes
+    let body = parts.join("|");
+    while (head.length + body.length > MAX && parts.length) { parts.shift(); body = parts.join("|"); }
+    return head + body;
+  };
+  W.decode = function (str) {
+    if (typeof str !== "string" || str.indexOf("~") < 0) return null;
+    const [hd, body] = [str.slice(0, str.indexOf("~")), str.slice(str.indexOf("~") + 1)];
+    const [w, hr] = hd.split(",").map(Number);
+    const strokes = body ? body.split("|").map((t) => ({
+      t: t[0] === "e" ? "erase" : "pen", c: t[0] === "r" ? "red" : "ink", pen: t[1] === "p",
+      p: t.slice(2).split(" ").filter(Boolean).map((q) => { const a = q.split(".").map(Number); return [a[0], a[1], a[2] / 9]; })
+    })).filter((s) => s.p.length) : [];
+    return { w: w || 400, hr: hr || 750, strokes };
+  };
+
+  // ------------------------------------------------------------------ drawing a shared board (view only)
+  function colors() {
+    const cs = getComputedStyle(document.documentElement);
+    const v = (n, d) => (cs.getPropertyValue(n) || "").trim() || d;
+    return { ink: v("--sc-ink", "#E8ECF4"), red: v("--sc-red", "#FF6B6B") };
+  }
+  /** draws board b into canvas cv, fitted inside the canvas's box; widths scale with the board */
+  W.draw = function (cv, b) {
+    const r = cv.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    cv.width = Math.max(1, Math.round(r.width * dpr)); cv.height = Math.max(1, Math.round(r.height * dpr));
+    const x = cv.getContext("2d");
+    x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, cv.width, cv.height);
+    if (!b) return;
+    const bw = r.width, bh = r.height;
+    const k = Math.min(bw / 1000, bh / b.hr);           // board units -> CSS px
+    const ox = (bw - 1000 * k) / 2, oy = (bh - b.hr * k) / 2;
+    const ws = (1000 * k) / b.w;                          // the author's pixels -> ours
+    x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const col = colors();
+    const P = (q) => [ox + q[0] * k, oy + q[1] * k, q[2]];
+    const width = (s, p) => (s.t === "erase" ? 22 : s.pen ? 0.9 + p * 3.6 : 2.6) * ws;
+    x.lineCap = x.lineJoin = "round";
+    for (const s of b.strokes) {
+      x.globalCompositeOperation = s.t === "erase" ? "destination-out" : "source-over";
+      x.strokeStyle = x.fillStyle = s.t === "erase" ? "#000" : col[s.c] || col.ink;
+      const pts = s.p.map(P);
+      x.beginPath(); x.arc(pts[0][0], pts[0][1], width(s, pts[0][2]) / 2, 0, Math.PI * 2); x.fill();
+      for (let i = 1; i < pts.length; i++) {
+        const a = pts[i - 2] || pts[i - 1], bb = pts[i - 1], c = pts[i];
+        const m1 = [(a[0] + bb[0]) / 2, (a[1] + bb[1]) / 2], m2 = [(bb[0] + c[0]) / 2, (bb[1] + c[1]) / 2];
+        x.lineWidth = width(s, (bb[2] + c[2]) / 2);
+        x.beginPath();
+        x.moveTo(i < 2 ? bb[0] : m1[0], i < 2 ? bb[1] : m1[1]);
+        x.quadraticCurveTo(bb[0], bb[1], m2[0], m2[1]);
+        x.stroke();
+      }
+    }
+    x.globalCompositeOperation = "source-over";
+  };
+
+  // ------------------------------------------------------------------ sharing my board
+  let sh = null; // {key, opts, api, on, dirty, sent, t}
+  let btn = null;
+  function api() { return M2M.net && M2M.net.wbApi ? M2M.net.wbApi() : null; }
+  function locked() { try { return !!(sh && sh.opts.share.locked()); } catch (e) { return false; } }
+  function paint() {
+    if (!btn || !sh) return;
+    btn.classList.toggle("on", sh.on);
+    btn.setAttribute("aria-pressed", sh.on ? "true" : "false");
+    const lab = !sh.on ? "Share" : locked() ? "Shared" : "Shares when you lock in";
+    btn.querySelector(".sc-share-l").textContent = lab;
+    btn.title = !sh.on ? "Let the other players see this board once your answer is locked in" : locked() ? "The other players can see this board. Tap to stop sharing." : "Your board goes to the others once you lock in. Tap to cancel.";
+    SC().hint(!sh.on ? null : locked() ? "Shared with the players in this game. Tap Shared to stop." : "Shared with the players in this game once you lock in.");
+  }
+  function send() {
+    if (!sh || !sh.on || !locked() || !sh.dirty) return;
+    const a = sh.api;
+    sh.dirty = false;
+    const v = W.encode(SC().snapshot());
+    if (v === sh.last) return;
+    sh.last = v;
+    a.write(sh.key, v).catch(() => { sh.dirty = true; sh.last = null; });
+  }
+  function loop() {
+    if (!sh) return;
+    paint();
+    send();
+    sh.t = setTimeout(loop, EVERY);
+  }
+  function stop(del) {
+    if (!sh) return;
+    clearTimeout(sh.t);
+    if (del && sh.last != null) sh.api.write(sh.key, null).catch(() => {});
+    sh.last = null;
+  }
+  function toggle() {
+    if (!sh) return;
+    sh.on = !sh.on;
+    if (sh.on) { sh.dirty = true; loop(); }
+    else { stop(true); paint(); }
+    try { if (M2M.audio && M2M.audio.toggle) M2M.audio.toggle(sh.on); } catch (e) { /* no sound */ }
+  }
+  function detach() {
+    const had = !!(sh || btn);
+    if (sh) stop(false);
+    sh = null;
+    if (btn) { btn.remove(); btn = null; }
+    if (had && SC() && SC().hint) try { SC().hint(null); } catch (e) { /* fine */ }
+  }
+  function onButton(key, opts) {
+    const a = opts && opts.share ? api() : null;
+    if (!a || a.rated()) { detach(); return; }
+    if (sh && sh.key === opts.share.key) { sh.opts = opts; paint(); return; } // the same question drawn again
+    detach();
+    sh = { key: opts.share.key, opts, api: a, on: false, dirty: false, last: null, t: 0 };
+    btn = h("button.sc-share", { type: "button", "aria-pressed": "false", html: '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="5" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15" cy="5" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15" cy="15" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 9l6-3M7 11l6 3" stroke="currentColor" stroke-width="1.6"/></svg><span class="sc-share-l">Share</span>' });
+    btn.addEventListener("click", toggle);
+    const slot = SC().extra();
+    U.clear(slot);
+    slot.appendChild(btn);
+    paint();
+  }
+
+  // ------------------------------------------------------------------ the others' boards, during the explanation
+  let tabsSt = null; // {unsubs, el, boards: {slot: decoded}, view}
+  /** the keys element for the explanation: one "Name's board" key per other player who shared this tile */
+  W.tabs = function (tileKey) {
+    W.closeTabs();
+    const a = api(), st = M2M.state;
+    if (!a || a.rated() || !st || !st.online) return null;
+    const el = h("div.wb-tabs", { role: "group", "aria-label": "The other players' shared boards" });
+    el.hidden = true;
+    tabsSt = { el, unsubs: [], boards: {}, key: tileKey, view: null };
+    const me = tabsSt;
+    st.players.forEach((pl, i) => {
+      if (i === st.online.me) return;
+      const slot = a.slotOf(i);
+      if (slot == null) return;
+      const k = h("button.wb-tab", { type: "button", style: { "--pc": pl.color }, hidden: true }, h("i.wb-dot"), h("span", { text: pl.name + "'s board" }));
+      k.addEventListener("click", () => openView(i, slot, pl));
+      el.appendChild(k);
+      try {
+        me.unsubs.push(a.watch(slot, tileKey, (v) => {
+          if (tabsSt !== me) return;
+          const b = v ? W.decode(v) : null;
+          me.boards[slot] = b;
+          k.hidden = !b;
+          el.hidden = !el.querySelector(".wb-tab:not([hidden])");
+          if (me.view && me.view.slot === slot) { if (b) W.draw(me.view.cv, b); else closeView(); }
+        }, () => { /* not readable (yet): this player's own answer isn't in */ }));
+      } catch (e) { /* no board for this one */ }
+    });
+    return el;
+  };
+  function openView(i, slot, pl) {
+    if (!tabsSt) return;
+    closeView();
+    const cv = h("canvas.wb-cv", { "aria-label": pl.name + "'s board (view only)" });
+    const x = h("button.wb-x", { type: "button", "aria-label": "Close " + pl.name + "'s board", text: "×" });
+    const box = h("div.wb-view", { role: "dialog", "aria-label": pl.name + "'s board", style: { "--pc": pl.color } },
+      h("div.wb-vhead", null, h("i.wb-dot"), h("span.wb-vname", { text: pl.name + "'s board" }), h("span.wb-vnote", { text: "view only" }), x),
+      h("div.wb-vwrap", null, cv));
+    const back = h("div.wb-back");
+    back.addEventListener("click", closeView);
+    x.addEventListener("click", closeView);
+    document.body.append(back, box);
+    const v = { slot, cv, box, back, ro: null };
+    tabsSt.view = v;
+    const draw = () => { if (tabsSt && tabsSt.view === v) W.draw(cv, tabsSt.boards[slot]); };
+    v.ro = new ResizeObserver(draw); v.ro.observe(cv);
+    v.theme = draw; document.addEventListener("m2m-theme", draw);
+    requestAnimationFrame(() => box.classList.add("on"));
+    try { x.focus({ preventScroll: true }); } catch (e) { /* fine */ }
+  }
+  function closeView() {
+    if (!tabsSt || !tabsSt.view) return;
+    const v = tabsSt.view;
+    tabsSt.view = null;
+    if (v.ro) v.ro.disconnect();
+    document.removeEventListener("m2m-theme", v.theme);
+    v.box.remove(); v.back.remove();
+  }
+  W.closeTabs = function () {
+    if (!tabsSt) return;
+    closeView();
+    tabsSt.unsubs.forEach((u) => { try { if (typeof u === "function") u(); } catch (e) { /* fine */ } });
+    tabsSt = null;
+  };
+  W.viewOpen = () => !!(tabsSt && tabsSt.view);
+  /** the question closed: stop sending and close any open view (the shared copies stay until the floor closes) */
+  W.end = function () { W.closeTabs(); };
+
+  // Escape closes an open view first (before the scratch board's own Escape, which listens on the document)
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape" && W.viewOpen()) { e.preventDefault(); e.stopImmediatePropagation(); closeView(); } }, true);
+
+  // the scratch board's hooks
+  const hook = () => {
+    const S = SC();
+    if (!S) return setTimeout(hook, 0);
+    S.onButton = onButton;
+    S.onEnd = () => { if (sh) detach(); };
+    S.onChange = () => { if (sh) sh.dirty = true; };
+  };
+  hook();
 })();
 
 /* ---- chat.js ---- */
