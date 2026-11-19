@@ -3224,6 +3224,67 @@ html.reduced .cell:not(.used):not(.void):hover .slab:active, html.reduced .cell.
 html.scratch-side .chat, html.scratch-flip .chat { display: none; }
 html[data-m2m-theme="light"] .chat-preview { box-shadow: var(--e2); }
 
+/* ================================================================ R3 (19 Nov 2026): voice and video on friend floors
+   The panel sits bottom left (chat is bottom right); video bubbles sit in each player's quote in the top bar; a
+   talking ring in the player's color lights while they speak. Keys follow the depth recipe. */
+.vc { position: fixed; z-index: 27; left: calc(var(--side-l) + 18px + env(safe-area-inset-left, 0px)); bottom: calc(var(--tk-h) + var(--dock-h) + 16px); max-width: min(360px, calc(100vw - var(--side-l) - var(--side-r) - 140px)); }
+.vc-dock { display: flex; flex-direction: column; gap: 6px; padding: 7px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line-2); box-shadow: var(--e2); }
+.vc-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.vc-k { --key-d: 3px; display: inline-flex; align-items: center; gap: 6px; height: 34px; min-width: 34px; padding: 0 10px; border-radius: 8px; cursor: pointer;
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--line-2); font: 600 13px var(--f-ui);
+  box-shadow: inset 0 1px 0 var(--key-hi), 0 var(--key-d) 0 var(--key-edge), 0 var(--key-d) 0 1px var(--key-rim), 0 calc(var(--key-d) + 5px) 12px -7px var(--key-drop);
+  transition: background 0.15s, color 0.15s, transform 0.07s cubic-bezier(0.3, 0, 0.6, 1), box-shadow 0.07s; }
+.vc-k svg { width: 17px; height: 17px; flex: none; }
+.vc-k:active:not(:disabled) { transform: translateY(calc(var(--key-d) - 1px)); box-shadow: inset 0 1px 0 var(--key-hi), 0 1px 0 var(--key-edge), 0 2px 4px -2px var(--key-drop); }
+.vc-k[aria-pressed="true"] { color: var(--accent-2); }
+.vc-k.off { color: var(--muted); background: var(--well); }
+.vc-k.red { background: color-mix(in srgb, var(--down) 85%, #000); color: #fff; border-color: transparent; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 var(--key-d) 0 color-mix(in srgb, var(--down) 50%, #000); }
+.vc-k:disabled { opacity: 0.45; cursor: default; }
+.vc-k.vc-wide { width: 100%; justify-content: center; }
+.vc-k:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+.vc-hint, .vc-note { margin: 0; font: 12.5px/1.35 var(--f-ui); color: var(--muted); max-width: 32ch; }
+.vc-note { color: var(--text); }
+.vc-wait { font: 13px var(--f-ui); color: var(--muted); padding: 6px 4px; }
+.vc-peers { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.vc-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; font: 12px var(--f-ui); color: var(--muted); background: var(--well); border: 1px solid var(--line); transition: box-shadow 0.12s; }
+.vc-chip.ok { color: var(--text); border-color: color-mix(in srgb, var(--pc) 55%, var(--line)); }
+.vc-dot { width: 9px; height: 9px; border-radius: 50%; margin: 0 3px; background: var(--muted); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5); }
+.vc-dot[data-q="good"] { background: var(--up); box-shadow: 0 0 6px var(--up); }
+.vc-dot[data-q="ok"] { background: var(--gold, #F5B83D); }
+.vc-dot[data-q="poor"] { background: var(--down); }
+.vc-dot[data-q="off"] { animation: vcBlink 1s steps(2) infinite; }
+@keyframes vcBlink { 50% { opacity: 0.3; } }
+/* the talking ring: on the chip, on the player's quote, on the bubble */
+.vc-chip.vc-talk { box-shadow: 0 0 0 2px var(--pc); color: var(--text); }
+.quote[data-vc-seat] { position: relative; transition: box-shadow 0.12s; }
+.quote.vc-talk { box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7), 0 0 0 2px var(--pc), 0 0 14px -2px var(--pc); }
+html[data-m2m-theme="light"] .quote.vc-talk { box-shadow: inset 0 2px 5px rgba(24, 20, 14, 0.12), 0 0 0 2px var(--pc), 0 0 12px -3px var(--pc); }
+/* video bubbles: round, small, inside the quote (or the panel in the lobby); tap for larger */
+.vc-bub { position: relative; flex: none; width: 34px; height: 34px; padding: 0; border-radius: 50%; overflow: hidden; cursor: zoom-in; background: #000;
+  border: 2px solid color-mix(in srgb, var(--pc) 70%, transparent); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45); transition: box-shadow 0.12s; }
+.quote .vc-bub { position: absolute; left: 5px; top: 50%; margin-top: -17px; z-index: 2; }
+.quote:has(.vc-bub) { padding-left: 46px; } /* the name moves over to make room for the bubble */
+@media (max-width: 600px) { .quote .vc-bub { width: 28px; height: 28px; margin-top: -14px; left: 4px; } .quote:has(.vc-bub) { padding-left: 36px; } }
+.vc-dock .vc-bub { width: 52px; height: 52px; }
+.vc-bub video, .vc-big video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vc-bub.mirror video, .vc-big.mirror video { transform: scaleX(-1); }
+.vc-bub.vc-talk { box-shadow: 0 0 0 2px var(--pc), 0 0 12px var(--pc); }
+.vc-big { position: fixed; z-index: 46; top: calc(70px + env(safe-area-inset-top, 0px)); right: calc(16px + env(safe-area-inset-right, 0px)); width: 240px; height: 180px; padding: 0; border-radius: 12px; overflow: hidden;
+  background: #000; border: 2px solid color-mix(in srgb, var(--pc) 70%, transparent); box-shadow: var(--e3); cursor: zoom-out; }
+.vc-big.vc-talk { box-shadow: var(--e3), 0 0 0 2px var(--pc); }
+.vc-big-n { position: absolute; left: 8px; bottom: 6px; font: 600 12px var(--f-ui); color: #fff; text-shadow: 0 1px 3px #000; }
+.vc-audio { display: none; }
+/* out of the way while the scratch board is open, and small on a phone */
+html.scratch-side .vc, html.scratch-flip .vc { display: none; }
+@media (max-width: 600px) {
+  .vc { left: calc(8px + env(safe-area-inset-left, 0px)); max-width: calc(100vw - 110px); }
+  .vc-dock:not(.in) .vc-k span { display: none; }
+  .vc-dock:not(.in) .vc-k { padding: 0 9px; }
+  .vc-big { width: 180px; height: 135px; top: calc(60px + env(safe-area-inset-top, 0px)); right: 8px; }
+}
+html.reduced .vc-k:active { transform: none; }
+html.reduced .vc-dot[data-q="off"] { animation: none; }
+
 </style>
 <script>(function(){var t="dark";try{var p=localStorage.getItem("m2m-theme");if(p==="light")t="light";else if(p==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)t="light";}catch(e){}document.documentElement.setAttribute("data-m2m-theme",t);})();</script>
 </head>
@@ -11870,6 +11931,11 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         return FB.update(FB.ref(db, "fchat/" + code), { ["m/" + id]: Object.assign({}, msg, { t: now }), ["last/" + uid]: now });
       },
       chatClear(code) { return FB.set(FB.ref(db, "fchat/" + code), null); },
+      // R3 (19 Nov): call notes for voice and video at rtc/<code>/<seat>/… (voice.js); readable by the seated players only
+      rtcWatch(code, cb, onErr) { return FB.onValue(FB.ref(db, "rtc/" + code), (s) => cb(s.val() || {}), (err) => { if (onErr) onErr(err); }); },
+      rtcWrite(rel, v) { return FB.set(FB.ref(db, "rtc/" + rel), v); },
+      rtcOnDisconnect(rel) { const od = FB.onDisconnect(FB.ref(db, "rtc/" + rel)); od.remove().catch(() => {}); return () => { od.cancel().catch(() => {}); }; },
+      connection(cb) { return FB.onValue(FB.ref(db, ".info/connected"), (s) => cb(s.val() === true)); },
       goOffline() { FB.goOffline(db); },
       goOnline() { FB.goOnline(db); }
     };
@@ -11999,7 +12065,18 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     });
     if (b.presence) fl.unpres = b.presence(code);
     if (M2M.chat && b.chatOk && b.chatOk()) M2M.chat.attach(code);
+    if (M2M.voice && b.rtcWatch) M2M.voice.attach(code);
   }
+  /** R3: the voice and video link to this floor (voice.js). Friend floors only: not when this player ticked rated, not in a tournament. */
+  N.voiceApi = () => (be && fl && be.rtcWatch ? {
+    uid: fl.uid, code: fl.code, host: fl.host,
+    seats: () => seatList(fl.snap),
+    rated: () => !!(fl && fl.snap && (fl.snap.tm || (fl.snap.r && Object.values(fl.snap.r).some((v) => v === true)))),
+    watch: (cb, onErr) => be.rtcWatch(fl.code, cb, onErr),
+    write: (rel, v) => be.rtcWrite(rel, v),
+    onDisconnect: (rel) => be.rtcOnDisconnect(rel),
+    connection: (cb) => be.connection(cb)
+  } : null);
   /** R2: the chat's link to this floor (chat.js) */
   N.chatApi = () => (be && fl && be.chatOk && be.chatOk() ? {
     uid: fl.uid, code: fl.code, host: fl.host,
@@ -12058,6 +12135,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
 
   N.leave = function () {
     if (M2M.chat) M2M.chat.detach();
+    if (M2M.voice) M2M.voice.detach();
     clearTimeout(driveT); clearInterval(enforceT);
     waiters = [];
     if (fl) {
@@ -12387,6 +12465,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (fl && fl.host && be) {
       be.set(fl.code, "status", "done").catch(() => {});
       if (be.chatClear) be.chatClear(fl.code).catch(() => {}); // R2: the chat is deleted when the game ends
+      if (be.rtcWrite) be.rtcWrite(fl.code, null).catch(() => {}); // R3: so are any call notes left behind
     }
   };
 })();
@@ -18539,6 +18618,795 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (root) { root.hidden = true; panel.hidden = true; preview.hidden = true; }
   };
   C.state = () => ({ attached: !!api, open, locked, unread, n: msgs.length, muted: muted(), last: msgs.length ? msgs[msgs.length - 1].x : null });
+})();
+
+/* ---- voicecore.js ---- */
+/* MARK TO MARKET — voicecore.js (R3, 19 Nov 2026)
+ * The pure part of talking while you play, copied verbatim from Tata's Equations js/voice.js (its VoiceCore, which
+ * has its own node tests there): message parsing with size limits, the mailbox that turns rtc/<code> into events,
+ * "perfect negotiation" for one link (safe when both sides offer at once), and the Session that runs every link of
+ * one device (a mesh of up to 3 devices). The page part, in M2M's own look, is voice.js.
+ *
+ * Signalling layout (all values short JSON strings; the database rules check the sizes and who writes what):
+ *   rtc/<CODE>/<seat>/hi               {s: session id, cam: bool, mic: bool}     "I'm in the call" (this page load)
+ *   rtc/<CODE>/<seat>/<to>/<n>         {t:'desc'|'cand', s: my session, r: their session, d | c}
+ * A message is used only if s is the sender's current session and r is mine.
+ */
+/*CORE-START*/
+var VoiceCore = (function () {
+  var MAX_SDP = 15000, MAX_CAND = 1000, MAX_CANDS_PER_LINK = 60, SEATS = ['0', '1', '2'];
+  var SID_RE = /^[a-z0-9]{4,16}$/;
+  function newSid() { var s = ''; while (s.length < 10) s += Math.random().toString(36).slice(2); return s.slice(0, 10); }
+  // The lower seat starts each link (host first); the higher seat is "polite" (gives way when both offer at once).
+  function polite(me, other) { return +me > +other; }
+  function starts(me, other) { return +me < +other; }
+
+  function parseHi(v) {
+    if (typeof v !== 'string' || v.length > 200) return null;
+    var o; try { o = JSON.parse(v); } catch (e) { return null; }
+    if (!o || typeof o !== 'object' || typeof o.s !== 'string' || !SID_RE.test(o.s)) return null;
+    return { s: o.s, cam: o.cam === true, mic: o.mic !== false };
+  }
+  function parseMsg(v) {
+    if (typeof v !== 'string' || v.length > MAX_SDP + 400) return null;
+    var o; try { o = JSON.parse(v); } catch (e) { return null; }
+    if (!o || typeof o !== 'object' || typeof o.s !== 'string' || typeof o.r !== 'string' || !SID_RE.test(o.s) || !SID_RE.test(o.r)) return null;
+    if (o.t === 'desc') {
+      var d = o.d;
+      if (!d || (d.type !== 'offer' && d.type !== 'answer') || typeof d.sdp !== 'string' || d.sdp.length > MAX_SDP) return null;
+      return { t: 'desc', s: o.s, r: o.r, d: { type: d.type, sdp: d.sdp } };
+    }
+    if (o.t === 'cand') {
+      if (o.c === null) return { t: 'cand', s: o.s, r: o.r, c: null }; // end of candidates
+      var c = o.c;
+      if (!c || typeof c.c !== 'string' || c.c.length > MAX_CAND) return null;
+      return { t: 'cand', s: o.s, r: o.r, c: { candidate: c.c, sdpMid: typeof c.m === 'string' ? c.m.slice(0, 32) : null,
+        sdpMLineIndex: c.i === (c.i | 0) && c.i >= 0 && c.i < 16 ? c.i : null, usernameFragment: typeof c.u === 'string' ? c.u.slice(0, 64) : null } };
+    }
+    return null;
+  }
+
+  // Turns a snapshot of rtc/<CODE> into what changed since the last snapshot, for seat `me`:
+  //   joins [{slot, sid}]: someone is in the call (a new session: a first join, or after a reload)
+  //   leaves [slot]: someone's session ended (hung up, left, reloaded: a reload is a leave + a join)
+  //   msgs {slot: [msg…]}: new notes for me from their CURRENT session to MY session, oldest first
+  //   info {slot: {cam, mic}}: their latest "hi" flags
+  function Mailbox(me) {
+    me = String(me);
+    var peers = {};
+    return {
+      reset: function () { peers = {}; },
+      peers: function () { return peers; },
+      read: function (tree, mySid) {
+        var out = { joins: [], leaves: [], msgs: {}, info: {} };
+        tree = tree && typeof tree === 'object' ? tree : {};
+        SEATS.forEach(function (j) {
+          if (j === me) return;
+          var node = tree[j] && typeof tree[j] === 'object' ? tree[j] : null;
+          var hi = parseHi(node && node.hi), cur = peers[j];
+          if (!hi) { if (cur) { out.leaves.push(j); delete peers[j]; } return; }
+          if (!cur || cur.sid !== hi.s) {
+            if (cur) out.leaves.push(j);
+            cur = peers[j] = { sid: hi.s, last: 0 };
+            out.joins.push({ slot: j, sid: hi.s });
+          }
+          out.info[j] = { cam: hi.cam, mic: hi.mic };
+          var box = node[me] && typeof node[me] === 'object' ? node[me] : null;
+          if (!box) return;
+          var nums = Object.keys(box).filter(function (k) { return /^[0-9]{1,4}$/.test(k) && +k > cur.last; }).map(Number).sort(function (a, b) { return a - b; });
+          nums.forEach(function (k) {
+            cur.last = k;
+            var m = parseMsg(box[k]);
+            if (!m || m.s !== hi.s || m.r !== mySid) return; // from an older session of theirs, or meant for my older session
+            (out.msgs[j] = out.msgs[j] || []).push(m);
+          });
+        });
+        return out;
+      }
+    };
+  }
+
+  // One link, "perfect negotiation" (both sides may offer; on a clash the polite side rolls back and answers).
+  // o: { pc, polite, send(msg), log? }. pc is an RTCPeerConnection (or a pretend one in the tests).
+  function Peer(o) {
+    var pc = o.pc, making = false, ignoreOffer = false, settingAnswer = false, pending = [], closed = false, chain = Promise.resolve();
+    var log = o.log || function () {};
+    function sendDesc() { var d = pc.localDescription; if (d && !closed) o.send({ t: 'desc', d: { type: d.type, sdp: d.sdp } }); }
+    function negotiate(iceRestart) {
+      if (closed) return Promise.resolve();
+      making = true;
+      return Promise.resolve().then(function () { return pc.createOffer(iceRestart ? { iceRestart: true } : undefined); })
+        .then(function (offer) { if (closed || pc.signalingState !== 'stable') return; return pc.setLocalDescription(offer).then(sendDesc); })
+        .catch(function (e) { log('offer failed', e); })
+        .then(function () { making = false; });
+    }
+    pc.onnegotiationneeded = function () { negotiate(false); };
+    pc.onicecandidate = function (e) {
+      if (closed) return;
+      var c = e && e.candidate;
+      o.send({ t: 'cand', c: c ? { c: c.candidate, m: c.sdpMid, i: c.sdpMLineIndex, u: c.usernameFragment || undefined } : null });
+    };
+    function addCand(c) {
+      return Promise.resolve().then(function () { return pc.addIceCandidate(c); })
+        .catch(function (e) { if (!ignoreOffer) log('candidate refused', e); });
+    }
+    function handle(m) {
+      if (m.t === 'desc') {
+        var d = m.d;
+        var ready = !making && (pc.signalingState === 'stable' || settingAnswer);
+        var clash = d.type === 'offer' && !ready;
+        ignoreOffer = !o.polite && clash;
+        if (ignoreOffer) { log('ignored a clashing offer'); return Promise.resolve(); }
+        return Promise.resolve()
+          .then(function () { if (clash) return pc.setLocalDescription({ type: 'rollback' }); })
+          .then(function () { settingAnswer = d.type === 'answer'; return pc.setRemoteDescription(d); })
+          .then(function () {
+            settingAnswer = false;
+            var q = pending; pending = [];
+            return q.reduce(function (p, c) { return p.then(function () { return addCand(c); }); }, Promise.resolve());
+          })
+          .then(function () {
+            if (d.type !== 'offer' || closed) return;
+            if (o.beforeAnswer) o.beforeAnswer(pc);
+            return pc.createAnswer().then(function (a) { return pc.setLocalDescription(a); }).then(sendDesc);
+          })
+          .catch(function (e) { settingAnswer = false; log('description failed', e); });
+      }
+      if (m.t === 'cand') {
+        if (m.c === null) return Promise.resolve();
+        if (!pc.remoteDescription) { pending.push(m.c); return Promise.resolve(); } // too early: keep it until the description is in
+        return addCand(m.c);
+      }
+      return Promise.resolve();
+    }
+    return {
+      pc: pc,
+      // Notes are handled strictly one after another (a candidate never overtakes its description).
+      handle: function (m) { chain = chain.then(function () { if (!closed) return handle(m); }); return chain; },
+      negotiate: negotiate,
+      restart: function () { if (o.polite) return Promise.resolve(); if (pc.restartIce) { try { pc.restartIce(); return Promise.resolve(); } catch (e) {} } return negotiate(true); },
+      pendingCount: function () { return pending.length; },
+      close: function () { if (closed) return; closed = true; pending = []; try { pc.onnegotiationneeded = null; pc.onicecandidate = null; pc.close(); } catch (e) {} },
+      closed: function () { return closed; }
+    };
+  }
+
+  // Everything one device does in the call.
+  // o: { me: seat, sid?, write(relPath, value) -> Promise   (relPath is under rtc/<CODE>/)
+  //      makePc(slot, starts) -> pc   (the starter adds its transceivers there, which makes it offer)
+  //      onPeer(slot, link|null, info)   a link opened / closed
+  //      onInfo(slot, {cam, mic})   their flags changed
+  //      log? }
+  function Session(o) {
+    var me = String(o.me), sid = o.sid || newSid(), n = 0, mb = Mailbox(me), links = {}, live = false, flags = { cam: false, mic: true };
+    var log = o.log || function () {};
+    function w(path, val) { try { return Promise.resolve(o.write(path, val)); } catch (e) { return Promise.reject(e); } }
+    function hiText() { return JSON.stringify({ s: sid, cam: !!flags.cam, mic: flags.mic !== false }); }
+    function post(slot, msg) {
+      var L = links[slot];
+      if (!L || !live) return;
+      if (msg.t === 'cand' && msg.c && ++L.cands > MAX_CANDS_PER_LINK) return;
+      msg.s = sid; msg.r = L.sid;
+      var text = JSON.stringify(msg);
+      if (text.length > MAX_SDP + 400) { log('note too big', text.length); return; }
+      n++; if (n > 9999) return;
+      w(me + '/' + slot + '/' + n, text).catch(function (e) { log('write refused', e); });
+    }
+    function open(slot, theirSid) {
+      close(slot);
+      w(me + '/' + slot, null).catch(function () {}); // my notes to their older session are no use now
+      var st = starts(me, slot);
+      var link = { slot: slot, sid: theirSid, cands: 0, starts: st, polite: polite(me, slot) };
+      var pc = o.makePc(slot, st);
+      link.peer = Peer({ pc: pc, polite: link.polite, send: function (m) { post(slot, m); }, beforeAnswer: o.beforeAnswer ? function (p) { o.beforeAnswer(slot, p); } : null, log: function (a, b) { log('[' + slot + '] ' + a, b); } });
+      links[slot] = link;
+      if (o.onPeer) o.onPeer(slot, link);
+      return link;
+    }
+    function close(slot) {
+      var L = links[slot];
+      if (!L) return;
+      delete links[slot];
+      L.peer.close();
+      if (o.onPeer) o.onPeer(slot, null);
+    }
+    return {
+      sid: function () { return sid; },
+      links: function () { return links; },
+      live: function () { return live; },
+      // Join: clear my old notes, then say hi. Resolves when the hi is written (rejects if the database refuses).
+      start: function () {
+        live = true;
+        return w(me, null).catch(function () {}).then(function () { return w(me + '/hi', hiText()); });
+      },
+      setFlags: function (f) { Object.keys(f || {}).forEach(function (k) { flags[k] = f[k]; }); if (live) return w(me + '/hi', hiText()).catch(function () {}); return Promise.resolve(); },
+      onTree: function (tree) {
+        if (!live) return;
+        var ev = mb.read(tree, sid);
+        ev.leaves.forEach(close);
+        ev.joins.forEach(function (j) { open(j.slot, j.sid); });
+        Object.keys(ev.info).forEach(function (k) { if (o.onInfo) o.onInfo(k, ev.info[k]); });
+        Object.keys(ev.msgs).forEach(function (k) { var L = links[k]; if (L) ev.msgs[k].forEach(function (m) { L.peer.handle(m); }); });
+        return ev;
+      },
+      // A fresh session (after this device lost its connection to the database): everybody reconnects to me.
+      renew: function () {
+        Object.keys(links).forEach(close); mb.reset(); sid = newSid(); n = 0;
+        if (!live) return Promise.resolve();
+        return w(me, null).catch(function () {}).then(function () { return w(me + '/hi', hiText()); });
+      },
+      restart: function (slot) { var L = links[slot]; if (L) return L.peer.restart(); },
+      stop: function () {
+        if (!live) return Promise.resolve();
+        live = false;
+        Object.keys(links).forEach(close); mb.reset();
+        return w(me, null).catch(function () {});
+      }
+    };
+  }
+
+  return { Mailbox: Mailbox, Peer: Peer, Session: Session, parseHi: parseHi, parseMsg: parseMsg, polite: polite, starts: starts, newSid: newSid,
+    MAX_SDP: MAX_SDP, MAX_CANDS_PER_LINK: MAX_CANDS_PER_LINK };
+})();
+/*CORE-END*/
+if (typeof window !== "undefined") { window.M2M = window.M2M || {}; window.M2M.voiceCore = VoiceCore; }
+if (typeof module !== "undefined" && module.exports) module.exports = VoiceCore;
+
+/* ---- voice.js ---- */
+/* MARK TO MARKET — voice.js (R3, 19 Nov 2026)
+ * Talk while you play: voice and video between the players of one friend floor (2–3 people).
+ *   - Ported from Tata's Equations js/voice.js. The pure part is voicecore.js (verbatim). This page part keeps Tata's
+ *     media, links, stats, failure detection, talking rings and wake lock, and redraws the controls in M2M's look.
+ *   - Sound and pictures go straight from device to device (WebRTC). Only the short "how to connect" notes go
+ *     through the database, under rtc/<code>/<seat>/…, written by each player for its own seat and readable by the
+ *     seated players only. They are deleted on hang-up, on leaving, when the page closes and when the game ends.
+ *   - Public STUN only (no relay): if a link can't connect in 10 s, the player is told and the game carries on.
+ *   - Friend floors only. Hidden and hung up the moment this player ticks Rated, or in a tournament (the database
+ *     rules refuse call notes there too). Host mode is a separate screen and never loads this.
+ *   - Off until a tap: "Talk" (microphone) or "See each other" (camera and microphone). The browser asks then.
+ *   - Video: small (240 × 180, at most 15 frames a second), shown as round bubbles in each player's quote in the
+ *     top bar (in the panel while in the lobby). Tap a bubble to see it larger.
+ * API: M2M.voice.attach(code), M2M.voice.detach() (online.js), M2M.voice.state(), M2M.voice.peers(),
+ *      M2M.voice.block(on) (tests: a network where nothing connects).
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U, h = U.h;
+  const VC = (M2M.voice = {});
+  const Core = () => M2M.voiceCore;
+  const STUN = [{ urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302"] }, { urls: "stun:stun.cloudflare.com:3478" }];
+  const FAIL_MS = 10000;
+  const AUDIO_C = { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 };
+  const VIDEO_C = { facingMode: "user", width: { ideal: 240, max: 320 }, height: { ideal: 180, max: 240 }, frameRate: { ideal: 12, max: 15 } };
+  const NO_NET = "Voice couldn't connect on this network. Chat still works.";
+  const NO_RULES = "Voice isn't available on this floor right now. Chat still works.";
+  const TEST = /[?&]vctest=1(&|$)/.test(location.search) || !!window.M2M_VOICE_TEST;
+  const ICON = {
+    mic: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="2.5" width="6" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    micOff: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="7" y="2.5" width="6" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5M3.5 3.5l13 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    cam: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="5.5" width="10.5" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13 9l4.5-2.5v7L13 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+    spk: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 7.5h3l4-3.5v12l-4-3.5h-3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.5 7a4 4 0 0 1 0 6M15.5 5a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    spkOff: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 7.5h3l4-3.5v12l-4-3.5h-3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.5 8l4 4M17.5 8l-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    leave: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 11.5c4-4 10-4 14 0l-1.8 2.2-3-1.2v-2a7 7 0 0 0-4.4 0v2l-3 1.2z" fill="currentColor"/></svg>'
+  };
+
+  let api = null, R = null, tree = null, unsub = null, offConn = null, offDisc = null, wasOffline = false, sess = null;
+  const st = { busy: false, inCall: false, cam: false, micOff: false, spkOff: false, refused: false, denied: false, camDenied: false, needTap: false, unsupported: false };
+  let local = { audio: null, video: null };
+  let peers = {}; // seat -> { pc, link, audio, vstream, info, timer, ok, failed, restarted, an, stats }
+  let ctx = null, meAn = null, levelTimer = null, statsTimer = null, uiTimer = null, wake = null, ducked = false, block = false, dcTimer = null;
+  let root = null, dock = null, big = null, lastDock = "";
+
+  const supported = () => !!(window.RTCPeerConnection && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  const others = () => Object.keys(peers);
+  const log = (a, b) => { if (TEST && window.console) console.log("[voice]", a, b === undefined ? "" : (b && b.message) || b); };
+  const seats = () => (api ? api.seats() : []);
+  function name(slot) { const s = seats()[+slot]; return s ? s.name : "Player"; }
+  function mySlot() { const s = api ? seats().find((x) => x && x.uid === api.uid) : null; return s ? s.slot : -1; }
+  /** the player's color, as on the board (the roster order of the filled seats) */
+  function color(slot) {
+    const roster = seats().filter(Boolean), idx = roster.findIndex((r) => r.slot === +slot), S = M2M.state;
+    return S && S.online && S.players && S.players[idx] ? S.players[idx].color : ["#A78BFA", "#2DD4BF", "#F5B83D"][+slot] || "#A78BFA";
+  }
+  /** this player's quote in the top bar (online games list the players in roster order) */
+  function quoteOf(slot) {
+    const roster = seats().filter(Boolean), idx = roster.findIndex((r) => r.slot === +slot);
+    const q = document.querySelectorAll(".tb-quotes .quote");
+    const el = idx >= 0 ? q[idx] : null;
+    return el && el.offsetParent ? el : null;
+  }
+  const friend = () => !!api && !api.rated();
+
+  // ---------------------------------------------------------------- the floor
+  VC.attach = function (code) {
+    const a = M2M.net && M2M.net.voiceApi ? M2M.net.voiceApi() : null;
+    if (!a || !Core()) return;
+    if (R && R.code === code) { api = a; return; }
+    if (R) VC.detach();
+    api = a; R = { code };
+    build();
+    st.refused = false;
+    clearInterval(uiTimer);
+    uiTimer = setInterval(() => {
+      if (!api) return;
+      const s = mySlot();
+      if (R && s >= 0 && R.slot !== s) R.slot = s;
+      if (!friend() && (st.inCall || st.busy)) hangUp();
+      render();
+    }, 600);
+    if (supported()) watch();
+    render();
+  };
+  VC.detach = function () {
+    hangUp();
+    if (unsub) { try { unsub(); } catch (e) { /* closed */ } unsub = null; }
+    if (offConn) { try { offConn(); } catch (e) { /* closed */ } offConn = null; }
+    clearInterval(uiTimer); uiTimer = null;
+    api = null; R = null; tree = null;
+    if (root) root.hidden = true;
+    closeBig();
+    document.querySelectorAll(".vc-bub").forEach((b) => b.remove());
+  };
+  function watch() {
+    if (!R || unsub || !api) return;
+    let tries = 0;
+    const code = R.code;
+    // the read can be refused for a moment while this device's seat is being written: try again a few times
+    const sub = () => { unsub = api.watch(onTree, () => { unsub = null; if (R && R.code === code && tries++ < 4) setTimeout(() => { if (R && R.code === code && !unsub) sub(); }, 2000); }); };
+    sub();
+    offConn = api.connection((ok) => {
+      if (!ok) { wasOffline = true; return; }
+      if (wasOffline && sess) { log("back online: new session"); sess.renew(); armDisconnect(); }
+      wasOffline = false;
+    });
+  }
+  function onTree(v) {
+    tree = v && typeof v === "object" ? v : {};
+    if (sess) sess.onTree(block ? blocked(tree) : tree);
+    render();
+  }
+  // tests: "a network where nothing connects" (every candidate dropped, both ways)
+  function blocked(t) {
+    const out = JSON.parse(JSON.stringify(t || {})), me = String(R.slot);
+    Object.keys(out).forEach((j) => {
+      const box = out[j] && out[j][me];
+      if (!box || typeof box !== "object") return;
+      Object.keys(box).forEach((k) => {
+        try { const m = JSON.parse(box[k]); if (m.t === "cand") delete box[k]; else if (m.d) { m.d.sdp = stripCands(m.d.sdp); box[k] = JSON.stringify(m); } } catch (e) { /* not a note */ }
+      });
+    });
+    return out;
+  }
+  const stripCands = (sdp) => String(sdp || "").split(/\r\n/).filter((l) => l.indexOf("a=candidate") !== 0 && l.indexOf("a=end-of-candidates") !== 0).join("\r\n");
+  /** who has said hi in this floor's call right now */
+  function inCallList() {
+    const out = {}; if (!tree) return out;
+    Object.keys(tree).forEach((j) => { const hi = Core().parseHi(tree[j] && tree[j].hi); if (hi) out[j] = hi; });
+    return out;
+  }
+
+  // ---------------------------------------------------------------- media
+  function ensureCtx() {
+    if (ctx) { if (ctx.state === "suspended" && ctx.resume) ctx.resume().catch(() => {}); return ctx; }
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    try { ctx = new AC(); if (ctx.state === "suspended" && ctx.resume) ctx.resume().catch(() => {}); } catch (e) { ctx = null; }
+    return ctx;
+  }
+  const getMic = () => navigator.mediaDevices.getUserMedia({ audio: AUDIO_C, video: false }).then((s) => s.getAudioTracks()[0] || null);
+  const getCam = () => navigator.mediaDevices.getUserMedia({ audio: false, video: VIDEO_C }).then((s) => { const t = s.getVideoTracks()[0] || null; if (t && "contentHint" in t) t.contentHint = "motion"; return t; });
+  function watchTrack(t, kind) { if (t) t.onended = () => { if (kind === "audio" && local.audio === t) deviceChanged(true); if (kind === "video" && local.video === t) setCam(false); }; }
+  function stopMedia() {
+    [local.audio, local.video].forEach((t) => { if (t) { try { t.onended = null; t.stop(); } catch (e) { /* gone */ } } });
+    local = { audio: null, video: null };
+    meAn = null;
+  }
+
+  // ---------------------------------------------------------------- joining (always after a tap)
+  function talk(withCam) {
+    if (!R || st.busy || st.inCall || !friend()) return;
+    if (!supported()) { st.unsupported = true; render(); return; }
+    st.busy = true; st.denied = false; st.camDenied = false; st.refused = false; render();
+    if (!unsub) watch();
+    ensureCtx();
+    try { if (navigator.audioSession) navigator.audioSession.type = "play-and-record"; } catch (e) { /* not iOS */ } // iOS: the game's sounds keep playing with the mic on
+    getMic().then((t) => { local.audio = t; watchTrack(t, "audio"); if (!t) st.denied = true; }, (e) => { log("no microphone", e); st.denied = true; })
+      .then(() => {
+        if (!withCam) return null;
+        return getCam().then((t) => { local.video = t; watchTrack(t, "video"); st.cam = !!t; }, (e) => { log("no camera", e); st.camDenied = true; st.cam = false; });
+      })
+      .then(() => {
+        if (local.audio && st.micOff) local.audio.enabled = false;
+        try { if (M2M.audio && M2M.audio.unlock) M2M.audio.unlock(); } catch (e) { /* sound is optional */ }
+        return startSession();
+      })
+      .catch((e) => { log("talk failed", e); st.busy = false; stopMedia(); render(); });
+  }
+  function startSession() {
+    if (!R || R.slot == null || R.slot < 0) { R && (R.slot = mySlot()); }
+    if (!R || R.slot < 0) { st.busy = false; stopMedia(); render(); return null; }
+    const r = R;
+    sess = Core().Session({
+      me: r.slot,
+      write: (p, v) => {
+        if (block && v && /\/[0-9]\/[0-9]+$/.test(p)) { try { const m = JSON.parse(v); if (m.t === "cand") return Promise.resolve(); if (m.d) { m.d.sdp = stripCands(m.d.sdp); v = JSON.stringify(m); } } catch (e) { /* not a note */ } }
+        return api.write(r.code + "/" + p, v);
+      },
+      makePc, onPeer, onInfo, beforeAnswer, log
+    });
+    sess.setFlags({ cam: !!(st.cam && local.video), mic: !!(local.audio && !st.micOff) });
+    return sess.start().then(() => {
+      if (R !== r || !sess) return;
+      st.busy = false; st.inCall = true; st.refused = false;
+      armDisconnect(); startTimers(); keepAwake(true);
+      if (tree) onTree(tree);
+      render();
+    }, (e) => {
+      log("the database refused the call notes", e);
+      if (sess) { const s = sess; sess = null; s.stop(); }
+      st.busy = false; st.refused = true; stopMedia(); render();
+    });
+  }
+  function armDisconnect() { if (offDisc) { try { offDisc(); } catch (e) { /* gone */ } } offDisc = R && api ? api.onDisconnect(R.code + "/" + R.slot) : null; }
+  function hangUp() {
+    const had = st.inCall || st.busy || !!sess;
+    if (sess) { const s = sess; sess = null; s.stop(); }
+    others().forEach(dropPeer);
+    if (offDisc) { try { offDisc(); } catch (e) { /* gone */ } offDisc = null; }
+    stopMedia(); stopTimers(); keepAwake(false); duck(false);
+    st.inCall = false; st.busy = false; st.cam = false; st.needTap = false;
+    try { if (navigator.audioSession) navigator.audioSession.type = "auto"; } catch (e) { /* not iOS */ }
+    closeBig();
+    if (had) render();
+  }
+
+  // ---------------------------------------------------------------- links
+  function makePc(slot, starts) {
+    const pc = new RTCPeerConnection({ iceServers: TEST ? [] : STUN, bundlePolicy: "max-bundle" });
+    const p = peers[slot] = peers[slot] || {};
+    p.pc = pc; p.ok = false; p.failed = false; p.restarted = false; p.stats = {}; p.vstream = null;
+    if (starts) {
+      addTx(pc, "audio", local.audio, [{ priority: "high", networkPriority: "high", maxBitrate: 40000 }]);
+      addTx(pc, "video", st.cam ? local.video : null, [{ maxBitrate: 150000, maxFramerate: 15 }]);
+    }
+    pc.ontrack = (e) => gotTrack(slot, pc, e.track);
+    pc.oniceconnectionstatechange = () => onIce(slot, pc);
+    return pc;
+  }
+  function addTx(pc, kind, track, enc) {
+    try { pc.addTransceiver(track || kind, { direction: "sendrecv", sendEncodings: enc }); }
+    catch (e) { try { pc.addTransceiver(track || kind, { direction: "sendrecv" }); } catch (e2) { log("addTransceiver failed", e2); } }
+  }
+  const kindOf = (t) => (t.receiver && t.receiver.track && t.receiver.track.kind) || (t.sender && t.sender.track && t.sender.track.kind) || "";
+  // the answering side sends on the transceivers the offer made (so the camera never needs a new negotiation)
+  function beforeAnswer(slot, pc) {
+    pc.getTransceivers().forEach((t) => {
+      const k = kindOf(t);
+      if (k !== "audio" && k !== "video") return;
+      try { t.direction = "sendrecv"; } catch (e) { /* closed */ }
+      const want = k === "audio" ? local.audio : (st.cam ? local.video : null);
+      if (t.sender.track !== want) t.sender.replaceTrack(want).catch(() => {});
+    });
+  }
+  function senders(kind) {
+    const out = [];
+    others().forEach((s) => { const p = peers[s]; if (!p.pc || p.pc.signalingState === "closed") return; p.pc.getTransceivers().forEach((t) => { if (kindOf(t) === kind && t.sender) out.push(t.sender); }); });
+    return out;
+  }
+  // small pictures, low frame rate; the voice goes first when the network is slow
+  function tune(pc) {
+    pc.getSenders().forEach((s) => {
+      const k = s.track ? s.track.kind : null; if (!k || !s.getParameters || !s.setParameters) return;
+      try {
+        const prm = s.getParameters(); if (!prm.encodings || !prm.encodings.length) return;
+        if (k === "video") { prm.encodings[0].maxBitrate = 150000; prm.encodings[0].maxFramerate = 15; }
+        else { prm.encodings[0].priority = "high"; prm.encodings[0].networkPriority = "high"; }
+        s.setParameters(prm).catch(() => {});
+      } catch (e) { /* older browser */ }
+    });
+  }
+  function onPeer(slot, link) {
+    if (!link) { dropPeer(slot); render(); return; }
+    const p = peers[slot] = peers[slot] || {};
+    p.link = link; p.info = p.info || { cam: false, mic: true };
+    clearTimeout(p.timer);
+    p.timer = setTimeout(() => checkFail(slot), FAIL_MS);
+    render();
+  }
+  function dropPeer(slot) {
+    const p = peers[slot]; if (!p) return;
+    clearTimeout(p.timer); clearTimeout(p.retry);
+    try { if (p.pc && p.pc.signalingState !== "closed") p.pc.close(); } catch (e) { /* closed */ }
+    if (p.audio) { try { p.audio.pause(); p.audio.srcObject = null; p.audio.remove(); } catch (e) { /* gone */ } }
+    if (p.an) { try { p.an.src.disconnect(); } catch (e) { /* gone */ } }
+    delete peers[slot];
+    document.querySelectorAll('.vc-bub[data-seat="' + slot + '"]').forEach((b) => b.remove());
+    if (big && big.dataset.seat === String(slot)) closeBig();
+  }
+  function onInfo(slot, f) { const p = peers[slot]; if (!p) return; const was = JSON.stringify(p.info || {}); p.info = f; if (was !== JSON.stringify(f)) render(); }
+  function onIce(slot, pc) {
+    const p = peers[slot]; if (!p || p.pc !== pc) return;
+    const s = pc.iceConnectionState;
+    log("[" + slot + "] ice " + s);
+    if (s === "connected" || s === "completed") {
+      clearTimeout(p.retry); clearTimeout(p.timer); p.ok = true; p.failed = false; tune(pc); render();
+    } else if (s === "failed") {
+      p.ok = false; checkFail(slot);
+    } else if (s === "disconnected") {
+      p.ok = false; render();
+      clearTimeout(p.retry);
+      p.retry = setTimeout(() => { if (peers[slot] === p && pc.iceConnectionState === "disconnected" && sess) sess.restart(slot); }, 4000);
+      clearTimeout(p.timer); p.timer = setTimeout(() => checkFail(slot), FAIL_MS);
+    }
+  }
+  function checkFail(slot) {
+    const p = peers[slot]; if (!p || p.ok) return;
+    p.failed = true;
+    if (!p.restarted && sess) { p.restarted = true; sess.restart(slot); }
+    render();
+  }
+  function gotTrack(slot, pc, track) {
+    const p = peers[slot]; if (!p || p.pc !== pc) return;
+    if (track.kind === "audio") {
+      if (!p.audio) { p.audio = document.createElement("audio"); p.audio.autoplay = true; p.audio.setAttribute("playsinline", ""); p.audio.className = "vc-audio"; document.body.appendChild(p.audio); }
+      p.audio.srcObject = new MediaStream([track]);
+      p.audio.muted = st.spkOff;
+      playAudio(p.audio);
+      p.an = analyser(new MediaStream([track]));
+    } else if (track.kind === "video") {
+      p.vstream = new MediaStream([track]);
+    }
+    render();
+  }
+  // autoplay rules (iOS Safari, Chrome): if the browser refuses to start the sound, the panel offers "Tap to hear"
+  function playAudio(a) {
+    let pr = null; try { pr = a.play(); } catch (e) { /* refused */ }
+    if (pr && pr.catch) pr.then(() => { if (st.needTap && everyonePlays()) { st.needTap = false; render(); } }, () => { st.needTap = true; render(); });
+  }
+  const everyonePlays = () => others().every((s) => { const a = peers[s].audio; return !a || !a.paused; });
+
+  // ---------------------------------------------------------------- buttons
+  function setMic(off) { st.micOff = off; if (local.audio) local.audio.enabled = !off; if (sess) sess.setFlags({ mic: !!(local.audio && !off) }); render(); }
+  function setSpeaker(off) { st.spkOff = off; others().forEach((s) => { const a = peers[s].audio; if (a) a.muted = off; }); if (off) duck(false); render(); }
+  function setCam(on) {
+    if (on && !local.video) {
+      if (st.busy) return;
+      st.busy = true; render();
+      getCam().then((t) => {
+        st.busy = false;
+        if (!sess) { if (t) t.stop(); render(); return; }
+        local.video = t; watchTrack(t, "video"); st.cam = !!t; st.camDenied = !t;
+        senders("video").forEach((s) => s.replaceTrack(t).catch(() => {}));
+        sess.setFlags({ cam: !!t }); render();
+      }, (e) => { log("no camera", e); st.busy = false; st.camDenied = true; st.cam = false; render(); });
+      return;
+    }
+    if (!on) {
+      senders("video").forEach((s) => s.replaceTrack(null).catch(() => {}));
+      if (local.video) { try { local.video.onended = null; local.video.stop(); } catch (e) { /* gone */ } }
+      local.video = null; st.cam = false;
+      if (sess) sess.setFlags({ cam: false });
+      render();
+    }
+  }
+  // headphones plugged in or pulled out, or the microphone went away: take the (new) default microphone
+  function deviceChanged(now) {
+    if (!sess || (!local.audio && !now)) return;
+    clearTimeout(dcTimer);
+    dcTimer = setTimeout(() => {
+      if (!sess) return;
+      navigator.mediaDevices.getUserMedia({ audio: AUDIO_C, video: false }).then((s) => {
+        const t = s.getAudioTracks()[0]; if (!t || !sess) { if (t) t.stop(); return; }
+        const old = local.audio;
+        if (old && old.readyState === "live" && old.getSettings && t.getSettings && old.getSettings().deviceId === t.getSettings().deviceId) { t.stop(); return; }
+        t.enabled = !st.micOff; local.audio = t; watchTrack(t, "audio"); meAn = null;
+        senders("audio").forEach((snd) => snd.replaceTrack(t).catch(() => {}));
+        if (old) { try { old.onended = null; old.stop(); } catch (e) { /* gone */ } }
+      }, (e) => log("microphone switch failed", e));
+    }, now ? 50 : 700);
+  }
+  try { if (navigator.mediaDevices && navigator.mediaDevices.addEventListener) navigator.mediaDevices.addEventListener("devicechange", () => deviceChanged(false)); } catch (e) { /* older browser */ }
+
+  // ---------------------------------------------------------------- talking rings, ducking, connection quality
+  function analyser(stream) {
+    const c = ensureCtx(); if (!c || !c.createMediaStreamSource) return null;
+    try { const src = c.createMediaStreamSource(stream), an = c.createAnalyser(); an.fftSize = 512; src.connect(an); return { src, an, buf: new Float32Array(an.fftSize), on: false, quiet: 0 }; } catch (e) { return null; }
+  }
+  function level(a) {
+    if (!a || !a.an.getFloatTimeDomainData) return 0;
+    a.an.getFloatTimeDomainData(a.buf);
+    let s = 0; for (let i = 0; i < a.buf.length; i++) s += a.buf[i] * a.buf[i];
+    return Math.sqrt(s / a.buf.length);
+  }
+  function speaking(a, muted) {
+    if (!a) return false;
+    const l = muted ? 0 : level(a);
+    if (l > 0.03) { a.on = true; a.quiet = 0; } else if (a.on && ++a.quiet > 3) a.on = false; // stays lit about half a second after the last sound
+    return a.on;
+  }
+  function startTimers() {
+    stopTimers();
+    levelTimer = setInterval(() => {
+      if (local.audio && (!meAn || meAn.track !== local.audio)) { meAn = analyser(new MediaStream([local.audio])); if (meAn) meAn.track = local.audio; }
+      ring(String(R ? R.slot : "me"), speaking(meAn, st.micOff || !local.audio));
+      let any = false;
+      others().forEach((s) => { const p = peers[s], on = speaking(p.an, !p.ok || (p.info && p.info.mic === false)); ring(s, on); if (on) any = true; });
+      duck(any && !st.spkOff);
+    }, 140);
+    statsTimer = setInterval(stats, 2000);
+  }
+  function stopTimers() { clearInterval(levelTimer); clearInterval(statsTimer); levelTimer = statsTimer = null; document.querySelectorAll(".vc-talk").forEach((el) => el.classList.remove("vc-talk")); }
+  function ring(seat, on) {
+    document.querySelectorAll('[data-vc-seat="' + seat + '"]').forEach((el) => { if (el.classList.contains("vc-talk") !== on) el.classList.toggle("vc-talk", on); });
+  }
+  /** while someone else talks, the game's music and ambience drop (the same duck the host voice uses) */
+  function duck(on) {
+    if (on === ducked) return; ducked = on;
+    try { if (M2M.audio && M2M.audio.duck) M2M.audio.duck(on); } catch (e) { /* sound is optional */ }
+  }
+  function stats() {
+    others().forEach((s) => {
+      const p = peers[s]; if (!p.pc || !p.pc.getStats) return;
+      p.pc.getStats().then((rep) => {
+        const o = { bytesIn: 0, bytesOut: 0, rtt: null, lost: 0, got: 0, audioIn: 0, videoIn: 0 };
+        rep.forEach((r) => {
+          if (r.type === "inbound-rtp") { o.bytesIn += r.bytesReceived || 0; if (r.kind === "audio" || r.mediaType === "audio") { o.lost += r.packetsLost || 0; o.got += r.packetsReceived || 0; o.audioIn += r.bytesReceived || 0; } else o.videoIn += r.bytesReceived || 0; }
+          if (r.type === "outbound-rtp") o.bytesOut += r.bytesSent || 0;
+          if (r.type === "candidate-pair" && r.nominated && r.state === "succeeded" && typeof r.currentRoundTripTime === "number") o.rtt = r.currentRoundTripTime;
+        });
+        const prev = p.stats || {}, dl = o.lost - (prev.lost || 0), dg = o.got - (prev.got || 0);
+        const loss = dg + dl > 0 ? dl / (dg + dl) : 0;
+        o.q = !p.ok ? "off" : ((o.rtt !== null && o.rtt > 0.6) || loss > 0.1) ? "poor" : ((o.rtt !== null && o.rtt > 0.3) || loss > 0.03) ? "ok" : "good";
+        o.ice = p.pc.iceConnectionState;
+        p.stats = o;
+        const d = dock && dock.querySelector(".vc-dot"); if (d) { const qq = quality(); if (d.dataset.q !== qq) { d.dataset.q = qq; d.title = QTXT[qq]; d.setAttribute("aria-label", QTXT[qq]); } }
+      }).catch(() => {});
+    });
+  }
+  const QTXT = { good: "Good connection", ok: "A bit slow", poor: "Poor connection", off: "Connecting…", none: "Nobody else is in the call yet" };
+  function quality() {
+    const ks = others(); if (!ks.length) return "none";
+    const rank = { good: 0, ok: 1, poor: 2, off: 3 }; let worst = "good";
+    ks.forEach((s) => { const p = peers[s], qq = p.ok ? ((p.stats && p.stats.q) || "good") : "off"; if (rank[qq] > rank[worst]) worst = qq; });
+    return worst;
+  }
+  // phone or iPad: keep the screen awake while talking
+  function keepAwake(on) {
+    if (!on) { if (wake) { try { wake.release(); } catch (e) { /* gone */ } wake = null; } return; }
+    if (!navigator.wakeLock || wake || document.visibilityState !== "visible") return;
+    navigator.wakeLock.request("screen").then((w) => { wake = w; w.addEventListener("release", () => { if (wake === w) wake = null; }); }).catch(() => {});
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible" || !st.inCall) return;
+    keepAwake(true); ensureCtx();
+    others().forEach((s) => { const a = peers[s].audio; if (a && a.paused) playAudio(a); });
+  });
+  window.addEventListener("pagehide", () => { if (sess || st.inCall) hangUp(); });
+
+  // ---------------------------------------------------------------- the panel (bottom left) and the bubbles (top bar)
+  function build() {
+    if (root) return;
+    dock = h("div.vc-dock", { role: "group", "aria-label": "Voice and video" });
+    root = h("div.vc", { hidden: true }, dock);
+    document.body.appendChild(root);
+    dock.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-vc]"); if (!b || b.disabled) return;
+      const a = b.dataset.vc;
+      if (a === "talk") talk(false);
+      else if (a === "see") talk(true);
+      else if (a === "mic") { if (local.audio) setMic(!st.micOff); }
+      else if (a === "spk") setSpeaker(!st.spkOff);
+      else if (a === "cam") { if (st.inCall) setCam(!st.cam); }
+      else if (a === "leave") hangUp();
+      else if (a === "hear") { st.needTap = false; ensureCtx(); others().forEach((s) => { const x = peers[s].audio; if (x) playAudio(x); }); render(); }
+      else if (a === "ok") { st.refused = false; st.unsupported = false; render(); }
+      try { if (M2M.audio && M2M.audio.optKey) M2M.audio.optKey(); } catch (err) { /* sound is optional */ }
+    });
+  }
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  function key(act, icon, label, opts) {
+    const o = opts || {};
+    return '<button type="button" class="vc-k' + (o.cls ? " " + o.cls : "") + '" data-vc="' + act + '"' + (o.pressed != null ? ' aria-pressed="' + o.pressed + '"' : "") +
+      (o.disabled ? " disabled" : "") + ' title="' + esc(o.title || label) + '" aria-label="' + esc(o.title || label) + '">' + (icon ? ICON[icon] : "") + (o.text ? '<span>' + esc(label) + "</span>" : "") + "</button>";
+  }
+  function chips() {
+    const ks = others();
+    if (!ks.length) return '<span class="vc-chip vc-wait">Waiting for the others to tap Talk</span>';
+    return ks.map((s) => {
+      const p = peers[s], state = p.ok ? "" : p.failed ? " ✕" : " …";
+      return '<span class="vc-chip' + (p.ok ? " ok" : "") + '" data-vc-seat="' + s + '" style="--pc:' + color(s) + '">' + esc(name(s)) + (p.info && p.info.mic === false ? " (muted)" : "") + state + "</span>";
+    }).join("");
+  }
+  function notes() {
+    const out = [];
+    if (others().some((s) => peers[s].failed && !peers[s].ok)) out.push(NO_NET);
+    if (st.denied && st.inCall) out.push("The microphone isn't allowed on this device, so the others can't hear you. You can still hear them.");
+    if (st.camDenied) out.push("The camera isn't allowed on this device. Talking still works.");
+    return out.map((t) => '<p class="vc-note">' + esc(t) + "</p>").join("");
+  }
+  function dockHTML() {
+    if (st.unsupported) return '<p class="vc-note">Voice doesn\'t work in this browser. Chat still works.</p>' + key("ok", null, "OK", { text: true, cls: "vc-wide" });
+    if (st.refused && !st.inCall) return '<p class="vc-note">' + esc(NO_RULES) + "</p>" + key("ok", null, "OK", { text: true, cls: "vc-wide" });
+    if (st.busy && !st.inCall) return '<span class="vc-wait">Connecting…</span>';
+    if (!st.inCall) {
+      const on = inCallList(), me = R ? String(R.slot) : "";
+      const names = Object.keys(on).filter((j) => j !== me).map((j) => esc(name(j)));
+      const hint = names.length ? '<p class="vc-hint"><b>' + names.join(" and ") + "</b> " + (names.length > 1 ? "are" : "is") + " in the call.</p>" : "";
+      return '<div class="vc-row">' + key("talk", "mic", "Talk", { text: true, title: "Talk: join the call with your microphone" }) +
+        key("see", "cam", "See each other", { text: true, title: "See each other: join with your camera and microphone" }) + "</div>" + hint;
+    }
+    const q = quality();
+    const micOff = st.micOff || !local.audio;
+    return '<div class="vc-row"><span class="vc-dot" data-q="' + q + '" role="img" title="' + QTXT[q] + '" aria-label="' + QTXT[q] + '"></span>' +
+      key("mic", micOff ? "micOff" : "mic", "Microphone", { pressed: !micOff, disabled: !local.audio, cls: micOff ? "off" : "", title: micOff ? "Microphone off: tap to talk" : "Microphone on: tap to mute" }) +
+      key("cam", "cam", "Camera", { pressed: st.cam, cls: st.cam ? "" : "off", title: st.cam ? "Camera on: tap to turn it off" : "Camera off: tap to turn it on" }) +
+      key("spk", st.spkOff ? "spkOff" : "spk", "Speaker", { pressed: !st.spkOff, cls: st.spkOff ? "off" : "", title: st.spkOff ? "The others are muted on this device" : "Hearing the others: tap to mute them" }) +
+      key("leave", "leave", "Leave the call", { cls: "red" }) + "</div>" +
+      '<div class="vc-peers">' + chips() + "</div>" +
+      (st.needTap ? key("hear", "spk", "Tap to hear the others", { text: true, cls: "vc-wide" }) : "") + notes();
+  }
+  function render() {
+    if (!root) return;
+    const show = !!api && friend() && mySlot() >= 0;
+    root.hidden = !show;
+    if (!show) { bubbles(false); return; }
+    const html = dockHTML();
+    if (html !== lastDock) { lastDock = html; dock.innerHTML = html; }
+    dock.classList.toggle("in", st.inCall);
+    // my own quote, and the others', carry the talking ring
+    seats().forEach((s) => { if (!s) return; const q = quoteOf(s.slot); if (q) { q.dataset.vcSeat = String(s.slot); q.style.setProperty("--pc", color(s.slot)); } });
+    bubbles(true);
+  }
+  /** video bubbles: inside each player's quote in the top bar when it is on screen, otherwise in the panel */
+  function bubbles(on) {
+    const want = {};
+    if (on && st.inCall) {
+      if (st.cam && local.video && R) want[R.slot] = { track: local.video, mirror: true, label: "You" };
+      others().forEach((s) => { const p = peers[s]; if (p.ok && p.vstream && p.info && p.info.cam) want[s] = { stream: p.vstream, label: name(s) }; });
+    }
+    document.querySelectorAll(".vc-bub").forEach((b) => { if (!want[b.dataset.seat]) b.remove(); });
+    Object.keys(want).forEach((seat) => {
+      const w = want[seat];
+      const host = quoteOf(seat) || dock.querySelector(".vc-peers") || dock;
+      let b = document.querySelector('.vc-bub[data-seat="' + seat + '"]');
+      if (!b) {
+        b = h("button.vc-bub" + (w.mirror ? ".mirror" : ""), { type: "button", dataset: { seat, vcSeat: seat }, title: "Video: " + w.label + " (tap for larger)", "aria-label": "Video of " + w.label + ", tap to see it larger" });
+        b.innerHTML = "<video autoplay playsinline muted></video>";
+        b.style.setProperty("--pc", color(seat));
+        b.addEventListener("click", (e) => { e.stopPropagation(); openBig(seat); });
+      }
+      if (b.parentNode !== host) host.insertBefore(b, host.firstChild);
+      const v = b.querySelector("video");
+      const s = w.stream || (v.srcObject && v.srcObject.getVideoTracks()[0] === w.track ? v.srcObject : new MediaStream([w.track]));
+      if (v.srcObject !== s) { v.srcObject = s; const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); }
+      if (big && big.dataset.seat === seat) { const bv = big.querySelector("video"); if (bv.srcObject !== s) { bv.srcObject = s; bv.play().catch(() => {}); } }
+    });
+    if (big && !want[big.dataset.seat]) closeBig();
+  }
+  function openBig(seat) {
+    if (big && big.dataset.seat === String(seat)) { closeBig(); return; }
+    closeBig();
+    const src = document.querySelector('.vc-bub[data-seat="' + seat + '"] video');
+    if (!src || !src.srcObject) return;
+    big = h("button.vc-big" + (String(seat) === String(R && R.slot) ? ".mirror" : ""), { type: "button", dataset: { seat: String(seat), vcSeat: String(seat) }, "aria-label": "Close the larger video" },
+      h("span.vc-big-n", { text: String(seat) === String(R && R.slot) ? "You" : name(seat) }));
+    big.style.setProperty("--pc", color(seat));
+    const v = document.createElement("video"); v.autoplay = true; v.muted = true; v.setAttribute("playsinline", ""); v.srcObject = src.srcObject;
+    big.prepend(v); v.play().catch(() => {});
+    big.addEventListener("click", closeBig);
+    document.body.appendChild(big);
+  }
+  function closeBig() { if (big) { big.remove(); big = null; } }
+
+  // ---------------------------------------------------------------- reading the state (tests and the panel)
+  VC.state = () => ({ attached: !!api, shown: !!root && !root.hidden, friend: friend(), slot: R ? R.slot : -1, busy: st.busy, inCall: st.inCall, cam: st.cam, micOff: st.micOff, spkOff: st.spkOff,
+    refused: st.refused, denied: st.denied, needTap: st.needTap, inCallList: Object.keys(inCallList()), ducked, bubbles: document.querySelectorAll(".vc-bub").length });
+  VC.peers = () => {
+    const o = {}; others().forEach((s) => { const p = peers[s]; o[s] = { ice: p.pc && p.pc.iceConnectionState, ok: !!p.ok, failed: !!p.failed, info: p.info, stats: p.stats, playing: !!(p.audio && !p.audio.paused), video: !!p.vstream }; });
+    return o;
+  };
+  VC.block = (on) => { block = !!on; return block; };
+  VC.tree = () => tree;
 })();
 
 </script>
