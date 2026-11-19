@@ -2898,11 +2898,12 @@ html[data-m2m-theme="light"] .stage-shade::after {
 html.clue-open .stage-shade::after { opacity: 0.35; }
 
 /* 5 · higher stakes stand taller; a quieter dollar sign; an accent edge on hover */
-.cell[data-row="0"] .slab { --th: 4px; }
-.cell[data-row="1"] .slab { --th: 8px; }
-.cell[data-row="2"] .slab { --th: 12px; }
-.cell[data-row="3"] .slab { --th: 17px; }
-.cell[data-row="4"] .slab { --th: 22px; }
+/* (DEPTH, 18 Nov: centred on --tile-th, medium = 14 px: $200 8 px … $1,000 20 px) */
+.cell[data-row="0"] .slab { --th: calc(var(--tile-th) * 0.57); }
+.cell[data-row="1"] .slab { --th: calc(var(--tile-th) * 0.79); }
+.cell[data-row="2"] .slab { --th: var(--tile-th); }
+.cell[data-row="3"] .slab { --th: calc(var(--tile-th) * 1.21); }
+.cell[data-row="4"] .slab { --th: calc(var(--tile-th) * 1.43); }
 .slab .v .cur { font-size: 0.62em; font-weight: 500; vertical-align: 0.42em; margin-right: 0.08em; opacity: 0.8; }
 .cell:not(.used):not(.void):hover .f { box-shadow: inset 0 0 0 1.5px var(--accent-2), inset 0 1px 0 rgba(255,255,255,0.1); }
 
@@ -3011,38 +3012,194 @@ html.scratch-side .host { visibility: hidden; }
 html.scratch-flip body { overflow: hidden; }
 html[data-m2m-theme="light"] .scratch { box-shadow: 0 18px 50px rgba(24, 20, 14, 0.16); }
 
-/* ================================================================ R1 (18 Nov 2026): tactile press, after Tata's Equations
-   Keys with a bottom edge that sink when pressed: in this game's own palette, short travel, no bounce. */
-:root { --edge: #0B0F1A; --edge-hi: rgba(255, 255, 255, 0.06); }
-html[data-m2m-theme="light"] { --edge: #D6CEC2; --edge-hi: rgba(255, 255, 255, 0.9); }
-/* the board's tiles: the face sinks into its own sides on a press */
-.cell:not(.used) .slab:active .f { transform: translateZ(calc(var(--th) * 0.3)); transition: transform 0.06s; }
-.slab .f { transition: transform 0.18s var(--ease); }
-/* the answers and the leverage keys */
-button.opt, button.lev { box-shadow: inset 0 1px 0 var(--edge-hi), 0 3px 0 var(--edge); transition: background 0.15s, border-color 0.15s, opacity 0.2s, transform 0.07s, box-shadow 0.07s; }
-button.opt:active:not(:disabled), button.lev:active:not(:disabled) { transform: translateY(3px); box-shadow: inset 0 1px 0 var(--edge-hi), 0 0 0 var(--edge); }
-button.opt.chosen, button.lev[aria-pressed="true"] { box-shadow: inset 0 1px 0 var(--edge-hi), 0 3px 0 color-mix(in srgb, var(--accent) 70%, var(--edge)); }
-.opt.revealed, .opt:disabled { box-shadow: none; transform: none; }
-/* the main buttons: a darker edge in their own color */
-.btn-primary:not(:disabled), .btn-ink:not(:disabled) { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 3px 0 color-mix(in srgb, var(--accent) 60%, #000), 0 10px 24px -14px var(--accent); transition: transform 0.07s, box-shadow 0.07s, background 0.15s; }
-.btn-primary:active:not(:disabled), .btn-ink:active:not(:disabled) { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 0 0 color-mix(in srgb, var(--accent) 60%, #000); }
-.btn:not(.btn-primary):not(:disabled) { box-shadow: inset 0 1px 0 var(--edge-hi), 0 2px 0 var(--edge); }
-.btn:not(.btn-primary):active:not(:disabled) { transform: translateY(2px); box-shadow: inset 0 1px 0 var(--edge-hi), 0 0 0 var(--edge); }
-html.reduced button.opt:active, html.reduced button.lev:active, html.reduced .btn:active, html.reduced .btn-ink:active { transform: none; }
+/* ================================================================ DEPTH (18 Nov 2026): one material, trading-desk hardware
+   Matte keycaps, engraved plates, recessed windows, paper tickets. Short travel, no bounce. Replaces the R1 tactile press.
+   How raised: --key-d (flat keys) and --tile-th (board tiles). Sean chose "medium": 4 px and 14 px.
+   Reduced motion keeps the depth (it is static) and drops the travel. */
+:root {
+  --key-d: 4px; --tile-th: 14px;
+  --key-edge: #0A0F1C; --key-rim: rgba(130, 146, 196, 0.2); --key-hi: rgba(255, 255, 255, 0.09); --key-drop: rgba(0, 0, 0, 0.55);
+  --well-in: inset 0 2px 5px rgba(0, 0, 0, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  --e1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 14px -6px rgba(0, 0, 0, 0.45);
+  --e2: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 2px 4px rgba(0, 0, 0, 0.35), 0 14px 30px -10px rgba(0, 0, 0, 0.55);
+  --e3: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 2px 6px rgba(0, 0, 0, 0.35), 0 18px 36px -12px rgba(0, 0, 0, 0.6), 0 46px 100px -24px rgba(0, 0, 0, 0.8);
+}
+html[data-m2m-theme="light"] {
+  --key-edge: #CFC6B8; --key-rim: rgba(24, 20, 14, 0.1); --key-hi: rgba(255, 255, 255, 0.95); --key-drop: rgba(24, 20, 14, 0.18);
+  --well-in: inset 0 2px 4px rgba(24, 20, 14, 0.13), inset 0 -1px 0 rgba(255, 255, 255, 0.9);
+  --e1: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 1px 2px rgba(24, 20, 14, 0.06), 0 6px 14px -8px rgba(24, 20, 14, 0.12);
+  --e2: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 2px 4px rgba(24, 20, 14, 0.06), 0 14px 30px -12px rgba(24, 20, 14, 0.18);
+  --e3: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 2px 6px rgba(24, 20, 14, 0.07), 0 18px 40px -14px rgba(24, 20, 14, 0.2), 0 40px 90px -30px rgba(24, 20, 14, 0.22);
+}
+
+/* ---------- the board: a tray of keycaps ---------- */
+.board { box-shadow: inset 0 0 0 1px rgba(110, 125, 170, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.05), inset 0 10px 26px rgba(0, 0, 0, 0.45), inset 0 -2px 0 rgba(0, 0, 0, 0.5),
+  0 0 0 1px rgba(0, 0, 0, 0.6), 0 50px 90px -30px rgba(0, 0, 0, 0.9); }
+.board::after { content: ""; position: absolute; left: 6px; right: 6px; bottom: 0; height: 18px; transform-origin: 50% 100%; transform: rotateX(-90deg); border-radius: 0 0 12px 12px; pointer-events: none;
+  background: linear-gradient(180deg, #1C2540, #0A0E18); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+html[data-m2m-theme="light"] .board { box-shadow: inset 0 0 0 1px var(--line-2), inset 0 2px 0 rgba(255, 255, 255, 0.9), inset 0 10px 24px rgba(24, 20, 14, 0.07), 0 36px 70px -36px rgba(24, 20, 14, 0.3); }
+html[data-m2m-theme="light"] .board::after { background: linear-gradient(180deg, #E4DCD0, #CFC5B7); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+.slab .f { background: linear-gradient(180deg, #232D4C 0%, #19223A 46%, #131B2F 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.17), inset 0 0 0 1px rgba(130, 146, 196, 0.24), inset 0 -3px 0 rgba(0, 0, 0, 0.3), inset 0 -14px 22px rgba(0, 0, 0, 0.22); }
+.slab .sb { left: 3px; right: 3px; background: linear-gradient(180deg, #273152 0%, #161E33 55%, #0D1322 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07); }
+.slab .sl { top: 3px; bottom: 3px; background: linear-gradient(90deg, #10172A, #1B2440); }
+.slab .sr { top: 3px; bottom: 3px; background: linear-gradient(90deg, #1B2440, #10172A); }
+.slab .st { left: 3px; right: 3px; background: #2E3A5E; }
+.cast { inset: 4px 2px -2px; background: rgba(0, 0, 0, 0.8); filter: blur(6px); opacity: 0.7; }
+html[data-m2m-theme="light"] .slab .f { background: linear-gradient(180deg, #FFFFFF 0%, #FCFAF6 55%, #F5F1EA 100%);
+  box-shadow: inset 0 1px 0 #FFFFFF, inset 0 0 0 1px var(--line-2), inset 0 -3px 0 rgba(24, 20, 14, 0.06), inset 0 -12px 18px rgba(24, 20, 14, 0.035); }
+html[data-m2m-theme="light"] .slab .sb { background: linear-gradient(180deg, #DDD5C9 0%, #CBC1B2 60%, #B9AE9E 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6); }
+html[data-m2m-theme="light"] .slab .sl { background: linear-gradient(90deg, #BFB4A5, #D8D0C4); }
+html[data-m2m-theme="light"] .slab .sr { background: linear-gradient(90deg, #D8D0C4, #BFB4A5); }
+html[data-m2m-theme="light"] .cast { background: rgba(24, 20, 14, 0.3); opacity: 0.6; }
+@media (hover: hover) {
+  .cell:not(.used):not(.void):hover .slab { transform: translateZ(7px); }
+  .cell:not(.used):not(.void):hover .cast { opacity: 0.9; filter: blur(11px); transform: translateZ(0.5px) scale(1.05); }
+}
+.cell:not(.used) .slab:focus-visible { transform: translateZ(7px); }
+/* a press travels almost flush with the tray, for a finger as well as a mouse (board.js holds .pressed a beat) */
+/* (as specific as the hover lift, which otherwise wins while the pointer is over the tile: the press never showed) */
+.cell:not(.used):not(.void):hover .slab:active, .cell:not(.used):not(.void) .slab:active,
+.cell.pressed:not(.used):not(.void):hover .slab, .cell.pressed:not(.used):not(.void) .slab { transform: translateZ(calc(var(--th) * -1 + 3px)); transition: transform 0.07s cubic-bezier(0.3, 0, 0.6, 1); }
+.cell:not(.used):not(.void):hover:active .cast, .cell:not(.used):not(.void):active .cast,
+.cell.pressed:not(.used):not(.void):hover .cast, .cell.pressed:not(.used):not(.void) .cast { opacity: 0.25; filter: blur(3px); transform: translateZ(0.5px) scale(0.96); transition-duration: 0.07s; }
+/* played tiles stay seated in a shallow well, the result engraved */
+.cell.used .slab { transform: translateZ(calc(var(--th) * -1 + 1px)); }
+.cell.used .f { box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(120, 136, 186, 0.1); }
+.cell.used.r-up .f { box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(31, 203, 122, 0.34); }
+.cell.used.r-dn .f { box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(240, 68, 78, 0.32); }
+.cell.used .f .res b { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.05); }
+.cell.used .f .res small { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6); }
+html[data-m2m-theme="light"] .cell.used .f { box-shadow: inset 0 3px 6px rgba(24, 20, 14, 0.1), inset 0 0 0 1px var(--line); }
+html[data-m2m-theme="light"] .cell.used.r-up .f { box-shadow: inset 0 3px 6px rgba(24, 20, 14, 0.09), inset 0 0 0 1px rgba(27, 127, 82, 0.42); }
+html[data-m2m-theme="light"] .cell.used.r-dn .f { box-shadow: inset 0 3px 6px rgba(24, 20, 14, 0.09), inset 0 0 0 1px rgba(196, 58, 50, 0.42); }
+html[data-m2m-theme="light"] .cell.used .f .res b, html[data-m2m-theme="light"] .cell.used .f .res small { text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9); }
+/* lecture headers: engraved plates, progress pips as inset lights */
+.bplate { background: linear-gradient(180deg, #0A0E19, #0D1220); box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), inset 0 -1px 0 rgba(255, 255, 255, 0.05), inset 0 0 0 1px rgba(110, 125, 170, 0.14), 0 1px 0 rgba(255, 255, 255, 0.04); }
+.bp-name { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8); }
+.bp-meter i { height: 4px; background: rgba(0, 0, 0, 0.5); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.05); }
+.bp-meter i.on { background: var(--accent-2); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 6px var(--accent-2); }
+html[data-m2m-theme="light"] .bplate { background: linear-gradient(180deg, #F4EFE7, #FBF8F3); box-shadow: inset 0 2px 4px rgba(24, 20, 14, 0.1), inset 0 -1px 0 #FFFFFF, inset 0 0 0 1px var(--line-2); }
+html[data-m2m-theme="light"] .bp-name { text-shadow: 0 1px 0 #FFFFFF; }
+html[data-m2m-theme="light"] .bp-meter i { background: rgba(24, 20, 14, 0.08); box-shadow: inset 0 1px 1px rgba(24, 20, 14, 0.15), 0 1px 0 #FFFFFF; }
+html[data-m2m-theme="light"] .bp-meter i.on { background: var(--accent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 5px rgba(196, 58, 50, 0.5); }
+
+/* ---------- flat keys: one recipe ---------- */
+button.opt, button.lev, .btn:not(:disabled), .chip-l, .pills span, .chat-fab, .sc-btn, .iconbtn, .tb-code, .chipbtn, .watch button, .ch-q, .ch-send, .sc-tool {
+  box-shadow: inset 0 1px 0 var(--key-hi), 0 var(--key-d) 0 var(--key-edge), 0 var(--key-d) 0 1px var(--key-rim), 0 calc(var(--key-d) + 5px) 12px -7px var(--key-drop);
+  transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.2s, transform 0.07s cubic-bezier(0.3, 0, 0.6, 1), box-shadow 0.07s; }
+.iconbtn, .tb-code, .sc-btn, .sc-tool, .ch-q, .chipbtn, .pills span { --key-d: 2px; }
+.chip-l, .chat-fab, .watch button, .ch-send { --key-d: 3px; }
+button.opt:active:not(:disabled), button.lev:active:not(:disabled), .btn:active:not(:disabled), .chip-l:active, .pills label:active span, .chat-fab:active:not(.locked),
+.sc-btn:active, .iconbtn:active, .tb-code:active, .chipbtn:active, .watch button:active, .ch-q:active:not(:disabled), .ch-send:active:not(:disabled), .sc-tool:active {
+  transform: translateY(calc(var(--key-d) - 1px)); box-shadow: inset 0 1px 0 var(--key-hi), 0 1px 0 var(--key-edge), 0 2px 4px -2px var(--key-drop); }
+/* a setting's hidden radio stays on top of its key, as before (the key's transform would otherwise lift it above) */
+.pills input[type="radio"] { z-index: 1; }
+/* held down: the chosen answer, the chosen leverage, a lecture that is on, a setting that is picked */
+button.opt.chosen:not(.revealed), button.lev[aria-pressed="true"], .chip-l[aria-pressed="true"], .pills input:checked + span, .sc-tool[aria-pressed="true"], .sc-tool.on {
+  transform: translateY(calc(var(--key-d) - 1px)); box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.32), 0 1px 0 color-mix(in srgb, var(--accent) 65%, var(--key-edge)); }
+html[data-m2m-theme="light"] button.opt.chosen:not(.revealed), html[data-m2m-theme="light"] button.lev[aria-pressed="true"], html[data-m2m-theme="light"] .chip-l[aria-pressed="true"], html[data-m2m-theme="light"] .pills input:checked + span, html[data-m2m-theme="light"] .sc-tool[aria-pressed="true"], html[data-m2m-theme="light"] .sc-tool.on {
+  box-shadow: inset 0 2px 4px rgba(24, 20, 14, 0.12), 0 1px 0 color-mix(in srgb, var(--accent) 45%, var(--key-edge)); }
+/* main buttons: an edge in their own color */
+.btn-primary:not(:disabled), .btn-ink:not(:disabled) { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 var(--key-d) 0 color-mix(in srgb, var(--accent) 55%, #000), 0 calc(var(--key-d) + 8px) 22px -12px var(--accent); }
+.btn-primary:active:not(:disabled), .btn-ink:active:not(:disabled) { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 1px 0 color-mix(in srgb, var(--accent) 55%, #000); }
+/* answers: the letter is its own small key; at the reveal the right answer pops up and the rest sink */
+.opts { row-gap: calc(var(--key-d) + 6px); }
+.o-letter { box-shadow: inset 0 1px 0 var(--key-hi), 0 2px 0 var(--key-edge); transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.07s, box-shadow 0.07s; }
+.opt.chosen .o-letter, .opt.right .o-letter, .opt.wrong .o-letter { transform: translateY(1px); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35); }
+.opt.revealed { transform: translateY(var(--key-d)); box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3); transition: transform 0.22s var(--ease), box-shadow 0.22s, opacity 0.3s; }
+.opt.revealed.right { transform: translateY(-2px); box-shadow: inset 0 1px 0 var(--key-hi), 0 calc(var(--key-d) + 2px) 0 color-mix(in srgb, var(--up) 55%, #000), 0 16px 30px -14px var(--up); animation: keyPop 0.34s var(--ease) both; }
+.opt.revealed.wrong { box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.38); }
+html[data-m2m-theme="light"] .opt.revealed { box-shadow: inset 0 2px 4px rgba(24, 20, 14, 0.1); }
+html[data-m2m-theme="light"] .opt.revealed.right { box-shadow: inset 0 1px 0 #FFFFFF, 0 calc(var(--key-d) + 2px) 0 color-mix(in srgb, var(--up) 60%, #FFFFFF), 0 16px 28px -16px var(--up); }
+html[data-m2m-theme="light"] .opt.revealed.wrong { box-shadow: inset 0 3px 6px rgba(24, 20, 14, 0.14); }
+@keyframes keyPop { 0% { transform: translateY(var(--key-d)); } 60% { transform: translateY(-3px); } 100% { transform: translateY(-2px); } }
+/* title: lecture chips are toggle keys with a small light; presets are one switch in a recessed track */
+.chip-l::after { content: ""; position: absolute; top: 6px; right: 6px; width: 5px; height: 5px; border-radius: 50%; background: rgba(0, 0, 0, 0.45); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6); transition: background 0.2s, box-shadow 0.2s; }
+.chip-l[aria-pressed="true"]::after { background: var(--accent); box-shadow: 0 0 6px var(--accent), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+html[data-m2m-theme="light"] .chip-l::after { background: rgba(24, 20, 14, 0.12); box-shadow: inset 0 1px 1px rgba(24, 20, 14, 0.2); }
+html[data-m2m-theme="light"] .chip-l[aria-pressed="true"]::after { background: var(--accent); box-shadow: 0 0 5px rgba(196, 58, 50, 0.6); }
+.presets { box-shadow: var(--well-in); padding: 3px; }
+.preset { transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.07s; }
+.preset[aria-pressed="true"] { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 0 color-mix(in srgb, var(--accent) 55%, #000), 0 4px 8px -3px rgba(0, 0, 0, 0.45); transform: translateY(-1px); }
+.preset:active { transform: translateY(1px); }
+html[data-m2m-theme="light"] .preset[aria-pressed="true"] { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 0 color-mix(in srgb, var(--accent) 60%, #000), 0 4px 8px -4px rgba(24, 20, 14, 0.3); }
+/* the P&L: a recessed display window */
+.quote { background: linear-gradient(180deg, #070A12, #0C111D); box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.05); border-color: rgba(110, 125, 170, 0.22); }
+.quote .q-val { text-shadow: 0 0 14px rgba(255, 255, 255, 0.08); }
+button.quote.couch { box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.05); }
+html[data-m2m-theme="light"] .quote { background: linear-gradient(180deg, #F1ECE3, #F8F5EF); box-shadow: inset 0 2px 5px rgba(24, 20, 14, 0.12), 0 1px 0 #FFFFFF; border-color: var(--line-2); }
+html[data-m2m-theme="light"] .quote .q-val { text-shadow: none; }
+
+/* ---------- surfaces: three heights ---------- */
+.lect, .settings, .si, .tr-stat, .cb-wager, .ai-panel { box-shadow: var(--e1); }
+.panel, .tb-pop, .scratch, .chat-panel, .ru-card { box-shadow: var(--e2); }
+.card { box-shadow: var(--e3), 0 0 0 1px rgba(0, 0, 0, 0.35); }
+/* the order ticket: a paper slip with a perforated top */
+.ticket { box-shadow: var(--e1); }
+.ticket::before { content: ""; position: absolute; left: 10px; right: 10px; top: 0; height: 6px; pointer-events: none; opacity: 0.9;
+  background: radial-gradient(circle at 4px 0, var(--panel) 2.4px, transparent 2.6px) 0 0 / 11px 6px repeat-x; }
+.ticket.filled { animation: ticketPrint 0.26s var(--ease); }
+@keyframes ticketPrint { 0% { transform: translateY(0); } 40% { transform: translateY(2px); } 100% { transform: translateY(0); } }
+
+/* ---------- moments ---------- */
+/* the deal settles without a bounce */
+.cell.dealt .slab { transition: transform 0.5s cubic-bezier(0.2, 1.06, 0.35, 1), opacity 0.2s; }
+/* the money in flight, and the quote taking it */
+.money-fly { position: fixed; z-index: 45; pointer-events: none; padding: 3px 9px; border-radius: 6px; font: 600 15px var(--f-mono); white-space: nowrap; will-change: transform, opacity;
+  background: var(--panel-2); border: 1px solid var(--line-2); box-shadow: var(--e2); }
+.money-fly.up { color: var(--up); border-color: color-mix(in srgb, var(--up) 55%, var(--line-2)); }
+.money-fly.dn { color: var(--down); border-color: color-mix(in srgb, var(--down) 55%, var(--line-2)); }
+.quote.recv { transition: box-shadow 0.1s; }
+.quote.recv-up { box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7), inset 0 0 18px -2px color-mix(in srgb, var(--up) 55%, transparent), 0 0 0 1px color-mix(in srgb, var(--up) 60%, transparent); }
+.quote.recv-dn { box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7), inset 0 0 18px -2px color-mix(in srgb, var(--down) 55%, transparent), 0 0 0 1px color-mix(in srgb, var(--down) 60%, transparent); }
+html[data-m2m-theme="light"] .quote.recv-up { box-shadow: inset 0 2px 5px rgba(24, 20, 14, 0.12), inset 0 0 16px -4px color-mix(in srgb, var(--up) 45%, transparent), 0 0 0 1px var(--up); }
+html[data-m2m-theme="light"] .quote.recv-dn { box-shadow: inset 0 2px 5px rgba(24, 20, 14, 0.12), inset 0 0 16px -4px color-mix(in srgb, var(--down) 45%, transparent), 0 0 0 1px var(--down); }
+/* The Close: the closing number settles with a small press; the share card deals in and tilts with the pointer */
+.close-num.landed { animation: numLand 0.42s var(--ease); display: inline-block; }
+@keyframes numLand { 0% { transform: translateY(0); } 35% { transform: translateY(3px); } 100% { transform: translateY(0); } }
+.share-card { --rx: 0deg; --ry: 0deg; transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)); transition: transform 0.25s var(--ease), box-shadow 0.25s;
+  box-shadow: var(--e2); animation: shareDeal 0.6s 0.45s var(--ease) both; }
+.share-card:hover { box-shadow: var(--e3); }
+@keyframes shareDeal { 0% { opacity: 0; transform: perspective(900px) translateY(26px) rotateX(38deg); } 100% { opacity: 1; transform: perspective(900px) rotateX(0deg) rotateY(0deg); } }
+/* rank up: the card rises out of the screen, the badge falls into place with weight, a rim light sweeps across it */
+.ru-card { animation: ruRise 0.38s var(--ease) both; }
+@keyframes ruRise { 0% { opacity: 0; transform: perspective(900px) translateY(18px) rotateX(10deg) scale(0.96); } 100% { opacity: 1; transform: none; } }
+.ru-badge { position: relative; }
+.ru-badge .av { animation: ruDrop 0.45s 0.55s cubic-bezier(0.55, 0, 0.85, 0.4) both; }
+@keyframes ruDrop { 0% { transform: translateY(-70px) scale(1.12); opacity: 0; } 30% { opacity: 1; } 100% { transform: none; opacity: 1; } }
+.ru-badge::before { content: ""; position: absolute; left: 50%; bottom: -6px; width: 88px; height: 10px; margin-left: -44px; border-radius: 50%; background: rgba(0, 0, 0, 0.5); filter: blur(5px);
+  animation: ruShadow 0.45s 0.55s cubic-bezier(0.55, 0, 0.85, 0.4) both; }
+@keyframes ruShadow { 0% { transform: scale(0.4); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.ru-badge::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; pointer-events: none; opacity: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 236, 190, 0.75) 50%, transparent 65%) -120% 0 / 250% 100% no-repeat; animation: ruSweep 0.8s 1.05s var(--ease) both; }
+@keyframes ruSweep { 0% { opacity: 1; background-position: -120% 0; } 100% { opacity: 0; background-position: 140% 0; } }
+html[data-m2m-theme="light"] .ru-badge::before { background: rgba(24, 20, 14, 0.22); }
+/* screens fade in (opacity only: a transform here would break the fixed panels inside some screens) */
+.screen:not([hidden]) { animation: scrIn 0.24s ease-out both; }
+@keyframes scrIn { from { opacity: 0; } to { opacity: 1; } }
+html.reduced .share-card, html.reduced .ru-card, html.reduced .ru-badge .av, html.reduced .ru-badge::before, html.reduced .ru-badge::after, html.reduced .screen:not([hidden]),
+html.reduced .close-num.landed { animation: none; }
+html.reduced .share-card { transform: none; }
+
+/* ---------- reduced motion: depth stays, travel goes ---------- */
+html.reduced button.opt:active, html.reduced button.lev:active, html.reduced .btn:active, html.reduced .chip-l:active, html.reduced .pills label:active span,
+html.reduced button.opt.chosen, html.reduced button.lev[aria-pressed="true"], html.reduced .chip-l[aria-pressed="true"], html.reduced .pills input:checked + span,
+html.reduced .opt.revealed, html.reduced .preset, html.reduced .chat-fab:active, html.reduced .iconbtn:active { transform: none; animation: none; }
+html.reduced .cell:not(.used):not(.void):hover .slab:active, html.reduced .cell.pressed:not(.used):not(.void) .slab { transition: none; }
 
 /* ================================================================ R2 (18 Nov 2026): floor chat (chat.js) */
 .chat { position: fixed; z-index: 27; right: calc(var(--side-r) + 18px); bottom: calc(var(--tk-h) + var(--dock-h) + 16px); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; pointer-events: none; }
 .chat > * { pointer-events: auto; }
 .chat-fab { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px 0 12px; border-radius: 20px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text);
-  font: 600 13.5px var(--f-ui); cursor: pointer; box-shadow: 0 3px 0 var(--edge), 0 10px 24px rgba(0, 0, 0, 0.35); transition: transform 0.07s, box-shadow 0.07s, opacity 0.2s; }
-.chat-fab:active { transform: translateY(3px); box-shadow: 0 0 0 var(--edge), 0 6px 16px rgba(0, 0, 0, 0.3); }
+  font: 600 13.5px var(--f-ui); cursor: pointer; }
 .chat-fab .ch-ico svg { width: 18px; height: 18px; display: block; }
 .chat-fab.locked { opacity: 0.6; cursor: default; }
 .ch-badge { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: var(--brand); color: #fff; font: 700 11.5px/20px var(--f-mono); text-align: center; }
 .chat-preview { max-width: min(320px, calc(100vw - 36px)); text-align: left; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text);
   font: 14px/1.35 var(--f-ui); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35); cursor: pointer; }
 .chat-panel { width: min(340px, calc(100vw - 36px)); max-height: min(440px, calc(100vh - var(--top-h) - var(--tk-h) - 90px)); display: flex; flex-direction: column;
-  border-radius: 12px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); overflow: hidden; }
+  border-radius: 12px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text); box-shadow: var(--e2); overflow: hidden; }
 .ch-head { display: flex; align-items: center; gap: 8px; padding: 10px 10px 8px 14px; border-bottom: 1px solid var(--line); }
 .ch-title { font: 600 12.5px var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); margin-right: auto; }
 .ch-mute, .ch-x { height: 30px; padding: 0 10px; border-radius: 7px; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font: 600 12.5px var(--f-ui); cursor: pointer; }
@@ -3054,8 +3211,7 @@ html.reduced button.opt:active, html.reduced button.lev:active, html.reduced .bt
 .ch-m.me .ch-t { color: var(--text-2); }
 .ch-empty { color: var(--text-3); font-size: 13.5px; }
 .ch-quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px 0; border-top: 1px solid var(--line); }
-.ch-q { padding: 5px 10px; border-radius: 14px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text); font: 13px var(--f-ui); cursor: pointer; box-shadow: 0 2px 0 var(--edge); }
-.ch-q:active:not(:disabled) { transform: translateY(2px); box-shadow: none; }
+.ch-q { padding: 5px 10px; border-radius: 14px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--text); font: 13px var(--f-ui); cursor: pointer; }
 .ch-row { display: flex; gap: 8px; padding: 10px 12px 6px; }
 .ch-in { flex: 1; min-width: 0; height: 38px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--well); color: var(--text-hi); font: 15px var(--f-ui); }
 .ch-in:focus { outline: none; border-color: var(--accent); }
@@ -3065,7 +3221,7 @@ html.reduced button.opt:active, html.reduced button.lev:active, html.reduced .bt
 @media (pointer: coarse) { .ch-in, .ch-send { height: 44px; } .ch-q { padding: 8px 12px; } }
 @media (max-width: 560px) { .chat-fab .ch-l { display: none; } .chat-fab { padding: 0 12px; } .chat-fab.locked .ch-l { display: none; } }
 html.scratch-side .chat, html.scratch-flip .chat { display: none; }
-html[data-m2m-theme="light"] .chat-fab, html[data-m2m-theme="light"] .chat-panel, html[data-m2m-theme="light"] .chat-preview { box-shadow: 0 3px 0 var(--edge), 0 10px 24px rgba(24, 20, 14, 0.12); }
+html[data-m2m-theme="light"] .chat-preview { box-shadow: var(--e2); }
 
 </style>
 <script>(function(){var t="dark";try{var p=localStorage.getItem("m2m-theme");if(p==="light")t="light";else if(p==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)t="light";}catch(e){}document.documentElement.setAttribute("data-m2m-theme",t);})();</script>
@@ -3805,7 +3961,12 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       shaper.oversample = "2x";
       master.connect(shaper); shaper.connect(ctx.destination);
       A._post = shaper;
-      sfx = ctx.createGain(); sfx.gain.value = 0.9; sfx.connect(master);
+      sfx = ctx.createGain(); sfx.gain.value = 0.9;
+      // DEPTH (18 Nov): a loudness budget. A gentle compressor on the effects bus keeps layered sounds (a key, a bell,
+      // a cash drawer) from stacking into noise; the master's soft clip still catches the rest.
+      const comp = ctx.createDynamicsCompressor();
+      comp.threshold.value = -16; comp.knee.value = 10; comp.ratio.value = 3.5; comp.attack.value = 0.004; comp.release.value = 0.18;
+      sfx.connect(comp); comp.connect(master);
       duckNode = ctx.createGain(); duckNode.gain.value = 1; duckNode.connect(master);
       musicBus = ctx.createGain(); musicBus.gain.value = A.musicOn ? A.musicVol * 0.7 : 0; musicBus.connect(duckNode);
       ambBus = ctx.createGain(); ambBus.gain.value = 0; ambBus.connect(duckNode); // ducks under the host voice with the music
@@ -4147,6 +4308,89 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     tone(t, 2600, 0.012, 0.05, "square");
     noiseHit(t + 0.004, 0.03, "lowpass", 700, 0.8, 0.14, 0.7);
     noiseHit(t + 0.062, 0.005, "bandpass", 5200, 1.8, 0.14, 1.2);
+  };
+
+  // ---- DEPTH (18 Nov 2026): keys, toggles, deal, money, rank-up ------------------------------------------------
+  /** a board tile is a heavy keycap: a click on the way down and a low "thock" whose pitch steps down with the dollar
+   *  row ($200 brightest, $1,000 deepest), then a lighter click on the way up */
+  A.tileKey = function (row) {
+    if (!ready()) return;
+    const t = now() + 0.003, r = Math.max(0, Math.min(4, row || 0));
+    const body = 260 * Math.pow(2, -r / 6);
+    noiseHit(t, 0.006, "bandpass", 3600 - r * 260, 1.5, 0.3, 1.05);
+    const o = tone(t, body * 1.6, 0.08, 0.2, "sine", null, 0.002);
+    o.o.frequency.exponentialRampToValueAtTime(body, t + 0.05);
+    noiseHit(t + 0.003, 0.045, "lowpass", 900 - r * 80, 0.8, 0.18, 0.7);
+    noiseHit(t + 0.11, 0.005, "bandpass", 5000, 1.8, 0.11, 1.2);
+  };
+  /** an answer or leverage key: shorter travel than a tile, so a crisper, higher thock */
+  A.optKey = function () {
+    if (!ready()) return;
+    const t = now() + 0.002;
+    noiseHit(t, 0.005, "bandpass", 4200, 1.6, 0.22, 1.1);
+    const o = tone(t, 620, 0.05, 0.12, "sine", null, 0.002);
+    o.o.frequency.exponentialRampToValueAtTime(340, t + 0.04);
+    noiseHit(t + 0.002, 0.03, "lowpass", 1300, 0.8, 0.1, 0.8);
+  };
+  /** a lecture chip or a setting: a two-position toggle; latching on is a notch higher than releasing */
+  A.toggle = function (on) {
+    if (!ready()) return;
+    const t = now() + 0.002;
+    noiseHit(t, 0.004, "bandpass", on ? 4800 : 3400, 1.8, 0.2, 1.1);
+    tone(t, on ? 1180 : 820, 0.035, 0.07, "triangle");
+    if (on) noiseHit(t + 0.03, 0.004, "bandpass", 6000, 2, 0.08, 1.2);
+  };
+  /** a chat message arriving: a short soft pop, two notes a fourth apart */
+  A.pop = function () {
+    if (!ready()) return;
+    const t = now() + 0.003;
+    tone(t, 880, 0.07, 0.08, "sine", null, 0.003);
+    tone(t + 0.055, 1174.7, 0.1, 0.07, "sine", null, 0.003);
+  };
+  /** one tile landing in the deal: a soft card flick, quieter and higher across the wave, at most ~40 a second */
+  let lastDeal = 0;
+  A.deal = function (i, n) {
+    if (!ready()) return;
+    const tNow = performance.now();
+    if (tNow - lastDeal < 24) return;
+    lastDeal = tNow;
+    const t = now() + 0.002, k = n ? i / n : 0;
+    noiseHit(t, 0.022, "bandpass", 1900 + k * 1400, 1.1, 0.07 - k * 0.025, 1.1);
+    noiseHit(t + 0.012, 0.012, "lowpass", 700, 0.8, 0.05, 0.8);
+  };
+  /** the order filled: a short ticket print, then the stamp */
+  A.fill = function () {
+    if (!ready()) return;
+    A.stream(3);
+    setTimeout(() => A.stamp(), 70);
+  };
+  /** money landing on the P&L: a bright coin for a gain, a muted drop for a loss */
+  A.land = function (up) {
+    if (!ready()) return;
+    const t = now() + 0.003;
+    if (up) { bellTone(t, 1567.98, 0.09, 0.45); bellTone(t + 0.05, 2349.3, 0.06, 0.4); noiseHit(t, 0.015, "highpass", 5000, 0.7, 0.06, 1.2); }
+    else { const o = tone(t, 220, 0.16, 0.12, "sine"); o.o.frequency.exponentialRampToValueAtTime(110, t + 0.14); noiseHit(t, 0.04, "lowpass", 500, 0.7, 0.08, 0.7); }
+  };
+  /** rank up: the badge lands with weight, then a short three-note brass fanfare and a bell */
+  A.rankUp = function () {
+    if (!ready()) return;
+    const t = now() + 0.01;
+    const o = tone(t, 90, 0.35, 0.28, "sine", null, 0.003); o.o.frequency.exponentialRampToValueAtTime(48, t + 0.3);
+    noiseHit(t, 0.08, "lowpass", 900, 0.8, 0.2, 0.7);
+    brass(t + 0.18, [293.66, 440], 0.13, 0.17);
+    brass(t + 0.33, [369.99, 554.37], 0.13, 0.17);
+    brass(t + 0.48, [440, 587.33, 880], 0.55, 0.2);
+    bellTone(t + 0.5, 1174.66, 0.1, 1.4);
+  };
+  /** The Close: one count-up tick (rising) as the closing number rolls */
+  let lastCount = 0;
+  A.count = function (k, n) {
+    if (!ready()) return;
+    const tNow = performance.now();
+    if (tNow - lastCount < 34) return;
+    lastCount = tNow;
+    const t = now() + 0.002;
+    tone(t, 900 * Math.pow(2, (n ? k / n : 0) * 1.2), 0.02, 0.04, "triangle");
   };
 
   /** hovering an open tile (desktop): a faint magnetic tick, at most one every 45 ms */
@@ -5790,6 +6034,34 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     chip.addEventListener("animationend", kill, { once: true });
     setTimeout(kill, 2400 + (delay || 0));
     return chip;
+  };
+
+  // ---- DEPTH (18 Nov 2026): the money travels from the answer to the account -----------------------------------
+  /** from: the element the money leaves (the answer, or the card); to: the quote cell. A small amount flies up in an
+   *  arc and lands in the quote, which takes it with a short inset glow and a coin (gain) or a drop (loss). Never
+   *  blocks: the odometer is already rolling, and the whole flight is about half a second. */
+  fx.travel = function (from, to, delta, delay) {
+    if (!from || !to || !delta || fx.calm() || !document.body.animate) return;
+    const a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+    if (!a.width || !b.width || b.bottom <= 0) return;
+    const up = delta > 0;
+    const el = U.h("span.money-fly." + (up ? "up" : "dn"), { "aria-hidden": "true" }, U.h("span", { text: U.signed(delta) }));
+    document.body.appendChild(el); // its own layer: the fill layer sits under the card and the top bar
+    const w = el.offsetWidth, hgt = el.offsetHeight;
+    const x0 = a.left + a.width / 2 - w / 2, y0 = a.top + Math.min(a.height / 2, 28) - hgt / 2;
+    const x1 = b.left + b.width / 2 - w / 2, y1 = b.top + b.height / 2 - hgt / 2;
+    const mx = (x0 + x1) / 2, my = Math.min(y0, y1) - 60;
+    el.style.left = "0px"; el.style.top = "0px";
+    const pt = (k) => { const u = 1 - k; return [u * u * x0 + 2 * u * k * mx + k * k * x1, u * u * y0 + 2 * u * k * my + k * k * y1]; };
+    const frames = [0, 0.25, 0.5, 0.75, 1].map((k) => { const [x, y] = pt(k); return { transform: `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${(1 - 0.45 * k).toFixed(3)})`, opacity: k < 0.9 ? 1 : 0.2 }; });
+    const anim = el.animate(frames, { duration: 520, delay: delay || 0, easing: "cubic-bezier(0.45, 0, 0.55, 1)", fill: "both" });
+    anim.finished.then(() => {
+      el.remove();
+      to.classList.remove("recv", "recv-up", "recv-dn"); void to.offsetWidth;
+      to.classList.add("recv", up ? "recv-up" : "recv-dn");
+      setTimeout(() => to.classList.remove("recv", "recv-up", "recv-dn"), 420);
+      try { if (M2M.audio && M2M.audio.land) M2M.audio.land(up); } catch (e) { /* sound is optional */ }
+    }, () => el.remove());
   };
 
   // ---- streaks: three or five right in a row pops a small badge beside the quote -------------------
@@ -8644,13 +8916,15 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         M2M.fx.decode(p.name, p.cat.name, 420, true)
       ])));
     });
+    // DEPTH (18 Nov): a diagonal wave from the top-left key, each tile with a soft card flick
+    const nDeal = board.cols.reduce((m, col) => Math.max(m, col.length), 0) + board.cols.length;
     board.cols.forEach((col, ci) => col.forEach((cell, ri) => {
       const t = tiles[cell.key];
-      const d = base + 180 + ci * 110 + ri * 70;
+      const d = base + 180 + (ci + ri) * 85 + ri * 12;
       jobs.push(U.wait(d).then(() => {
         t.el.classList.add("dealt");
         t.el.classList.remove("deal");
-        if (M2M.audio) M2M.audio.clack(0.9);
+        if (M2M.audio) { if (M2M.audio.deal) M2M.audio.deal(ci + ri, nDeal); else M2M.audio.clack(0.9); }
         if (shine) setTimeout(() => sheen(t), 230);
         if (!cell.used) return M2M.fx.decode(t.v, valueText(cell.value), 300, false, valueHTML(cell.value));
       }));
@@ -8900,7 +9174,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const t = tiles[cell.key];
     if (!t) return Promise.resolve();
     t.el.classList.add("pressed");
-    return U.wait(U.reduced() ? 0 : 110).then(() => t.el.classList.remove("pressed"));
+    return U.wait(U.reduced() ? 0 : 150).then(() => t.el.classList.remove("pressed"));
   };
 
   /** debug: the board as plain data (item ids and option order) */
@@ -9323,7 +9597,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (i === pk.chosen) return;
     pk.chosen = i;
     if (cs.online) cs.myMs = Math.round(performance.now() - cs.t0);
-    A().select();
+    (A().optKey || A().select)();
     cs.els.optEls.forEach((el, k) => { el.classList.toggle("chosen", k === i); el.classList.toggle("dim", k !== i); el.setAttribute("aria-pressed", k === i ? "true" : "false"); });
   }
 
@@ -9335,7 +9609,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (pk.locked) return;
     pk.chosen = i;
     pk.locked = true;
-    A().select();
+    (A().optKey || A().select)();
     cs.els.optEls.forEach((el, k) => { el.classList.toggle("chosen", k === i); el.classList.toggle("dim", k !== i); el.setAttribute("aria-pressed", k === i ? "true" : "false"); });
     stopClock();
     afterLock();
@@ -9350,7 +9624,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (cs.online) cs.myMs = Math.round(performance.now() - cs.t0);
     pk.chosen = i;
     pk.locked = true;
-    A().select();
+    (A().optKey || A().select)();
     M2M.topbar.status(p, "locked in");
     if (cs.online) {
       cs.els.optEls.forEach((el, k) => { el.classList.toggle("chosen", k === i); el.classList.toggle("dim", k !== i); el.setAttribute("aria-pressed", k === i ? "true" : "false"); });
@@ -9530,7 +9804,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const note = cs.els.ticket.querySelector(".tk-note");
     if (note) { U.clear(note); note.appendChild(h("span.tk-done", { text: "Filled: " + b.x + " " + b.name + " on the " + U.money(cs.V) + " tile." })); }
     A().heartbeat(false);
-    A().stamp();
+    (A().fill || A().stamp)();
     M2M.fx.recoil(cs.els.card);
     setTimeout(() => { if (cs) { cs.phase = "bet"; reveal(); } }, U.reduced() ? 120 : 620);
   }
@@ -9550,7 +9824,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       cs.els.ticket.classList.add("filled");
       hideChange();
       cs.els.levs && Object.keys(cs.els.levs).forEach((x) => { if (x !== k) cs.els.levs[x].classList.add("void"); });
-      setTimeout(() => A().stamp(), 200);
+      setTimeout(() => (A().fill || A().stamp)(), 200);
       M2M.fx.recoil(cs.els.card, 200);
       submitMine();
       return;
@@ -9561,7 +9835,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       const note = cs.els.ticket.querySelector(".tk-note");
       if (note) { U.clear(note); note.appendChild(h("span.tk-done", { text: "Filled: every order is in." })); }
       cs.els.ticket.classList.add("filled");
-      A().stamp();
+      (A().fill || A().stamp)();
       M2M.fx.recoil(cs.els.card);
       setTimeout(() => { if (cs) { cs.phase = "bet"; reveal(); } }, 520);
     }
@@ -10835,6 +11109,12 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       c.odo.set(st.players[r.p].score, animate);
       paintQuote(c, r.p, r.delta);
       const chip = animate && r.delta ? M2M.fx.fill(c.el, r.delta, i * 70) : null;
+      // DEPTH (18 Nov): the amount flies from this player's answer (or the card) into the quote
+      if (animate && r.delta && M2M.fx.travel) {
+        const card = document.querySelector(".layer-clue .card") || document.querySelector(".card");
+        const src = (card && (card.querySelector(".opt.chosen") || card.querySelector(".opt.right") || card.querySelector(".card-head"))) || card;
+        M2M.fx.travel(src, c.el, r.delta, 120 + i * 90);
+      }
       if (animate && r.correct && (r.streak === 3 || r.streak === 5)) M2M.fx.streak(c.el, r.streak, later + i * 70, chip);
       if (r.delta) M2M.ticker.push({ name: st.players[r.p].ticker, delta: r.delta, kind: r.big === "bear" ? "warn" : null, note: r.big === "bear" ? "MARGIN CALL" : r.big === "bull" ? "BULL RUN" : null });
     });
@@ -10905,6 +11185,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         const bit = 1 << D.CHIPS.indexOf(c);
         handlers.setting("mask", s.mask ^ bit);
         S.syncLectures();
+        try { if (M2M.audio.toggle) M2M.audio.toggle(b.getAttribute("aria-pressed") === "true"); } catch (e) { /* sound is optional */ }
       });
       chips.appendChild(b);
     });
@@ -10913,6 +11194,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       if (!b || b.dataset.preset === "custom") return;
       handlers.setting("mask", D.maskFromChips(D.PRESETS[b.dataset.preset].chips));
       S.syncLectures();
+      try { if (M2M.audio.toggle) M2M.audio.toggle(true); } catch (err) { /* sound is optional */ }
     });
     // settings
     const set = M2M.settings;
@@ -10927,6 +11209,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       if (r.type !== "radio") return;
       if (handlers.setting) handlers.setting(r.name, r.value);
       S.blurbs();
+      try { if (M2M.audio.toggle) M2M.audio.toggle(r.value !== "off"); } catch (err) { /* sound is optional */ }
     });
     box.addEventListener("input", (e) => { if (e.target.name === "musicVol" && handlers.setting) handlers.setting("musicVol", e.target.value); });
     S.blurbs();
@@ -11298,6 +11581,15 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       h("p.sc-lect", { text: lect }),
       h("div.sc-by", null, h("span.sw", { text: "sW:" }), h("span", { text: "by Sean Wang · http://profsean.wang" })),
       pre);
+    // DEPTH (18 Nov): the share card deals in (CSS) and tilts a little toward the pointer on a mouse
+    if (!M2M.fx.calm() && window.matchMedia && matchMedia("(pointer: fine)").matches) {
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty("--ry", (((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(2) + "deg");
+        card.style.setProperty("--rx", ((0.5 - (e.clientY - r.top) / r.height) * 6).toFixed(2) + "deg");
+      });
+      card.addEventListener("pointerleave", () => { card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg"); });
+    }
     const copyB = h("button.btn.btn-primary", { type: "button" }, "Copy", U.icon("copy"));
     copyB.addEventListener("click", () => {
       U.copy(shareText, null).then((ok) => {
@@ -11336,6 +11628,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const tw = M2M.fx.tween(ms, (k) => {
       const x = k * N, i = Math.min(N - 1, Math.floor(x));
       el.textContent = U.money(values[i] + (values[i + 1] - values[i]) * (x - i));
+      try { if (M2M.audio.count) M2M.audio.count(Math.round(k * 40), 40); } catch (e) { /* sound is optional */ }
     }, ease);
     headTw = tw;
     // settle unless a newer count has taken over the headline
@@ -11343,6 +11636,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       if (headTw && headTw !== tw) return;
       if (headTw === tw) headTw = null;
       el.textContent = fin; el.style.minWidth = ""; el.classList.remove("counting");
+      el.classList.add("landed"); setTimeout(() => el.classList.remove("landed"), 500);
+      try { if (M2M.audio.land) M2M.audio.land(values[N] >= values[0]); } catch (e) { /* sound is optional */ }
     });
   }
 
@@ -12259,7 +12554,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (!item.gen) ses.seen.add(item.id);
     ses.recent.push(cat);
     const cell = { key: "T-" + ses.n, round: "T", cat, col: 0, row: 0, value: item.tier * 200, ai: false, used: false, item };
-    M2M.audio.keyswitch();
+    M2M.audio.tileKey((item.tier || 1) - 1);
     M2M.audio.ambience(false);
     if (!ses.said.has(cat)) { ses.said.add(cat); M2M.host.say("cat_" + cat); }
     document.documentElement.classList.add("dof");
@@ -13816,7 +14111,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       requestAnimationFrame(() => layer.classList.add("on"));
       F.set(row1, "RANK UP", { delay: 120, stagger: 50, min: 8, max: 16 });
       F.set(row2, name, { delay: 520, stagger: 45, min: 8, max: 18, sound: "arp" });
-      try { M2M.audio.bellOpen(); setTimeout(() => M2M.audio.cash(), 900); if (!U.reduced()) setTimeout(() => M2M.fx.parade(2200, 24), 700); } catch (e) { /* sound is optional */ }
+      // DEPTH (18 Nov): the badge falls into place at about 1 s; the fanfare starts with the thud as it lands
+      try { setTimeout(() => { const au = M2M.audio; if (au.rankUp) au.rankUp(); else { au.bellOpen(); au.cash(); } }, U.reduced() ? 300 : 980); if (!U.reduced()) setTimeout(() => M2M.fx.parade(2200, 24), 1050); } catch (e) { /* sound is optional */ }
       let done = false;
       const close = () => {
         if (done) return; done = true;
@@ -17292,7 +17588,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     resetEndRound();
     M2M.panels.closeSheet();
     M2M.panels.closeReview();
-    M2M.audio.keyswitch();
+    M2M.audio.tileKey(cell.row);
     M2M.music.stop(0.35);
     M2M.audio.ambience(false);
     const colKey = st.rounds[st.ri] + ":" + cell.col;
@@ -18146,7 +18442,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       if (!open || locked) unread += theirs.length;
       if (!muted()) {
         if (!locked && !open) showPreview(theirs[theirs.length - 1]);
-        try { if (M2M.audio && M2M.audio.select) M2M.audio.select(); } catch (e) { /* no sound */ }
+        try { const au = M2M.audio; if (au && au.pop) au.pop(); else if (au && au.select) au.select(); } catch (e) { /* no sound */ }
       }
     }
     firstLoad = false;
