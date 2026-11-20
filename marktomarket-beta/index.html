@@ -2202,6 +2202,26 @@ html.reduced .lob-inv { animation: none; }
   .lob-who { max-height: 30vh; }
   .lob-feed { height: clamp(140px, calc(100vh - 600px), 46vh); height: clamp(140px, calc(100svh - 600px), 46vh); }
 }
+/* round 1 (20 Nov): new-post badge on the title's lobby key, and the lobby when nobody else is on */
+.lob-new { margin-left: 6px; padding: 0 7px; height: 18px; border-radius: 9px; background: var(--accent); color: #fff; font: 700 10.5px/18px var(--f-mono); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+.lob-alone { display: block; padding: 12px; border-radius: 10px; border: 1px dashed var(--line-2); color: var(--text-2); }
+.lob-alone b { color: var(--text-hi); }
+.lob-alone-b { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.lob-alone-b .btn { padding: 7px 12px; font-size: 13px; }
+/* the 3D round (20 Nov): the rank-up badge spins in like a struck coin, then a light sweeps across it */
+.ru-badge { position: relative; perspective: 700px; border-radius: 50%; }
+.ru-badge .av { animation: ruCoin 0.9s 0.6s cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+@keyframes ruCoin {
+  0% { opacity: 0; transform: translateY(-140px) rotateY(-900deg) scale(0.45); }
+  30% { opacity: 1; }
+  72% { transform: translateY(0) rotateY(24deg) scale(1.14); }
+  100% { opacity: 1; transform: none; }
+}
+.ru-badge::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 38%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0) 62%); background-size: 280% 100%; background-position: 130% 0;
+  animation: ruSweep 0.9s 1.5s ease-out both; }
+@keyframes ruSweep { from { background-position: 130% 0; } to { background-position: -40% 0; } }
+html.reduced .ru-badge::after { display: none; }
 
 /* ---- light theme, automatic layer (theme_light.py; regenerated every build) ---- */
 html[data-m2m-theme="light"] .stage-shade {
@@ -2788,6 +2808,9 @@ html[data-m2m-theme="light"] .lob-q:active:not(:disabled) {
 }
 html[data-m2m-theme="light"] .lob-inv {
   box-shadow: var(--e3, 0 20px 50px rgba(24, 20, 14, 0.175));
+}
+html[data-m2m-theme="light"] .ru-badge::after {
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 38%, rgba(24, 20, 14, 0.166) 50%, rgba(255, 255, 255, 0) 62%);
 }
 
 /* =====================================================================================================
@@ -3458,6 +3481,50 @@ html.reduced .vc-dot[data-q="off"] { animation: none; }
 html.reduced .wn-card { animation: none; opacity: 1; transform: none; }
 html.reduced .wn { transition: none; }
 .wn-arr { margin-left: 7px; }
+
+/* ================================================================ the 3D round (20 Nov 2026)
+   Pointer-driven depth on top of the board's own 3D. Mouse only; reduced motion keeps everything still. */
+/* board tiles: the open tile under the pointer lifts, leans toward it, and a foil glare follows (wow3d.js sets --hx, --hy) */
+.holo { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.25s; mix-blend-mode: screen;
+  background:
+    radial-gradient(circle at calc(50% + var(--hx, 0) * 46%) calc(50% + var(--hy, 0) * 46%), rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0) 52%),
+    linear-gradient(115deg, rgba(124, 92, 255, 0) 18%, rgba(124, 92, 255, 0.3) 34%, rgba(46, 196, 222, 0.24) 44%, rgba(31, 203, 122, 0.22) 52%, rgba(255, 196, 84, 0.26) 62%, rgba(255, 196, 84, 0) 78%);
+  background-size: 100% 100%, 240% 240%;
+  background-position: 0 0, calc(50% + var(--hx, 0) * -38%) calc(50% + var(--hy, 0) * -38%); }
+html[data-m2m-theme="light"] .holo { mix-blend-mode: normal;
+  background:
+    radial-gradient(circle at calc(50% + var(--hx, 0) * 46%) calc(50% + var(--hy, 0) * 46%), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 46%),
+    linear-gradient(115deg, rgba(196, 58, 50, 0) 18%, rgba(196, 58, 50, 0.2) 34%, rgba(214, 160, 60, 0.24) 47%, rgba(60, 120, 190, 0.2) 60%, rgba(60, 120, 190, 0) 78%);
+  background-size: 100% 100%, 240% 240%;
+  background-position: 0 0, calc(50% + var(--hx, 0) * -38%) calc(50% + var(--hy, 0) * -38%); }
+@media (hover: hover) {
+  .cell.holo-on:not(.used):not(.void):hover .slab { transform: translateZ(13px) rotateX(calc(var(--hy, 0) * -10deg)) rotateY(calc(var(--hx, 0) * 10deg)); transition: transform 0.12s ease-out; }
+  .cell.holo-on:not(.used):not(.void):hover .holo { opacity: 1; }
+  .cell.holo-on:not(.used):not(.void):hover .cast { opacity: 1; filter: blur(13px); transform: translateZ(0.5px) translate(calc(var(--hx, 0) * -5px), calc(var(--hy, 0) * -5px)) scale(1.08); }
+  /* the press still travels flush (same rule as the depth release, one class more specific) */
+  .cell.holo-on:not(.used):not(.void):hover .slab:active, .cell.holo-on.pressed:not(.used):not(.void):hover .slab { transform: translateZ(calc(var(--th) * -1 + 3px)); transition: transform 0.07s cubic-bezier(0.3, 0, 0.6, 1); }
+}
+html.reduced .holo { display: none; }
+.slab .f > .v, .slab .f > .res { position: relative; z-index: 1; } /* the value stays above the glare */
+/* the question card arrives like the tile turning over toward you, and tips away when it leaves */
+@keyframes cardRise {
+  0% { opacity: 0; transform: perspective(1300px) translateY(46px) rotateX(-34deg) scale(0.88); }
+  55% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes cardLeave { to { opacity: 0; transform: perspective(1300px) translateY(30px) rotateX(22deg) scale(0.94); } }
+.card.rise, .card.pop, .card.leaving { transform-origin: 50% 60%; backface-visibility: hidden; }
+/* the title: the wordmark leans with the pointer, and its lines sit at different depths (wow3d.js sets --tx, --ty on .title-wrap) */
+@media (hover: hover) and (min-width: 900px) {
+  .title-flap { transform: perspective(1100px) rotateX(calc(var(--ty, 0) * -5deg)) rotateY(calc(var(--tx, 0) * 7deg)); }
+  .title-eyebrow { transform: translate(calc(var(--tx, 0) * -9px), calc(var(--ty, 0) * -5px)); }
+  .title-quote { transform: translate(calc(var(--tx, 0) * 7px), calc(var(--ty, 0) * 4px)); }
+}
+html.reduced .title-flap, html.reduced .title-eyebrow, html.reduced .title-quote { transform: none; }
+/* the rank-up badge: a struck coin that spins down and lands with the thud at 1 s, then catches the light */
+.rankup .ru-badge .av { animation: ruCoin 0.5s 0.5s cubic-bezier(0.3, 0.2, 0.3, 1) both; }
+.rankup .ru-badge::after { animation-delay: 1.02s; }
+html.reduced .rankup .ru-badge .av { animation: none; }
 
 </style>
 <script>(function(){var t="dark";try{var p=localStorage.getItem("m2m-theme");if(p==="light")t="light";else if(p==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)t="light";}catch(e){}document.documentElement.setAttribute("data-m2m-theme",t);})();</script>
@@ -5857,8 +5924,10 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
 
   /** one paper ribbon: about 6px wide and three to five times as long */
   function spawn(x, y, vx, vy, delay, ttl) {
-    const w = 5.2 + Math.random() * 3.4;
+    const z = 0.5 + Math.random() * Math.random() * 1.7; // depth (20 Nov): most pieces mid-field, a few close to the glass
+    const w = (5.2 + Math.random() * 3.4) * z;
     T.parts.push({
+      z,
       x, y, vx, vy, delay: delay || 0,
       w, len: w * (2.6 + Math.random() * 2.4),
       rot: Math.random() * Math.PI * 2, vrot: (Math.random() - 0.5) * 4.2,
@@ -5944,8 +6013,9 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       p.vy += (g - p.drag * p.vy * (p.vy > 0 ? 1 : 0.32)) * dt;
       p.vx -= p.vx * 1.5 * dt;
       p.sway += p.vsway * dt;
-      p.x += (p.vx + Math.sin(p.sway) * p.swayAmp) * dt;
-      p.y += p.vy * dt;
+      const zk = 0.62 + 0.38 * (p.z || 1); // nearer paper crosses the screen faster
+      p.x += (p.vx + Math.sin(p.sway) * p.swayAmp) * dt * zk;
+      p.y += p.vy * dt * zk;
       p.rot += p.vrot * dt;
       p.tw += p.vtw * dt;
       if (p.y - p.len > T.H + 20) continue;
@@ -5960,7 +6030,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       ctx.rotate(p.rot);
       ctx.transform(1, 0, p.curl * Math.sin(p.tw * 0.5), 1, 0, 0);
       ctx.scale(sx, 1);
-      ctx.globalAlpha = Math.max(0, Math.min(fadeIn, fadeOut) * gFade) * 0.95;
+      ctx.globalAlpha = Math.max(0, Math.min(fadeIn, fadeOut) * gFade) * 0.95 * ((p.z || 1) < 0.8 ? 0.45 + 0.55 * (p.z || 1) : 1);
       ctx.fillStyle = p.color;
       ctx.fillRect(-p.w / 2, -p.len / 2, p.w, p.len);
       // the face turning away darkens; one edge shows the paper's thickness
@@ -9092,7 +9162,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         const v = U.h("span.v", { html: valueHTML(cell.value) });
         const res = U.h("span.res");
         const btn = U.h("button.slab", { type: "button", tabindex: "-1", dataset: { key: cell.key }, "aria-label": cat.name + ", " + valueText(cell.value) },
-          U.h("span.sb"), U.h("span.sl"), U.h("span.sr"), U.h("span.f", null, v, res));
+          U.h("span.sb"), U.h("span.sl"), U.h("span.sr"), U.h("span.f", null, v, res, U.h("span.holo", { "aria-hidden": "true" })));
         const el = U.h("div.cell", { dataset: { key: cell.key, row: Math.min(4, Math.round(ri * 4 / Math.max(1, col.length - 1))) } }, U.h("span.cast"), btn);
         if (!cell.item) el.classList.add("void");
         const t = { el, btn, v, res, cell };
@@ -15622,6 +15692,9 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   const L = (M2M.lobby = {});
   const MAX = 200, GAP_MS = 2000, KEEP_MS = 7 * 86400000, SHOW = 100, STALE_MS = 12 * 60000, BEAT_MS = 5 * 60000, INV_MS = 10 * 60000;
   const PHRASES = ["Anyone up for a game?", "Studying L18 now", "Quiz 4 review?", "Explain residual income?", "Good luck tomorrow"];
+  // round 1 (20 Nov): when nobody else is on, the quick phrases turn the board into a meet-up board
+  const MEET = ["I'll be on tonight around 9", "On tomorrow afternoon", "Looking for a Quiz 4 partner", "Anyone want to play this weekend?", "Reply with a time that works"];
+  const SEEN_KEY = "m2m-lobby-seen";
   const DOING = { lobby: "In the lobby", solo: "Playing solo", game: "In an online game", training: "Training", around: "Around" };
   const TS = { ".sv": "timestamp" };
 
@@ -15664,6 +15737,9 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     offHere = fbx.FB.onValue(ref("lobby/here"), (s) => { here = s.val() || {}; paintHere(); paintBadge(); }, () => {});
     offInv = fbx.FB.onValue(ref("lobby/inv/" + myUid), (s) => showInvites(s.val() || {}), () => {});
     offMute = fbx.FB.onValue(ref("lobby/mute/" + myUid), (s) => { muted = s.val() === true; paintInput(); }, () => {});
+    // the chat is read on every screen, so new posts can show on the title's badge (a player without a handle can't read it)
+    firstLoad = true;
+    offMsgs = fbx.FB.onValue(ref("lobby/m"), (s) => onMsgs(s.val() || {}), () => { if (els.note) els.note.textContent = "The lobby chat isn't available right now."; });
     clearInterval(beatT); beatT = setInterval(() => writeHere(true), BEAT_MS);
     writeHere(true);
   }
@@ -15673,7 +15749,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     clearInterval(beatT);
     if (fbx && myUid) fbx.FB.set(ref("lobby/here/" + myUid), null).catch(() => {});
     if (pres) { pres.cancel().catch(() => {}); pres = null; }
-    fbx = null; myUid = null; here = {}; status = ""; muted = false;
+    fbx = null; myUid = null; here = {}; status = ""; muted = false; msgs = [];
     if (invBox) U.clear(invBox);
     shownInv = {};
     paintBadge();
@@ -15694,9 +15770,17 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   }
   /** the small count on the title's "Study lobby" button */
   L.badge = function () { const b = h("span.lob-badge", { "aria-hidden": "true" }); setTimeout(paintBadge, 0); return b; };
+  function seenAt() { let v = 0; try { v = +localStorage.getItem(SEEN_KEY) || 0; } catch (e) { /* private window */ } return v || Date.now() - 86400000; }
+  function markSeen() { if (!msgs.length) return; try { localStorage.setItem(SEEN_KEY, String(Math.max(seenAt(), msgs[msgs.length - 1].t || 0))); } catch (e) { /* private window */ } }
+  function unread() { if (!myUid) return 0; const t = seenAt(); return msgs.filter((m) => m.u !== myUid && (m.t || 0) > t).length; }
   function paintBadge() {
-    const n = myUid ? others().length : 0;
-    document.querySelectorAll(".lob-badge").forEach((b) => { b.textContent = n ? String(n) : ""; b.hidden = !n; b.title = n + " studying now"; });
+    const n = myUid ? others().length : 0, nw = unread();
+    document.querySelectorAll(".lob-badge").forEach((b) => {
+      b.textContent = n ? String(n) : ""; b.hidden = !n; b.title = n + " studying now";
+      let w = b.parentNode && b.parentNode.querySelector(".lob-new");
+      if (!w && b.parentNode) { w = h("span.lob-new"); b.parentNode.appendChild(w); }
+      if (w) { w.textContent = nw ? (nw > 9 ? "9+" : nw) + " new" : ""; w.hidden = !nw; }
+    });
   }
 
   function showInvites(v) {
@@ -15743,7 +15827,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     els.input = h("input.lob-in", { type: "text", maxlength: String(MAX), placeholder: "Message the lobby", "aria-label": "Message the lobby", autocomplete: "off" });
     els.send = h("button.btn.btn-primary.lob-send", { type: "button", text: "Send" });
     els.note = h("p.lob-note");
-    els.quick = h("div.lob-quick", { role: "group", "aria-label": "Quick messages" }, PHRASES.map((t) => { const b = h("button.lob-q", { type: "button", text: t }); b.addEventListener("click", () => send(t)); return b; }));
+    els.quick = h("div.lob-quick", { role: "group", "aria-label": "Quick messages" });
     els.send.addEventListener("click", () => send(els.input.value));
     els.input.addEventListener("keydown", (e) => { e.stopPropagation(); if (e.key === "Enter") { e.preventDefault(); send(els.input.value); } });
     els.input.addEventListener("keyup", (e) => e.stopPropagation());
@@ -15778,16 +15862,14 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     M2M.topbar.show(false);
     M2M.panels.show(false);
     try { M2M.music.stop(0.4); } catch (e) { /* no audio yet */ }
-    if (!offMsgs) offMsgs = fbx.FB.onValue(ref("lobby/m"), (s) => onMsgs(s.val() || {}), () => { els.note.textContent = "The lobby chat isn't available right now."; });
-    paintHere(); paintInput();
+    paintFeed(); paintHere(); paintInput();
+    markSeen(); paintBadge();
     if (matchMedia("(pointer: fine)").matches) setTimeout(() => { if (!els.input.disabled) els.input.focus({ preventScroll: true }); }, 60);
   };
-  // leaving the lobby screen stops reading the chat (presence and invitations carry on)
-  new MutationObserver(() => {
-    if (document.documentElement.dataset.screen !== "lobby" && offMsgs) { try { offMsgs(); } catch (e) { /* closed */ } offMsgs = null; }
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-screen"] });
+  const onLobby = () => document.documentElement.dataset.screen === "lobby";
+  const inQuestion = () => !!(M2M.clue && M2M.clue.isOpen && M2M.clue.isOpen());
 
-  let firstLoad = true, cleaned = false;
+  let firstLoad = true, cleaned = false, lastNote = 0;
   function onMsgs(v) {
     const now = Date.now();
     const all = Object.keys(v).map((k) => Object.assign({ id: k }, v[k])).filter((m) => m && typeof m.x === "string");
@@ -15795,15 +15877,22 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (!cleaned) { cleaned = true; all.filter((m) => now - (m.t || 0) > KEEP_MS + 3600000).forEach((m) => fbx.FB.set(ref("lobby/m/" + m.id), null).catch(() => {})); }
     const keep = all.filter((m) => now - (m.t || 0) <= KEEP_MS).sort((a, b) => (a.t || 0) - (b.t || 0) || (a.id < b.id ? -1 : 1)).slice(-SHOW);
     const fresh = !firstLoad && keep.length && msgs.length && keep[keep.length - 1].id !== msgs[msgs.length - 1].id && keep[keep.length - 1].u !== myUid;
+    const newest = keep[keep.length - 1];
     msgs = keep; firstLoad = false;
     paintFeed();
-    if (fresh) { try { if (M2M.audio && M2M.audio.pop) M2M.audio.pop(); } catch (e) { /* sound is optional */ } }
+    if (onLobby()) markSeen();
+    paintBadge();
+    // a new post: a soft pop, and off the lobby screen a short notice (never while a question is open, at most one a minute)
+    if (fresh && !inQuestion()) {
+      try { if (M2M.audio && M2M.audio.pop) M2M.audio.pop(); } catch (e) { /* sound is optional */ }
+      if (!onLobby() && now - lastNote > 60000) { lastNote = now; U.toast("Study lobby · " + newest.h + ": " + (newest.x.length > 70 ? newest.x.slice(0, 68) + "…" : newest.x)); }
+    }
   }
   function paintFeed() {
     if (!els.feed) return;
     const atEnd = els.feed.scrollHeight - els.feed.scrollTop - els.feed.clientHeight < 60;
     U.clear(els.feed);
-    if (!msgs.length) { els.feed.appendChild(h("li.lob-empty", { text: "Nobody has posted this week. Say hello, or ask who's up for a game." })); return; }
+    if (!msgs.length) { els.feed.appendChild(h("li.lob-empty", { text: "Nobody has posted this week. Be the first: say when you'll be on, and the note stays here for 7 days." })); return; }
     const admin = !!(M2M.desk && M2M.desk.isOwner && M2M.desk.isOwner());
     for (const m of msgs) {
       const mine = m.u === myUid;
@@ -15821,12 +15910,31 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const list = others();
     els.whoN.textContent = list.length ? "(" + list.length + ")" : "";
     U.clear(els.who);
-    if (!list.length) { els.who.appendChild(h("li.lob-empty", { text: "Nobody else is signed in right now. Post below and people will see it when they come by." })); return; }
+    paintQuick(!list.length);
+    if (!list.length) {
+      const when = h("button.btn.lob-meet", { type: "button", text: "Say when you'll be on" });
+      when.addEventListener("click", () => { if (els.input.disabled) return; els.input.value = "I'll be on at "; els.input.focus(); });
+      const solo = h("button.btn.btn-quiet.lob-solo", { type: "button", text: "Play solo meanwhile" });
+      solo.addEventListener("click", () => M2M.app.title());
+      els.who.appendChild(h("li.lob-empty.lob-alone", null,
+        h("b", { text: "You're the first one here." }),
+        h("span", { text: " Leave a note with when you'll be on. It stays on the board for 7 days, and anyone who comes by can answer or invite you." }),
+        h("div.lob-alone-b", null, when, solo)));
+      return;
+    }
     for (const p of list) {
       const inv = h("button.btn.lob-invb", { type: "button", dataset: { inv: p.uid }, text: "Invite", title: "Open a friend game and invite " + p.h });
       if (p.s === "game") { inv.disabled = true; inv.title = p.h + " is in a game"; }
       els.who.appendChild(h("li.lob-p", null, h("span.lob-dot." + (p.s || "around"), { "aria-hidden": "true" }), h("span.lob-ph", null, h("b", { text: p.h }), h("small", { text: DOING[p.s] || DOING.around })), inv));
     }
+  }
+  let quickMeet = null;
+  function paintQuick(meet) {
+    if (!els.quick || quickMeet === meet) return;
+    quickMeet = meet;
+    U.clear(els.quick);
+    (meet ? MEET : PHRASES).forEach((t) => { const b = h("button.lob-q", { type: "button", text: t }); b.addEventListener("click", () => send(t)); els.quick.appendChild(b); });
+    paintInput();
   }
   function paintInput() {
     if (!els.input) return;
@@ -15895,7 +16003,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     panel.append(h("div.dk-scroll", null, tbl));
   };
 
-  L.state = () => ({ on: !!myUid, here: others().map((p) => p.h + ":" + p.s), msgs: msgs.length, last: msgs.length ? msgs[msgs.length - 1].x : null, muted, status,
+  L.state = () => ({ on: !!myUid, here: others().map((p) => p.h + ":" + p.s), msgs: msgs.length, last: msgs.length ? msgs[msgs.length - 1].x : null, unread: unread(), meet: quickMeet === true, muted, status,
     canPost: !!(els.input && !els.input.disabled), invites: invBox ? invBox.querySelectorAll(".lob-inv").length : 0 });
 })();
 
@@ -19372,6 +19480,54 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   }
   new MutationObserver(maybe).observe(document.documentElement, { attributes: true, attributeFilter: ["data-screen"] });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", maybe); else maybe();
+})();
+
+/* ---- wow3d.js ---- */
+/* MARK TO MARKET — wow3d.js (20 Nov 2026, the 3D round)
+ * Pointer-driven depth that sits on top of the board's and the title's own 3D:
+ *   - board tiles: the open tile under a mouse tilts toward the pointer, and a foil glare follows it (--hx, --hy on the cell);
+ *   - the title: the wordmark and its lines float at different depths and lean with the pointer (--tx, --ty on .title-wrap).
+ * Mouse only (a finger gets the press travel instead), never under reduced motion, and never while a question is open.
+ */
+(function () {
+  "use strict";
+  const M2M = window.M2M, U = M2M.U;
+  const de = document.documentElement;
+  let cell = null, raf = 0, last = null, tw = null, tx = 0, ty = 0, ttx = 0, tty = 0, traf = 0;
+  const calm = () => U.reduced() || de.classList.contains("clue-open");
+
+  function clearCell() { if (cell) { cell.style.removeProperty("--hx"); cell.style.removeProperty("--hy"); cell.classList.remove("holo-on"); cell = null; } }
+  function apply() {
+    raf = 0;
+    const e = last; if (!e) return;
+    const c = e.target && e.target.closest ? e.target.closest(".cell") : null;
+    if (!c || c.classList.contains("used") || c.classList.contains("void") || calm() || (M2M.board && M2M.board.diving && M2M.board.diving())) { clearCell(); return; }
+    if (c !== cell) { clearCell(); cell = c; c.classList.add("holo-on"); }
+    const r = c.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    c.style.setProperty("--hx", U.clamp(((e.clientX - r.left) / r.width) * 2 - 1, -1, 1).toFixed(3));
+    c.style.setProperty("--hy", U.clamp(((e.clientY - r.top) / r.height) * 2 - 1, -1, 1).toFixed(3));
+  }
+  function titleStep() {
+    traf = 0;
+    if (!tw) return;
+    tx += (ttx - tx) * 0.1; ty += (tty - ty) * 0.1;
+    tw.style.setProperty("--tx", tx.toFixed(4)); tw.style.setProperty("--ty", ty.toFixed(4));
+    if (Math.abs(ttx - tx) > 0.002 || Math.abs(tty - ty) > 0.002) traf = requestAnimationFrame(titleStep);
+  }
+  document.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return;
+    const scr = de.dataset.screen;
+    if (scr === "board") { last = e; if (!raf) raf = requestAnimationFrame(apply); }
+    else if (scr === "title" && !U.reduced()) {
+      tw = tw || document.querySelector(".title-wrap");
+      ttx = U.clamp((e.clientX / window.innerWidth) * 2 - 1, -1, 1); tty = U.clamp((e.clientY / window.innerHeight) * 2 - 1, -1, 1);
+      if (!traf) traf = requestAnimationFrame(titleStep);
+    }
+  }, { passive: true });
+  document.addEventListener("pointerleave", clearCell);
+  new MutationObserver(() => { if (de.dataset.screen !== "board" || calm()) clearCell(); }).observe(de, { attributes: true, attributeFilter: ["data-screen", "class"] });
+  M2M.wow3d = { state: () => ({ cell: cell ? cell.dataset.key : null, hx: cell ? +cell.style.getPropertyValue("--hx") : 0, tx, ty }) };
 })();
 
 /* ---- chat.js ---- */
