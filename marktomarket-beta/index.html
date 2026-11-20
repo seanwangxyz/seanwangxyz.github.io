@@ -3525,6 +3525,7 @@ html.reduced .title-flap, html.reduced .title-eyebrow, html.reduced .title-quote
 .rankup .ru-badge .av { animation: ruCoin 0.5s 0.5s cubic-bezier(0.3, 0.2, 0.3, 1) both; }
 .rankup .ru-badge::after { animation-delay: 1.02s; }
 html.reduced .rankup .ru-badge .av { animation: none; }
+.wn-fresh { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 9px; background: var(--accent); color: #fff; font: 700 9.5px/16px var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; vertical-align: 2px; }
 
 </style>
 <script>(function(){var t="dark";try{var p=localStorage.getItem("m2m-theme");if(p==="light")t="light";else if(p==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)t="light";}catch(e){}document.documentElement.setAttribute("data-m2m-theme",t);})();</script>
@@ -13584,13 +13585,17 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   function creditNotes() {
     const acts = document.querySelector("#scr-title .title-actions");
     if (acts && !document.querySelector("#scr-title .credit-note")) {
-      acts.after(h("p.credit-note", null, "Extra credit counts only in ", h("b", { text: "Training" }), ", while you're signed in. Play solo, couch, online and challenge-code games are practice and don't count."));
+      // 20 Nov: online games count too (a day of play and up to 10 questions per game)
+      acts.after(h("p.credit-note", null, "Extra credit counts in ", h("b", { text: "Training" }), " and in ", h("b", { text: "online games" }), " (up to 10 questions a game), while you're signed in with your verified Rice email. Solo, couch and challenge-code games are practice."));
     }
     const wrap = document.querySelector("#scr-close .close-wrap");
     if (wrap) {
       const add = () => {
         if (!wrap.firstChild || wrap.querySelector(".credit-note")) return;
-        wrap.appendChild(h("p.credit-note.cn-close", null, "This game doesn't count toward extra credit. Only ", h("b", { text: "Training" }), " does, while you're signed in."));
+        const online = !!(M2M.state && M2M.state.online);
+        if (online && A.signedIn() && A.verified()) wrap.appendChild(h("p.credit-note.cn-close", null, "This online game counted toward your extra credit: a day of play and up to 10 of your questions."));
+        else if (online) wrap.appendChild(h("p.credit-note.cn-close", null, "Online games count toward extra credit when you're signed in with your verified Rice email."));
+        else wrap.appendChild(h("p.credit-note.cn-close", null, "This game doesn't count toward extra credit. ", h("b", { text: "Training" }), " and ", h("b", { text: "online games" }), " do, while you're signed in."));
       };
       new MutationObserver(add).observe(wrap, { childList: true });
       add();
@@ -19335,7 +19340,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   "use strict";
   const M2M = window.M2M, U = M2M.U, h = U.h;
   const W = (M2M.whatsnew = {});
-  const VERSION = "2026-11-19";
+  const VERSION = "2026-11-20"; // 20 Nov: online games count for credit, and the 3D board (cards marked fresh)
   const KEY = "m2m-whatsnew";
   W.VERSION = VERSION;
 
@@ -19347,7 +19352,9 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     talk: svg('<path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4h0A2.5 2.5 0 0 1 4 13.5z"/><path d="M8.5 9.5h7M8.5 12h4"/>'),
     share: svg('<circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6"/>'),
     app: svg('<rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/>'),
-    look: svg('<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/>')
+    look: svg('<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/>'),
+    credit: svg('<path d="M4 17l5-5 4 4 7-8"/><path d="M15 8h5v5"/>'),
+    cube: svg('<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>')
   };
 
   function isIOS() { return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); }
@@ -19361,6 +19368,13 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   /** the cards: what it is, what it's for when studying, and an optional Try it (returns false to keep the panel open) */
   function cards() {
     const list = [
+      { id: "credit", icon: "credit", fresh: true, name: "Online games now count for extra credit",
+        what: "Signed in with your verified Rice email, an online game counts as a day of play and up to 10 of your 25 questions that week. Three games on three days make a full week.",
+        use: "Studying with friends instead of alone, and getting credit for it. Training still counts the same, and you still need 15 different questions in each lecture for full coverage.",
+        tryLabel: "Start a friend game", tryIt: () => clickTitle('[data-act="online"]'), needs: () => { const b = document.querySelector('[data-act="online"]'); return !!(b && !b.hidden); } },
+      { id: "board3d", icon: "cube", fresh: true, name: "A board that reacts",
+        what: "Tiles lift and lean toward your mouse with a foil glare, the question card flips up toward you, and a rank-up lands like a struck coin.",
+        use: "Making the grind feel like a game. Turn it off any time with Reduced motion in the settings." },
       { id: "quiz", icon: "quiz", name: "Quiz 4 and Final practice",
         what: "The L18 questions are in, with one-tap presets for Quiz 4 (L15–L19) and the Final (L13 on).",
         use: "Drill exactly what the next exam covers. My misses brings back the ones you got wrong.",
@@ -19436,7 +19450,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       list.appendChild(h("li.wn-card", { style: { "--i": i } },
         h("span.wn-ico", { html: ICONS[c.icon] }),
         h("div.wn-txt", null,
-          h("h3.wn-name", { text: c.name }),
+          h("h3.wn-name", null, c.name, c.fresh ? h("span.wn-fresh", { text: "new" }) : null),
           h("p.wn-what", { text: c.what }),
           h("p.wn-use", null, h("b", { text: "Use it for: " }), c.use),
           how, tryBtn)));
