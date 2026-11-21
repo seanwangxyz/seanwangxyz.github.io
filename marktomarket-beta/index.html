@@ -9923,6 +9923,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     if (cs.numeric && !cs.half) return;
     const pk = cs.picks[0];
     if (pk.locked) return;
+    cs.myMs = Math.round(performance.now() - cs.t0); // solo: the answer time goes with the reveal (credit, 20 Nov)
     pk.chosen = i;
     pk.locked = true;
     (A().optKey || A().select)();
@@ -9959,6 +9960,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       return;
     }
     const pk = cs.picks[0];
+    cs.myMs = Math.round(performance.now() - cs.t0);
     pk.typed = val.trim();
     pk.match = m;
     pk.chosen = m.optIndex >= 0 ? m.optIndex : null;
@@ -13585,8 +13587,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   function creditNotes() {
     const acts = document.querySelector("#scr-title .title-actions");
     if (acts && !document.querySelector("#scr-title .credit-note")) {
-      // 20 Nov: online games count too (a day of play and up to 10 questions per game)
-      acts.after(h("p.credit-note", null, "Extra credit counts in ", h("b", { text: "Training" }), " and in ", h("b", { text: "online games" }), " (up to 10 questions a game), while you're signed in with your verified Rice email. Solo, couch and challenge-code games are practice."));
+      // 20 Nov: online games count too (a day of play and up to 10 questions per game); then solo games (10 answered)
+      acts.after(h("p.credit-note", null, "Extra credit counts in ", h("b", { text: "Training" }), ", in ", h("b", { text: "online games" }), " and in ", h("b", { text: "solo games" }), " (a day and up to 10 questions a game; solo needs 10 answered), while you're signed in with your verified Rice email. Couch and challenge-code games are practice."));
     }
     const wrap = document.querySelector("#scr-close .close-wrap");
     if (wrap) {
@@ -13595,7 +13597,16 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
         const online = !!(M2M.state && M2M.state.online);
         if (online && A.signedIn() && A.verified()) wrap.appendChild(h("p.credit-note.cn-close", null, "This online game counted toward your extra credit: a day of play and up to 10 of your questions."));
         else if (online) wrap.appendChild(h("p.credit-note.cn-close", null, "Online games count toward extra credit when you're signed in with your verified Rice email."));
-        else wrap.appendChild(h("p.credit-note.cn-close", null, "This game doesn't count toward extra credit. ", h("b", { text: "Training" }), " and ", h("b", { text: "online games" }), " do, while you're signed in."));
+        else if (M2M.state && M2M.state.mode === "solo" && A.signedIn() && A.verified()) {
+          const sc = M2M.keyless && M2M.keyless.soloCredit;
+          const mine = sc && sc.code === M2M.state.code ? sc : null;
+          if (mine && mine.counted) wrap.appendChild(h("p.credit-note.cn-close", null, "This solo game counted toward your extra credit: a day of play and 10 of your questions."));
+          else if (mine && mine.fresh === false) wrap.appendChild(h("p.credit-note.cn-close", null, "This board was dealt to someone else first (a challenge code), so it's practice. A new board of your own counts."));
+          else if (mine && !mine.none) wrap.appendChild(h("p.credit-note.cn-close", null, "This solo game didn't count: you answered " + mine.n + " of the 10 questions a solo game needs."));
+          else wrap.appendChild(h("p.credit-note.cn-close", null, "Solo games count toward extra credit once you answer 10 questions on a new board of your own."));
+        }
+        else if (M2M.state && M2M.state.mode === "solo") wrap.appendChild(h("p.credit-note.cn-close", null, "Solo games count toward extra credit when you're signed in with your verified Rice email."));
+        else wrap.appendChild(h("p.credit-note.cn-close", null, "This game doesn't count toward extra credit. ", h("b", { text: "Training" }), ", ", h("b", { text: "online games" }), " and ", h("b", { text: "solo games" }), " do, while you're signed in."));
       };
       new MutationObserver(add).observe(wrap, { childList: true });
       add();
@@ -17996,6 +18007,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   }
 
   /** deal a board on the server (once per code per page) */
+  K.soloCredit = null; // the last solo reveal's credit status {code, n, need, counted, fresh} (the end-of-game note)
   K.deal = async function (code) {
     const p = D().parseCode(code);
     if (!p || p.error) throw new Error(D().codeError(p && p.error));
@@ -18032,7 +18044,10 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     const st = M2M.state;
     if (st.online) return call("floorReveal", { code: st.code, key: c.cell.key });
     const picks = c.picks.map((p, i) => ({ chosen: p.chosen == null ? null : p.chosen, typed: i === 0 && p.typed != null ? String(p.typed) : null }));
-    return call("revealTile", { code: st.code, key: c.cell.key, picks, half: !!c.half });
+    // solo games count toward credit (20 Nov): the mode and the page's answer time go along; the server keeps the count
+    const solo = st.mode === "solo";
+    return call("revealTile", { code: st.code, key: c.cell.key, picks, half: !!c.half, mode: solo ? "solo" : st.mode || "", ms: solo ? Math.round(c.myMs || 0) : 0 })
+      .then((r) => { if (r && solo) K.soloCredit = r.so ? Object.assign({ code: st.code }, r.so) : { code: st.code, none: true }; return r; });
   };
 
   /** online: ask for a finished tile's key when no open card is asking (a page catching up) */
@@ -19340,7 +19355,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   "use strict";
   const M2M = window.M2M, U = M2M.U, h = U.h;
   const W = (M2M.whatsnew = {});
-  const VERSION = "2026-11-20"; // 20 Nov: online games count for credit, and the 3D board (cards marked fresh)
+  const VERSION = "2026-11-21"; // 20 Nov: online games, then solo games, count for credit (cards marked fresh)
   const KEY = "m2m-whatsnew";
   W.VERSION = VERSION;
 
@@ -19368,11 +19383,15 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   /** the cards: what it is, what it's for when studying, and an optional Try it (returns false to keep the panel open) */
   function cards() {
     const list = [
+      { id: "solocredit", icon: "credit", fresh: true, name: "Solo games count for extra credit too",
+        what: "Signed in with your verified Rice email, a solo game on a new board of your own counts as a day of play and 10 of your 25 questions that week, once you've answered 10 of its questions. Under 10 counts nothing.",
+        use: "Playing the full game when no one's around. A challenge code someone else already played is practice, and so is a couch game. Answers clicked faster than anyone could read don't count.",
+        tryLabel: "Start a solo game", tryIt: () => clickTitle('[data-act="solo"]'), needs: () => { const b = document.querySelector('[data-act="solo"]'); return !!(b && !b.hidden); } },
       { id: "credit", icon: "credit", fresh: true, name: "Online games now count for extra credit",
         what: "Signed in with your verified Rice email, an online game counts as a day of play and up to 10 of your 25 questions that week. Three games on three days make a full week.",
         use: "Studying with friends instead of alone, and getting credit for it. Training still counts the same, and you still need 15 different questions in each lecture for full coverage.",
         tryLabel: "Start a friend game", tryIt: () => clickTitle('[data-act="online"]'), needs: () => { const b = document.querySelector('[data-act="online"]'); return !!(b && !b.hidden); } },
-      { id: "board3d", icon: "cube", fresh: true, name: "A board that reacts",
+      { id: "board3d", icon: "cube", name: "A board that reacts",
         what: "Tiles lift and lean toward your mouse with a foil glare, the question card flips up toward you, and a rank-up lands like a struck coin.",
         use: "Making the grind feel like a game. Turn it off any time with Reduced motion in the settings." },
       { id: "quiz", icon: "quiz", name: "Quiz 4 and Final practice",
