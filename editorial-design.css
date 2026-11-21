@@ -247,3 +247,16 @@ nav a.nav-cv{border:1px solid #89918b;color:var(--ink)!important;padding:.47rem 
 
 
 #about .hs{margin:0 0 2rem}.teaching-section{padding-top:0}.teaching-section>.wrap{padding-top:3rem}.sw-lab header{box-shadow:none}.sr:focus-visible{clip-path:none}
+
+/* Responsive cover typography */
+.cover h1{font-size:clamp(3.55rem,5.2vw,5.15rem)}
+@media(max-width:760px){
+ .cover,.about-grid{grid-template-columns:minmax(0,1fr)}
+ .cover-text,.about-txt{min-width:0}
+ .cover h1{font-size:clamp(2.15rem,11.6vw,4.1rem)}
+ .cover .subject{font-size:.71rem}
+ .n-name{white-space:nowrap}
+ .wrap.nav{gap:.55rem}
+ .path .r{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+ .path .r span{overflow-wrap:anywhere}
+}
