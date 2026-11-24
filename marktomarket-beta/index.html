@@ -3583,7 +3583,7 @@ html.reduced .rankup .ru-badge .av { animation: none; }
             <button type="button" class="preset" data-preset="early">L01–L07</button>
             <button type="button" class="preset" data-preset="late">L07–L12</button>
             <button type="button" class="preset" data-preset="q3" title="Quiz 3: L13–L15" aria-label="Quiz 3, lectures 13 to 15">Quiz 3</button>
-            <button type="button" class="preset" data-preset="q4" title="Quiz 4: L15–L19" aria-label="Quiz 4, lectures 15 to 19">Quiz 4</button>
+            <button type="button" class="preset" data-preset="q4" title="Quiz 4: L15–L18" aria-label="Quiz 4, lectures 15 to 18">Quiz 4</button>
             <button type="button" class="preset" data-preset="final" title="Final: L13 to the last lecture" aria-label="Final, lecture 13 onward">Final</button>
             <button type="button" class="preset" data-preset="custom" tabindex="-1" aria-disabled="true">Custom</button>
           </div>
@@ -7948,8 +7948,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     early: { id: "early", label: "L01–L07", chips: ["L01", "L02", "L03", "L04", "L05", "L07"] },
     late: { id: "late", label: "L07–L12", chips: ["L07", "L08", "L09", "L10", "L11", "L12"] },
     q3: { id: "q3", label: "Quiz 3", chips: ["L13", "L14", "L15"] }, // Quiz 3 covers L13–L15 (kept for final-exam practice, 18 Nov)
-    // 18 Nov: Quiz 4 covers L15–L19 and the final L13 to the last lecture. Both pick up new lectures as they join D.CHIPS.
-    q4: { id: "q4", label: "Quiz 4", chips: D.CHIPS.map((c) => c.id).filter((id) => { const n = +id.slice(1); return n >= 15 && n <= 19; }) },
+    // 24 Nov (Sean): Quiz 4 covers L15–L18 (L19 is not on it); the Final covers L13 to the last lecture and picks up new ones.
+    q4: { id: "q4", label: "Quiz 4", chips: D.CHIPS.map((c) => c.id).filter((id) => { const n = +id.slice(1); return n >= 15 && n <= 18; }) },
     final: { id: "final", label: "Final", chips: D.CHIPS.map((c) => c.id).filter((id) => +id.slice(1) >= 13) }
   };
 
@@ -13784,7 +13784,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
       // 21 Oct: an "All" kept on the account moves to Quiz 3 once per device, like the device's own save (main.js)
       if (ss.mask === D().ALL_MASK && M2M.q3move) moveQ3 = true;
       else if (ss.mask === D().Q3_MASK && M2M.q4move) moveQ3 = true; // 18 Nov: Quiz 3 on the account moves to Quiz 4 once
-      // 24 Nov: the old Quiz 4 or old Final kept on the account moves to the new one (with L19) once per device
+      // 24 Nov: the old Final kept on the account moves to the new one (with L19) once per device (Quiz 4 stays L15-L18)
       else if (ss.mask === D().OLD_Q4_MASK && M2M.l19move) { if (s.mask !== D().DEFAULT_MASK) { s.mask = D().DEFAULT_MASK; changed = true; } moveQ3 = true; }
       else if (ss.mask === D().OLD_FINAL_MASK && M2M.l19move) { if (s.mask !== D().FINAL_MASK) { s.mask = D().FINAL_MASK; changed = true; } moveQ3 = true; }
       else { s.mask = ss.mask; changed = true; }
@@ -18133,7 +18133,8 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
     // picking Quiz 3 again sticks. M2M.q4move does the same for a Quiz 3 kept on the account (account.js).
     M2M.q4move = (s.defv || 0) < 3;
     if (M2M.q4move) { if (s.mask === D.Q3_MASK) s.mask = D.DEFAULT_MASK; s.defv = 3; }
-    // 24 Nov: L19 joined Quiz 4 and the Final. A save on exactly the old Quiz 4 or the old Final moves to the new one once.
+    // 24 Nov: L19 joined the Final (not Quiz 4, which stays L15-L18). A save on exactly the old Final moves to the new one once;
+    // the old-Quiz-4 line is kept but does nothing now, since the old Quiz 4 is Quiz 4.
     M2M.l19move = (s.defv || 0) < 4;
     if (M2M.l19move) {
       if (s.mask === D.OLD_Q4_MASK) s.mask = D.DEFAULT_MASK;
@@ -19371,7 +19372,7 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   "use strict";
   const M2M = window.M2M, U = M2M.U, h = U.h;
   const W = (M2M.whatsnew = {});
-  const VERSION = "2026-11-24"; // 24 Nov: L19 questions (Quiz 4 card marked fresh); 20 Nov: online and solo games count for credit
+  const VERSION = "2026-11-24"; // 24 Nov: L19 questions (L19 card marked fresh; Quiz 4 stays L15-L18); 20 Nov: online and solo games count for credit
   const KEY = "m2m-whatsnew";
   W.VERSION = VERSION;
 
@@ -19399,10 +19400,10 @@ window.M2M_NET = {"firebase": {"apiKey": "AIzaSyAEfetXfKfSTlmx_Db-E7SbWEb0Nj6Qj3
   /** the cards: what it is, what it's for when studying, and an optional Try it (returns false to keep the panel open) */
   function cards() {
     const list = [
-      { id: "quiz", icon: "quiz", fresh: true, name: "L19 is in: Quiz 4 is complete",
-        what: "The L19 questions (value per share) are in, so the Quiz 4 preset now covers all of L15–L19 and the Final covers L13–L19.",
-        use: "Drill exactly what the next exam covers. My misses brings back the ones you got wrong.",
-        tryLabel: "Set Quiz 4", tryIt: () => { clickTitle('[data-preset="q4"]'); scrollTo(".presets"); } },
+      { id: "quiz", icon: "quiz", fresh: true, name: "L19 is in: value per share",
+        what: "The L19 questions (from the value of the business to the value of a share) are in. Quiz 4 still covers L15–L18; the Final now covers L13–L19.",
+        use: "Tick the L19 chip to drill it on its own, or press Final for everything since L13. My misses brings back the ones you got wrong.",
+        tryLabel: "Set Final", tryIt: () => { clickTitle('[data-preset="final"]'); scrollTo(".presets"); } },
       { id: "solocredit", icon: "credit", name: "Solo games count for extra credit too",
         what: "Signed in with your verified Rice email, a solo game on a new board of your own counts as a day of play and 10 of your 25 questions that week, once you've answered 10 of its questions. Under 10 counts nothing.",
         use: "Playing the full game when no one's around. A challenge code someone else already played is practice, and so is a couch game. Answers clicked faster than anyone could read don't count.",
